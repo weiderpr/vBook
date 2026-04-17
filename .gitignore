@@ -1,0 +1,20 @@
+# Django
+*.pyc
+*~
+__pycache__/
+myproject/settings.py
+db.sqlite3
+staticfiles/
+media/
+/static/images/hero.png
+/static/images/management.png
+
+# Environment
+.venv/
+env/
+venv/
+.env
+
+# OS
+.DS_Store
+Thumbs.db

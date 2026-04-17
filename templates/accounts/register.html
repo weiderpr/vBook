@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrar - VerticeBook{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="glass-card">
+        <h2>Criar Conta</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.name }}" id="{{ field.id_for_label }}" required>
+                    {% if field.errors %}
+                        <small style="color: var(--secondary);">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Registrar</button>
+        </form>
+        <div class="auth-footer">
+            <p>Já tem uma conta? <a href="{% url 'login' %}">Entrar</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

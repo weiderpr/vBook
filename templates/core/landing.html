@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Domine a Gestão da sua <span>Locação de Temporada</span></h1>
+            <p>Reduza custos, otimize manutenções e maximize seus retornos financeiros com uma plataforma administrativa inteligente e focada em resultados.</p>
+            <div class="hero-btns">
+                <a href="{% url 'register' %}" class="btn btn-primary" style="margin-right: 1.5rem;">Começar Grátis</a>
+                <a href="#features" class="btn btn-outline">Ver Funcionalidades</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="{% static 'images/hero.png' %}" alt="Interior moderno de locação">
+        </div>
+    </div>
+</section>
+
+<!-- Stats/Value Section -->
+<section class="section section-stats" style="background: var(--bg-card);">
+    <div class="container">
+        <div class="features-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div style="text-align: center;">
+                <h3 style="font-size: 3rem; color: var(--primary); margin-bottom: 0.5rem;">+30%</h3>
+                <p>Economia Operacional</p>
+            </div>
+            <div style="text-align: center;">
+                <h3 style="font-size: 3rem; color: var(--primary); margin-bottom: 0.5rem;">2x</h3>
+                <p>Mais Agilidade</p>
+            </div>
+            <div style="text-align: center;">
+                <h3 style="font-size: 3rem; color: var(--primary); margin-bottom: 0.5rem;">100%</h3>
+                <p>Controle Financeiro</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Split Content Section -->
+<section class="section split-section">
+    <div class="container">
+        <div class="split-image">
+            <img src="{% static 'images/management.png' %}" alt="Dashboard de Gestão no Tablet">
+        </div>
+        <div class="split-content">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Gestão na <span>Palma da Mão</span></h2>
+            <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem;">Acesse relatórios detalhados, controle o cronograma de manutenção e acompanhe o fluxo de caixa de onde estiver. O VerticeBook centraliza tudo o que importa para o seu negócio.</p>
+            <ul style="list-style: none; color: var(--text-muted);">
+                <li style="margin-bottom: 1rem;">✅ Monitoramento de reservas em tempo real</li>
+                <li style="margin-bottom: 1rem;">✅ Alertas automáticos de manutenção</li>
+                <li style="margin-bottom: 1rem;">✅ Relatórios de performance financeira</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Gestão sem Complicações</h2>
+            <p>O VerticeBook foi desenhado para quem precisa de controle total sobre a operação de temporada, sem perder tempo com processos manuais.</p>
+        </div>
+
+        <div class="features-grid">
+            <!-- Feature 1: Financeiro -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+                </div>
+                <h3>Retorno Financeiro</h3>
+                <p>Monitore suas receitas e identifique oportunidades para maximizar o lucro por propriedade.</p>
+            </div>
+
+            <!-- Feature 2: Custos -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                </div>
+                <h3>Redução de Custos</h3>
+                <p>Identifique gargalos e reduza gastos excessivos em sua operação diária de forma eficiente.</p>
+            </div>
+
+            <!-- Feature 3: Manutenção -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench"><path d="M14.7 13.5a5.5 5.5 0 1 0-8.2-8.2a5.5 5.5 0 0 0 8.2 8.2z"></path><path d="M14.7 13.5l4.3 4.3a2 2 0 0 1 0 2.8l-1.5 1.5a2 2 0 0 1-2.8 0l-4.3-4.3"></path><path d="M6.5 10.5l-2.5-2.5"></path><path d="M10.5 6.5l2.5 2.5"></path></svg>
+                </div>
+                <h3>Gestão de Manutenção</h3>
+                <p>Controle ordens de serviço, vistorias e reparos para manter a qualidade impecável da sua hospedagem.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="section" style="text-align: center;">
+    <div class="container">
+        <div class="glass-card" style="max-width: 800px; margin: 0 auto; padding: 4rem;">
+            <h2>Pronto para elevar o nível da sua gestão?</h2>
+            <p style="margin-bottom: 2rem;">Junte-se a administradores que já otimizaram seus retornos com o VerticeBook.</p>
+            <a href="{% url 'register' %}" class="btn btn-primary" style="font-size: 1.2rem;">Criar Minha Conta Agora</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
