@@ -18,16 +18,19 @@
             {% endfor %}
         {% endif %}
 
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" id="profile-form">
             {% csrf_token %}
             
             <div style="text-align: center; margin-bottom: 2rem;">
-                <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem; border: 4px solid var(--primary); background: var(--glass-border); display: flex; align-items: center; justify-content: center;">
+                <div id="avatar-container" class="avatar-upload" style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem; border: 4px solid var(--primary); background: var(--glass-border); display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;">
                     {% if user.profile_picture %}
                         <img src="{{ user.profile_picture.url }}" alt="Foto de Perfil" style="width: 100%; height: 100%; object-fit: cover;">
                     {% else %}
                         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="color: var(--text-muted);"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     {% endif %}
+                    <div class="avatar-overlay">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                    </div>
                 </div>
                 <p style="color: var(--text-muted); font-size: 0.9rem;">{{ user.email }}</p>
             </div>
@@ -37,8 +40,8 @@
                 {{ profile_form.full_name }}
             </div>
 
-            <div class="form-group">
-                <label for="{{ profile_form.profile_picture.id_for_label }}">Alterar Foto de Perfil</label>
+            <!-- Hidden Default Input -->
+            <div style="display: none;">
                 {{ profile_form.profile_picture }}
             </div>
 
@@ -72,8 +75,7 @@
 
 <style>
     .form-group input[type="text"], 
-    .form-group input[type="email"], 
-    .form-group input[type="file"] {
+    .form-group input[type="email"] {
         width: 100%;
         padding: 1rem;
         border-radius: 12px;
@@ -82,10 +84,62 @@
         color: var(--text-main);
         font-family: inherit;
     }
-    
-    .form-group input[type="file"] {
-        padding: 0.5rem;
-        font-size: 0.9rem;
+
+    .avatar-upload:hover .avatar-overlay {
+        opacity: 1;
+    }
+
+    .avatar-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s;
+        backdrop-filter: blur(2px);
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('avatar-container');
+        const fileInput = document.querySelector('input[type="file"]');
+        const imgElement = container.querySelector('img');
+        const svgElement = container.querySelector('svg:not(.lucide-camera)');
+
+        if (container && fileInput) {
+            container.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        if (imgElement) {
+                            imgElement.src = e.target.result;
+                        } else if (svgElement) {
+                            // Replace SVG icon with a new Image element
+                            svgElement.style.display = 'none';
+                            const newImg = document.createElement('img');
+                            newImg.src = e.target.result;
+                            newImg.style.width = '100%';
+                            newImg.style.height = '100%';
+                            newImg.style.objectFit = 'cover';
+                            container.insertBefore(newImg, container.firstChild);
+                        }
+                        container.style.borderColor = '#10b981'; // Green to show change
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}
