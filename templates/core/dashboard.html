@@ -1,41 +1,41 @@
 {% extends 'dashboard_layout.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}Dashboard - VerticeBook{% endblock %}
 
 {% block dashboard_content %}
     <div class="dashboard-header">
         <div>
-            <h1>Olá, {{ user.full_name|default:user.email }}!</h1>
-            <p style="color: var(--text-muted);">Bem-vindo de volta ao seu painel.</p>
+            <h1>{% trans "Olá" %}, {{ user.full_name|default:user.email }}!</h1>
+            <p style="color: var(--text-muted);">{% trans "Bem-vindo de volta ao seu painel." %}</p>
         </div>
         <div class="header-actions">
-             <button class="btn btn-primary">+ Nova Postagem</button>
+             <button class="btn btn-primary">+ {% trans "Nova Postagem" %}</button>
         </div>
     </div>
 
     <div class="stats-grid">
         <div class="stat-card">
-            <h3>Conexões</h3>
+            <h3>{% trans "Conexões" %}</h3>
             <p class="value">128</p>
-            <small style="color: #10b981;">+12 esta semana</small>
+            <small style="color: #10b981;">+12 {% trans "esta semana" %}</small>
         </div>
         <div class="stat-card">
-            <h3>Visualizações</h3>
+            <h3>{% trans "Visualizações" %}</h3>
             <p class="value">1,402</p>
             <small style="color: #10b981;">+5.4%</small>
         </div>
         <div class="stat-card">
-            <h3>Mensagens</h3>
+            <h3>{% trans "Mensagens" %}</h3>
             <p class="value">24</p>
-            <small style="color: var(--secondary);">3 novas</small>
+            <small style="color: var(--secondary);">3 {% trans "novas" %}</small>
         </div>
     </div>
 
     <div style="margin-top: 4rem;">
-        <h2>Atividade Recente</h2>
+        <h2>{% trans "Atividade Recente" %}</h2>
         <div class="glass-card" style="max-width: 100%; margin-top: 1.5rem; padding: 2rem;">
-            <p style="color: var(--text-muted); text-align: center;">Nenhuma atividade recente para mostrar.</p>
+            <p style="color: var(--text-muted); text-align: center;">{% trans "Nenhuma atividade recente para mostrar." %}</p>
         </div>
     </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,21 +9,62 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .lang-trigger:hover {
+            background: var(--glass-border);
+            transform: translateY(-1px);
+        }
+        .lang-trigger:active {
+            transform: translateY(0);
+        }
+    </style>
     {% block extra_head %}{% endblock %}
+    
+    <script>
+        // Critical: Set theme as early as possible to avoid flash
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const userTheme = "{% if user.is_authenticated %}{{ user.theme_preference }}{% endif %}";
+            const theme = userTheme || savedTheme || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
 </head>
-<script>
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-</script>
 <body>
     <header class="navbar {% block navbar_class %}{% endblock %}">
         <div class="container">
             <a href="{% url 'landing' %}" class="logo">Vertice<span>Book</span></a>
-            <nav>
-                <button id="theme-toggle" class="theme-toggle" aria-label="Alterar tema">
+            <nav style="display: flex; align-items: center; gap: 0.5rem;">
+                <!-- Language Selector -->
+                <div class="user-menu" id="lang-menu" style="position: relative; display: flex; align-items: center;">
+                    <div class="lang-trigger" id="lang-trigger" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 1px solid transparent;">
+                        <span id="current-lang-flag" style="display: flex; align-items: center; line-height: 0;">
+{% trans "en" as curr_lang %}
+                            {% if request.LANGUAGE_CODE == 'en' %}
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#00247D"/><path d="M12 2v20M2 12h20M2 2l20 20M22 2L2 22" stroke="#fff" stroke-width="2.5"/><path d="M12 2v20M2 12h20M2 2l20 20M22 2L2 22" stroke="#CF142B" stroke-width="1.2"/></svg>
+                            {% else %}
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#009C3B"/><path d="M12 5.5l5.5 6.5-5.5 6.5L6.5 12z" fill="#FFDF00"/><circle cx="12" cy="12" r="3" fill="#002776"/></svg>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="user-dropdown" id="lang-dropdown" style="right: 0; min-width: 140px; padding: 0.5rem;">
+                        <a href="javascript:void(0)" class="dropdown-item lang-option" data-lang="pt-br" style="display: flex; align-items: center; gap: 10px;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#009C3B"/><path d="M12 5.5l5.5 6.5-5.5 6.5L6.5 12z" fill="#FFDF00"/><circle cx="12" cy="12" r="3" fill="#002776"/></svg>
+                            Português
+                        </a>
+                        <a href="javascript:void(0)" class="dropdown-item lang-option" data-lang="en" style="display: flex; align-items: center; gap: 10px;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#00247D"/><path d="M12 2v20M2 12h20M2 2l20 20M22 2L2 22" stroke="#fff" stroke-width="2.5"/><path d="M12 2v20M2 12h20M2 2l20 20M22 2L2 22" stroke="#CF142B" stroke-width="1.2"/></svg>
+                            English
+                        </a>
+                    </div>
+                </div>
+
+                <button id="theme-toggle" class="theme-toggle" aria-label="Alterar tema" style="margin: 0; padding: 0.5rem;">
                     <span class="theme-icon">🌙</span>
                 </button>
+                
                 {% if user.is_authenticated %}
+                    <div class="dropdown-divider-v" style="width: 1px; height: 20px; background: var(--glass-border); margin: 0 0.5rem;"></div>
                     <a href="{% url 'dashboard' %}">Dashboard</a>
                     <div class="user-menu" id="user-menu">
                         <div class="user-trigger" id="user-trigger">
@@ -38,24 +79,20 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
                         </div>
                         <div class="user-dropdown" id="user-dropdown">
-                            <a href="{% url 'dashboard' %}" class="dropdown-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-                                Dashboard
-                            </a>
                             <a href="{% url 'profile' %}" class="dropdown-item">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                Perfil
+                                {% trans "Perfil" %}
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="{% url 'logout' %}" class="dropdown-item" style="color: #ef4444;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                                Sair
+                                {% trans "Sair" %}
                             </a>
                         </div>
                     </div>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-outline">Entrar</a>
-                    <a href="{% url 'register' %}" class="btn btn-primary">Registrar</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline">{% trans "Entrar" %}</a>
+                    <a href="{% url 'register' %}" class="btn btn-primary">{% trans "Registrar" %}</a>
                 {% endif %}
             </nav>
         </div>
@@ -88,7 +125,62 @@
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateIcon(newTheme);
+
+            // Persistent theme saving if logged in
+            {% if user.is_authenticated %}
+            fetch("{% url 'update_theme' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ theme: newTheme })
+            }).catch(err => console.error("Erro ao salvar tema:", err));
+            {% endif %}
         });
+
+        // Language Switcher Logic
+        const langTrigger = document.getElementById('lang-trigger');
+        const langDropdown = document.getElementById('lang-dropdown');
+        const langOptions = document.querySelectorAll('.lang-option');
+
+        if (langTrigger && langDropdown) {
+            langTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (userDropdown) userDropdown.classList.remove('active');
+                langDropdown.classList.toggle('active');
+            });
+
+            langOptions.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const newLang = opt.getAttribute('data-lang');
+                    
+                    {% if user.is_authenticated %}
+                    fetch("{% url 'update_language' %}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        },
+                        body: JSON.stringify({ language: newLang })
+                    }).then(() => {
+                        window.location.reload();
+                    }).catch(err => console.error("Erro ao salvar idioma:", err));
+                    {% else %}
+                    // For non-authenticated users, use standard Django i18n form or cookies
+                    // For now, let's just use a simple redirect if needed or window.location.reload
+                    // But our persistence logic focuses on logged-in users
+                    window.location.reload(); 
+                    {% endif %}
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!langDropdown.contains(e.target) && !langTrigger.contains(e.target)) {
+                    langDropdown.classList.remove('active');
+                }
+            });
+        }
 
         // User Dropdown logic
         const userTrigger = document.getElementById('user-trigger');
@@ -97,6 +189,7 @@
         if (userTrigger && userDropdown) {
             userTrigger.addEventListener('click', (e) => {
                 e.stopPropagation();
+                if (langDropdown) langDropdown.classList.remove('active');
                 userDropdown.classList.toggle('active');
             });
 

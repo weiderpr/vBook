@@ -330,7 +330,7 @@ nav a:hover {
     flex: 1;
     margin-left: 280px; /* Space for sidebar */
     padding: 3rem;
-    padding-top: 5rem; /* Space for top navbar */
+    padding-top: 6.8rem; /* Precision calibration for the '2mm' gap */
     min-height: 100vh;
 }
 

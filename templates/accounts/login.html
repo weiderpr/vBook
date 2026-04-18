@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Entrar - VerticeBook{% endblock %}
+{% block title %}{% trans "Entrar" %} - VerticeBook{% endblock %}
 
 {% block content %}
 <div class="auth-wrapper">
     <div class="glass-card">
-        <h2>Entrar</h2>
+        <h2>{% trans "Entrar" %}</h2>
         <form method="POST">
             {% csrf_token %}
             {% for field in form %}
@@ -17,10 +18,10 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Entrar</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">{% trans "Entrar" %}</button>
         </form>
         <div class="auth-footer">
-            <p>Não tem uma conta? <a href="{% url 'register' %}">Registre-se</a></p>
+            <p>{% trans "Não tem uma conta?" %} <a href="{% url 'register' %}">{% trans "Registre-se" %}</a></p>
         </div>
     </div>
 </div>
