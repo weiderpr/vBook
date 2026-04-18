@@ -7,6 +7,7 @@ class CustomUser(AbstractUser):
     # or just use first_name/last_name. Let's add a 'full_name' field for simplicity.
     full_name = models.CharField(max_length=255, verbose_name="Nome Completo")
     email = models.EmailField(unique=True, verbose_name="E-mail")
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True, verbose_name="Foto de Perfil")
 
     # Use email as the identifier for login
     USERNAME_FIELD = 'email'

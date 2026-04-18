@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Meu Perfil - VerticeBook{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper" style="padding: 100px 2rem; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; align-items: start;">
+    
+    <!-- Profile Info Card -->
+    <div class="glass-card" style="max-width: none;">
+        <h2>Dados Pessoais</h2>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem; border: 4px solid var(--primary); background: var(--glass-border); display: flex; align-items: center; justify-content: center;">
+                    {% if user.profile_picture %}
+                        <img src="{{ user.profile_picture.url }}" alt="Foto de Perfil" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="color: var(--text-muted);"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    {% endif %}
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">{{ user.email }}</p>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ profile_form.full_name.id_for_label }}">Nome Completo</label>
+                {{ profile_form.full_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ profile_form.profile_picture.id_for_label }}">Alterar Foto de Perfil</label>
+                {{ profile_form.profile_picture }}
+            </div>
+
+            <button type="submit" name="update_profile" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Salvar Alterações</button>
+        </form>
+    </div>
+
+    <!-- Password Change Card -->
+    <div class="glass-card" style="max-width: none;">
+        <h2>Segurança</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem; text-align: center;">Mantenha sua conta protegida alterando sua senha regularmente.</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in password_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <input type="password" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" style="width: 100%; padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main);">
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p style="color: #ef4444; font-size: 0.8rem; margin-top: 0.5rem;">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" name="change_password" class="btn btn-outline" style="width: 100%; margin-top: 1rem;">Alterar Senha</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .form-group input[type="text"], 
+    .form-group input[type="email"], 
+    .form-group input[type="file"] {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+        background: var(--bg-card);
+        color: var(--text-main);
+        font-family: inherit;
+    }
+    
+    .form-group input[type="file"] {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
