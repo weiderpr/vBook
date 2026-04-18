@@ -311,13 +311,27 @@ nav a:hover {
 .dashboard-container {
     display: flex;
     min-height: 100vh;
-    padding-top: 80px;
 }
 
 .sidebar {
     width: 280px;
+    height: calc(100vh - 45px); /* Adjusted for mini navbar */
+    position: fixed;
+    top: 45px;
+    left: 0;
     border-right: 1px solid var(--glass-border);
     padding: 2rem;
+    overflow-y: auto;
+    background: var(--bg-dark);
+    z-index: 900;
+}
+
+.dashboard-main {
+    flex: 1;
+    margin-left: 280px; /* Space for sidebar */
+    padding: 3rem;
+    padding-top: 5rem; /* Space for top navbar */
+    min-height: 100vh;
 }
 
 .sidebar-menu {

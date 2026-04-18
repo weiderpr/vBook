@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'dashboard_layout.html' %}
 {% load static %}
 
 {% block title %}Meu Perfil - VerticeBook{% endblock %}
 
-{% block content %}
-<div class="auth-wrapper" style="padding: 100px 2rem; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; align-items: start;">
+{% block dashboard_content %}
+<div class="profile-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; align-items: start;">
     
     <!-- Profile Info Card -->
     <div class="glass-card" style="max-width: none;">
@@ -74,17 +74,6 @@
 </div>
 
 <style>
-    .form-group input[type="text"], 
-    .form-group input[type="email"] {
-        width: 100%;
-        padding: 1rem;
-        border-radius: 12px;
-        border: 1px solid var(--glass-border);
-        background: var(--bg-card);
-        color: var(--text-main);
-        font-family: inherit;
-    }
-
     .avatar-upload:hover .avatar-overlay {
         opacity: 1;
     }
@@ -125,7 +114,6 @@
                         if (imgElement) {
                             imgElement.src = e.target.result;
                         } else if (svgElement) {
-                            // Replace SVG icon with a new Image element
                             svgElement.style.display = 'none';
                             const newImg = document.createElement('img');
                             newImg.src = e.target.result;
@@ -134,7 +122,7 @@
                             newImg.style.objectFit = 'cover';
                             container.insertBefore(newImg, container.firstChild);
                         }
-                        container.style.borderColor = '#10b981'; // Green to show change
+                        container.style.borderColor = '#10b981';
                     }
                     reader.readAsDataURL(this.files[0]);
                 }
