@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-18 00:59+0000\n"
+"POT-Creation-Date: 2026-04-19 22:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,135 +19,777 @@ msgstr ""
 
 #: accounts/views.py:31
 msgid "Perfil atualizado com sucesso!"
-msgstr ""
+msgstr "Perfil atualizado com sucesso!"
 
 #: accounts/views.py:39
 msgid "Sua senha foi alterada com sucesso!"
+msgstr "Sua senha foi alterada com sucesso!"
+
+#: properties/forms.py:25
+msgid "Ex: Apartamento em Ipanema"
+msgstr "Ex: Apartamento em Ipanema"
+
+#: properties/forms.py:26
+msgid "Rua, Avenida, etc."
+msgstr "Rua, Avenida, etc."
+
+#: properties/forms.py:27
+msgid "Sua cidade"
+msgstr "Sua cidade"
+
+#: properties/forms.py:28
+msgid "Seu estado"
+msgstr "Seu estado"
+
+#: properties/forms.py:36
+msgid "Opcional: Detalhes sobre este custo"
 msgstr ""
+
+#: properties/forms.py:37
+msgid "Ex: Condomínio, IPTU, Limpeza"
+msgstr ""
+
+#: properties/models.py:10
+msgid "Proprietário"
+msgstr "Proprietário"
+
+#: properties/models.py:12
+msgid "Nome da propriedade"
+msgstr "Nome da propriedade"
+
+#: properties/models.py:13
+msgid "Descrição da propriedade"
+msgstr "Descrição da propriedade"
+
+#: properties/models.py:16
+msgid "Rua"
+msgstr "Rua"
+
+#: properties/models.py:17
+msgid "Número"
+msgstr "Número"
+
+#: properties/models.py:18
+msgid "Complemento"
+msgstr "Complemento"
+
+#: properties/models.py:19
+msgid "Cidade"
+msgstr "Cidade"
+
+#: properties/models.py:20
+msgid "Estado"
+msgstr "Estado"
+
+#: properties/models.py:22
+msgid "Data da aquisição"
+msgstr "Data da aquisição"
+
+#: properties/models.py:26
+msgid "Valor da aquisição"
+msgstr "Valor da aquisição"
+
+#: properties/models.py:32
+msgid "Foto de Capa"
+msgstr "Foto de Capa"
+
+#: properties/models.py:39 properties/models.py:64 reservations/models.py:10
+msgid "Propriedade"
+msgstr "Propriedade"
+
+#: properties/models.py:40 properties/templates/properties/property_list.html:4
+#: templates/dashboard_layout.html:21
+msgid "Propriedades"
+msgstr "Propriedades"
+
+#: properties/models.py:48
+#, fuzzy
+#| msgid "Proprietário"
+msgid "Diário"
+msgstr "Proprietário"
+
+#: properties/models.py:49
+#, fuzzy
+#| msgid "Mensagens"
+msgid "Mensal"
+msgstr "Mensagens"
+
+#: properties/models.py:50
+msgid "Anual"
+msgstr ""
+
+#: properties/models.py:51
+#, fuzzy
+#| msgid "Nova Reserva"
+msgid "Por reserva"
+msgstr "Nova Reserva"
+
+#: properties/models.py:52
+msgid "Único"
+msgstr ""
+
+#: properties/models.py:56
+msgid "Fixo"
+msgstr ""
+
+#: properties/models.py:57
+msgid "Variável"
+msgstr ""
+
+#: properties/models.py:66
+#, fuzzy
+#| msgid "Nome do cliente"
+msgid "Nome do custo"
+msgstr "Nome do cliente"
+
+#: properties/models.py:67
+#: properties/templates/properties/property_settings.html:219
+#, fuzzy
+#| msgid "Valor total"
+msgid "Valor"
+msgstr "Valor total"
+
+#: properties/models.py:72
+msgid "Frequência"
+msgstr ""
+
+#: properties/models.py:78
+#: properties/templates/properties/property_settings.html:217
+msgid "Categoria"
+msgstr ""
+
+#: properties/models.py:80
+msgid "Descrição"
+msgstr ""
+
+#: properties/models.py:85
+#, fuzzy
+#| msgid "Cadastrar Propriedade"
+msgid "Custo da Propriedade"
+msgstr "Cadastrar Propriedade"
+
+#: properties/models.py:86
+#, fuzzy
+#| msgid "Todas as Propriedades"
+msgid "Custos da Propriedade"
+msgstr "Todas as Propriedades"
+
+#: properties/templates/properties/includes/property_sidebar.html:7
+#: reservations/templates/reservations/reservation_confirm_delete.html:12
+msgid "Todas as Propriedades"
+msgstr "Todas as Propriedades"
+
+#: properties/templates/properties/includes/property_sidebar.html:13
+#: reservations/templates/reservations/reservation_confirm_delete.html:18
+msgid "Painel da Unidade"
+msgstr "Painel da Unidade"
+
+#: properties/templates/properties/includes/property_sidebar.html:19
+#: reservations/models.py:28
+#: reservations/templates/reservations/reservation_confirm_delete.html:24
+#: reservations/templates/reservations/reservation_list_v2.html:4
+#: reservations/templates/reservations/reservation_list_v2.html:162
+#: templates/dashboard_layout.html:27
+msgid "Reservas"
+msgstr "Reservas"
+
+#: properties/templates/properties/includes/property_sidebar.html:25
+msgid "Relatórios"
+msgstr "Relatórios"
+
+#: properties/templates/properties/includes/property_sidebar.html:31
+#: properties/templates/properties/property_settings.html:4
+#: properties/templates/properties/property_settings.html:180
+#, fuzzy
+#| msgid "Visualizações"
+msgid "Configurações"
+msgstr "Visualizações"
+
+#: properties/templates/properties/property_confirm_delete.html:4
+msgid "Excluir Propriedade"
+msgstr "Excluir Propriedade"
+
+#: properties/templates/properties/property_confirm_delete.html:13
+msgid "Excluir Propriedade?"
+msgstr "Excluir Propriedade?"
+
+#: properties/templates/properties/property_confirm_delete.html:15
+msgid "Você está prestes a excluir a propriedade"
+msgstr "Você está prestes a excluir a propriedade"
+
+#: properties/templates/properties/property_confirm_delete.html:16
+#: reservations/templates/reservations/reservation_confirm_delete.html:42
+msgid "Esta ação não pode ser desfeita."
+msgstr "Esta ação não pode ser desfeita."
+
+#: properties/templates/properties/property_confirm_delete.html:23
+msgid "Sim, Excluir"
+msgstr "Sim, Excluir"
+
+#: properties/templates/properties/property_confirm_delete.html:26
+#: properties/templates/properties/property_form.html:287
+#: properties/templates/properties/property_form.html:291
+#: properties/templates/properties/property_settings.html:310
+#: reservations/templates/reservations/reservation_confirm_delete.html:48
+#: reservations/templates/reservations/reservation_form.html:154
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#: properties/templates/properties/property_dashboard.html:4
+msgid "Painel de Controle"
+msgstr "Painel de Controle"
+
+#: properties/templates/properties/property_dashboard.html:155
+msgid "Propriedade Ativa"
+msgstr "Propriedade Ativa"
+
+#: properties/templates/properties/property_dashboard.html:169
+msgid "Disponibilidade"
+msgstr "Disponibilidade"
+
+#: properties/templates/properties/property_dashboard.html:170
+msgid "Disponível"
+msgstr "Disponível"
+
+#: properties/templates/properties/property_dashboard.html:173
+msgid "Reservas do Mês"
+msgstr "Reservas do Mês"
+
+#: properties/templates/properties/property_dashboard.html:177
+msgid "Receita Bruta"
+msgstr "Receita Bruta"
+
+#: properties/templates/properties/property_dashboard.html:178
+#: reservations/templates/reservations/reservation_list_v2.html:215
+msgid "R$"
+msgstr "R$"
+
+#: properties/templates/properties/property_dashboard.html:188
+msgid "Calendário de Reservas"
+msgstr "Calendário de Reservas"
+
+#: properties/templates/properties/property_dashboard.html:189
+msgid "Visualize e gerencie a ocupação deste imóvel."
+msgstr "Visualize e gerencie a ocupação deste imóvel."
+
+#: properties/templates/properties/property_dashboard.html:198
+msgid "Dados Cadastrais"
+msgstr "Dados Cadastrais"
+
+#: properties/templates/properties/property_dashboard.html:199
+msgid "Edite as informações e a foto da propriedade."
+msgstr "Edite as informações e a foto da propriedade."
+
+#: properties/templates/properties/property_dashboard.html:207
+msgid "Gestão Financeira"
+msgstr "Gestão Financeira"
+
+#: properties/templates/properties/property_dashboard.html:208
+msgid "Controle receitas e despesas desta unidade."
+msgstr "Controle receitas e despesas desta unidade."
+
+#: properties/templates/properties/property_form.html:6
+msgid "Editar Propriedade"
+msgstr "Editar Propriedade"
+
+#: properties/templates/properties/property_form.html:8
+#: properties/templates/properties/property_form.html:193
+#: properties/templates/properties/property_list.html:152
+msgid "Nova Propriedade"
+msgstr "Nova Propriedade"
+
+#: properties/templates/properties/property_form.html:191
+#: reservations/templates/reservations/reservation_list_v2.html:219
+msgid "Editar"
+msgstr "Editar"
+
+#: properties/templates/properties/property_form.html:196
+msgid "Preencha as informações detalhadas da sua propriedade."
+msgstr "Preencha as informações detalhadas da sua propriedade."
+
+#: properties/templates/properties/property_form.html:211
+msgid "Informações Básicas"
+msgstr "Informações Básicas"
+
+#: properties/templates/properties/property_form.html:235
+msgid "Localização"
+msgstr "Localização"
+
+#: properties/templates/properties/property_form.html:269
+msgid "Dados Financeiros"
+msgstr "Dados Financeiros"
+
+#: properties/templates/properties/property_form.html:296
+#: templates/accounts/profile.html:43
+msgid "Salvar Alterações"
+msgstr "Salvar Alterações"
+
+#: properties/templates/properties/property_form.html:298
+msgid "Cadastrar Propriedade"
+msgstr "Cadastrar Propriedade"
+
+#: properties/templates/properties/property_form.html:309
+#: properties/templates/properties/widgets/clearable_file_input.html:24
+msgid "Clique ou arraste para enviar uma nova foto"
+msgstr "Clique ou arraste para enviar uma nova foto"
+
+#: properties/templates/properties/property_list.html:147
+msgid "Minhas Propriedades"
+msgstr "Minhas Propriedades"
+
+#: properties/templates/properties/property_list.html:148
+msgid "Selecione uma unidade para gerenciar reservas e finanças."
+msgstr "Selecione uma unidade para gerenciar reservas e finanças."
+
+#: properties/templates/properties/property_list.html:186
+msgid "Acessar Painel"
+msgstr "Acessar Painel"
+
+#: properties/templates/properties/property_list.html:188
+msgid "Excluir Unidade"
+msgstr "Excluir Unidade"
+
+#: properties/templates/properties/property_list.html:200
+msgid "Nenhuma propriedade encontrada"
+msgstr "Nenhuma propriedade encontrada"
+
+#: properties/templates/properties/property_list.html:201
+msgid "Comece cadastrando seu primeiro imóvel para gerenciar."
+msgstr "Comece cadastrando seu primeiro imóvel para gerenciar."
+
+#: properties/templates/properties/property_list.html:202
+msgid "Cadastrar Minha Primeira Propriedade"
+msgstr "Cadastrar Minha Primeira Propriedade"
+
+#: properties/templates/properties/property_settings.html:181
+msgid "Estrutura financeira e definições da unidade"
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:189
+msgid "Custos"
+msgstr "Custos"
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:193
+msgid "Geral"
+msgstr "Geral"
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:202
+msgid "Estrutura de Custos"
+msgstr "Estrutura de Custos"
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:203
+msgid "Defina os custos recorrentes para cálculos de lucratividade automática."
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:207
+#: properties/templates/properties/property_settings.html:290
+msgid "Novo Custo"
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:216
+msgid "Custo / Descrição"
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:218
+msgid "Ciclo"
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:220
+#: reservations/templates/reservations/reservation_list_v2.html:183
+msgid "Ações"
+msgstr "Ações"
+
+#: properties/templates/properties/property_settings.html:245
+#, fuzzy
+#| msgid "Excluir"
+msgid "Excluir Custo"
+msgstr "Excluir"
+
+#: properties/templates/properties/property_settings.html:245
+#, fuzzy
+#| msgid "Tem certeza que deseja excluir a reserva de"
+msgid "Tem certeza que deseja remover este custo?"
+msgstr "Tem certeza que deseja excluir a reserva de"
+
+#: properties/templates/properties/property_settings.html:261
+msgid "Nenhum custo cadastrado."
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:262
+msgid ""
+"Comece adicionando despesas fixas ou variáveis para ter um controle "
+"financeiro completo."
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:275
+msgid "Configurações Gerais"
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:277
+msgid ""
+"Esta área permitirá configurar o tipo de precificação dinâmica, regras de "
+"automação para check-in/out e integrações com calendários externos."
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:279
+msgid "Funcionalidade em desenvolvimento para a próxima versão."
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:291
+msgid "Preencha os dados do encargo financeiro."
+msgstr ""
+
+#: properties/templates/properties/property_settings.html:311
+#, fuzzy
+#| msgid "Salvar Reserva"
+msgid "Salvar Custo"
+msgstr "Salvar Reserva"
+
+#: properties/templates/properties/widgets/clearable_file_input.html:6
+msgid "Atual"
+msgstr "Atual"
+
+#: properties/templates/properties/widgets/clearable_file_input.html:9
+msgid "Ver imagem atual"
+msgstr "Ver imagem atual"
+
+#: properties/templates/properties/widgets/clearable_file_input.html:13
+msgid "Remover imagem"
+msgstr "Remover imagem"
+
+#: properties/templates/properties/widgets/clearable_file_input.html:18
+msgid "Alterar imagem:"
+msgstr "Alterar imagem:"
+
+#: properties/views.py:33
+msgid "Janeiro"
+msgstr "Janeiro"
+
+#: properties/views.py:33
+msgid "Fevereiro"
+msgstr "Fevereiro"
+
+#: properties/views.py:33
+msgid "Março"
+msgstr "Março"
+
+#: properties/views.py:33
+msgid "Abril"
+msgstr "Abril"
+
+#: properties/views.py:34
+msgid "Maio"
+msgstr "Maio"
+
+#: properties/views.py:34
+msgid "Junho"
+msgstr "Junho"
+
+#: properties/views.py:34
+msgid "Julho"
+msgstr "Julho"
+
+#: properties/views.py:34
+msgid "Agosto"
+msgstr "Agosto"
+
+#: properties/views.py:35
+msgid "Setembro"
+msgstr "Setembro"
+
+#: properties/views.py:35
+msgid "Outubro"
+msgstr "Outubro"
+
+#: properties/views.py:35
+msgid "Novembro"
+msgstr "Novembro"
+
+#: properties/views.py:35
+msgid "Dezembro"
+msgstr "Dezembro"
+
+#: properties/views.py:61
+msgid "Propriedade cadastrada com sucesso!"
+msgstr "Propriedade cadastrada com sucesso!"
+
+#: properties/views.py:77
+msgid "Propriedade atualizada com sucesso!"
+msgstr "Propriedade atualizada com sucesso!"
+
+#: properties/views.py:90
+msgid "Propriedade removida com sucesso!"
+msgstr "Propriedade removida com sucesso!"
+
+#: properties/views.py:120
+#, fuzzy
+#| msgid "Perfil atualizado com sucesso!"
+msgid "Custo adicionado com sucesso!"
+msgstr "Perfil atualizado com sucesso!"
+
+#: properties/views.py:123
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "Propriedade não encontrada."
+msgstr "Nenhuma propriedade encontrada"
+
+#: properties/views.py:140
+#, fuzzy
+#| msgid "Reserva removida com sucesso!"
+msgid "Custo removido com sucesso!"
+msgstr "Reserva removida com sucesso!"
+
+#: reservations/forms.py:7 reservations/models.py:19
+msgid "Valor total"
+msgstr "Valor total"
+
+#: reservations/forms.py:28
+msgid "A data final não pode ser anterior à data inicial."
+msgstr "A data final não pode ser anterior à data inicial."
+
+#: reservations/forms.py:40
+msgid "Valor inválido."
+msgstr ""
+
+#: reservations/forms.py:45
+msgid "Nome completo do hóspede"
+msgstr "Nome completo do hóspede"
+
+#: reservations/forms.py:46
+msgid "(00) 00000-0000"
+msgstr "(00) 00000-0000"
+
+#: reservations/models.py:12
+msgid "Data inicial"
+msgstr "Data inicial"
+
+#: reservations/models.py:13
+msgid "Data final"
+msgstr "Data final"
+
+#: reservations/models.py:14
+msgid "Nome do cliente"
+msgstr "Nome do cliente"
+
+#: reservations/models.py:15
+msgid "Telefone"
+msgstr "Telefone"
+
+#: reservations/models.py:21
+msgid "Observações"
+msgstr "Observações"
+
+#: reservations/models.py:27
+msgid "Reserva"
+msgstr "Reserva"
+
+#: reservations/templates/reservations/reservation_confirm_delete.html:4
+msgid "Excluir Reserva"
+msgstr "Excluir Reserva"
+
+#: reservations/templates/reservations/reservation_confirm_delete.html:38
+msgid "Excluir Reserva?"
+msgstr "Excluir Reserva?"
+
+#: reservations/templates/reservations/reservation_confirm_delete.html:40
+msgid "Tem certeza que deseja excluir a reserva de"
+msgstr "Tem certeza que deseja excluir a reserva de"
+
+#: reservations/templates/reservations/reservation_confirm_delete.html:51
+msgid "Confirmar Exclusão"
+msgstr "Confirmar Exclusão"
+
+#: reservations/templates/reservations/reservation_form.html:6
+#: reservations/templates/reservations/reservation_form.html:90
+msgid "Editar Reserva"
+msgstr "Editar Reserva"
+
+#: reservations/templates/reservations/reservation_form.html:8
+#: reservations/templates/reservations/reservation_form.html:92
+#: reservations/templates/reservations/reservation_list_v2.html:167
+msgid "Nova Reserva"
+msgstr "Nova Reserva"
+
+#: reservations/templates/reservations/reservation_form.html:158
+msgid "Atualizar Reserva"
+msgstr "Atualizar Reserva"
+
+#: reservations/templates/reservations/reservation_form.html:160
+msgid "Salvar Reserva"
+msgstr "Salvar Reserva"
+
+#: reservations/templates/reservations/reservation_list_v2.html:179
+msgid "Hóspede"
+msgstr "Hóspede"
+
+#: reservations/templates/reservations/reservation_list_v2.html:180
+msgid "Período"
+msgstr "Período"
+
+#: reservations/templates/reservations/reservation_list_v2.html:181
+msgid "Status"
+msgstr "Status"
+
+#: reservations/templates/reservations/reservation_list_v2.html:182
+msgid "Valor Total"
+msgstr "Valor Total"
+
+#: reservations/templates/reservations/reservation_list_v2.html:205
+msgid "Em breve"
+msgstr "Em breve"
+
+#: reservations/templates/reservations/reservation_list_v2.html:207
+msgid "Passada"
+msgstr "Passada"
+
+#: reservations/templates/reservations/reservation_list_v2.html:209
+msgid "No Imóvel"
+msgstr "No Imóvel"
+
+#: reservations/templates/reservations/reservation_list_v2.html:222
+msgid "Excluir"
+msgstr "Excluir"
+
+#: reservations/templates/reservations/reservation_list_v2.html:236
+msgid "Nenhuma reserva encontrada para este imóvel."
+msgstr "Nenhuma reserva encontrada para este imóvel."
+
+#: reservations/templates/reservations/reservation_list_v2.html:237
+msgid "Cadastrar Primeira Reserva"
+msgstr "Cadastrar Primeira Reserva"
+
+#: reservations/views.py:47
+msgid "Reserva cadastrada com sucesso!"
+msgstr "Reserva cadastrada com sucesso!"
+
+#: reservations/views.py:62
+msgid "Reserva atualizada com sucesso!"
+msgstr "Reserva atualizada com sucesso!"
+
+#: reservations/views.py:76
+msgid "Reserva removida com sucesso!"
+msgstr "Reserva removida com sucesso!"
 
 #: templates/accounts/login.html:4 templates/accounts/login.html:9
 #: templates/accounts/login.html:21 templates/accounts/register.html:24
-#: templates/base.html:84
+#: templates/base.html:110
 msgid "Entrar"
 msgstr "Entrar"
 
 #: templates/accounts/login.html:24
 msgid "Não tem uma conta?"
-msgstr ""
+msgstr "Não tem uma conta?"
 
 #: templates/accounts/login.html:24
-#, fuzzy
-#| msgid "Registrar"
 msgid "Registre-se"
-msgstr "Registrar"
+msgstr "Registre-se"
 
-#: templates/accounts/profile.html:3 templates/dashboard_layout.html:34
+#: templates/accounts/profile.html:4
 msgid "Meu Perfil"
 msgstr "Meu Perfil"
 
-#: templates/accounts/profile.html:10
+#: templates/accounts/profile.html:11
 msgid "Dados Pessoais"
-msgstr ""
+msgstr "Dados Pessoais"
 
-#: templates/accounts/profile.html:26
-#, fuzzy
-#| msgid "Meu Perfil"
+#: templates/accounts/profile.html:21
 msgid "Foto de Perfil"
-msgstr "Meu Perfil"
+msgstr "Foto de Perfil"
 
-#: templates/accounts/profile.html:38
+#: templates/accounts/profile.html:33
 msgid "Nome Completo"
-msgstr ""
+msgstr "Nome Completo"
 
-#: templates/accounts/profile.html:48
-msgid "Salvar Alterações"
-msgstr ""
-
-#: templates/accounts/profile.html:55
+#: templates/accounts/profile.html:50
 msgid "Segurança"
-msgstr ""
+msgstr "Segurança"
 
-#: templates/accounts/profile.html:59
+#: templates/accounts/profile.html:54
 msgid "Mantenha sua conta protegida alterando sua senha regularmente."
-msgstr ""
+msgstr "Mantenha sua conta protegida alterando sua senha regularmente."
 
-#: templates/accounts/profile.html:74
+#: templates/accounts/profile.html:69
 msgid "Alterar Senha"
-msgstr ""
+msgstr "Alterar Senha"
 
 #: templates/accounts/register.html:4 templates/accounts/register.html:21
-#: templates/base.html:85
+#: templates/base.html:111
 msgid "Registrar"
 msgstr "Registrar"
 
 #: templates/accounts/register.html:9
 msgid "Criar Conta"
-msgstr ""
+msgstr "Criar Conta"
 
 #: templates/accounts/register.html:24
 msgid "Já tem uma conta?"
-msgstr ""
+msgstr "Já tem uma conta?"
 
-#: templates/base.html:74
+#: templates/base.html:58
+msgid "en"
+msgstr "pt-br"
+
+#: templates/base.html:100
 msgid "Perfil"
 msgstr "Perfil"
 
-#: templates/base.html:79 templates/dashboard_layout.html:40
+#: templates/base.html:105
 msgid "Sair"
 msgstr "Sair"
 
 #: templates/core/dashboard.html:9
 msgid "Olá"
-msgstr ""
+msgstr "Olá"
 
 #: templates/core/dashboard.html:10
 msgid "Bem-vindo de volta ao seu painel."
-msgstr ""
+msgstr "Bem-vindo de volta ao seu painel."
 
 #: templates/core/dashboard.html:13
 msgid "Nova Postagem"
-msgstr ""
+msgstr "Nova Postagem"
 
 #: templates/core/dashboard.html:19
 msgid "Conexões"
-msgstr ""
+msgstr "Conexões"
 
 #: templates/core/dashboard.html:21
 msgid "esta semana"
-msgstr ""
+msgstr "esta semana"
 
 #: templates/core/dashboard.html:24
 msgid "Visualizações"
-msgstr ""
+msgstr "Visualizações"
 
 #: templates/core/dashboard.html:29
 msgid "Mensagens"
-msgstr ""
+msgstr "Mensagens"
 
 #: templates/core/dashboard.html:31
 msgid "novas"
-msgstr ""
+msgstr "novas"
 
 #: templates/core/dashboard.html:36
 msgid "Atividade Recente"
-msgstr ""
+msgstr "Atividade Recente"
 
 #: templates/core/dashboard.html:38
 msgid "Nenhuma atividade recente para mostrar."
-msgstr ""
+msgstr "Nenhuma atividade recente para mostrar."
 
-#: templates/dashboard_layout.html:13
+#: templates/dashboard_layout.html:14
 msgid "Visão Geral"
 msgstr "Visão Geral"
 
-#: templates/dashboard_layout.html:19
-msgid "Propriedades"
-msgstr "Propriedades"
+#: templates/dashboard_layout.html:17
+msgid "Gestão"
+msgstr "Gestão"
 
-#: templates/dashboard_layout.html:25
-msgid "Reservas"
-msgstr "Reservas"
+#~ msgid "R$ 0,00"
+#~ msgstr "R$ 0,00"
 
-#: templates/dashboard_layout.html:29
-msgid "Usuário"
-msgstr "Usuário"
+#~ msgid "Gerencie as estadias e pagamentos dos seus hóspedes."
+#~ msgstr "Gerencie as estadias e pagamentos dos seus hóspedes."

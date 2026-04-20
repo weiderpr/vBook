@@ -1,0 +1,884 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static humanize l10n %}
+
+{% block title %}{% trans "Custos" %} - {{ property.name }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Tabs Style */
+    .settings-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        padding-bottom: 0px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 6px;
+        border-radius: 14px;
+        border: 1px solid var(--glass-border);
+        width: fit-content;
+    }
+    
+    .tab-link {
+        padding: 0.6rem 1.2rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 10px;
+        transition: all 0.3s;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    
+    .tab-link.active {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+    
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .tab-content.active {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Costs Table */
+    .costs-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .costs-table th {
+        text-align: left;
+        padding: 1rem;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .costs-table td {
+        padding: 1.2rem 1rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .costs-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .cost-name {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    
+    .badge {
+        padding: 4px 10px;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .action-btns {
+        display: flex;
+        gap: 0.8rem;
+        justify-content: flex-end;
+    }
+    
+    .btn-action-small {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: all 0.2s;
+        cursor: pointer;
+        border: 1px solid transparent;
+    }
+    
+    .btn-edit-small {
+        background: rgba(99, 102, 241, 0.05);
+        border-color: rgba(99, 102, 241, 0.1);
+        color: var(--primary);
+    }
+    
+    .btn-edit-small:hover {
+        background: var(--primary);
+        color: white;
+        transform: scale(1.1);
+    }
+    
+    .btn-delete-small {
+        background: rgba(239, 68, 68, 0.05);
+        border-color: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+    }
+    
+    .btn-delete-small:hover {
+        background: #ef4444;
+        color: white;
+        transform: scale(1.1);
+    }
+    
+    /* Modal Style */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+    }
+    
+    .modal-content {
+        background: var(--bg-dark);
+        padding: 2rem;
+        border-radius: 28px;
+        border: 1px solid var(--glass-border);
+        width: 100%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+    }
+    
+    @keyframes modalIn {
+        from { opacity: 0; transform: scale(0.95) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+        background: var(--bg-card);
+        color: var(--text-main);
+        font-size: 1rem;
+        font-family: inherit;
+        transition: border 0.3s;
+    }
+
+    .form-group select:focus, .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+
+    .history-input {
+        padding: 0.8rem 1rem 0.8rem 42px !important;
+        height: 48px;
+        font-size: 1.05rem !important;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 10px !important;
+        width: 100%;
+        min-width: 150px;
+        transition: all 0.3s;
+    }
+
+    .history-input:focus {
+        border-color: var(--primary) !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='settings' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="settings-container">
+    <div class="dashboard-header" style="margin-bottom: 2.5rem;">
+        <div>
+            <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{% trans "Custos" %}</h1>
+            <p style="color: var(--text-muted); font-size: 1rem;">{% trans "Estrutura financeira e definições da unidade" %} <span style="color: var(--primary); font-weight: 600;">{{ property.name }}</span></p>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="settings-tabs">
+        <div class="tab-link active" onclick="openTab('costs_booking')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            {% trans "Custos por reserva" %}
+        </div>
+        <div class="tab-link" onclick="openTab('costs_monthly')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            {% trans "Custos mensais" %}
+        </div>
+        <div class="tab-link" onclick="openTab('costs_yearly')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            {% trans "Custos Anuais" %}
+        </div>
+        <div class="tab-link" onclick="openTab('costs_history')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+            {% trans "Resultado por mês" %}
+        </div>
+        <div class="tab-link" onclick="openTab('results_yearly')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><line x1="12" y1="20" y2="10"/><line x1="18" y1="20" y2="4"/><line x1="6" y1="20" y2="16"/></svg>
+            {% trans "Resultado por ano" %}
+        </div>
+    </div>
+
+    <!-- Costs Per Booking Tab -->
+    <div id="costs_booking" class="tab-content active">
+        <div class="glass-card" style="max-width: 100%; padding: 2.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+                <div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">{% trans "Custos por reserva" %}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Custos variáveis aplicados a cada nova reserva." %}</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleModal(true, 'per_booking')" style="display: inline-flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                    <span style="line-height: normal; display: block;">{% trans "Novo Custo" %}</span>
+                </button>
+            </div>
+
+            {% if costs_booking %}
+                <div style="overflow-x: auto; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <table class="costs-table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Custo / Período" %}</th>
+                                <th>{% trans "Valor" %}</th>
+                                <th style="text-align: right; padding-right: 1.5rem;">{% trans "Ações" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cost in costs_booking %}
+                                <tr>
+                                    <td>
+                                        <div class="cost-name">{{ cost.name }}</div>
+                                        <div style="display: flex; gap: 8px; margin-top: 6px;">
+                                            {% if cost.get_period_display %}
+                                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                                    {{ cost.get_period_display }}
+                                                </span>
+                                            {% endif %}
+                                            {% if cost.recipient != 'none' %}
+                                                <span style="font-size: 0.7rem; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 6px; border: 1px solid var(--glass-border); display: inline-flex; align-items: center;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                                    {{ cost.get_recipient_display }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                        {% if cost.description %}
+                                            <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 6px; font-weight: 400; opacity: 0.8;">{{ cost.description }}</div>
+                                        {% endif %}
+                                    </td>
+                                    <td style="font-weight: 700; color: var(--text-main); font-size: 1.05rem;">
+                                        {% if cost.amount_type == 'fixed' %}
+                                            <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 2px;">R$</span>{{ cost.amount|floatformat:2|localize }}
+                                        {% else %}
+                                            {{ cost.amount|floatformat:1|localize }}<span style="font-size: 0.95rem; color: var(--primary); margin-left: 1px;">%</span>
+                                        {% endif %}
+                                    </td>
+                                    <td style="padding-right: 1.5rem;">
+                                        <div class="action-btns">
+                                            <button type="button" class="btn-action-small btn-edit-small" title="{% trans 'Editar Custo' %}"
+                                                onclick="openEditModal({
+                                                    id: '{{ cost.pk }}',
+                                                    name: '{{ cost.name|escapejs }}',
+                                                    description: '{{ cost.description|escapejs }}',
+                                                    amount: '{{ cost.amount|unlocalize }}',
+                                                    amount_type: '{{ cost.amount_type }}',
+                                                    recipient: '{{ cost.recipient }}',
+                                                    frequency: '{{ cost.frequency }}'
+                                                })">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                            </button>
+                                            <form action="{% url 'properties:cost_delete' cost.pk %}" method="post" style="display: inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn-action-small btn-delete-small delete-confirm-btn" title="{% trans 'Excluir Custo' %}" data-confirm="{% trans 'Tem certeza que deseja excluir este custo?' %}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div style="text-align: center; padding: 4rem 2rem; background: rgba(255,255,255,0.01); border-radius: 20px; border: 1px dashed var(--glass-border);">
+                    <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.3; color: var(--text-muted);"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">{% trans "Nenhum custo por reserva." %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Costs Monthly Tab -->
+    <div id="costs_monthly" class="tab-content">
+        <div class="glass-card" style="max-width: 100%; padding: 2.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+                <div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">{% trans "Custos mensais" %}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Despesas fixas recorrentes mensalmente (ex: Condomínio, IPTU)." %}</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleModal(true, 'monthly')" style="display: inline-flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                    <span style="line-height: normal; display: block;">{% trans "Novo Custo" %}</span>
+                </button>
+            </div>
+
+            {% if costs_monthly %}
+                <div style="overflow-x: auto; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <table class="costs-table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Custo / Período" %}</th>
+                                <th>{% trans "Valor" %}</th>
+                                <th style="text-align: right; padding-right: 1.5rem;">{% trans "Ações" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cost in costs_monthly %}
+                                <tr>
+                                    <td>
+                                        <div class="cost-name">{{ cost.name }}</div>
+                                        <div style="display: flex; gap: 8px; margin-top: 6px;">
+                                            {% if cost.get_period_display %}
+                                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                                    {{ cost.get_period_display }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                        {% if cost.description %}
+                                            <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 6px; font-weight: 400; opacity: 0.8;">{{ cost.description }}</div>
+                                        {% endif %}
+                                    </td>
+                                    <td style="font-weight: 700; color: var(--text-main); font-size: 1.05rem;">
+                                        {% if cost.amount_type == 'fixed' %}
+                                            <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 2px;">R$</span>{{ cost.amount|floatformat:2|localize }}
+                                        {% else %}
+                                            {{ cost.amount|floatformat:1|localize }}<span style="font-size: 0.95rem; color: var(--primary); margin-left: 1px;">%</span>
+                                        {% endif %}
+                                    </td>
+                                    <td style="padding-right: 1.5rem;">
+                                        <div class="action-btns">
+                                            <button type="button" class="btn-action-small btn-edit-small" title="{% trans 'Editar Custo' %}"
+                                                onclick="openEditModal({
+                                                    id: '{{ cost.pk }}',
+                                                    name: '{{ cost.name|escapejs }}',
+                                                    description: '{{ cost.description|escapejs }}',
+                                                    amount: '{{ cost.amount|unlocalize }}',
+                                                    amount_type: '{{ cost.amount_type }}',
+                                                    recipient: '{{ cost.recipient }}',
+                                                    frequency: '{{ cost.frequency }}',
+                                                    month: '{{ cost.month|unlocalize }}',
+                                                    year: '{{ cost.year|unlocalize }}'
+                                                })">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                            </button>
+                                            <form action="{% url 'properties:cost_delete' cost.pk %}" method="post" style="display: inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn-action-small btn-delete-small delete-confirm-btn" title="{% trans 'Excluir Custo' %}" data-confirm="{% trans 'Tem certeza que deseja excluir este custo?' %}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div style="text-align: center; padding: 4rem 2rem; background: rgba(255,255,255,0.01); border-radius: 20px; border: 1px dashed var(--glass-border);">
+                    <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.3; color: var(--text-muted);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">{% trans "Nenhum custo mensal cadastrado." %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Costs Yearly Tab -->
+    <div id="costs_yearly" class="tab-content">
+        <div class="glass-card" style="max-width: 100%; padding: 2.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+                <div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">{% trans "Custos Anuais" %}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Encargos anuais (ex: Taxas de Licenciamento, Seguros)." %}</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleModal(true, 'yearly')" style="display: inline-flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                    <span style="line-height: normal; display: block;">{% trans "Novo Custo" %}</span>
+                </button>
+            </div>
+
+            {% if costs_yearly %}
+                <div style="overflow-x: auto; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <table class="costs-table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Custo / Ano" %}</th>
+                                <th>{% trans "Valor" %}</th>
+                                <th style="text-align: right; padding-right: 1.5rem;">{% trans "Ações" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cost in costs_yearly %}
+                                <tr>
+                                    <td>
+                                        <div class="cost-name">{{ cost.name }}</div>
+                                        <div style="display: flex; gap: 8px; margin-top: 6px;">
+                                            {% if cost.get_period_display %}
+                                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                                    {{ cost.get_period_display }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                        {% if cost.description %}
+                                            <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 6px; font-weight: 400; opacity: 0.8;">{{ cost.description }}</div>
+                                        {% endif %}
+                                    </td>
+                                    <td style="font-weight: 700; color: var(--text-main); font-size: 1.05rem;">
+                                        {% if cost.amount_type == 'fixed' %}
+                                            <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 2px;">R$</span>{{ cost.amount|floatformat:2|localize }}
+                                        {% else %}
+                                            {{ cost.amount|floatformat:1|localize }}<span style="font-size: 0.95rem; color: var(--primary); margin-left: 1px;">%</span>
+                                        {% endif %}
+                                    </td>
+                                    <td style="padding-right: 1.5rem;">
+                                        <div class="action-btns">
+                                            <button type="button" class="btn-action-small btn-edit-small" title="{% trans 'Editar Custo' %}"
+                                                onclick="openEditModal({
+                                                    id: '{{ cost.pk }}',
+                                                    name: '{{ cost.name|escapejs }}',
+                                                    description: '{{ cost.description|escapejs }}',
+                                                    amount: '{{ cost.amount|unlocalize }}',
+                                                    amount_type: '{{ cost.amount_type }}',
+                                                    recipient: '{{ cost.recipient }}',
+                                                    frequency: '{{ cost.frequency }}',
+                                                    year: '{{ cost.year|unlocalize }}'
+                                                })">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                            </button>
+                                            <form action="{% url 'properties:cost_delete' cost.pk %}" method="post" style="display: inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn-action-small btn-delete-small delete-confirm-btn" title="{% trans 'Excluir Custo' %}" data-confirm="{% trans 'Tem certeza que deseja excluir este custo?' %}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div style="text-align: center; padding: 4rem 2rem; background: rgba(255,255,255,0.01); border-radius: 20px; border: 1px dashed var(--glass-border);">
+                    <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.3; color: var(--text-muted);"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">{% trans "Nenhum custo anual cadastrado." %}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Financial History Tab -->
+    <div id="costs_history" class="tab-content">
+        <div class="glass-card" style="max-width: 100%; padding: 2.5rem;">
+            <form action="{% url 'properties:history_save' property.pk %}" method="post">
+                {% csrf_token %}
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+                    <div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">{% trans "Resultado por mês" %}</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Acompanhamento mensal de faturamento e custos. Meses com reservas são bloqueados para edição manual." %}</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        <span>{% trans "Salvar Histórico" %}</span>
+                    </button>
+                </div>
+
+                <div style="overflow-x: auto; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <table class="costs-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">{% trans "Mês / Ano" %}</th>
+                                <th style="width: 20%;">{% trans "Valor Bruto" %}</th>
+                                <th style="width: 20%;">{% trans "Custos" %}</th>
+                                <th style="width: 20%;">{% trans "Valor Líquido" %}</th>
+                                <th style="width: 15%;">{% trans "% de Margem" %}</th>
+                                <th style="width: 5%; text-align: center;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in financial_structure %}
+                                <tr {% if item.is_locked %}style="background: rgba(255,255,255,0.015); opacity: 0.85;" title="{% trans 'Dados obtidos via sistema (Reservas)' %}"{% endif %}>
+                                    <td style="font-weight: 600; color: var(--text-main);">
+                                        {{ item.month_name }} {{ item.year }}
+                                        <input type="hidden" name="history_month[]" value="{{ item.month|unlocalize }}">
+                                        <input type="hidden" name="history_year[]" value="{{ item.year|unlocalize }}">
+                                    </td>
+                                    <td>
+                                        <div style="position: relative; display: flex; align-items: center;">
+                                            <span style="position: absolute; left: 12px; font-size: 0.85rem; color: var(--text-muted); opacity: 0.6; pointer-events: none;">R$</span>
+                                            <input type="text" name="history_gross[]" class="form-control history-input currency-mask" 
+                                                   value="{{ item.gross|floatformat:2|localize }}" 
+                                                   {% if item.is_locked %}readonly style="background: transparent; border-color: transparent; padding-left: 32px;"{% else %}style="padding-left: 32px;"{% endif %}
+                                                   oninput="calcHistoryNet(this.closest('tr'))">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="position: relative; display: flex; align-items: center;">
+                                            <span style="position: absolute; left: 12px; font-size: 0.85rem; color: var(--text-muted); opacity: 0.6; pointer-events: none;">R$</span>
+                                            <input type="text" name="history_costs[]" class="form-control history-input currency-mask" 
+                                                   value="{{ item.costs|floatformat:2|localize }}" 
+                                                   {% if item.is_locked %}readonly style="background: transparent; border-color: transparent; padding-left: 32px;"{% else %}style="padding-left: 32px;"{% endif %}
+                                                   oninput="calcHistoryNet(this.closest('tr'))">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight: 700; font-size: 1rem; color: {% if item.net >= 0 %}var(--success){% else %}var(--danger){% endif %}; padding-left: 4px;">
+                                            <span style="font-size: 0.85rem; opacity: 0.8; margin-right: 2px;">R$</span>
+                                            <span class="history-net-display">{{ item.net|floatformat:2|localize }}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight: 600; font-size: 0.95rem; color: var(--text-muted);">
+                                            <span class="history-margin-display">{{ item.margin|floatformat:1 }}</span>%
+                                        </div>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {% if item.is_locked %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); opacity: 0.5;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Yearly Results Tab -->
+    <div id="results_yearly" class="tab-content">
+        <div class="glass-card" style="max-width: 100%; padding: 2.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+                <div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">{% trans "Resultado por ano" %}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Consolidado anual de faturamento e rentabilidade bruta/líquida." %}</p>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--glass-border);">
+                <table class="costs-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">{% trans "Ano" %}</th>
+                            <th style="width: 20%;">{% trans "Valor Bruto" %}</th>
+                            <th style="width: 20%;">{% trans "Custos" %}</th>
+                            <th style="width: 20%;">{% trans "Valor Líquido" %}</th>
+                            <th style="width: 20%;">{% trans "% de Margem" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in yearly_structure %}
+                            <tr>
+                                <td style="font-weight: 700; color: var(--primary);">
+                                    {{ item.year }}
+                                </td>
+                                <td>
+                                    <div style="font-weight: 600;">
+                                        <span style="font-size: 0.85rem; opacity: 0.6; margin-right: 2px;">R$</span>
+                                        {{ item.gross|floatformat:2|localize }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 600;">
+                                        <span style="font-size: 0.85rem; opacity: 0.6; margin-right: 2px;">R$</span>
+                                        {{ item.costs|floatformat:2|localize }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 700; font-size: 1rem; color: {% if item.net >= 0 %}var(--success){% else %}var(--danger){% endif %};">
+                                        <span style="font-size: 0.85rem; opacity: 0.8; margin-right: 2px;">R$</span>
+                                        {{ item.net|floatformat:2|localize }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 600; font-size: 0.95rem; color: var(--text-muted);">
+                                        {{ item.margin|floatformat:1 }}%
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cost Modal -->
+<div id="costModal" class="modal">
+    <div class="modal-content">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.5rem;">
+            <div>
+                <h3 id="modalTitle" style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.2rem;">{% trans "Novo Custo" %}</h3>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Preencha os dados do encargo financeiro." %}</p>
+                            </div>
+                            <span style="cursor: pointer; padding: 8px; background: var(--bg-card); border-radius: 10px; color: var(--text-muted);" onclick="toggleModal(false);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                            </span>
+                        </div>
+                        
+                        <form id="costForm" action="{% url 'properties:cost_create' property.pk %}" method="post">
+            {% csrf_token %}
+            {% for field in cost_form %}
+                <div class="form-group form-group-{{ field.name }}" style="margin-bottom: 1.5rem; {% if field.name == 'month' or field.name == 'year' %}display: none;{% endif %}">
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.6rem;">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px; font-weight: 500;">{{ field.errors.0 }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem;">
+                <button type="button" class="btn btn-outline" style="padding: 1rem;" onclick="toggleModal(false)">{% trans "Cancelar" %}</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="padding: 1rem;">{% trans "Salvar Custo" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openTab(tabName) {
+        // Hide all contents
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Remove active class from buttons
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        
+        // Show selected tab
+        const targetTab = document.getElementById(tabName);
+        if (targetTab) {
+            targetTab.classList.add('active');
+            // Find the button and activate it
+            document.querySelectorAll('.tab-link').forEach(link => {
+                if (link.getAttribute('onclick').includes(tabName)) {
+                    link.classList.add('active');
+                }
+            });
+            // Persist the state
+            sessionStorage.setItem('active_cost_tab_' + '{{ property.pk }}', tabName);
+        }
+    }
+
+    function calcHistoryNet(row) {
+        const grossInput = row.querySelector('input[name="history_gross[]"]');
+        const costsInput = row.querySelector('input[name="history_costs[]"]');
+        const netDisplay = row.querySelector('.history-net-display');
+        const marginDisplay = row.querySelector('.history-margin-display');
+        
+        function parseVal(val) {
+            if (!val) return 0;
+            // Remove everything except digits and comma
+            let clean = val.replace(/[^\d,]/g, '').replace(',', '.');
+            return parseFloat(clean) || 0;
+        }
+        
+        const gross = parseVal(grossInput.value);
+        const costs = parseVal(costsInput.value);
+        const net = gross - costs;
+        const margin = gross > 0 ? (net / gross * 100) : 0;
+        
+        // Format for display
+        if (netDisplay) {
+            netDisplay.innerText = net.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            // Update color
+            const colorContainer = netDisplay.parentElement;
+            if (net >= 0) {
+                colorContainer.style.color = 'var(--success)';
+            } else {
+                colorContainer.style.color = 'var(--danger)';
+            }
+        }
+        
+        if (marginDisplay) {
+            marginDisplay.innerText = margin.toFixed(1);
+        }
+    }
+
+    function toggleModal(show, frequency = null) {
+        const modal = document.getElementById('costModal');
+        const form = document.getElementById('costForm');
+        const title = document.getElementById('modalTitle');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        modal.style.display = show ? 'flex' : 'none';
+        
+        if(show) {
+            // Reset form for "New" mode if frequency is provided (which implies a "New" action from a tab button)
+            if (frequency) {
+                form.reset();
+                form.action = "{% url 'properties:cost_create' property.pk %}";
+                title.textContent = "{% trans "Novo Custo" %}";
+                submitBtn.textContent = "{% trans "Salvar Custo" %}";
+                
+                const frequencySelect = form.querySelector('select[name="frequency"]');
+                frequencySelect.value = frequency;
+                frequencySelect.disabled = true;
+            }
+
+            // Update fields visibility based on frequency
+            updateFormFields();
+            
+            // Focus on first input
+            setTimeout(() => {
+                const firstInput = modal.querySelector('input:not([type="hidden"])');
+                if(firstInput) firstInput.focus();
+            }, 100);
+            
+            modal.onclick = function(event) {
+                if (event.target == modal) {
+                    toggleModal(false);
+                }
+            }
+        }
+    }
+
+    function openEditModal(data) {
+        const modal = document.getElementById('costModal');
+        const form = document.getElementById('costForm');
+        const title = document.getElementById('modalTitle');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // Reset and populate
+        form.reset();
+        
+        // Dynamic URL for editing
+        let editUrl = "{% url 'properties:cost_update' 0 %}".replace('0', data.id);
+        form.action = editUrl;
+        
+        title.textContent = "{% trans "Editar Custo" %}";
+        submitBtn.textContent = "{% trans "Atualizar Custo" %}";
+        
+        // Populate fields
+        form.querySelector('input[name="name"]').value = data.name;
+        form.querySelector('textarea[name="description"]').value = data.description || '';
+        form.querySelector('input[name="amount"]').value = data.amount;
+        form.querySelector('select[name="amount_type"]').value = data.amount_type;
+        form.querySelector('select[name="recipient"]').value = data.recipient;
+        
+        const frequencySelect = form.querySelector('select[name="frequency"]');
+        frequencySelect.value = data.frequency;
+        frequencySelect.disabled = true;
+        
+        if (data.month) form.querySelector('[name="month"]').value = data.month;
+        if (data.year) form.querySelector('[name="year"]').value = data.year;
+        
+        updateFormFields();
+        toggleModal(true);
+    }
+
+    function updateFormFields() {
+        const modal = document.getElementById('costModal');
+        if (!modal) return;
+        
+        const frequency = modal.querySelector('select[name="frequency"]').value;
+        const monthGroup = modal.querySelector('.form-group-month');
+        const yearGroup = modal.querySelector('.form-group-year');
+        
+        if (frequency === 'monthly') {
+            monthGroup.style.display = 'block';
+            yearGroup.style.display = 'block';
+        } else if (frequency === 'yearly') {
+            monthGroup.style.display = 'none';
+            yearGroup.style.display = 'block';
+        } else {
+            monthGroup.style.display = 'none';
+            yearGroup.style.display = 'none';
+        }
+    }
+
+    // Add event listener to frequency select and confirm buttons
+    document.addEventListener('DOMContentLoaded', function() {
+        // Restore active tab
+        const savedTab = sessionStorage.getItem('active_cost_tab_' + '{{ property.pk }}');
+        if (savedTab) {
+            openTab(savedTab);
+        }
+
+        const frequencySelect = document.querySelector('select[name="frequency"]');
+        if (frequencySelect) {
+            frequencySelect.addEventListener('change', updateFormFields);
+        }
+
+        // Re-enable disabled fields before form submission
+        const costForm = document.querySelector('#costModal form');
+        if (costForm) {
+            costForm.addEventListener('submit', function() {
+                const disabled = this.querySelectorAll(':disabled');
+                disabled.forEach(field => {
+                    field.disabled = false;
+                });
+            });
+        }
+
+        // Global delete confirmation
+        document.querySelectorAll('.delete-confirm-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const message = this.getAttribute('data-confirm');
+                if (!confirm(message)) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Masks for history inputs
+        const historyInputs = document.querySelectorAll('.history-input');
+        historyInputs.forEach(input => {
+            VMasker(input).maskMoney({
+                precision: 2,
+                separator: ',',
+                delimiter: '.',
+                unit: ''
+            });
+        });
+    });
+
+    // Escape to close modal
+    document.onkeydown = function(evt) {
+        evt = evt || window.event;
+        if (evt.keyCode == 27) {
+            toggleModal(false);
+        }
+    };
+</script>
+{% endblock %}

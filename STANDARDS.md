@@ -21,9 +21,17 @@ Sempre que um novo componente for criado ou um texto alterado:
 2. Traduzir as novas entradas nos arquivos `.po` em `locale/`.
 3. Executar: `python manage.py compilemessages`
 
-## 4. UI e UX
+## 4. Notificações e Mensagens
+O sistema utiliza um padrão global de **Toast Notifications** (notificações flutuantes) no canto superior direito.
+
+- **Backend:** Utilize o sistema de mensagens do Django (`messages.success`, `messages.error`, etc.). O sistema global em `base.html` detectará e exibirá estas mensagens automaticamente como toasts.
+- **Frontend (JavaScript):** Utilize a função global `showToast(mensagem, tipo)` onde `tipo` pode ser `'success'`, `'error'`, `'warning'` ou `'info'`.
+- **Limpeza:** Nunca inclua blocos `{% if messages %}` em templates individuais de visualização.
+
+## 5. UI e UX
 - Novos seletores ou botões devem estar próximos aos ícones globais (Tema e Idioma) se forem configurações de sistema.
 - Elementos de interface devem ser flexíveis para suportar palavras de comprimentos diferentes (ex: "Sair" vs "Logout").
+- Utilize preferencialmente a biblioteca de ícones Lucide (SVG) para consistência visual.
 
 ---
 **Esta regra é mandatória.** O não cumprimento invalida o componente para integração na branch principal.

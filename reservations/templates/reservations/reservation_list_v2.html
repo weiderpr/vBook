@@ -1,0 +1,242 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static l10n %}
+
+{% block title %}{% trans "Reservas" %} - {{ property.name }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .reservations-container {
+        padding-top: 2rem;
+        width: 100%;
+    }
+
+    .table-wrapper {
+        width: 100% !important;
+        max-width: none !important;
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--glass-shadow);
+    }
+    
+    .professional-table {
+        width: 100% !important;
+        border-collapse: collapse;
+        text-align: left;
+    }
+    
+    .professional-table thead {
+        background: rgba(255, 255, 255, 0.03);
+    }
+    
+    .professional-table th {
+        padding: 1.2rem 1.5rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .professional-table td {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--glass-border);
+        vertical-align: middle;
+        transition: all 0.2s;
+    }
+    
+    .professional-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .professional-table tbody tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+    }
+    
+    .client-cell {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .client-cell .name {
+        font-weight: 600;
+        color: var(--text-main);
+    }
+    
+    .client-cell .phone {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+    
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .status-upcoming {
+        background: rgba(99, 102, 241, 0.15);
+        color: #818cf8;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    
+    .status-active {
+        background: rgba(34, 197, 94, 0.15);
+        color: #4ade80;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+    
+    .status-past {
+        background: rgba(148, 163, 184, 0.1);
+        color: var(--text-muted);
+        border: 1px solid var(--glass-border);
+    }
+    
+    .value-text {
+        font-family: 'Monaco', 'Consolas', monospace;
+        font-weight: 600;
+        color: var(--primary);
+    }
+
+    .period-text {
+        color: var(--text-main);
+        font-size: 0.85rem;
+    }
+
+    .actions-group {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+    
+    .btn-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: var(--text-muted);
+        transition: all 0.2s;
+    }
+    
+    .btn-icon:hover {
+        background: var(--glass-border);
+        color: var(--text-main);
+    }
+    
+    .btn-icon.delete:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .property-mini-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='reservations' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="reservations-container">
+    <div class="property-mini-header">
+        <div>
+            <h1 style="margin: 0; font-size: 1.8rem;">{% trans "Reservas" %}</h1>
+            <p style="color: var(--text-muted); margin: 4px 0 0;">{{ property.name }}</p>
+        </div>
+        <a href="{% url 'reservations:create' property.pk %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            {% trans "Nova Reserva" %}
+        </a>
+    </div>
+
+    
+
+
+    <div class="table-wrapper">
+        {% if reservations %}
+        <table class="professional-table">
+            <thead>
+                <tr>
+                    <th>{% trans "Hóspede" %}</th>
+                    <th>{% trans "Período" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Valor Total" %}</th>
+                    <th style="text-align: right;">{% trans "Ações" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% now "Y-m-d" as today_str %}
+                {% for res in reservations %}
+                <tr>
+                    <td>
+                        <div class="client-cell">
+                            <span class="name">{{ res.client_name }}</span>
+                            <span class="phone">{{ res.client_phone }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="period-text">
+                            {{ res.start_date|date:"SHORT_DATE_FORMAT" }} <span style="opacity: 0.4;">➔</span> {{ res.end_date|date:"SHORT_DATE_FORMAT" }}
+                        </div>
+                    </td>
+                    <td>
+                        {% with res.start_date|date:"Y-m-d" as start_str %}
+                        {% with res.end_date|date:"Y-m-d" as end_str %}
+                            {% if today_str < start_str %}
+                                <span class="status-badge status-upcoming">{% trans "Em breve" %}</span>
+                            {% elif today_str > end_str %}
+                                <span class="status-badge status-past">{% trans "Passada" %}</span>
+                            {% else %}
+                                <span class="status-badge status-active">{% trans "No Imóvel" %}</span>
+                            {% endif %}
+                        {% endwith %}
+                        {% endwith %}
+                    </td>
+                    <td>
+                        <span class="value-text">{% trans "R$" %} {{ res.total_value|localize }}</span>
+                    </td>
+                    <td>
+                        <div class="actions-group">
+                            <a href="{% url 'reservations:update' property.pk res.pk %}" class="btn-icon" title="{% trans 'Editar' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                            </a>
+                            <a href="{% url 'reservations:delete' property.pk res.pk %}" class="btn-icon delete" title="{% trans 'Excluir' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div style="text-align: center; padding: 5rem 2rem;">
+            <div style="width: 64px; height: 64px; background: rgba(255, 255, 255, 0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--text-muted);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">{% trans "Nenhuma reserva encontrada para este imóvel." %}</p>
+            <a href="{% url 'reservations:create' property.pk %}" class="btn btn-primary">{% trans "Cadastrar Primeira Reserva" %}</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

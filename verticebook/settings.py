@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'core',
+    'properties',
+    'reservations',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +137,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+USE_THOUSAND_SEPARATOR = True
+NUMBER_GROUPING = 3
 
 LANGUAGES = [
     ('pt-br', 'Português'),

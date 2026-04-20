@@ -9,6 +9,8 @@ urlpatterns = [
     path('', landing_view, name='landing'),
     path('dashboard/', dashboard_view, name='dashboard'),
     path('accounts/', include('accounts.urls')),
+    path('propriedades/', include('properties.urls')),
+    path('propriedades/<int:property_pk>/reservas/', include('reservations.urls')),
 ]
 
 if settings.DEBUG:

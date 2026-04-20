@@ -1,0 +1,474 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static humanize l10n %}
+
+{% block title %}
+    {% if object %}
+        {% trans "Editar Reserva" %}
+    {% else %}
+        {% trans "Nova Reserva" %}
+    {% endif %}
+    - {{ property.name }} - VerticeBook
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    .grid-2-asymmetric {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 2.5rem;
+    }
+    @media (max-width: 1024px) {
+        .grid-2-asymmetric {
+            grid-template-columns: 1fr;
+        }
+    }
+    @media (max-width: 768px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+    }
+    input:not([type="checkbox"]), textarea, select {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        border: 1px solid var(--glass-border);
+        background: var(--bg-card);
+        color: var(--text-main);
+        transition: all 0.3s;
+    }
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+    .field-error {
+        color: #ef4444;
+        font-size: 0.85rem;
+        margin-top: 5px;
+    }
+
+    .btn-add-small {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        color: var(--primary);
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+    .btn-add-small:hover {
+        background: var(--primary);
+        color: white;
+        transform: scale(1.1);
+    }
+    
+    /* Autocomplete Suggestions */
+    .autocomplete-container {
+        position: relative;
+    }
+    .suggestions-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 10px;
+        margin-top: 5px;
+        z-index: 1000;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        display: none;
+    }
+    .suggestion-item {
+        padding: 0.8rem 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .suggestion-item:last-child {
+        border-bottom: none;
+    }
+    .suggestion-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--primary);
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0/build/vanilla-masker.min.js"></script>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='reservations' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-form-container" style="padding-top: 2.5rem;">
+    <div class="dashboard-header" style="margin-bottom: 2rem;">
+        <div>
+            <h1>
+                {% if object %}
+                    {% trans "Editar Reserva" %}
+                {% else %}
+                    {% trans "Nova Reserva" %}
+                {% endif %}
+            </h1>
+            <p style="color: var(--text-muted);">{{ property.name }}</p>
+        </div>
+    </div>
+
+    <form method="post" class="glass-card" style="padding: 2.5rem; max-width: 1100px; margin: 0 auto;">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="field-error" style="margin-bottom: 2rem;">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="grid-2-asymmetric">
+            <!-- Reservation Main Data -->
+            <div class="form-section">
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary);">{% trans "Dados da Reserva" %}</h3>
+                
+                <div class="grid-2" style="margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}</label>
+                        {{ form.start_date }}
+                        {% if form.start_date.errors %}<div class="field-error">{{ form.start_date.errors.0 }}</div>{% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
+                        {{ form.end_date }}
+                        {% if form.end_date.errors %}<div class="field-error">{{ form.end_date.errors.0 }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="{{ form.client_name.id_for_label }}">{{ form.client_name.label }}</label>
+                    <div class="autocomplete-container">
+                        {{ form.client_name }}
+                        <div id="client-suggestions" class="suggestions-list"></div>
+                    </div>
+                    {% if form.client_name.errors %}<div class="field-error">{{ form.client_name.errors.0 }}</div>{% endif %}
+                </div>
+
+                <div class="grid-2" style="margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label for="{{ form.client_phone.id_for_label }}">{{ form.client_phone.label }}</label>
+                        {{ form.client_phone }}
+                        {% if form.client_phone.errors %}<div class="field-error">{{ form.client_phone.errors.0 }}</div>{% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.guests_count.id_for_label }}">{{ form.guests_count.label }}</label>
+                        {{ form.guests_count }}
+                        {% if form.guests_count.errors %}<div class="field-error">{{ form.guests_count.errors.0 }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="{{ form.total_value.id_for_label }}">{{ form.total_value.label }}</label>
+                    {{ form.total_value }}
+                    {% if form.total_value.errors %}<div class="field-error">{{ form.total_value.errors.0 }}</div>{% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
+                    {{ form.notes }}
+                    {% if form.notes.errors %}<div class="field-error">{{ form.notes.errors.0 }}</div>{% endif %}
+                </div>
+            </div>
+
+            <!-- Reservation Costs Sidebar -->
+            <div class="costs-sidebar" style="background: rgba(0, 0, 0, 0.1); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border); align-self: start;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">{% trans "Custos / Encargos" %}</h3>
+                    <button type="button" id="add-cost-btn" class="btn-add-small" title="{% trans "Adicionar Custo" %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                    </button>
+                </div>
+                
+                <div id="cost-items-container" style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Costs will be rendered here by JS -->
+                </div>
+                
+                <div id="no-costs-msg" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 0.85rem; {% if reservation_costs or property_costs %}display: none;{% endif %}">
+                    {% trans "Nenhum custo automatizado para esta propriedade." %}
+                </div>
+
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">{% trans "Total de Custos" %}</span>
+                    <span id="costs-total-display" style="font-weight: 700; color: var(--primary);">R$ 0,00</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 3rem; justify-content: flex-end;">
+            <a href="{% url 'reservations:list' property.pk %}" class="btn btn-outline" style="min-width: 150px; text-align: center;">
+                {% trans "Cancelar" %}
+            </a>
+            <button type="submit" class="btn btn-primary" style="min-width: 200px;">
+                {% if object %}
+                    {% trans "Atualizar Reserva" %}
+                {% else %}
+                    {% trans "Salvar Reserva" %}
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const nameInput = document.getElementById('{{ form.client_name.id_for_label }}');
+        const phoneInput = document.getElementById('{{ form.client_phone.id_for_label }}');
+        const valueInput = document.getElementById('{{ form.total_value.id_for_label }}');
+        const suggestionsBox = document.getElementById('client-suggestions');
+
+        // 1. Masks Implementation
+        if (typeof VMasker !== 'undefined') {
+            // Phone Mask: (99) 99999-9999
+            VMasker(phoneInput).maskPattern('(99) 99999-9999');
+            
+            // Money Mask: R$ 1.234,56
+            VMasker(valueInput).maskMoney({
+                precision: 2,
+                separator: ',',
+                delimiter: '.',
+                unit: 'R$',
+                zeroCents: false
+            });
+
+            // Format initial value if present (for edits)
+            if (valueInput.value) {
+                // Remove existing formatting if any and re-apply
+                let val = valueInput.value.replace(/\D/g, '');
+                valueInput.value = VMasker.toMoney(val, {
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+            }
+        }
+
+        // 2. Intelligent Search (Autocomplete)
+        let timeout = null;
+        nameInput.addEventListener('input', function() {
+            const query = this.value;
+            clearTimeout(timeout);
+            
+            if (query.length < 2) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+
+            timeout = setTimeout(() => {
+                fetch(`{% url 'reservations:search_clients' property.pk %}?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            suggestionsBox.innerHTML = '';
+                            data.forEach(name => {
+                                const div = document.createElement('div');
+                                div.className = 'suggestion-item';
+                                div.textContent = name;
+                                div.onclick = function() {
+                                    nameInput.value = name;
+                                    suggestionsBox.style.display = 'none';
+                                };
+                                suggestionsBox.appendChild(div);
+                            });
+                            suggestionsBox.style.display = 'block';
+                        } else {
+                            suggestionsBox.style.display = 'none';
+                        }
+                    });
+            }, 300);
+        });
+
+            // Close suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!nameInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                    suggestionsBox.style.display = 'none';
+                }
+            });
+        
+        // --- 3. Costs Management Logic ---
+        const costsContainer = document.getElementById('cost-items-container');
+        const costsTotalDisplay = document.getElementById('costs-total-display');
+        const noCostsMsg = document.getElementById('no-costs-msg');
+        const addCostBtn = document.getElementById('add-cost-btn');
+
+        // Initial Data from context
+        const initialCosts = [
+            {% if reservation_costs %}
+                {% for cost in reservation_costs %}
+                    {
+                        "description": "{{ cost.description|escapejs }}",
+                        "value": "{{ cost.value|unlocalize }}",
+                        "property_cost_id": "{{ cost.property_cost.pk|default:'' }}",
+                        "type": "fixed",
+                        "amount": "{{ cost.value|unlocalize }}"
+                    },
+                {% endfor %}
+            {% else %}
+                {% for cost in property_costs %}
+                    {
+                        "description": "{{ cost.name|escapejs }}",
+                        "value": 0,
+                        "property_cost_id": "{{ cost.pk }}",
+                        "type": "{{ cost.amount_type }}",
+                        "amount": "{{ cost.amount|unlocalize }}"
+                    },
+                {% endfor %}
+            {% endif %}
+        ];
+
+        function addCostRow(data = {}) {
+            const rowId = 'cost_' + Math.random().toString(36).substr(2, 9);
+            const div = document.createElement('div');
+            div.className = 'cost-row';
+            div.id = rowId;
+            div.style = "background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 1rem; border: 1px solid var(--glass-border);";
+            
+            const rawValue = data.value !== undefined ? parseFloat(data.value) : 0;
+
+            div.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <input type="hidden" name="cost_property_id[]" value="${data.property_cost_id || ''}">
+                        <input type="text" name="cost_description[]" value="${data.description || ''}" placeholder="{% trans "Descrição" %}" 
+                            style="font-size: 0.8rem; padding: 0.4rem 0.6rem; background: transparent; border: none; border-bottom: 1px dashed var(--glass-border); border-radius: 0; color: var(--text-muted); width: 85%;">
+                        <button type="button" class="btn-remove-cost"
+                            style="background: none; border: none; color: #ef4444; padding: 5px; cursor: pointer; transition: opacity 0.2s; opacity: 0.6;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                    <input type="text" name="cost_value[]" class="cost-value-input" data-type="${data.type || 'fixed'}" data-amount="${data.amount || 0}" value="${rawValue}" 
+                        style="font-size: 1rem; font-weight: 700; padding: 0.5rem 0.8rem; background: rgba(255,255,255,0.05);">
+                </div>
+            `;
+            
+            costsContainer.appendChild(div);
+            if (noCostsMsg) noCostsMsg.style.display = 'none';
+
+            // Handle removal
+            div.querySelector('.btn-remove-cost').addEventListener('click', function() {
+                div.remove();
+                calculateGrandTotal();
+                if (costsContainer.children.length === 0 && noCostsMsg) {
+                    noCostsMsg.style.display = 'block';
+                }
+            });
+
+            // Apply masks to the new input
+            const valInput = div.querySelector('.cost-value-input');
+            if (typeof VMasker !== 'undefined') {
+                VMasker(valInput).maskMoney({
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+                
+                // Set initial masked value using cents
+                valInput.value = VMasker.toMoney(Math.round(rawValue * 100), {
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+            }
+
+            // Track manual changes (dirty state)
+            valInput.addEventListener('input', function() {
+                this.classList.add('is-dirty');
+                calculateGrandTotal();
+            });
+        }
+
+        function calculateCosts() {
+            // Bulletproof parsing: get all digits and divide by 100
+            const digits = valueInput.value.replace(/\D/g, '');
+            const resTotal = (parseFloat(digits) || 0) / 100;
+            
+            document.querySelectorAll('.cost-value-input').forEach(input => {
+                const type = input.getAttribute('data-type');
+                const amount = parseFloat(input.getAttribute('data-amount')) || 0;
+                
+                // Only auto-update if not manually edited
+                if (!input.classList.contains('is-dirty')) {
+                    if (type === 'percentage') {
+                        const calculated = (resTotal * amount) / 100;
+                        // Use integer cents for VMasker to avoid precision issues
+                        const cents = Math.round(calculated * 100);
+                        input.value = VMasker.toMoney(cents, {
+                            precision: 2,
+                            separator: ',',
+                            delimiter: '.',
+                            unit: 'R$',
+                            zeroCents: false
+                        });
+                    } else if (type === 'fixed' && (input.value === 'R$ 0,00' || input.value === '0')) {
+                        const cents = Math.round(amount * 100);
+                        input.value = VMasker.toMoney(cents, {
+                            precision: 2,
+                            separator: ',',
+                            delimiter: '.',
+                            unit: 'R$',
+                            zeroCents: false
+                        });
+                    }
+                }
+            });
+            calculateGrandTotal();
+        }
+
+        function calculateGrandTotal() {
+            let total = 0;
+            document.querySelectorAll('.cost-value-input').forEach(input => {
+                const digits = input.value.replace(/\D/g, '');
+                total += (parseFloat(digits) || 0) / 100;
+            });
+            
+            if (typeof VMasker !== 'undefined') {
+                const cents = Math.round(total * 100);
+                costsTotalDisplay.textContent = VMasker.toMoney(cents, {
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+            }
+        }
+
+        // Event Listeners
+        if (addCostBtn) {
+            addCostBtn.addEventListener('click', () => addCostRow());
+        }
+        
+        if (valueInput) {
+            valueInput.addEventListener('input', calculateCosts);
+        }
+        
+        // Initialize rows
+        initialCosts.forEach(cost => addCostRow(cost));
+        
+        // Initial calculation
+        calculateCosts();
+    });
+</script>
+{% endblock %}

@@ -34,6 +34,22 @@
     <header class="navbar {% block navbar_class %}{% endblock %}">
         <div class="container">
             <a href="{% url 'landing' %}" class="logo">Vertice<span>Book</span></a>
+            
+            {% if property and property.pk %}
+            <div class="navbar-divider" style="margin-left: 2rem; opacity: 0.5;"></div>
+            <a href="{% url 'properties:dashboard' property.pk %}" class="navbar-property-badge" style="display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; margin-left: 1.5rem;">
+                <div class="thumb" style="width: 36px; height: 36px; border-radius: 8px; overflow: hidden; border: 1.5px solid var(--glass-border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05);">
+                    {% if property.image %}
+                        <img src="{{ property.image.url }}" alt="{{ property.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    {% else %}
+                        <div class="thumb-fallback">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </div>
+                    {% endif %}
+                </div>
+                <span class="name">{{ property.name }}</span>
+            </a>
+            {% endif %}
             <nav style="display: flex; align-items: center; gap: 0.5rem;">
                 <!-- Language Selector -->
                 <div class="user-menu" id="lang-menu" style="position: relative; display: flex; align-items: center;">
@@ -102,12 +118,75 @@
         {% block content %}{% endblock %}
     </main>
 
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 VerticeBook. Todos os direitos reservados.</p>
         </div>
     </footer>
+
     <script>
+        // Toast System Logic
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            
+            let icon = '';
+            switch(type) {
+                case 'success': icon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'; break;
+                case 'error': icon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'; break;
+                case 'warning': icon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'; break;
+                default: icon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y1="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+            }
+
+            toast.innerHTML = `
+                <div class="toast-icon">${icon}</div>
+                <div class="toast-content">${message}</div>
+                <button class="toast-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            const closeBtn = toast.querySelector('.toast-close');
+            closeBtn.onclick = () => {
+                toast.classList.add('hiding');
+                setTimeout(() => toast.remove(), 400);
+            };
+
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.classList.add('hiding');
+                    setTimeout(() => toast.remove(), 400);
+                }
+            }, 5000);
+        }
+
+        // Render Django messages as toasts
+        document.addEventListener('DOMContentLoaded', () => {
+            {% if messages %}
+                {% for message in messages %}
+                    // Use includes or match to handle multiple tags
+                    const tags = "{{ message.tags }}";
+                    const text = "{{ message|escapejs }}";
+                    
+                    if (tags.includes('error')) {
+                        showToast(text, "error");
+                    } else if (tags.includes('success')) {
+                        showToast(text, "success");
+                    } else if (tags.includes('warning')) {
+                        showToast(text, "warning");
+                    } else {
+                        showToast(text, "info");
+                    }
+                {% endfor %}
+            {% endif %}
+        });
+
         // Theme Toggle logic
         const themeToggle = document.getElementById('theme-toggle');
         const themeIcon = themeToggle.querySelector('.theme-icon');
