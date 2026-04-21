@@ -209,17 +209,24 @@
         <!-- Informações Básicas -->
         <div class="form-section">
             <h3 class="form-section-title">{% trans "Informações Básicas" %}</h3>
+            
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                {{ form.name }}
+                {% if form.name.errors %}<div class="field-error">{{ form.name.errors.0 }}</div>{% endif %}
+            </div>
+
             <div class="grid-2">
-                <div class="form-group">
-                    <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-                    {{ form.name }}
-                    {% if form.name.errors %}<div class="field-error">{{ form.name.errors.0 }}</div>{% endif %}
-                </div>
-                
                 <div class="form-group">
                     <label style="margin-bottom: 0.5rem; display: block;">{{ form.image.label }}</label>
                     {{ form.image }}
                     {% if form.image.errors %}<div class="field-error">{{ form.image.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom: 0.5rem; display: block;">{% trans "Assinatura do Proprietário" %}</label>
+                    {{ form.signature }}
+                    <small class="text-muted" style="display: block; margin-top: 0.5rem;">{% trans "Imagem da assinatura para a autorização de locação." %}</small>
+                    {% if form.signature.errors %}<div class="field-error">{{ form.signature.errors.0 }}</div>{% endif %}
                 </div>
             </div>
 
@@ -227,6 +234,12 @@
                 <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
                 {{ form.description }}
                 {% if form.description.errors %}<div class="field-error">{{ form.description.errors.0 }}</div>{% endif %}
+            </div>
+
+            <div class="form-group" style="margin-top: 1.5rem; max-width: 300px;">
+                <label for="{{ form.condo_phone.id_for_label }}">{{ form.condo_phone.label }}</label>
+                {{ form.condo_phone }}
+                {% if form.condo_phone.errors %}<div class="field-error">{{ form.condo_phone.errors.0 }}</div>{% endif %}
             </div>
         </div>
 
@@ -302,6 +315,7 @@
     </form>
 </div>
 
+<script src="https://unpkg.com/imask"></script>
 <script>
     // Simple logic to show selected filename in the custom overlay
     document.addEventListener('change', function(e) {
@@ -312,6 +326,19 @@
                 overlaySpan.textContent = fileName;
             }
         }
+    });
+
+    // Phone mask
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneElements = document.querySelectorAll('.phone-mask');
+        phoneElements.forEach(function(el) {
+            IMask(el, {
+                mask: [
+                    { mask: '(00) 0000-0000' },
+                    { mask: '(00) 00000-0000' }
+                ]
+            });
+        });
     });
 </script>
 {% endblock %}

@@ -1,0 +1,102 @@
+{% load i18n l10n %}
+
+<div class="guest-details-container" style="color: var(--text-main);">
+    <!-- Hóspede Principal -->
+    <div style="margin-bottom: 2rem;">
+        <h3 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+            {% trans "Hóspede Principal" %}
+        </h3>
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1.5rem;">
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Nome" %}</label>
+                <div style="font-size: 1rem; font-weight: 600;">{{ client.name }}</div>
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "CPF" %}</label>
+                <div style="font-size: 1rem;">{{ complement.cpf|default:"---" }}</div>
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "RG" %}</label>
+                <div style="font-size: 1rem;">{{ complement.rg|default:"---" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Endereço -->
+    <div style="margin-bottom: 2rem;">
+        <h3 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+            {% trans "Endereço Residencial" %}
+        </h3>
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Rua" %}</label>
+                <div style="font-size: 0.95rem;">{{ complement.street|default:"---" }}, {{ complement.number }}</div>
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Complemento" %}</label>
+                <div style="font-size: 0.95rem;">{{ complement.complement|default:"---" }}</div>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Bairro" %}</label>
+                <div style="font-size: 0.95rem;">{{ complement.neighborhood|default:"---" }}</div>
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Cidade" %}</label>
+                <div style="font-size: 0.95rem;">{{ complement.city|default:"---" }}</div>
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Estado" %}</label>
+                <div style="font-size: 0.95rem;">{{ complement.state|default:"---" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Veículo -->
+    <div style="margin-bottom: 2rem;">
+        <h3 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+            {% trans "Informações do Veículo" %}
+        </h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Modelo" %}</label>
+                <div style="font-size: 0.95rem; font-weight: 600;">{{ complement.car_model|default:"Nenhum informado" }}</div>
+            </div>
+            <div>
+                <label style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Placa" %}</label>
+                <div style="font-size: 0.95rem; font-weight: 600; color: #00c6ff;">{{ complement.car_plate|default:"---" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Acompanhantes -->
+    {% if companions %}
+    <div>
+        <h3 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+            {% trans "Acompanhantes" %} ({{ companions|length }})
+        </h3>
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+            <thead>
+                <tr style="text-align: left; border-bottom: 1px solid var(--glass-border);">
+                    <th style="padding: 10px 0; color: var(--text-muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase;">{% trans "Nome" %}</th>
+                    <th style="padding: 10px 0; color: var(--text-muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase;">{% trans "RG" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comp in companions %}
+                <tr style="border-bottom: 1px solid var(--glass-border);">
+                    <td style="padding: 12px 0; font-weight: 500;">{{ comp.name }}</td>
+                    <td style="padding: 12px 0;">{{ comp.rg }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div style="padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+        {% trans "Nenhum acompanhante registrado." %}
+    </div>
+    {% endif %}
+</div>
+</div>

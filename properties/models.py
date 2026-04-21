@@ -11,6 +11,7 @@ class Property(models.Model):
     )
     name = models.CharField(max_length=255, verbose_name=_("Nome da propriedade"))
     description = models.TextField(verbose_name=_("Descrição da propriedade"))
+    condo_phone = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Telefone do Condomínio"))
     
     # Address structured fields
     address_street = models.CharField(max_length=255, verbose_name=_("Rua"))
@@ -30,6 +31,12 @@ class Property(models.Model):
         null=True, 
         blank=True, 
         verbose_name=_("Foto de Capa")
+    )
+    signature = models.ImageField(
+        upload_to='property_signatures/',
+        null=True,
+        blank=True,
+        verbose_name=_("Assinatura do Proprietário")
     )
     
     created_at = models.DateTimeField(auto_now_add=True)

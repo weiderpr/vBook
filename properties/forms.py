@@ -10,14 +10,15 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
-            'name', 'description', 'image', 'address_street', 'address_number',
+            'name', 'description', 'image', 'signature', 'address_street', 'address_number',
             'address_complement', 'address_city', 'address_state',
-            'acquisition_date', 'acquisition_value'
+            'acquisition_date', 'acquisition_value', 'condo_phone'
         ]
         widgets = {
             'acquisition_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
             'description': forms.Textarea(attrs={'rows': 4}),
             'image': CustomClearableFileInput(),
+            'signature': CustomClearableFileInput(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -27,6 +28,7 @@ class PropertyForm(forms.ModelForm):
         self.fields['address_street'].widget.attrs.update({'placeholder': _("Rua, Avenida, etc.")})
         self.fields['address_city'].widget.attrs.update({'placeholder': _("Sua cidade")})
         self.fields['address_state'].widget.attrs.update({'placeholder': _("Seu estado")})
+        self.fields['condo_phone'].widget.attrs.update({'placeholder': _("(00) 00000-0000"), 'class': 'phone-mask'})
         self.fields['acquisition_value'].widget.attrs.update({'step': '0.01'})
 
 class PropertyCostForm(forms.ModelForm):

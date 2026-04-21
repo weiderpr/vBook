@@ -31,6 +31,7 @@
     </script>
 </head>
 <body>
+    {% block navbar %}
     <header class="navbar {% block navbar_class %}{% endblock %}">
         <div class="container">
             <a href="{% url 'landing' %}" class="logo">Vertice<span>Book</span></a>
@@ -113,6 +114,7 @@
             </nav>
         </div>
     </header>
+    {% endblock %}
 
     <main>
         {% block content %}{% endblock %}
@@ -168,21 +170,24 @@
 
         // Render Django messages as toasts
         document.addEventListener('DOMContentLoaded', () => {
+            console.log("Checking for Django messages...");
             {% if messages %}
                 {% for message in messages %}
-                    // Use includes or match to handle multiple tags
-                    const tags = "{{ message.tags }}";
-                    const text = "{{ message|escapejs }}";
-                    
-                    if (tags.includes('error')) {
-                        showToast(text, "error");
-                    } else if (tags.includes('success')) {
-                        showToast(text, "success");
-                    } else if (tags.includes('warning')) {
-                        showToast(text, "warning");
-                    } else {
-                        showToast(text, "info");
-                    }
+                    (function() {
+                        const tags = "{{ message.tags|escapejs }}";
+                        const text = "{{ message|escapejs }}";
+                        console.log("Processing message:", text, "with tags:", tags);
+                        
+                        if (tags.includes('error')) {
+                            showToast(text, "error");
+                        } else if (tags.includes('success')) {
+                            showToast(text, "success");
+                        } else if (tags.includes('warning')) {
+                            showToast(text, "warning");
+                        } else {
+                            showToast(text, "info");
+                        }
+                    })();
                 {% endfor %}
             {% endif %}
         });
@@ -279,5 +284,6 @@
             });
         }
     </script>
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>

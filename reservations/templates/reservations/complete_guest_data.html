@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">{% trans "Check-in Online" %}</h2>
+                    <p class="lead text-center mb-5">
+                        {% trans "Olá" %} {{ reservation.client_name }}, {% trans "por favor complete seus dados para agilizar sua estadia em" %} <strong>{{ reservation.property.name }}</strong>.
+                    </p>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        {% trans "Esta é uma página de exemplo (placeholder). Em uma implementação real, aqui estaria o formulário de pré-check-in." %}
+                    </div>
+
+                    <div class="mt-4">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {% trans "Data de Entrada" %}
+                                <span class="badge bg-primary rounded-pill">{{ reservation.start_date }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {% trans "Data de Saída" %}
+                                <span class="badge bg-primary rounded-pill">{{ reservation.end_date }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {% trans "Quantidade de Hóspedes" %}
+                                <span class="badge bg-secondary rounded-pill">{{ reservation.guests_count }}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-5">
+                        <button class="btn btn-success btn-lg disabled" type="button">
+                            <i class="fab fa-whatsapp me-2"></i> {% trans "Confirmar Dados (Em breve)" %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

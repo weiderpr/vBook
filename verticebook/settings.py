@@ -102,9 +102,20 @@ LOGIN_URL = 'login'
 FORCE_SCRIPT_NAME = '/book'
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = [
+    'https://verticesistemas.tech', 
+    'https://www.verticesistemas.tech',
+    'https://verticebook.tech',
+    'https://www.verticebook.tech'
+]
+# Cookie settings
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-# SECURE_SSL_REDIRECT = True # Already handled by Nginx
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 
@@ -161,3 +172,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files
 MEDIA_URL = '/book/media/'
 MEDIA_ROOT = '/var/www/verticebook/media'
+
+# Evolution API Settings
+EVOLUTION_API_URL = 'http://localhost:8010'
+AUTHENTICATION_API_KEY = 'vbook_secret_key_2026'

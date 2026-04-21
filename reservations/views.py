@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -142,3 +142,24 @@ def search_clients(request, property_pk):
     ).values_list('client_name', flat=True).distinct()[:10]
     
     return JsonResponse(list(clients), safe=False)
+
+@login_required
+def send_whatsapp_reservation(request, property_pk, pk):
+    """
+    View para gatilhar o envio de boas-vindas e link de check-in via WhatsApp.
+    """
+    from .services.evolution_api import EvolutionService
+    
+    reservation = get_object_or_404(Reservation, pk=pk, property__pk=property_pk, property__user=request.user)
+    
+    service = EvolutionService()
+    success, message = service.enviar_link_checkin(reservation.id)
+    
+    if success:
+        reservation.welcome_message_sent = True
+        reservation.save(update_fields=['welcome_message_sent'])
+        messages.success(request, message)
+    else:
+        messages.error(request, message)
+    
+    return redirect('reservations:list', property_pk=property_pk)

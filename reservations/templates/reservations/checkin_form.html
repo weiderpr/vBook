@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block navbar %}{% endblock %}
+
+{% block extra_head %}
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --input-bg: rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+        background: #0f172a;
+    }
+
+    .checkin-wrapper {
+        min-height: 100vh;
+        background: radial-gradient(circle at top right, rgba(0, 198, 255, 0.1), transparent),
+                    radial-gradient(circle at bottom left, rgba(0, 114, 255, 0.1), transparent);
+        padding: 4rem 1rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .checkin-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 800px;
+        padding: 3rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-logo {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .brand-logo h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 0.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .brand-logo p {
+        color: #94a3b8;
+        font-size: 1.1rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .section-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--glass-border);
+    }
+
+    .grid-form {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .col-12 { grid-column: span 12; }
+    .col-8 { grid-column: span 8; }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    .col-3 { grid-column: span 3; }
+    .col-2 { grid-column: span 2; }
+
+    label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .form-control, .form-select {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #00c6ff;
+        box-shadow: 0 0 0 4px rgba(0, 198, 255, 0.2);
+        outline: none;
+        background: rgba(255, 255, 255, 0.12);
+        color: white !important;
+    }
+
+    .companion-row {
+        background: rgba(255, 255, 255, 0.02);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 1px solid var(--glass-border);
+        margin-bottom: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 1.25rem;
+        border-radius: 16px;
+        border: none;
+        background: var(--primary-gradient);
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 15px -3px rgba(0, 114, 255, 0.3);
+        margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 25px -5px rgba(0, 114, 255, 0.4);
+    }
+
+    .submit-btn:active {
+        transform: translateY(0);
+    }
+
+    .info-box {
+        background: rgba(0, 198, 255, 0.05);
+        border-left: 4px solid #00c6ff;
+        padding: 1.25rem;
+        border-radius: 12px;
+        margin-bottom: 2.5rem;
+    }
+
+    .info-box p {
+        margin: 0;
+        color: #e2e8f0;
+        font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+        .col-8, .col-6, .col-4, .col-3, .col-2 {
+            grid-column: span 12;
+        }
+        .companion-row {
+            grid-template-columns: 1fr;
+        }
+        .checkin-card {
+            padding: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="checkin-wrapper">
+    <div class="checkin-card">
+        <div class="brand-logo">
+            <h1>Vertice<span>Book</span></h1>
+            <p>{% trans "Confirmação de Check-in" %}</p>
+        </div>
+
+        <div class="info-box">
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div style="background: rgba(0,198,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00c6ff;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <div>
+                    <h3 style="margin: 0; font-size: 1rem; color: white;">{{ property.name }}</h3>
+                    <p>{{ reservation.start_date|date:"d M" }} {% trans "até" %} {{ reservation.end_date|date:"d M Y" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <h2 class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                {% trans "Seus Dados" %}
+            </h2>
+            
+            <div class="grid-form">
+                <div class="form-group col-12">
+                    <label>{% trans "Nome Completo" %}</label>
+                    <input type="text" name="client_name" value="{{ reservation.client.name|default:reservation.client_name }}" class="form-control" required>
+                </div>
+
+                <div class="form-group col-6">
+                    <label>{% trans "CPF" %}</label>
+                    {{ form.cpf }}
+                </div>
+                <div class="form-group col-6">
+                    <label>{% trans "RG" %}</label>
+                    {{ form.rg }}
+                </div>
+
+                <div class="form-group col-8">
+                    <label>{% trans "Rua / Logradouro" %}</label>
+                    {{ form.street }}
+                </div>
+                <div class="form-group col-4">
+                    <label>{% trans "Número" %}</label>
+                    {{ form.number }}
+                </div>
+
+                <div class="form-group col-6">
+                    <label>{% trans "Complemento" %}</label>
+                    {{ form.complement }}
+                </div>
+                <div class="form-group col-6">
+                    <label>{% trans "Bairro" %}</label>
+                    {{ form.neighborhood }}
+                </div>
+
+                <div class="form-group col-8">
+                    <label>{% trans "Cidade" %}</label>
+                    {{ form.city }}
+                </div>
+                <div class="form-group col-4">
+                    <label>{% trans "Estado (UF)" %}</label>
+                    {{ form.state }}
+                </div>
+            </div>
+
+            <h2 class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                {% trans "Veículo" %} ({% trans "Opcional" %})
+            </h2>
+
+            <div class="grid-form">
+                <div class="form-group col-6">
+                    <label>{% trans "Modelo do Carro" %}</label>
+                    {{ form.car_model }}
+                </div>
+                <div class="form-group col-6">
+                    <label>{% trans "Placa" %}</label>
+                    {{ form.car_plate }}
+                </div>
+            </div>
+
+            {% if extra_companions > 0 %}
+            <h2 class="section-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                {% trans "Acompanhantes" %} ({{ extra_companions }})
+            </h2>
+
+            {{ formset.management_form }}
+            <div id="companion-list">
+                {% for c_form in formset %}
+                <div class="companion-row">
+                    <div class="form-group">
+                        <label>{% trans "Nome Completo" %}</label>
+                        {{ c_form.name }}
+                    </div>
+                    <div class="form-group">
+                        <label>{% trans "RG" %}</label>
+                        {{ c_form.rg }}
+                    </div>
+                    {% for hidden in c_form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <button type="submit" class="submit-btn">
+                {% trans "Finalizar Check-in" %}
+            </button>
+
+            <p style="text-align: center; margin-top: 2rem; color: #64748b; font-size: 0.85rem;">
+                {% trans "Ao clicar em finalizar, seus dados serão registrados com segurança para esta reserva." %}
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://unpkg.com/imask"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cpfElements = document.querySelectorAll('.mask-cpf');
+        cpfElements.forEach(el => {
+            IMask(el, {
+                mask: '000.000.000-00'
+            });
+        });
+    });
+</script>
+{% endblock %}

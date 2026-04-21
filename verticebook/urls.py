@@ -11,6 +11,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('propriedades/', include('properties.urls')),
     path('propriedades/<int:property_pk>/reservas/', include('reservations.urls')),
+    path('checkin/<uuid:token>/', include('reservations.urls_guest_checkin')), # We'll create this or use GuestCheckInView directly
 ]
 
 if settings.DEBUG:
