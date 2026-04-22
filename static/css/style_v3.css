@@ -1,3 +1,10 @@
+/* 
+   VBOOK DESIGN SYSTEM - REGRAS RÍGIDAS DE LAYOUT 
+   - Cabeçalhos: .property-mini-header (flex, space-between, flex-end)
+   - Títulos: H1 (font-size: 1.8rem, weight: 800)
+   - Botões: .btn (font-size: 1rem, weight: 700, padding: 0.75rem 1.5rem, border-radius: 14px)
+*/
+
 :root[data-theme="dark"] {
     --primary: #6366f1;
     --primary-hover: #4f46e5;
@@ -114,8 +121,9 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 100px;
     margin-left: 1.5rem;
-    margin-right: auto;
-    max-width: 300px;
+    margin-right: 2rem;
+    flex: 1;
+    max-width: 100%;
     transition: all 0.3s ease;
 }
 
@@ -215,9 +223,11 @@ nav a:hover {
 
 /* Buttons */
 .btn {
-    padding: 0.75rem 1.5rem;
-    border-radius: 14px;
-    font-weight: 700;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    font-family: 'Outfit', sans-serif !important;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
@@ -227,6 +237,8 @@ nav a:hover {
     gap: 8px;
     line-height: normal;
     border: 1px solid transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .btn svg {

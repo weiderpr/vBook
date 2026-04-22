@@ -118,6 +118,35 @@ class GuestCheckInView(View):
         }
         return render(request, 'reservations/checkin_form.html', context)
 
+class GuestAuthorizationPDFView(View):
+    """
+    View pública para o hóspede baixar seu PDF usando o token da reserva.
+    """
+    def get(self, request, token):
+        reservation = get_object_or_404(Reservation, checkin_token=token)
+        
+        if not reservation.checkin_completed:
+            return HttpResponseForbidden("O check-in ainda não foi concluído.")
+
+        output_bytes = generate_reservation_authorization_pdf(reservation)
+        
+        response = HttpResponse(output_bytes, content_type='application/pdf')
+        filename = f"autorizacao_{reservation.client_name}.pdf".replace(' ', '_')
+        response['Content-Disposition'] = f'inline; filename="{filename}"'
+        response['X-Frame-Options'] = 'SAMEORIGIN'
+        return response
+
+class GuestPropertyInstructionsView(View):
+    """
+    View pública para o hóspede visualizar as instruções da reserva.
+    """
+    def get(self, request, token):
+        reservation = get_object_or_404(Reservation, checkin_token=token)
+        return render(request, 'reservations/property_instructions_guest.html', {
+            'reservation': reservation,
+            'property': reservation.property
+        })
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 def generate_reservation_authorization_pdf(reservation):

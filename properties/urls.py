@@ -10,6 +10,7 @@ urlpatterns = [
     path('<int:pk>/editar/', views.PropertyUpdateView.as_view(), name='update'),
     path('<int:pk>/excluir/', views.PropertyDeleteView.as_view(), name='delete'),
     path('<int:pk>/configuracoes/', views.PropertySettingsView.as_view(), name='settings'),
+    path('<int:pk>/instrucoes/', views.PropertyInstructionsUpdateView.as_view(), name='instructions'),
     path('<int:pk>/configuracoes/custos/novo/', views.PropertyCostCreateView.as_view(), name='cost_create'),
     path('configuracoes/custos/<int:pk>/editar/', views.PropertyCostUpdateView.as_view(), name='cost_update'),
     path('configuracoes/custos/<int:pk>/excluir/', views.PropertyCostDeleteView.as_view(), name='cost_delete'),

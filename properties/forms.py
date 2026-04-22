@@ -32,6 +32,8 @@ class PropertyForm(forms.ModelForm):
         self.fields['acquisition_value'].widget.attrs.update({'step': '0.01'})
 
 class PropertyCostForm(forms.ModelForm):
+    amount = forms.CharField(label=_("Valor"))
+
     class Meta:
         model = PropertyCost
         fields = ['name', 'amount', 'amount_type', 'frequency', 'month', 'year', 'recipient', 'description']
@@ -42,13 +44,32 @@ class PropertyCostForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['amount'].widget.attrs.update({'step': '0.01', 'placeholder': '0,00'})
+        self.fields['amount'].widget.attrs.update({'placeholder': '0,00'})
         
         # Set defaults for month and year
         today = timezone.now()
         self.fields['month'].initial = today.month
         self.fields['year'].initial = today.year
         self.fields['year'].widget.attrs.update({'placeholder': today.year})
+
+    def clean_amount(self):
+        value = self.cleaned_data.get('amount')
+        amount_type = self.cleaned_data.get('amount_type')
+        
+        if isinstance(value, str):
+            # If it's a fixed value, it might have R$ and PT-BR formatting
+            if amount_type == 'fixed':
+                clean_value = value.replace('R$', '').replace('.', '').replace(',', '.').strip()
+            else:
+                # For percentages, just ensure it's a valid number (using dot)
+                clean_value = value.replace(',', '.').strip()
+                
+            try:
+                from decimal import Decimal
+                return Decimal(clean_value)
+            except (ValueError, ArithmeticError):
+                raise forms.ValidationError(_("Valor inválido."))
+        return value
 
     def clean(self):
         cleaned_data = super().clean()
@@ -71,3 +92,11 @@ class PropertyCostForm(forms.ModelForm):
                 self.add_error('year', _("O ano é obrigatório para custos mensais."))
         
         return cleaned_data
+
+class PropertyInstructionsForm(forms.ModelForm):
+    class Meta:
+        model = Property
+        fields = ['reservation_instructions']
+        widgets = {
+            'reservation_instructions': forms.HiddenInput(),
+        }

@@ -39,6 +39,8 @@ class Property(models.Model):
         verbose_name=_("Assinatura do Proprietário")
     )
     
+    reservation_instructions = models.TextField(blank=True, null=True, verbose_name=_("Instruções de Reserva"))
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -120,9 +122,9 @@ class PropertyCost(models.Model):
 
     def get_period_display(self):
         if self.frequency == 'monthly' and self.month and self.year:
-            return f"{self.get_month_display()} {self.year}"
+            return f"{self.get_month_display()} {self.year:d}"
         elif self.frequency == 'yearly' and self.year:
-            return str(self.year)
+            return f"{self.year:d}"
         return ""
 
     class Meta:

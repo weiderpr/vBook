@@ -30,20 +30,34 @@ services:
       - DATABASE_PROVIDER=postgresql
       - DATABASE_CONNECTION_URI=postgresql://evolution_user:evolution_password@evolution_db:5432/evolution_db?sslmode=disable
       - DATABASE_SAVE_DATA_INSTANCE=true
-      - DATABASE_SAVE_DATA_NEW_MESSAGE=true
-      - DATABASE_SAVE_MESSAGE_UPDATE=true
-      - DATABASE_SAVE_DATA_CONTACTS=true
-      - DATABASE_SAVE_DATA_CHATS=true
+      - DATABASE_SAVE_DATA_NEW_MESSAGE=false
+      - DATABASE_SAVE_MESSAGE_UPDATE=false
+      - DATABASE_SAVE_DATA_CONTACTS=false
+      - DATABASE_SAVE_DATA_CHATS=false
+      - DATABASE_SAVE_DATA_LABELS=false
+      - DATABASE_SAVE_DATA_QUOTED_MESSAGE=false
+      - DATABASE_SAVE_DATA_HISTORIC=false
       - DELAY_MESSAGES=true
       - SERVER_URL=https://wa.verticesistemas.tech
       - CACHE_REDIS_ENABLED=true
       - CACHE_REDIS_URI=redis://evolution_redis:6379/0
-      - WEBSOCKET_ENABLED=true
-      - WEBSOCKET_GLOBAL_EVENTS=true
+      - WEBSOCKET_ENABLED=false
+      - WEBSOCKET_GLOBAL_EVENTS=false
       - QRCODE_LIMIT=100
       - CONFIG_SESSION_PHONE_CLIENT=Desktop
       - CONFIG_SESSION_PHONE_NAME=Windows
       - CONFIG_SESSION_PHONE_VERSION=2.3000.1017564711
+      - IGNORE_GROUPS=true
+      - REJECT_CALLS=true
+      - MSG_CALL_REJECT=false
+      - CLEAN_TEMP_DIRECTORY_INTERVAL=60
+      - CONFIG_SESSION_PHONE_SYNC_FULL_HISTORY=false
+      - CONFIG_SESSION_PHONE_READ_MESSAGES=false
+      - CONFIG_SESSION_PHONE_READ_STATUS=false
+    deploy:
+      resources:
+        limits:
+          memory: 768M
     ports:
       - "8010:8080"
     volumes:

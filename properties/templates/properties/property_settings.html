@@ -14,8 +14,19 @@
         background: rgba(255, 255, 255, 0.03);
         padding: 6px;
         border-radius: 14px;
-        border: 1px solid var(--glass-border);
         width: fit-content;
+    }
+
+    .settings-container {
+        padding-top: 2rem;
+        width: 100%;
+    }
+
+    .property-mini-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
     }
     
     .tab-link {
@@ -201,6 +212,7 @@
         box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
     }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0/build/vanilla-masker.min.js"></script>
 {% endblock %}
 
 {% block sidebar %}
@@ -209,10 +221,10 @@
 
 {% block dashboard_content %}
 <div class="settings-container">
-    <div class="dashboard-header" style="margin-bottom: 2.5rem;">
+    <div class="property-mini-header">
         <div>
-            <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--text-main), var(--text-muted)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{% trans "Custos" %}</h1>
-            <p style="color: var(--text-muted); font-size: 1rem;">{% trans "Estrutura financeira e definições da unidade" %} <span style="color: var(--primary); font-weight: 600;">{{ property.name }}</span></p>
+            <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{% trans "Custos" %}</h1>
+            <p style="color: var(--text-muted); margin: 4px 0 0;">{{ property.name }}</p>
         </div>
     </div>
 
@@ -536,7 +548,7 @@
                             {% for item in financial_structure %}
                                 <tr {% if item.is_locked %}style="background: rgba(255,255,255,0.015); opacity: 0.85;" title="{% trans 'Dados obtidos via sistema (Reservas)' %}"{% endif %}>
                                     <td style="font-weight: 600; color: var(--text-main);">
-                                        {{ item.month_name }} {{ item.year }}
+                                        {{ item.month_name }} {{ item.year|unlocalize }}
                                         <input type="hidden" name="history_month[]" value="{{ item.month|unlocalize }}">
                                         <input type="hidden" name="history_year[]" value="{{ item.year|unlocalize }}">
                                     </td>
@@ -607,7 +619,7 @@
                         {% for item in yearly_structure %}
                             <tr>
                                 <td style="font-weight: 700; color: var(--primary);">
-                                    {{ item.year }}
+                                    {{ item.year|unlocalize }}
                                 </td>
                                 <td>
                                     <div style="font-weight: 600;">
@@ -635,6 +647,38 @@
                             </tr>
                         {% endfor %}
                     </tbody>
+                    {% if yearly_totals %}
+                    <tfoot style="border-top: 2px solid var(--glass-border); background: rgba(99, 102, 241, 0.05);">
+                        <tr>
+                            <td style="font-weight: 800; color: var(--text-main); font-size: 0.9rem;">
+                                {% trans "TOTAL ACUMULADO" %}
+                            </td>
+                            <td>
+                                <div style="font-weight: 800; color: var(--text-main);">
+                                    <span style="font-size: 0.85rem; opacity: 0.8; margin-right: 2px;">R$</span>
+                                    {{ yearly_totals.gross|floatformat:2|localize }}
+                                </div>
+                            </td>
+                            <td>
+                                <div style="font-weight: 800; color: var(--text-main);">
+                                    <span style="font-size: 0.85rem; opacity: 0.8; margin-right: 2px;">R$</span>
+                                    {{ yearly_totals.costs|floatformat:2|localize }}
+                                </div>
+                            </td>
+                            <td>
+                                <div style="font-weight: 900; font-size: 1.1rem; color: {% if yearly_totals.net >= 0 %}var(--success){% else %}var(--danger){% endif %};">
+                                    <span style="font-size: 0.85rem; opacity: 0.9; margin-right: 2px;">R$</span>
+                                    {{ yearly_totals.net|floatformat:2|localize }}
+                                </div>
+                            </td>
+                            <td>
+                                <div style="font-weight: 800; font-size: 1.05rem; color: var(--primary);">
+                                    {{ yearly_totals.margin|floatformat:1 }}%
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                    {% endif %}
                 </table>
             </div>
         </div>
@@ -804,6 +848,35 @@
         if (data.year) form.querySelector('[name="year"]').value = data.year;
         
         updateFormFields();
+        
+        // Re-apply mask after population
+        const amountInput = form.querySelector('input[name="amount"]');
+        const amountTypeSelect = form.querySelector('select[name="amount_type"]');
+        
+        if (typeof VMasker !== 'undefined' && amountInput) {
+            if (amountTypeSelect.value === 'fixed') {
+                // If it's fixed, format the current value as money
+                const val = (parseFloat(data.amount) || 0) * 100;
+                amountInput.value = VMasker.toMoney(Math.round(val), {
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+                
+                VMasker(amountInput).maskMoney({
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+            } else {
+                VMasker(amountInput).maskNumber();
+            }
+        }
+        
         toggleModal(true);
     }
 
@@ -839,6 +912,36 @@
         if (frequencySelect) {
             frequencySelect.addEventListener('change', updateFormFields);
         }
+
+        const amountInput = document.querySelector('#costForm input[name="amount"]');
+        const amountTypeSelect = document.querySelector('#costForm select[name="amount_type"]');
+
+        function applyAmountMask() {
+            if (typeof VMasker === 'undefined' || !amountInput) return;
+
+            // Unbind existing mask if any (not strictly needed with VMasker but good practice)
+            VMasker(amountInput).unMask();
+
+            if (amountTypeSelect.value === 'fixed') {
+                VMasker(amountInput).maskMoney({
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+            } else {
+                // For percentage, we use a simpler numeric mask or no mask
+                VMasker(amountInput).maskNumber();
+            }
+        }
+
+        if (amountTypeSelect) {
+            amountTypeSelect.addEventListener('change', applyAmountMask);
+        }
+
+        // Initialize mask on load
+        applyAmountMask();
 
         // Re-enable disabled fields before form submission
         const costForm = document.querySelector('#costModal form');

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div style="min-height: 100vh; background: #0f172a; padding: 2rem 1rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+        
+        <!-- Header -->
+        <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem;">
+            <div style="background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12" y1="8" y2="8"/></svg>
+            </div>
+            <div>
+                <h1 style="color: white; font-size: 1.5rem; font-weight: 800; margin: 0;">{% trans "Instruções da Reserva" %}</h1>
+                <p style="color: #94a3b8; margin: 0.25rem 0 0;">{{ property.name }}</p>
+            </div>
+        </div>
+
+        <!-- Instructions Content -->
+        <div style="background: white; border-radius: 24px; padding: 3rem; color: #1e293b; line-height: 1.8; font-size: 1.1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);">
+            {% if property.reservation_instructions %}
+                <div class="rich-text-content">
+                    {{ property.reservation_instructions|safe }}
+                </div>
+            {% else %}
+                <div style="text-align: center; padding: 3rem 0; color: #64748b;">
+                    <p>{% trans "Nenhuma instrução específica foi cadastrada para esta propriedade." %}</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Footer Actions -->
+        <div style="margin-top: 2rem; text-align: center;">
+            <a href="{% url 'guest_checkin' token=reservation.checkin_token %}" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                {% trans "Voltar para Confirmação" %}
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .rich-text-content h1 { font-size: 2rem; margin-bottom: 1.5rem; color: #0f172a; }
+    .rich-text-content h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: #0f172a; }
+    .rich-text-content p { margin-bottom: 1rem; }
+    .rich-text-content ul, .rich-text-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+    .rich-text-content li { margin-bottom: 0.5rem; }
+</style>
+{% endblock %}

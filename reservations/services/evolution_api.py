@@ -26,6 +26,27 @@ class EvolutionService:
             self.instance_name = instance_name or 'vbook'
             self.instance_key = None
 
+    def _apply_minimal_settings(self, name):
+        """Aplica configurações mínimas para a instância (não guardar histórico, ignorar grupos, etc)."""
+        settings_payload = {
+            "rejectCall": True,
+            "msgCall": "",
+            "groupsIgnore": True,
+            "alwaysOnline": False,
+            "readMessages": False,
+            "readStatus": False,
+            "syncFullHistory": False
+        }
+        try:
+            requests.post(
+                f"{self.base_url}/settings/set/{name}",
+                headers=self.headers,
+                json=settings_payload,
+                timeout=5
+            )
+        except Exception as e:
+            logger.error(f"Erro ao aplicar configurações mínimas na instância {name}: {e}")
+
     def create_instance(self, instance_name=None):
         """Cria uma nova instância na Evolution API ou retorna a existente."""
         name = instance_name or self.instance_name
@@ -40,6 +61,7 @@ class EvolutionService:
                 json=data
             )
             if response.status_code in [200, 201]:
+                self._apply_minimal_settings(name)
                 return response.json()
             
             # Se já existir ou erro de permissão (normalmente ocorre se já existir na v2)
@@ -54,6 +76,7 @@ class EvolutionService:
                     instances = fetch_response.json()
                     for inst in instances:
                         if inst.get('name') == name or inst.get('instanceName') == name:
+                            self._apply_minimal_settings(name)
                             # Formata para que o código chamador encontre o 'hash' (token)
                             return {
                                 'instance': inst,

@@ -10,8 +10,26 @@ from django.utils import timezone
 from django.db.models import Sum, Q
 
 from .models import Property, PropertyCost, FinancialHistory
-from .forms import PropertyForm, PropertyCostForm
+from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm
 from reservations.models import Reservation, ReservationCost
+
+class PropertyInstructionsUpdateView(LoginRequiredMixin, UpdateView):
+    model = Property
+    form_class = PropertyInstructionsForm
+    template_name = 'properties/property_instructions_form.html'
+    context_object_name = 'property'
+
+    def get_queryset(self):
+        return Property.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_item'] = 'instructions'
+        return context
+
+    def get_success_url(self):
+        messages.success(self.request, _("Instruções de reserva atualizadas com sucesso!"))
+        return reverse_lazy('properties:dashboard', kwargs={'pk': self.object.pk})
 
 class PropertyDashboardView(LoginRequiredMixin, DetailView):
     model = Property
@@ -27,8 +45,8 @@ class PropertyDashboardView(LoginRequiredMixin, DetailView):
         # Financial Stats Logic
         today = timezone.now().date()
         month_reservations = self.object.reservations.filter(
-            start_date__month=today.month, 
-            start_date__year=today.year
+            end_date__month=today.month, 
+            end_date__year=today.year
         )
         
         # Portuguese month names mapping
@@ -121,8 +139,8 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
         res_data = {} # Key: (month, year), Value: {'gross': D, 'costs': D}
         
         for res in reservations:
-            # We use start_date for month/year alignment
-            key = (res.start_date.month, res.start_date.year)
+            # We use end_date (Checkout) for month/year alignment as requested
+            key = (res.end_date.month, res.end_date.year)
             if key not in res_data:
                 res_data[key] = {'gross': Decimal(0), 'costs': Decimal(0)}
             res_data[key]['gross'] += res.total_value
@@ -130,7 +148,7 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
         # Bulk fetch reservation costs
         all_res_costs = ReservationCost.objects.filter(reservation__in=reservations)
         for rc in all_res_costs:
-            key = (rc.reservation.start_date.month, rc.reservation.start_date.year)
+            key = (rc.reservation.end_date.month, rc.reservation.end_date.year)
             res_data[key]['costs'] += rc.value
             
         # 2. Fetch all monthly property costs in bulk
@@ -229,6 +247,25 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
             })
             
         context['yearly_structure'] = sorted(yearly_structure, key=lambda x: x['year'], reverse=True)
+
+        # 6. Grand totals for yearly structure
+        total_gross = Decimal(0)
+        total_costs = Decimal(0)
+        total_net = Decimal(0)
+        for item in yearly_structure:
+            total_gross += item['gross']
+            total_costs += item['costs']
+            total_net += item['net']
+        
+        total_margin = (total_net / total_gross * 100) if total_gross > 0 else Decimal(0)
+        
+        context['yearly_totals'] = {
+            'gross': total_gross,
+            'costs': total_costs,
+            'net': total_net,
+            'margin': total_margin
+        }
+        
         return context
 
     def _get_month_name(self, month_index):

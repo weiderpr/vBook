@@ -318,7 +318,7 @@
 <div class="reservations-container">
     <div class="property-mini-header">
         <div>
-            <h1 style="margin: 0; font-size: 1.8rem;">{% trans "Reservas" %}</h1>
+            <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{% trans "Reservas" %}</h1>
             <p style="color: var(--text-muted); margin: 4px 0 0;">{{ property.name }}</p>
         </div>
         <a href="{% url 'reservations:create' property.pk %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">

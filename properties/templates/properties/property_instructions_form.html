@@ -1,0 +1,106 @@
+{% extends 'dashboard_layout.html' %}
+{% load static i18n %}
+
+{% block extra_head %}
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<style>
+    .property-panel-content {
+        padding-top: 2rem;
+    }
+    
+    .property-mini-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .instructions-editor-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: var(--glass-shadow);
+    }
+
+    #editor {
+        height: 400px;
+        background: white;
+        color: #1e293b;
+        border-radius: 0 0 12px 12px;
+        font-size: 1.1rem;
+    }
+    .ql-toolbar.ql-snow {
+        background: #f8fafc;
+        border-radius: 12px 12px 0 0;
+        border-color: #cbd5e1;
+    }
+    .ql-container.ql-snow {
+        border-color: #cbd5e1;
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with property=property active_item='instructions' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-panel-content">
+    <div class="property-mini-header">
+        <div>
+            <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">
+                {% trans "Instruções de Reserva" %}
+            </h1>
+            <p style="color: var(--text-muted); margin: 4px 0 0; font-size: 0.95rem; line-height: 1.4; max-width: 650px;">
+                {% trans "Configure aqui as orientações de check-in, regras da casa e informações úteis. Este conteúdo será exibido automaticamente para o hóspede assim que ele finalizar o formulário de check-in." %}
+            </p>
+        </div>
+        <button type="submit" form="instructions-form" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            {% trans "Salvar Instruções" %}
+        </button>
+    </div>
+
+    <div class="instructions-editor-card">
+        <form method="post" id="instructions-form">
+            {% csrf_token %}
+            {{ form.reservation_instructions }}
+            
+            <div id="editor-wrapper" style="border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;">
+                <div id="editor">
+                    {% if property.reservation_instructions %}
+                        {{ property.reservation_instructions|safe }}
+                    {% endif %}
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['link', 'clean']
+                ]
+            },
+            placeholder: '{% trans "Escreva aqui as instruções de check-in, regras da casa, senha do Wi-Fi, etc..." %}'
+        });
+
+        var form = document.getElementById('instructions-form');
+        form.onsubmit = function() {
+            var instructions = document.querySelector('input[name=reservation_instructions]');
+            instructions.value = quill.root.innerHTML;
+        };
+    });
+</script>
+{% endblock %}
