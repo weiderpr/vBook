@@ -152,7 +152,8 @@ def send_whatsapp_reservation(request, property_pk, pk):
     
     reservation = get_object_or_404(Reservation, pk=pk, property__pk=property_pk, property__user=request.user)
     
-    service = EvolutionService()
+    # Usa a instância do proprietário da propriedade
+    service = EvolutionService(user=reservation.property.user)
     success, message = service.enviar_link_checkin(reservation.id)
     
     if success:

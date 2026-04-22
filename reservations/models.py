@@ -179,7 +179,7 @@ class Companion(models.Model):
         verbose_name=_("Reserva")
     )
     name = models.CharField(max_length=255, verbose_name=_("Nome"))
-    rg = models.CharField(max_length=20, verbose_name=_("RG"))
+    rg = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("RG"))
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -8,6 +8,7 @@ from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 import json
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm
+from reservations.services.evolution_api import EvolutionService
 
 def register_view(request):
     if request.method == 'POST':
@@ -90,3 +91,61 @@ def update_language_preference(request):
         except Exception:
             pass
     return JsonResponse({'status': 'error'}, status=400)
+
+@login_required
+def whatsapp_settings_view(request):
+    """
+    View para gerenciar a conexão do usuário com o WhatsApp via Evolution API.
+    """
+    user = request.user
+    service = EvolutionService(user=user)
+    
+    status = service.get_connection_status()
+    
+    # Se não tiver instância ainda ou se ela foi deletada do servidor (not_found), tenta criar/vincular
+    if not user.whatsapp_instance_name or status == 'not_found':
+        instance_name = f"vbook_{user.id}"
+        result = service.create_instance(instance_name)
+        if result:
+            # Na v2, a apikey da instância é retornada no campo 'hash' como uma string
+            hash_data = result.get('hash')
+            if isinstance(hash_data, str):
+                apikey = hash_data
+            else:
+                instance_data = result.get('instance', {})
+                apikey = instance_data.get('apikey') if isinstance(instance_data, dict) else None
+                
+            user.whatsapp_instance_name = instance_name
+            user.whatsapp_instance_key = apikey
+            user.save(update_fields=['whatsapp_instance_name', 'whatsapp_instance_key'])
+            service = EvolutionService(user=user) # Re-init com os dados
+            status = service.get_connection_status() # Atualiza o status após criar
+    
+    # Atualiza cache de conexão no banco
+    is_connected = (status == 'open')
+    if user.whatsapp_connected != is_connected:
+        user.whatsapp_connected = is_connected
+        user.save(update_fields=['whatsapp_connected'])
+    
+    qr_code = None
+    if status != 'open':
+        qr_data = service.get_qrcode()
+        if qr_data:
+            # Evolution API v2 retorna o base64 em qr_data['qrcode']['base64'] ou similar
+            qr_code = qr_data.get('qrcode', {}).get('base64') or qr_data.get('base64')
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'logout':
+            if service.logout_instance():
+                messages.success(request, _("WhatsApp desconectado com sucesso."))
+            else:
+                messages.error(request, _("Erro ao desconectar WhatsApp."))
+            return redirect('whatsapp_settings')
+        
+    return render(request, 'accounts/whatsapp_settings.html', {
+        'status': status,
+        'qr_code': qr_code,
+        'instance_name': user.whatsapp_instance_name,
+        'instance_key': user.whatsapp_instance_key
+    })

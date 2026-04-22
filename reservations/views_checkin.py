@@ -26,11 +26,16 @@ class GuestCheckInView(View):
         if reservation.checkin_completed:
             return render(request, 'reservations/checkin_success.html', {'reservation': reservation})
 
-        # Pre-resolve client by phone if not linked yet
+        # Pre-resolve client by phone if not linked yet, scoped to the current owner
         client = reservation.client
         if not client:
             from .models import Client
-            client = Client.objects.filter(phone=reservation.client_phone).first()
+            owner = reservation.property.user
+            client = Client.objects.filter(
+                phone=reservation.client_phone, 
+                reservations__property__user=owner
+            ).distinct().first()
+            
             if client:
                 reservation.client = client
                 reservation.save(update_fields=['client'])
@@ -54,6 +59,7 @@ class GuestCheckInView(View):
 
     def post(self, request, token):
         reservation = get_object_or_404(Reservation, checkin_token=token)
+        owner = reservation.property.user
         
         # Ensure client is resolved before form initialization
         client = reservation.client
@@ -61,10 +67,19 @@ class GuestCheckInView(View):
         
         if not client:
             from .models import Client
-            client, _ = Client.objects.get_or_create(
-                phone=reservation.client_phone, 
-                defaults={'name': new_name or reservation.client_name}
-            )
+            # Try to find existing client FOR THIS OWNER first
+            client = Client.objects.filter(
+                phone=reservation.client_phone,
+                reservations__property__user=owner
+            ).distinct().first()
+            
+            if not client:
+                # Create a new client record
+                client = Client.objects.create(
+                    phone=reservation.client_phone, 
+                    name=new_name or reservation.client_name
+                )
+            
             reservation.client = client
             reservation.save(update_fields=['client'])
         
@@ -319,8 +334,8 @@ class ReservationSendAuthorizationWhatsAppView(LoginRequiredMixin, View):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': f"Erro ao gerar PDF: {str(e)}"}, status=500)
 
-        # 2. Inicializar Serviço
-        service = EvolutionService()
+        # 2. Inicializar Serviço com a instância do proprietário
+        service = EvolutionService(user=reservation.property.user)
         filename = f"Autorizacao_{reservation.start_date.strftime('%d_%m_%Y')}.pdf"
         
         results = []

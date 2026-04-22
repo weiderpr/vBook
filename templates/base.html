@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
+        .user-dropdown {
+            min-width: 240px;
+        }
         .lang-trigger:hover {
             background: var(--glass-border);
             transform: translateY(-1px);
@@ -83,8 +86,8 @@
                 {% if user.is_authenticated %}
                     <div class="dropdown-divider-v" style="width: 1px; height: 20px; background: var(--glass-border); margin: 0 0.5rem;"></div>
                     <a href="{% url 'dashboard' %}">Dashboard</a>
-                    <div class="user-menu" id="user-menu">
-                        <div class="user-trigger" id="user-trigger">
+                        <div class="user-menu" id="user-menu">
+                            <div class="user-trigger" id="user-trigger">
                             <div style="width: 24px; height: 24px; border-radius: 50%; overflow: hidden; background: var(--primary); display: flex; align-items: center; justify-content: center;">
                                 {% if user.profile_picture %}
                                     <img src="{{ user.profile_picture.url }}" alt="" style="width: 100%; height: 100%; object-fit: cover;">
@@ -92,15 +95,22 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="color: white;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                 {% endif %}
                             </div>
-                            <span>{{ user.full_name|default:user.email|truncatechars:15 }}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
                         </div>
                         <div class="user-dropdown" id="user-dropdown">
+                            <!-- Link WhatsApp - Prioridade Máxima -->
+                            <a href="{% url 'whatsapp_settings' %}" class="dropdown-item" id="whatsapp-dropdown-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                <span>{% trans "Integração WhatsApp" %}</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            
                             <a href="{% url 'profile' %}" class="dropdown-item">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                 {% trans "Perfil" %}
                             </a>
                             <div class="dropdown-divider"></div>
+                            
                             <a href="{% url 'logout' %}" class="dropdown-item" style="color: #ef4444;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
                                 {% trans "Sair" %}

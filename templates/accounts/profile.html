@@ -4,73 +4,70 @@
 {% block title %}{% trans "Meu Perfil" %} - VerticeBook{% endblock %}
 
 {% block dashboard_content %}
-<div class="profile-container" style="display: grid; grid-template-columns: repeat(auto-fit, 380px); gap: 1.5rem; justify-content: start; align-items: stretch;">
-    
-    <!-- Profile Info Card -->
-    <div class="glass-card" style="padding: 1.5rem; display: flex; flex-direction: column; height: 100%;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; text-align: left;">{% trans "Dados Pessoais" %}</h2>
-        
-        <form method="POST" enctype="multipart/form-data" id="profile-form" style="display: flex; flex-direction: column; flex: 1;">
-            {% csrf_token %}
+    <div class="dashboard-header mb-5">
+        <div>
+            <h1 class="h2">{% trans "Meu Perfil" %}</h1>
+            <p class="text-muted">{% trans "Gerencie suas informações pessoais e configurações de segurança." %}</p>
+        </div>
+    </div>
+
+    <div class="profile-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; justify-content: start; align-items: stretch;">
+        <!-- Profile Info Card -->
+        <div class="glass-card shadow-sm" style="padding: 1.5rem; display: flex; flex-direction: column; height: 100%;">
+            <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; text-align: left;">{% trans "Dados Pessoais" %}</h2>
             
-
-
-            <div style="text-align: center; margin-bottom: 1.5rem;">
-                <div id="avatar-container" class="avatar-upload" style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 0 auto 1rem; border: 3px solid var(--primary); background: var(--glass-border); display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;">
-                    {% if user.profile_picture %}
-                        <img src="{{ user.profile_picture.url }}" alt="{% trans 'Foto de Perfil' %}" style="width: 100%; height: 100%; object-fit: cover;">
-                    {% else %}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="color: var(--text-muted);"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    {% endif %}
-                    <div class="avatar-overlay">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <form method="POST" enctype="multipart/form-data" id="profile-form" style="display: flex; flex-direction: column; flex: 1;">
+                {% csrf_token %}
+                
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div id="avatar-container" class="avatar-upload" style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 0 auto 1rem; border: 3px solid var(--primary); background: var(--glass-border); display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="{% trans 'Foto de Perfil' %}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" style="color: var(--text-muted);"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        {% endif %}
+                        <div class="avatar-overlay">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                        </div>
                     </div>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">{{ user.email }}</p>
-            </div>
 
-            <div class="form-group" style="margin-bottom: 1rem;">
-                <label for="{{ profile_form.full_name.id_for_label }}" style="font-size: 0.85rem;">{% trans "Nome Completo" %}</label>
-                {{ profile_form.full_name }}
-            </div>
-
-            <!-- Hidden Default Input -->
-            <div style="display: none;">
-                {{ profile_form.profile_picture }}
-            </div>
-
-            <div style="margin-top: auto;">
-                <button type="submit" name="update_profile" class="btn btn-primary" style="width: 100%; padding: 0.6rem; font-size: 0.9rem;">{% trans "Salvar Alterações" %}</button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Password Change Card -->
-    <div class="glass-card" style="padding: 1.5rem; display: flex; flex-direction: column; height: 100%;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; text-align: left;">{% trans "Segurança" %}</h2>
-        
-        <form method="POST" style="display: flex; flex-direction: column; flex: 1;">
-            {% csrf_token %}
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.85rem;">{% trans "Mantenha sua conta protegida alterando sua senha regularmente." %}</p>
-            
-            {% for field in password_form %}
                 <div class="form-group" style="margin-bottom: 1rem;">
-                    <label for="{{ field.id_for_label }}" style="font-size: 0.85rem;">{{ field.label }}</label>
-                    <input type="password" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" style="width: 100%; padding: 0.6rem; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
-                    {% if field.errors %}
-                        {% for error in field.errors %}
-                            <p style="color: #ef4444; font-size: 0.75rem; margin-top: 0.3rem;">{{ error }}</p>
-                        {% endfor %}
-                    {% endif %}
+                    <label for="{{ profile_form.full_name.id_for_label }}" style="font-size: 0.85rem;">{% trans "Nome Completo" %}</label>
+                    {{ profile_form.full_name }}
                 </div>
-            {% endfor %}
 
-            <div style="margin-top: auto;">
-                <button type="submit" name="change_password" class="btn btn-primary" style="width: 100%; padding: 0.6rem; font-size: 0.9rem;">{% trans "Alterar Senha" %}</button>
-            </div>
-        </form>
+                <div style="display: none;">
+                    {{ profile_form.profile_picture }}
+                </div>
+
+                <div style="margin-top: auto;">
+                    <button type="submit" name="update_profile" class="btn btn-primary" style="width: 100%; padding: 0.6rem; font-size: 0.9rem;">{% trans "Salvar Alterações" %}</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Password Change Card -->
+        <div class="glass-card shadow-sm" style="padding: 1.5rem; display: flex; flex-direction: column; height: 100%;">
+            <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; text-align: left;">{% trans "Segurança" %}</h2>
+            
+            <form method="POST" style="display: flex; flex-direction: column; flex: 1;">
+                {% csrf_token %}
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.85rem;">{% trans "Mantenha sua conta protegida alterando sua senha regularmente." %}</p>
+                
+                {% for field in password_form %}
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="{{ field.id_for_label }}" style="font-size: 0.85rem;">{{ field.label }}</label>
+                        <input type="password" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" style="width: 100%; padding: 0.6rem; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
+                    </div>
+                {% endfor %}
+
+                <div style="margin-top: auto;">
+                    <button type="submit" name="change_password" class="btn btn-primary" style="width: 100%; padding: 0.6rem; font-size: 0.9rem;">{% trans "Alterar Senha" %}</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
 <style>
     .form-group input[type="text"], 
