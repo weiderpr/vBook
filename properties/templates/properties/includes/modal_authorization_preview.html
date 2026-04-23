@@ -1,0 +1,147 @@
+{% load i18n %}
+
+<style>
+    /* Estilos do Modal de Alta Fidelidade (Sincronizados com o editor) */
+    .vbook-auth-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px);
+        z-index: 99999;
+        justify-content: center;
+        align-items: center;
+    }
+    .vbook-auth-modal-overlay.active { display: flex; }
+
+    .vbook-auth-modal-content {
+        background: #f1f5f9;
+        width: 95%;
+        max-width: 1240px;
+        height: 95vh;
+        border-radius: 24px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+
+    .vbook-auth-modal-header {
+        padding: 1rem 2.5rem;
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .vbook-auth-modal-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 60px 0;
+        display: flex;
+        justify-content: center;
+        background: #cbd5e1; /* Cor de fundo "mesa" */
+    }
+
+    .vbook-auth-a4-page {
+        background: white;
+        width: 210mm;
+        min-height: 297mm;
+        padding: 8mm 12mm;
+        box-shadow: 0 0 40px rgba(0,0,0,0.15);
+        color: black;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        line-height: 1.2;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+    
+    .vbook-auth-a4-page p { margin: 0; }
+    .vbook-auth-a4-page table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+    .vbook-auth-a4-page table td, .vbook-auth-a4-page table th { padding: 8px; border: none; }
+    .vbook-auth-a4-page table.with-border, .vbook-auth-a4-page table.with-border td, .vbook-auth-a4-page table.with-border th {
+        border: 1px solid #000;
+    }
+    .vbook-auth-a4-page .document-footer {
+        margin-top: auto !important;
+        padding-top: 5mm;
+    }
+
+    .vbook-auth-btn-close {
+        background: transparent;
+        border: none;
+        padding: 8px;
+        color: #64748b;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .vbook-auth-btn-close:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+    }
+</style>
+
+<div id="vbookAuthPreviewModal" class="vbook-auth-modal-overlay" onclick="if(event.target==this) vbook_closeAuthPreview()">
+    <div class="vbook-auth-modal-content">
+        <div class="vbook-auth-modal-header">
+            <div>
+                <h3 id="vbookAuthTitle" style="margin: 0; font-size: 1.3rem; font-weight: 800; color: #0f172a;">{% trans "Autorização de Locação" %}</h3>
+                <p id="vbookAuthSubtitle" style="color: #64748b; font-size: 0.85rem; margin: 2px 0 0;">{% trans "Pré-visualização fiel ao documento final" %}</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div id="vbookAuthHeaderActions" style="display: flex; align-items: center; gap: 1rem;">
+                    <!-- Ações dinâmicas injetadas aqui -->
+                </div>
+                <div style="width: 1px; height: 30px; background: #e2e8f0; margin: 0 4px;"></div>
+                <button type="button" class="vbook-auth-btn-close" onclick="vbook_closeAuthPreview()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="vbook-auth-modal-body">
+            <div id="vbookAuthHtmlContent" class="vbook-auth-a4-page">
+                <!-- Injetado via JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function vbook_openAuthPreview(htmlContent, title = null, subtitle = null) {
+        const modal = document.getElementById('vbookAuthPreviewModal');
+        const container = document.getElementById('vbookAuthHtmlContent');
+        const titleEl = document.getElementById('vbookAuthTitle');
+        const subtitleEl = document.getElementById('vbookAuthSubtitle');
+        
+        if (title) titleEl.innerText = title;
+        if (subtitle) subtitleEl.innerText = subtitle;
+        
+        container.innerHTML = htmlContent;
+        modal.classList.add('active');
+        
+        // Evento customizado para quando o modal abre
+        modal.dispatchEvent(new CustomEvent('vbook:authModalOpened'));
+    }
+
+    function vbook_closeAuthPreview() {
+        const modal = document.getElementById('vbookAuthPreviewModal');
+        modal.classList.remove('active');
+        
+        // Evento customizado para quando o modal fecha
+        modal.dispatchEvent(new CustomEvent('vbook:authModalClosed'));
+    }
+
+    // Fechar com ESC
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') vbook_closeAuthPreview();
+    });
+</script>

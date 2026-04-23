@@ -4,6 +4,9 @@
 {% block title %}{% trans "Reservas" %} - {{ property.name }} - VerticeBook{% endblock %}
 
 {% block extra_head %}
+<!-- HTML to Canvas and PDF libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
     .reservations-container {
         padding-top: 2rem;
@@ -211,101 +214,33 @@
         align-items: flex-end;
     }
 
-    /* Modal Styles */
+    /* Estilos do Modal de Detalhes do Hóspede (Mantido no bloco principal) */
     .vbook-modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
+        width: 100vw;
+        height: 100vh;
         background: rgba(15, 23, 42, 0.8);
         backdrop-filter: blur(8px);
         display: none;
         align-items: center;
         justify-content: center;
-        z-index: 10000;
+        z-index: 9999;
         opacity: 0;
         transition: opacity 0.3s ease;
     }
-
-    .vbook-modal-overlay.active {
-        display: flex;
-        opacity: 1;
-    }
-
+    .vbook-modal-overlay.active { display: flex; opacity: 1; }
     .vbook-modal-content {
         background: var(--bg-card);
         backdrop-filter: blur(20px);
         border: 1px solid var(--glass-border);
         border-radius: 20px;
-        width: 100%;
+        width: 95%;
         max-width: 650px;
         max-height: 90vh;
         overflow-y: auto;
-        position: relative;
         padding: 2.5rem;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        transform: translateY(20px);
-        transition: transform 0.3s ease;
-        color: var(--text-main);
-    }
-
-    .vbook-modal-overlay.active .vbook-modal-content {
-        transform: translateY(0);
-    }
-
-    .modal-close {
-        position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
-        background: rgba(255, 255, 255, 0.05);
-        border: none;
-        color: white;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-
-    .modal-close:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* PDF Modal Specifics */
-    .pdf-modal-content {
-        max-width: 900px;
-        height: 95vh;
-        padding: 0;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .pdf-modal-header {
-        padding: 1rem 2rem;
-        border-bottom: 1px solid var(--glass-border);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: rgba(15, 23, 42, 0.4);
-    }
-
-    .pdf-iframe-container {
-        flex: 1;
-        width: 100%;
-        height: calc(95vh - 60px); /* Explicit height for Safari */
-        background: #525659; /* Standard PDF viewer background */
-    }
-
-    #pdfContainer object, #pdfContainer iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        display: block;
     }
 </style>
 {% endblock %}
@@ -383,7 +318,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><polyline points="20 6 9 17 4 12"/></svg>
                                         {% trans "Check-in Realizado" %}
                                     </span>
-                                    <form method="post" action="{% url 'reservations:reset_checkin' property.pk res.pk %}" onsubmit="return confirm('{% trans "Atenção: Isso excluirá os dados preenchidos pelo hóspede (documentos, acompanhantes, etc.) e permitirá um novo preenchimento. Confirmar exclusão?" %}')" style="display: inline;">
+                                    <form method="post" action="{% url 'reservations:reset_checkin' property.pk res.pk %}" onsubmit="return confirmAction('reset_checkin')" style="display: inline;">
                                         {% csrf_token %}
                                         <button type="submit" class="btn-reset-checkin" title="{% trans 'Excluir dados de check-in' %}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -398,12 +333,12 @@
                     </td>
                     <td>
                         <div class="actions-group">
-                            <a href="{% url 'reservations:send_whatsapp' property.pk res.pk %}" class="btn-icon whatsapp {% if res.welcome_message_sent %}sent{% endif %}" title="{% trans 'Enviar WhatsApp' %}" onclick='return confirm("{% trans "Deseja enviar a mensagem de boas-vindas via WhatsApp?" %}")'>
+                            <a href="{% url 'reservations:send_whatsapp' property.pk res.pk %}" class="btn-icon whatsapp {% if res.welcome_message_sent %}sent{% endif %}" title="{% trans 'Enviar WhatsApp' %}" onclick="return confirmAction('send_welcome')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                             </a>
                             {% if res.checkin_completed %}
                                 <button class="btn-icon pdf" title="{% trans 'Ver Autorização' %}" 
-                                        onclick='openPDFModal("{% url "reservations:authorization_pdf" property.pk res.pk %}", "{{ res.pk }}", {{ res.authorization_sent|yesno:"true,false" }})'>
+                                        onclick="openAuthorizationModal('{{ res.pk }}', '{% if res.authorization_sent %}1{% else %}0{% endif %}')">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                                 </button>
                             {% endif %}
@@ -428,14 +363,11 @@
             <a href="{% url 'reservations:create' property.pk %}" class="btn btn-primary">{% trans "Cadastrar Primeira Reserva" %}</a>
         </div>
         {% endif %}
-    </div>
-</div>
-
-<!-- Modal Structure -->
+   <!-- Guest Details Modal -->
 <div id="guestDetailModal" class="vbook-modal-overlay">
     <div class="vbook-modal-content">
-        <button class="modal-close" onclick="closeModal()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 1rem; right: 1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
         </button>
         <div id="modalBody">
             <div style="text-align: center; padding: 3rem;">
@@ -446,217 +378,237 @@
     </div>
 </div>
 
-<!-- PDF Preview Modal -->
-<div id="pdfPreviewModal" class="vbook-modal-overlay">
-    <div class="vbook-modal-content pdf-modal-content">
-        <div class="pdf-modal-header" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
-            <h3 style="margin: 0; font-size: 1.1rem; color: white;">{% trans "Autorização de Locação" %}</h3>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <button id="btnSendWhatsApp" class="btn btn-success" style="padding: 6px 12px; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; background: #25d366; border-color: #25d366; color: white; border-radius: 6px; border: none; cursor: pointer; transition: all 0.2s;" onclick="sendPDFToWhatsApp()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                    {% trans "Enviar WhatsApp" %}
-                </button>
-                <button class="modal-close" onclick="closePDFModal()" style="position: static; background: rgba(255,255,255,0.1); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
-            </div>
-        </div>
-        <div class="pdf-iframe-container" id="pdfContainer">
-            <!-- PDF Object is injected dynamically to prevent browser bugs -->
-        </div>
-    </div>
-</div>
-
 <style>
     @keyframes spin {
         to { transform: rotate(360deg); }
     }
+    .spinner {
+        border: 2px solid rgba(255,255,255,0.3);
+        border-left-color: white;
+        border-radius: 50%;
+        width: 14px;
+        height: 14px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+    }
 </style>
 
 <script>
+    // Guest Detail Modal Logic
+    function confirmAction(type) {
+        const messages = {
+            'reset_checkin': '{% trans "Atenção: Isso excluirá os dados preenchidos pelo hóspede (documentos, acompanhantes, etc.) e permitirá um novo preenchimento. Confirmar exclusão?" %}',
+            'send_welcome': '{% trans "Deseja enviar a mensagem de boas-vindas via WhatsApp?" %}'
+        };
+        return confirm(messages[type] || '{% trans "Tem certeza?" %}');
+    }
+
     async function openGuestDetail(reservationPk) {
         const modal = document.getElementById('guestDetailModal');
         const modalBody = document.getElementById('modalBody');
-        
-        // Show modal and loading state
         modal.classList.add('active');
+        
         modalBody.innerHTML = `
             <div style="text-align: center; padding: 3rem;">
-                <div class="spinner" style="border: 4px solid rgba(255,255,255,0.1); border-left-color: #00c6ff; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 1.5rem;"></div>
-                <p style="color: #94a3b8;">{% trans "Carregando dados do hóspede..." %}</p>
+                <div class="spinner" style="border-width: 4px; border-left-color: #00c6ff; width: 40px; height: 40px;"></div>
+                <p style="color: #94a3b8; margin-top: 1rem;">{% trans "Carregando dados do hóspede..." %}</p>
             </div>
         `;
 
         try {
-            // Using a dummy value for reservationPk because we replace it in JS
             let urlTemplate = "{% url 'reservations:guest_detail' property.pk 0 %}";
             const url = urlTemplate.replace('0', reservationPk);
-            
             const response = await fetch(url);
             if (!response.ok) throw new Error('Falha ao carregar dados');
-            
-            const html = await response.text();
-            modalBody.innerHTML = html;
+            modalBody.innerHTML = await response.text();
         } catch (error) {
             console.error(error);
-            modalBody.innerHTML = `
-                <div style="text-align: center; padding: 3rem; color: #ef4444;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1rem;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <p>{% trans "Erro ao carregar os dados. Tente novamente." %}</p>
-                </div>
-            `;
+            modalBody.innerHTML = `<div style="text-align: center; padding: 3rem; color: #ef4444;"><p>{% trans "Erro ao carregar os dados. Tente novamente." %}</p></div>`;
         }
     }
 
     function closeModal() {
-        const modal = document.getElementById('guestDetailModal');
-        modal.classList.remove('active');
+        document.getElementById('guestDetailModal').classList.remove('active');
     }
 
-    // Close on overlay click
-    document.getElementById('guestDetailModal').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
-    });
-
-    let currentPDFReservationPk = null;
+    // Authorization Preview and WhatsApp Logic
+    let currentReservationPk = null;
     let isAlreadySent = false;
 
-    function openPDFModal(url, reservationPk, sentStatus = false) {
-        const modal = document.getElementById('pdfPreviewModal');
-        const container = document.getElementById('pdfContainer');
-        currentPDFReservationPk = reservationPk;
-        isAlreadySent = sentStatus;
-        
-        // Reset/Update WhatsApp button state
-        const btnSend = document.getElementById('btnSendWhatsApp');
+    async function openAuthorizationModal(reservationPk, sentStatus) {
+        currentReservationPk = reservationPk;
+        isAlreadySent = sentStatus === "1" || sentStatus === true;
+
+        const actionsContainer = document.getElementById("vbookAuthHeaderActions");
+        const template = document.getElementById("authModalActionsTemplate");
+        actionsContainer.innerHTML = template.innerHTML;
+
+        const btnSend = document.getElementById("btnSendWhatsApp");
         if (btnSend) {
             btnSend.disabled = false;
             btnSend.style.opacity = "1";
-            
-            if (isAlreadySent) {
-                btnSend.style.background = "#25d366"; // Standard WhatsApp green
-                btnSend.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><polyline points="20 6 9 17 4 12"/></svg>
-                    {% trans "Já Enviado (Reenviar?)" %}
-                `;
-            } else {
-                btnSend.style.background = "#25d366"; // Brand WhatsApp green
-                btnSend.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                    {% trans "Enviar WhatsApp" %}
-                `;
-            }
+            btnSend.innerHTML = isAlreadySent ?
+                `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><polyline points="20 6 9 17 4 12"/></svg> {% trans "Já Enviado (Reenviar?)" %}` :
+                `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> {% trans "Enviar WhatsApp" %}`;
         }
-        
-        // Show modal first
-        modal.classList.add('active');
-        
-        // Load URL with cache buster
-        const fullUrl = url + (url.indexOf('?') > -1 ? '&' : '?') + 't=' + new Date().getTime();
-        
-        // Inject object tag dynamically after a small delay to ensure modal is visible
-        setTimeout(() => {
-            container.innerHTML = `
-                <object data="${fullUrl}" type="application/pdf" width="100%" height="100%">
-                    <p style="color: white; text-align: center; padding: 2rem;">
-                        O seu navegador não suporta visualização direta de PDF. 
-                        <br><br>
-                        <a href="${url}" target="_blank" class="btn btn-primary">Clique para Baixar / Visualizar o PDF</a>
-                    </p>
-                </object>
-            `;
-        }, 150);
-    }
 
-    async function sendPDFToWhatsApp() {
-        if (!currentPDFReservationPk) return;
-        
-        // Confirmation if already sent
-        if (isAlreadySent) {
-            if (!confirm("{% trans "Esta autorização já foi enviada anteriormente para este hóspede e condomínio. Deseja enviar novamente?" %}")) {
-                return;
-            }
-        }
-        
-        const btnSend = document.getElementById('btnSendWhatsApp');
-        
-        // Loading state
-        btnSend.disabled = true;
-        btnSend.style.opacity = "0.7";
-        btnSend.innerHTML = `
-            <div class="spinner" style="border: 2px solid rgba(255,255,255,0.3); border-left-color: white; border-radius: 50%; width: 14px; height: 14px; animation: spin 1s linear infinite;"></div>
-            {% trans "Enviando..." %}
-        `;
+        vbook_openAuthPreview(`<div style="text-align: center; padding: 4rem;"><div class="spinner" style="border-width: 4px; border-left-color: #00c6ff; width: 40px; height: 40px;"></div><p style="color: #94a3b8; margin-top: 1rem;">{% trans "Gerando visualização de alta fidelidade..." %}</p></div>`);
 
         try {
-            const url = "{% url 'reservations:reservation_send_whatsapp' property.pk 0 %}".replace('0', currentPDFReservationPk);
+            const url = "{% url "reservations:authorization_html" property.pk 0 %}".replace("0", reservationPk);
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Falha ao carregar HTML");
+            const html = await response.text();
+            document.getElementById("vbookAuthHtmlContent").innerHTML = html;
+        } catch (error) {
+            document.getElementById("vbookAuthHtmlContent").innerHTML = `<div style="color: #ef4444; padding: 2rem; text-align: center;">{% trans "Erro ao carregar pré-visualização." %}</div>`;
+        }
+    }
+
+    async function createAuthorizationPDF() {
+        const element = document.getElementById('vbookAuthHtmlContent');
+        const canvas = await html2canvas(element, {
+            scale: 2.5, // Alta fidelidade para impressão
+            useCORS: true,
+            logging: false,
+            backgroundColor: '#ffffff'
+        });
+        
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        return pdf;
+    }
+
+    async function sendAuthorizationToWhatsApp() {
+        if (!currentReservationPk) return;
+        if (isAlreadySent && !confirm("{% trans 'Esta autorização já foi enviada. Enviar novamente?' %}")) return;
+        
+        const btnSend = document.getElementById('btnSendWhatsApp');
+        const btnDownload = document.getElementById('btnDownloadPDF');
+        
+        btnSend.disabled = true;
+        if (btnDownload) btnDownload.disabled = true;
+        
+        btnSend.style.opacity = "0.7";
+        btnSend.innerHTML = `<div class="spinner"></div> {% trans "Processando..." %}`;
+
+        try {
+            const pdf = await createAuthorizationPDF();
+            const pdfBase64 = pdf.output('datauristring');
+            
+            btnSend.innerHTML = `<div class="spinner"></div> {% trans "Enviando..." %}`;
+
+            // 2. Send to backend
+            const url = "{% url 'reservations:reservation_send_whatsapp' property.pk 0 %}".replace('0', currentReservationPk);
+            const formData = new FormData();
+            formData.append('pdf_base64', pdfBase64);
+            
             const response = await fetch(url, {
                 method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                }
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                body: formData
             });
 
             const data = await response.json();
-            console.log("WhatsApp Response Data:", data);
-
             if (data.status === 'success') {
                 isAlreadySent = true;
                 btnSend.disabled = false;
+                if (btnDownload) btnDownload.disabled = false;
                 btnSend.style.opacity = "1";
-                btnSend.style.background = "#25d366";
-                btnSend.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><polyline points="20 6 9 17 4 12"/></svg>
-                    {% trans "Já Enviado (Reenviar?)" %}
-                `;
-                
-                if (window.showToast) {
-                    showToast("{% trans 'PDF enviado com sucesso!' %}", "success");
-                } else {
-                    alert("{% trans 'PDF enviado com sucesso!' %}");
-                }
+                btnSend.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><polyline points="20 6 9 17 4 12"/></svg> {% trans "Já Enviado" %}`;
+                alert("{% trans 'Autorização enviada com sucesso!' %}");
             } else {
-                throw new Error(data.message || "{% trans 'Erro ao enviar' %}");
+                throw new Error(data.message);
             }
         } catch (error) {
-            console.error("Erro no WhatsApp:", error);
+            console.error(error);
             btnSend.disabled = false;
+            if (btnDownload) btnDownload.disabled = false;
             btnSend.style.opacity = "1";
-            btnSend.style.background = "#dc3545";
+            btnSend.style.background = "#ef4444";
             btnSend.innerHTML = `{% trans "Erro ao enviar" %}`;
-            
-            if (window.showToast) {
-                showToast(error.message, "error");
-            } else {
-                alert("{% trans 'Falha no envio:' %} " + error.message);
-            }
+            alert("{% trans 'Falha no envio:' %} " + error.message);
         }
     }
 
-    function closePDFModal() {
-        const modal = document.getElementById('pdfPreviewModal');
-        const container = document.getElementById('pdfContainer');
+    async function downloadPDFDirectly() {
+        if (!currentReservationPk) return;
         
-        modal.classList.remove('active');
-        
-        // Clean up DOM to completely unload the PDF plugin after animation finishes
-        setTimeout(() => {
-            container.innerHTML = '';
-            currentPDFReservationPk = null;
-        }, 300);
+        const btnDownload = document.getElementById('btnDownloadPDF');
+        const originalHtml = btnDownload.innerHTML;
+        btnDownload.disabled = true;
+        btnDownload.innerHTML = `<div class="spinner"></div>`;
+
+        try {
+            const pdf = await createAuthorizationPDF();
+            pdf.save(`autorizacao_${currentReservationPk}.pdf`);
+        } catch (error) {
+            console.error(error);
+            alert("{% trans 'Erro ao gerar PDF para download.' %}");
+        } finally {
+            btnDownload.disabled = false;
+            btnDownload.innerHTML = originalHtml;
+        }
     }
 
-    document.getElementById('pdfPreviewModal').addEventListener('click', function(e) {
-        if (e.target === this) closePDFModal();
+    function closeAuthorizationModal() {
+        vbook_closeAuthPreview();
+        currentReservationPk = null;
+    }
+
+    // Generic Close Handlers
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { closeModal(); closeAuthorizationModal(); }
     });
 
-    // Close on Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
+    window.onclick = e => {
+        if (e.target.classList.contains('vbook-modal-overlay') || e.target.classList.contains('vbook-auth-modal-overlay')) {
             closeModal();
-            closePDFModal();
+            closeAuthorizationModal();
         }
-    });
+    };
+</script>
+{% endblock %}
+
+{% block extra_scripts %}
+<style>
+    /* Estilos de Check-in (Mantidos) */
+    .vbook-modal-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .vbook-modal-overlay.active { display: flex; opacity: 1; }
+</style>
+
+{% include 'properties/includes/modal_authorization_preview.html' %}
+
+<!-- Templates de Ações para o Modal -->
+<div id="authModalActionsTemplate" style="display: none;">
+    <button id="btnDownloadPDF" class="btn btn-outline" style="border-radius: 10px; border-color: #cbd5e1; color: #334155; font-size: 0.9rem;" onclick="downloadPDFDirectly()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        {% trans "Baixar PDF" %}
+    </button>
+    <button id="btnSendWhatsApp" class="btn btn-primary" style="border-radius: 10px; background: #22c55e; border: none; font-size: 0.9rem;" onclick="sendAuthorizationToWhatsApp()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        {% trans "Enviar WhatsApp" %}
+    </button>
+</div>
+<script>
+    console.log("VBook Authorization Modal v5.0 Loaded (Fidelity Sync)");
 </script>
 {% endblock %}

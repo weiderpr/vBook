@@ -150,9 +150,9 @@ class GuestPropertyInstructionsView(View):
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-def generate_reservation_authorization_pdf(reservation):
+def generate_reservation_authorization_html(reservation, for_pdf=False):
     """
-    Gera os bytes do PDF de autorização para uma reserva específica usando o modelo HTML.
+    Gera o HTML final da autorização com todas as variáveis substituídas.
     """
     prop = reservation.property
     owner = prop.user
@@ -160,7 +160,7 @@ def generate_reservation_authorization_pdf(reservation):
     complement = getattr(client, 'complement', None) if client else None
     companions = reservation.companions.all()
 
-    # 1. Obter o modelo HTML (Fallback para um padrão se vazio)
+    # 1. Obter o modelo HTML
     html_content = prop.authorization_template
     if not html_content:
         html_content = "<h2>AUTORIZAÇÃO DE LOCAÇÃO</h2><p>Modelo não configurado.</p>"
@@ -184,41 +184,38 @@ def generate_reservation_authorization_pdf(reservation):
     veic = complement.car_model if complement else "---"
     placa = complement.car_plate if complement else "---"
 
-    # Processamento Dinâmico de Acompanhantes (Clonagem de Blocos)
-    # Encontra o bloco pai mais próximo (tr, li, p, div) que contém {{acompanhante_nome}} ou {{acompanhante_rg}}
-    # e duplica o bloco inteiro para cada acompanhante.
-    pattern_comp = re.compile(r'<(tr|li|p|div)[^>]*>(?:(?!</?\1>).)*?\{\{acompanhante_(?:nome|rg)\}\}.*?</\1>', re.IGNORECASE | re.DOTALL)
+    # Processamento Dinâmico de Acompanhantes
+    pattern_comp = re.compile(r'<(tr|li|p|div)[^>]*>(?:(?!</?\1>)[\s\S])*?\{\{\s*acompanhante_(?:nome|rg)\s*\}\}[\s\S]*?<\/\1>', re.IGNORECASE)
     
     def replacer_companions(match):
         original_block = match.group(0)
         result = ""
         for i, comp in enumerate(companions, 1):
-            block = original_block.replace('{{acompanhante_nome}}', comp.name or '')
-            block = block.replace('{{acompanhante_rg}}', comp.rg or '')
-            # Opcional: Se o usuário quiser listar com números, podemos substituir um {{acompanhante_index}} no futuro.
+            block = re.sub(r'\{\{\s*acompanhante_nome\s*\}\}', comp.name or '', original_block)
+            block = re.sub(r'\{\{\s*acompanhante_rg\s*\}\}', comp.rg or '', block)
             result += block
         
-        # Se não houver acompanhantes, podemos remover o bloco ou colocar um aviso.
         if not companions:
-            # Mantém a tag original para não quebrar tabelas, mas diz "Nenhum acompanhante"
             tag_name = match.group(1).lower()
             if tag_name == 'tr':
                 result = f'<tr><td colspan="100%" style="text-align: center; color: #666;">(Nenhum acompanhante cadastrado)</td></tr>'
             else:
                 result = f'<{tag_name} style="color: #666;">(Nenhum acompanhante cadastrado)</{tag_name}>'
-                
         return result
 
     html_content = re.sub(pattern_comp, replacer_companions, html_content)
+    
+    if for_pdf:
+        # Limpeza apenas para o motor do PDF (WeasyPrint)
+        html_content = re.sub(r'position:\s*absolute;?', '', html_content, flags=re.IGNORECASE)
 
     # Assinatura em HTML
     signature_html = ""
     if prop.signature:
         try:
-            # fpdf2 handles local paths in img src
-            signature_html = f'<img src="{prop.signature.path}" width="120">'
+            signature_html = f'<img src="{prop.signature.url}" class="signature-img" style="width: 120px !important; height: auto; display: inline-block; margin: 0 auto;">'
         except Exception as e:
-            logger.error(f"Erro ao obter path da assinatura: {e}")
+            logger.error(f"Erro ao obter URL da assinatura: {e}")
             signature_html = '<span>(Erro ao carregar assinatura)</span>'
     else:
         signature_html = '<span>(Assinatura não cadastrada)</span>'
@@ -239,58 +236,87 @@ def generate_reservation_authorization_pdf(reservation):
         'assinatura_proprietario': signature_html
     }
 
-    # 3. Substituir as variáveis simples restantes no HTML
+    # 3. Substituir as variáveis
     for key, value in data.items():
-        # Regex para lidar com {{variavel}} ou {{ variavel }}
         pattern = re.compile(r'\{\{\s*' + key + r'\s*\}\}')
-        html_content = pattern.sub(value, html_content)
+        html_content = pattern.sub(str(value), html_content)
+    
+    return html_content
 
-    # 4. Gerar o PDF usando o motor HTML do fpdf2
-    pdf = FPDF()
-    pdf.set_margins(12, 12, 12) # Left, Top, Right em milímetros
-    pdf.add_page()
-    pdf.set_auto_page_break(auto=True, margin=12) # Bottom margin em milímetros
-    
-    # Adicionar fontes padrão se necessário
-    pdf.set_font("helvetica", size=11)
-    
+def generate_reservation_authorization_pdf(reservation):
+    """
+    Gera os bytes do PDF de autorização para uma reserva específica usando o modelo HTML.
+    """
+    html_content = generate_reservation_authorization_html(reservation, for_pdf=True)
+
+    # 4. Gerar o PDF usando WeasyPrint
     try:
-        # Limpeza extra para compatibilidade com fpdf2
-        html_compat = html_content
-        html_compat = re.sub(r'style="text-align:\s*center;?"', 'align="center"', html_compat)
-        html_compat = re.sub(r'style="text-align:\s*right;?"', 'align="right"', html_compat)
-        html_compat = re.sub(r'style="text-align:\s*left;?"', 'align="left"', html_compat)
-        html_compat = re.sub(r'style="text-align:\s*justify;?"', 'align="justify"', html_compat)
+        from weasyprint import HTML, CSS
+        from django.conf import settings
         
-        # Lógica de Rodapé Fixo
-        # Procura por um bloco com a classe document-footer
-        footer_match = re.search(r'<div[^>]*class="document-footer"[^>]*>(.*?)</div>', html_compat, re.DOTALL | re.IGNORECASE)
-        
-        if footer_match:
-            footer_html = footer_match.group(0)
-            # Remove o rodapé do conteúdo principal para não duplicar
-            main_html = html_compat.replace(footer_html, "")
-            
-            # Renderiza o conteúdo principal
-            pdf.write_html(main_html)
-            
-            # Posiciona o rodapé na base da página (última página)
-            # Aprox 40mm do fundo para caber assinatura e borda
-            pdf.set_y(-45) 
-            pdf.write_html(footer_html)
-        else:
-            # Renderização normal sem rodapé separado
-            pdf.write_html(html_compat)
+        base_css = CSS(string="""
+            * { 
+                margin: 0; 
+                padding: 0; 
+                box-sizing: border-box; 
+            }
+            @page {
+                size: A4;
+                margin: 8mm 12mm;
+                @bottom-right {
+                    content: counter(page);
+                    font-size: 8pt;
+                    color: #999;
+                }
+            }
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 11pt;
+                line-height: 1.2;
+                color: #000;
+                display: flex;
+                flex-direction: column;
+                min-height: 281mm; /* Altura exata da página A4 menos as margens */
+            }
+            /* Garantir margem zero em parágrafos para bater com o reset global do dashboard */
+            p { margin: 0; }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            /* Regra para mostrar bordas apenas se a tabela tiver atributo border="1" ou estilo de borda */
+            table[border="1"], table.with-border {
+                border: 1px solid #000;
+            }
+            table[border="1"] td, table[border="1"] th,
+            table.with-border td, table.with-border th {
+                border: 1px solid #000;
+            }
+            th, td {
+                padding: 8px;
+                vertical-align: top;
+            }
+            .document-footer {
+                margin-top: auto !important;
+                padding-top: 5mm;
+                /* Removendo bordas e margens extras para ser identico ao modal de preview */
+            }
+            img {
+                max-width: 120px;
+                height: auto;
+                display: inline-block;
+            }
+        """)
+
+        # Gerar PDF
+        pdf_bytes = HTML(string=html_content, base_url=settings.BASE_DIR).write_pdf(stylesheets=[base_css])
+        return pdf_bytes
 
     except Exception as e:
-        logger.error(f"Erro ao renderizar HTML no PDF: {e}")
-        # Fallback caso o HTML esteja muito quebrado
-        pdf.set_font("helvetica", "B", 12)
-        pdf.cell(0, 10, "Erro ao processar o modelo de autorização.", ln=True, align="C")
-        pdf.set_font("helvetica", "", 10)
-        pdf.multi_cell(0, 5, f"Por favor, verifique a formatação do modelo. Erro: {str(e)}")
-
-    return bytes(pdf.output())
+        logger.error(f"Erro ao renderizar com WeasyPrint: {e}")
+        # Fallback minimalista se WeasyPrint falhar (raro)
+        from django.template.loader import render_to_string
+        return b"Erro ao gerar PDF de alta fidelidade."
 
 class ReservationGuestDetailView(LoginRequiredMixin, View):
     """
@@ -316,6 +342,7 @@ class ReservationGuestDetailView(LoginRequiredMixin, View):
         }
         return render(request, 'reservations/includes/guest_detail_modal_content.html', context)
 
+@method_decorator(xframe_options_sameorigin, name='dispatch')
 class ReservationAuthorizationPDFView(LoginRequiredMixin, View):
     """
     Gera um PDF da autorização de locação baseado na imagem modelo.
@@ -343,7 +370,7 @@ class ReservationAuthorizationPDFView(LoginRequiredMixin, View):
 
 class ReservationSendAuthorizationWhatsAppView(LoginRequiredMixin, View):
     """
-    Gera o PDF e envia via WhatsApp para o hóspede e para o condomínio.
+    Recebe um PDF (via POST) ou gera um e envia via WhatsApp.
     """
     def post(self, request, property_pk, pk):
         reservation = get_object_or_404(Reservation, pk=pk)
@@ -352,11 +379,26 @@ class ReservationSendAuthorizationWhatsAppView(LoginRequiredMixin, View):
         if reservation.property.user != request.user:
             return JsonResponse({'status': 'error', 'message': "Sem permissão"}, status=403)
 
-        # 1. Gerar PDF
-        try:
-            pdf_bytes = generate_reservation_authorization_pdf(reservation)
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': f"Erro ao gerar PDF: {str(e)}"}, status=500)
+        pdf_bytes = None
+        
+        # Tenta pegar o PDF enviado pelo frontend (Blob/Base64)
+        if 'pdf_base64' in request.POST:
+            try:
+                import base64
+                pdf_data = request.POST.get('pdf_base64')
+                if ',' in pdf_data:
+                    pdf_data = pdf_data.split(',')[1]
+                pdf_bytes = base64.b64decode(pdf_data)
+                logger.info(f"Recebido PDF via base64 para reserva {pk}")
+            except Exception as e:
+                logger.error(f"Erro ao decodificar PDF base64: {e}")
+        
+        # Se não recebeu, gera no servidor (fallback ou legibilidade)
+        if not pdf_bytes:
+            try:
+                pdf_bytes = generate_reservation_authorization_pdf(reservation)
+            except Exception as e:
+                return JsonResponse({'status': 'error', 'message': f"Erro ao gerar PDF: {str(e)}"}, status=500)
 
         # 2. Inicializar Serviço com a instância do proprietário
         service = EvolutionService(user=reservation.property.user)
@@ -394,6 +436,35 @@ class ReservationSendAuthorizationWhatsAppView(LoginRequiredMixin, View):
             'message': str(_("Mensagem enviada com sucesso!")) if any_success else str(_("Erro ao enviar mensagem via WhatsApp. Verifique a conexão.")),
             'details': results
         })
+
+class ReservationAuthorizationHTMLView(LoginRequiredMixin, View):
+    """
+    Retorna o HTML processado da autorização para preview fiel no frontend.
+    """
+    def get(self, request, property_pk, pk):
+        reservation = get_object_or_404(Reservation, pk=pk)
+        if reservation.property.user != request.user:
+            return HttpResponseForbidden("Sem permissão")
+            
+        html_content = generate_reservation_authorization_html(reservation)
+        return HttpResponse(html_content)
+
+class ReservationAuthorizationPDFView(LoginRequiredMixin, View):
+    """
+    Gera o PDF da autorização para o administrador baixar.
+    """
+    def get(self, request, property_pk, pk):
+        reservation = get_object_or_404(Reservation, pk=pk)
+        if reservation.property.user != request.user:
+            return HttpResponseForbidden("Sem permissão")
+            
+        pdf_bytes = generate_reservation_authorization_pdf(reservation)
+        filename = f"Autorizacao_{reservation.start_date.strftime('%d_%m_%Y')}.pdf"
+        
+        response = HttpResponse(pdf_bytes, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
+
 class ReservationCheckInResetView(LoginRequiredMixin, View):
     """
     Exclui os dados de check-in (acompanhantes, vínculo com cliente) e 

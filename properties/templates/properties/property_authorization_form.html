@@ -103,64 +103,11 @@
         border-radius: 8px !important;
     }
 
-    /* Modal Preview Styles */
-    .preview-modal {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(10px);
-        z-index: 10000;
-        justify-content: center;
-        align-items: center;
-    }
-    .preview-content {
-        background: #f1f5f9;
-        width: 95%;
-        max-width: 1200px;
-        height: 95%;
-        border-radius: 24px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-    .preview-header {
-        padding: 1.2rem 2.5rem;
-        background: white;
-        border-bottom: 1px solid #e2e8f0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .preview-body {
-        flex: 1;
-        overflow-y: auto;
-        padding: 60px;
-        display: flex;
-        justify-content: center;
-    }
-    .a4-preview-page {
-        background: white;
-        width: 210mm;
-        min-height: 297mm;
-        padding: 12mm 12mm;
-        box-shadow: 0 0 30px rgba(0,0,0,0.1);
-        color: black;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 11pt;
-        line-height: 1.2;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-    }
-    .a4-preview-page table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
-    .a4-preview-page table td, .a4-preview-page table th { padding: 8px; }
-    
-    /* Footer Style for Preview */
-    .document-footer {
-        margin-top: auto !important;
-        padding-top: 5mm;
+    /* TinyMCE Overrides */
+    .tox-tinymce {
+        border: none !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+        border-radius: 8px !important;
     }
 </style>
 {% endblock %}
@@ -273,20 +220,7 @@
     </div>
 </div>
 
-<!-- Preview Modal -->
-<div id="previewModal" class="preview-modal" onclick="if(event.target==this) closePreview()">
-    <div class="preview-content">
-        <div class="preview-header">
-            <h3 style="margin: 0; font-weight: 700;">{% trans "Pré-visualização do Documento (Fidelidade A4)" %}</h3>
-            <button type="button" onclick="closePreview()" class="btn-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
-            </button>
-        </div>
-        <div class="preview-body">
-            <div class="a4-preview-page" id="preview-page"></div>
-        </div>
-    </div>
-</div>
+{% include 'properties/includes/modal_authorization_preview.html' %}
 
 <script>
     function initializeEditor() {
@@ -301,7 +235,11 @@
             fontsize_formats: '8pt 10pt 11pt 12pt 14pt 18pt 24pt 36pt',
             line_height_formats: '1 1.1 1.2 1.3 1.4 1.5 2',
             font_family_formats: 'Arial=arial,helvetica,sans-serif; Courier New=courier new,courier,monospace; Georgia=georgia,palatino; Times New Roman=times new roman,times; Verdana=verdana,geneva;',
-            table_appearance_options: false,
+            table_appearance_options: true,
+            table_class_list: [
+                {title: 'Nenhuma', value: ''},
+                {title: 'Tabela com Bordas', value: 'with-border'}
+            ],
             table_default_attributes: { border: '1' },
             table_default_styles: { 'border-collapse': 'collapse', 'width': '100%' },
             content_style: `
@@ -310,7 +248,7 @@
                     font-family: Arial, Helvetica, sans-serif; 
                     font-size: 11pt; 
                     line-height: 1.2; 
-                    padding: 12mm 12mm; 
+                    padding: 8mm 12mm; 
                     background: white;
                     color: black;
                     min-height: 280mm;
@@ -331,8 +269,8 @@
                     max-width: 120px;
                     height: auto;
                 }
-                table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
                 table td, table th { padding: 8px; }
+                table.with-border, table.with-border td, table.with-border th { border: 1px solid #000; }
             `,
             branding: false,
             promotion: false,
@@ -422,12 +360,11 @@
             content = content.replace(regex, value);
         }
 
-        document.getElementById('preview-page').innerHTML = content;
-        document.getElementById('previewModal').style.display = 'flex';
+        vbook_openAuthPreview(content, '{% trans "Pré-visualização do Documento (Fidelidade A4)" %}');
     }
 
     function closePreview() {
-        document.getElementById('previewModal').style.display = 'none';
+        vbook_closeAuthPreview();
     }
 
     document.getElementById('authorization-form').onsubmit = function() {
