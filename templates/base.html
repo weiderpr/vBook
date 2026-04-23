@@ -264,6 +264,14 @@
             {% endif %}
         });
 
+        // User Dropdown logic
+        const userTrigger = document.getElementById('user-trigger');
+        const userDropdown = document.getElementById('user-dropdown');
+        
+        // Property Dropdown logic
+        const propertyTrigger = document.getElementById('property-trigger');
+        const propertyDropdown = document.getElementById('property-dropdown');
+
         // Language Switcher Logic
         const langTrigger = document.getElementById('lang-trigger');
         const langDropdown = document.getElementById('lang-dropdown');
@@ -273,6 +281,7 @@
             langTrigger.addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (userDropdown) userDropdown.classList.remove('active');
+                if (propertyDropdown) propertyDropdown.classList.remove('active');
                 langDropdown.classList.toggle('active');
             });
 
@@ -292,9 +301,6 @@
                         window.location.reload();
                     }).catch(err => console.error("Erro ao salvar idioma:", err));
                     {% else %}
-                    // For non-authenticated users, use standard Django i18n form or cookies
-                    // For now, let's just use a simple redirect if needed or window.location.reload
-                    // But our persistence logic focuses on logged-in users
                     window.location.reload(); 
                     {% endif %}
                 });
@@ -306,14 +312,6 @@
                 }
             });
         }
-
-        // User Dropdown logic
-        const userTrigger = document.getElementById('user-trigger');
-        const userDropdown = document.getElementById('user-dropdown');
-        
-        // Property Dropdown logic
-        const propertyTrigger = document.getElementById('property-trigger');
-        const propertyDropdown = document.getElementById('property-dropdown');
 
         if (userTrigger && userDropdown) {
             userTrigger.addEventListener('click', (e) => {

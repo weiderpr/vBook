@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.db.models import Sum, Q
 
 from .models import Property, PropertyCost, FinancialHistory
-from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm
+from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm
 from reservations.models import Reservation, ReservationCost
 
 class PropertyInstructionsUpdateView(LoginRequiredMixin, UpdateView):
@@ -30,6 +30,25 @@ class PropertyInstructionsUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         messages.success(self.request, _("Instruções de reserva atualizadas com sucesso!"))
         return reverse_lazy('properties:dashboard', kwargs={'pk': self.object.pk})
+
+class PropertyAuthorizationUpdateView(LoginRequiredMixin, UpdateView):
+    model = Property
+    form_class = PropertyAuthorizationForm
+    template_name = 'properties/property_authorization_form.html'
+    context_object_name = 'property'
+
+    def get_queryset(self):
+        return Property.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_item'] = 'authorization'
+        context['editor_version'] = 'v3' # Force cache refresh
+        return context
+
+    def get_success_url(self):
+        messages.success(self.request, _("Modelo de autorização atualizado com sucesso!"))
+        return reverse_lazy('properties:authorization', kwargs={'pk': self.object.pk})
 
 class PropertyDashboardView(LoginRequiredMixin, DetailView):
     model = Property

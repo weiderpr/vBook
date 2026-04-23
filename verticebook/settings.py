@@ -107,15 +107,22 @@ CSRF_TRUSTED_ORIGINS = [
     'https://verticesistemas.tech', 
     'https://www.verticesistemas.tech',
     'https://verticebook.tech',
-    'https://www.verticebook.tech'
+    'https://www.verticebook.tech',
+    'http://verticesistemas.tech', 
+    'http://www.verticesistemas.tech',
+    'http://verticebook.tech',
+    'http://www.verticebook.tech'
 ]
 # Cookie settings
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_HTTPONLY = True
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False  # Changed to False (standard Django)
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_USE_SESSIONS = True      # Added: Store CSRF token in session
+CSRF_COOKIE_PATH = '/book/'   # Added: Match FORCE_SCRIPT_NAME
+SESSION_COOKIE_PATH = '/book/' # Added: Match FORCE_SCRIPT_NAME
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 

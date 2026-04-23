@@ -7,6 +7,7 @@ from .forms_checkin import ClientComplementForm, get_companion_formset
 from .services.evolution_api import EvolutionService
 import logging
 import io
+import re
 from django.http import HttpResponse, HttpResponseForbidden
 from fpdf import FPDF
 from django.utils.translation import gettext_lazy as _
@@ -151,7 +152,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 def generate_reservation_authorization_pdf(reservation):
     """
-    Gera os bytes do PDF de autorização para uma reserva específica.
+    Gera os bytes do PDF de autorização para uma reserva específica usando o modelo HTML.
     """
     prop = reservation.property
     owner = prop.user
@@ -159,40 +160,17 @@ def generate_reservation_authorization_pdf(reservation):
     complement = getattr(client, 'complement', None) if client else None
     companions = reservation.companions.all()
 
-    # Lógica de geração do PDF
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    
-    # Cores (Preto e Branco como o modelo)
-    pdf.set_text_color(0, 0, 0)
-    
-    # Header
-    pdf.set_font("Helvetica", "B", 14)
-    pdf.cell(0, 7, "AUTORIZAÇÃO DE LOCAÇÃO", ln=True, align="C")
-    pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 5, f"CONDOMÍNIO {prop.name.upper()}", ln=True, align="C")
-    
-    # Endereço da Propriedade
-    pdf.set_font("Helvetica", "B", 10)
-    address_line1 = f"{prop.address_street.upper()}, Nº{prop.address_number}"
-    if prop.address_city:
-        address_line1 += f" - {prop.address_city.upper()}/{prop.address_state.upper()}"
-    pdf.cell(0, 4, address_line1, ln=True, align="C")
-    
-    if prop.address_complement:
-        pdf.cell(0, 4, prop.address_complement.upper(), ln=True, align="C")
-    
-    pdf.ln(4)
-    
-    # Texto Principal
-    pdf.set_font("Helvetica", "", 11)
+    # 1. Obter o modelo HTML (Fallback para um padrão se vazio)
+    html_content = prop.authorization_template
+    if not html_content:
+        html_content = "<h2>AUTORIZAÇÃO DE LOCAÇÃO</h2><p>Modelo não configurado.</p>"
+
+    # 2. Preparar os dados para substituição
     owner_name = getattr(owner, 'full_name', '') or owner.get_full_name() or owner.username
     client_name = client.name if client else reservation.client_name
     rg = complement.rg if complement else "---"
     cpf = complement.cpf if complement else "---"
     
-    # Endereço do Cliente
     client_addr = "---"
     if complement:
         client_addr = f"{complement.street}, {complement.number}"
@@ -200,101 +178,118 @@ def generate_reservation_authorization_pdf(reservation):
         client_addr += f", {complement.neighborhood}, {complement.city}/{complement.state}"
 
     days = (reservation.end_date - reservation.start_date).days
-    
-    main_text = (
-        f"Eu, {owner_name}, proprietário do {prop.name}, autorizo o Sr.(a) {client_name}, "
-        f"portador do RG {rg} e CPF {cpf}, residente no endereço: {client_addr} e as pessoas "
-        f"abaixo relacionadas a permanecerem em meu apartamento pelo período de {days} dias. "
-        f"Fone: {client.phone if client else reservation.client_phone}"
-    )
-    pdf.multi_cell(0, 6, main_text)
-    pdf.ln(2)
-    
-    # Datas e Veículo em uma linha
-    pdf.set_font("Helvetica", "B", 9)
     checkin_str = reservation.start_date.strftime("%d/%m/%Y")
     checkout_str = reservation.end_date.strftime("%d/%m/%Y")
+    
     veic = complement.car_model if complement else "---"
     placa = complement.car_plate if complement else "---"
+
+    # Processamento Dinâmico de Acompanhantes (Clonagem de Blocos)
+    # Encontra o bloco pai mais próximo (tr, li, p, div) que contém {{acompanhante_nome}} ou {{acompanhante_rg}}
+    # e duplica o bloco inteiro para cada acompanhante.
+    pattern_comp = re.compile(r'<(tr|li|p|div)[^>]*>(?:(?!</?\1>).)*?\{\{acompanhante_(?:nome|rg)\}\}.*?</\1>', re.IGNORECASE | re.DOTALL)
     
-    info_line = f"Início: {checkin_str} (14h) | Término: {checkout_str} (11h) | Veículo: {veic} | Placa: {placa}"
-    pdf.cell(0, 6, info_line, ln=True)
-    pdf.ln(1)
-    
-    # Tabela de Acompanhantes
-    pdf.set_font("Helvetica", "BU", 10)
-    pdf.cell(0, 6, "Relação das demais pessoas:", ln=True)
-    pdf.set_font("Helvetica", "B", 10)
-    
-    # Colunas
-    pdf.cell(10, 8, "#", border=1, align="C")
-    pdf.cell(120, 8, "NOME", border=1, align="C")
-    pdf.cell(50, 8, "RG", border=1, align="C")
-    pdf.ln()
-    
-    pdf.set_font("Helvetica", "", 10)
-    for i, comp in enumerate(companions, 1):
-        pdf.cell(10, 8, str(i), border=1, align="C")
-        pdf.cell(120, 8, comp.name[:60], border=1) # Limit name length
-        pdf.cell(50, 8, comp.rg, border=1, align="C")
-        pdf.ln()
+    def replacer_companions(match):
+        original_block = match.group(0)
+        result = ""
+        for i, comp in enumerate(companions, 1):
+            block = original_block.replace('{{acompanhante_nome}}', comp.name or '')
+            block = block.replace('{{acompanhante_rg}}', comp.rg or '')
+            # Opcional: Se o usuário quiser listar com números, podemos substituir um {{acompanhante_index}} no futuro.
+            result += block
         
-    # Fill empty lines if few companions
-    for i in range(len(companions) + 1, 8):
-        pdf.cell(10, 8, str(i), border=1, align="C")
-        pdf.cell(120, 8, "", border=1)
-        pdf.cell(50, 8, "", border=1)
-        pdf.ln()
-        
-    pdf.ln(4)
-    
-    # REGRAS DO CONDOMÍNIO
-    pdf.set_font("Helvetica", "BU", 10)
-    pdf.cell(0, 8, "Dentre as principais regras e normas do condomínio destacamos:", ln=True, align="C")
-    pdf.ln(2)
-    
-    rules = [
-        ("OBRIGATORIEDADE DO USO DE PULSEIRA DE IDENTIFICAÇÃO", "é obrigatório o uso da pulseira de identificação, que será colocada no locatário pelo porteiro no momento do check-in. O locatário deverá permanecer com a pulseira por todo período em que estiver hospedado no condomínio. Em caso de perda ou extravio da pulseira será cobrada uma taxa no valor de R$ 3,00 para reposição da mesma."),
-        ("OBRIGATORIEDADE DO USO DE CRACHÁ VEICULAR", "cada veículo receberá no momento do check-in um crachá veicular modelo gancho. O crachá deve ser colocado de forma visível no para-brisa do veículo e somente veículos com crachá terão liberação para entrada ao condomínio. O locatário deverá devolver o crachá na portaria no momento do check-out e em caso de perda ou extravio o proprietário do apto deverá arcar com os custos para emissão da 2ª via do crachá veicular."),
-        ("BARULHO", "Proibido perturbar o sossego dos moradores a qualquer hora, quer na área comum quer no interior da própria unidade especialmente no horário de silêncio no período das 22:00 as 08:00 horas da manhã."),
-        ("LIXO", "Proibido lançar detritos, varreduras, ou qualquer objeto pelas janelas. O lixo deverá ser acondicionado em sacos plásticos e colocado na lixeira do prédio tomando cuidado para que não ocorram respingos."),
-        ("ÁGUA", "Não desperdiçar água. Proibido o uso de água para lavagem de carros, barcos ou motocicletas na área comum do prédio."),
-        ("VARAIS DE ROUPA", "Não colocar varais de roupas, estender, bater ou secar tapetes ou roupas nas janelas, nas sacadas, bem como nos corredores e nas áreas comuns;"),
-        ("PISCINA", "Não levar para o recinto da piscina frascos, copos, garrafas em vidro, porcelana ou material similar que possam quebrar, demais recipientes plásticos poderão ser utilizados desde que fora da água. O usuário que deixar detritos na piscina de qualquer espécie ou origem será convocado para removê-los."),
-        ("QUANTIDADE DE PESSOAS POR APTO", "Fica estabelecido um limite de 08 pessoas, incluindo crianças mesmo que de colo."),
-        ("NO APARTAMENTO", "Não molhar a área seca dos banheiros, não dependurar roupas e/ou toalhas molhadas nas portas, não sujar as paredes, não subir nas cadeiras, não apoiar peso nas mesas e/ou racks, retirar constantemente o lixo do apartamento (lixeira ao lado da portaria social), não pular nas camas e sofá.")
-    ]
-    
-    pdf.set_font("Helvetica", "", 7)
-    for title, text in rules:
-        pdf.set_font("Helvetica", "B", 7)
-        pdf.write(4, f"{title}: ")
-        pdf.set_font("Helvetica", "", 7)
-        pdf.write(4, f"{text}\n")
-        pdf.ln(2)
-        
-    pdf.ln(3)
-    pdf.set_font("Helvetica", "", 10)
-    pdf.multi_cell(0, 5, "O condômino deverá ser comunicado de qualquer quebra do regulamento e se houver despesa deverá arcar com os custos.")
-    
-    # Assinaturas
-    pdf.ln(20)
-    curr_y = pdf.get_y()
-    
+        # Se não houver acompanhantes, podemos remover o bloco ou colocar um aviso.
+        if not companions:
+            # Mantém a tag original para não quebrar tabelas, mas diz "Nenhum acompanhante"
+            tag_name = match.group(1).lower()
+            if tag_name == 'tr':
+                result = f'<tr><td colspan="100%" style="text-align: center; color: #666;">(Nenhum acompanhante cadastrado)</td></tr>'
+            else:
+                result = f'<{tag_name} style="color: #666;">(Nenhum acompanhante cadastrado)</{tag_name}>'
+                
+        return result
+
+    html_content = re.sub(pattern_comp, replacer_companions, html_content)
+
+    # Assinatura em HTML
+    signature_html = ""
     if prop.signature:
         try:
-            pdf.image(prop.signature.path, x=35, y=curr_y-18, w=40)
+            # fpdf2 handles local paths in img src
+            signature_html = f'<img src="{prop.signature.path}" width="120">'
         except Exception as e:
-             logger.error(f"Erro ao carregar assinatura: {e}")
+            logger.error(f"Erro ao obter path da assinatura: {e}")
+            signature_html = '<span>(Erro ao carregar assinatura)</span>'
+    else:
+        signature_html = '<span>(Assinatura não cadastrada)</span>'
 
-    pdf.line(20, curr_y, 90, curr_y)
-    pdf.line(120, curr_y, 190, curr_y)
-    pdf.ln(2)
-    pdf.set_x(20)
-    pdf.cell(70, 5, "Proprietário", align="C")
-    pdf.set_x(120)
-    pdf.cell(70, 5, "Locatário", align="C")
+    data = {
+        'proprietario_nome': owner_name,
+        'propriedade_nome': prop.name,
+        'hospede_nome': client_name,
+        'hospede_rg': rg,
+        'hospede_cpf': cpf,
+        'hospede_endereco': client_addr,
+        'hospede_telefone': client.phone if client else reservation.client_phone,
+        'total_dias': str(days),
+        'data_entrada': checkin_str,
+        'data_saida': checkout_str,
+        'veiculo_nome': veic,
+        'veiculo_placa': placa,
+        'assinatura_proprietario': signature_html
+    }
+
+    # 3. Substituir as variáveis simples restantes no HTML
+    for key, value in data.items():
+        # Regex para lidar com {{variavel}} ou {{ variavel }}
+        pattern = re.compile(r'\{\{\s*' + key + r'\s*\}\}')
+        html_content = pattern.sub(value, html_content)
+
+    # 4. Gerar o PDF usando o motor HTML do fpdf2
+    pdf = FPDF()
+    pdf.set_margins(12, 12, 12) # Left, Top, Right em milímetros
+    pdf.add_page()
+    pdf.set_auto_page_break(auto=True, margin=12) # Bottom margin em milímetros
     
+    # Adicionar fontes padrão se necessário
+    pdf.set_font("helvetica", size=11)
+    
+    try:
+        # Limpeza extra para compatibilidade com fpdf2
+        html_compat = html_content
+        html_compat = re.sub(r'style="text-align:\s*center;?"', 'align="center"', html_compat)
+        html_compat = re.sub(r'style="text-align:\s*right;?"', 'align="right"', html_compat)
+        html_compat = re.sub(r'style="text-align:\s*left;?"', 'align="left"', html_compat)
+        html_compat = re.sub(r'style="text-align:\s*justify;?"', 'align="justify"', html_compat)
+        
+        # Lógica de Rodapé Fixo
+        # Procura por um bloco com a classe document-footer
+        footer_match = re.search(r'<div[^>]*class="document-footer"[^>]*>(.*?)</div>', html_compat, re.DOTALL | re.IGNORECASE)
+        
+        if footer_match:
+            footer_html = footer_match.group(0)
+            # Remove o rodapé do conteúdo principal para não duplicar
+            main_html = html_compat.replace(footer_html, "")
+            
+            # Renderiza o conteúdo principal
+            pdf.write_html(main_html)
+            
+            # Posiciona o rodapé na base da página (última página)
+            # Aprox 40mm do fundo para caber assinatura e borda
+            pdf.set_y(-45) 
+            pdf.write_html(footer_html)
+        else:
+            # Renderização normal sem rodapé separado
+            pdf.write_html(html_compat)
+
+    except Exception as e:
+        logger.error(f"Erro ao renderizar HTML no PDF: {e}")
+        # Fallback caso o HTML esteja muito quebrado
+        pdf.set_font("helvetica", "B", 12)
+        pdf.cell(0, 10, "Erro ao processar o modelo de autorização.", ln=True, align="C")
+        pdf.set_font("helvetica", "", 10)
+        pdf.multi_cell(0, 5, f"Por favor, verifique a formatação do modelo. Erro: {str(e)}")
+
     return bytes(pdf.output())
 
 class ReservationGuestDetailView(LoginRequiredMixin, View):

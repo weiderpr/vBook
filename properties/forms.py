@@ -100,3 +100,11 @@ class PropertyInstructionsForm(forms.ModelForm):
         widgets = {
             'reservation_instructions': forms.HiddenInput(),
         }
+
+class PropertyAuthorizationForm(forms.ModelForm):
+    class Meta:
+        model = Property
+        fields = ['authorization_template']
+        widgets = {
+            'authorization_template': forms.HiddenInput(),
+        }

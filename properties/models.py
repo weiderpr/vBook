@@ -40,6 +40,7 @@ class Property(models.Model):
     )
     
     reservation_instructions = models.TextField(blank=True, null=True, verbose_name=_("Instruções de Reserva"))
+    authorization_template = models.TextField(blank=True, null=True, verbose_name=_("Modelo de Autorização"))
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
