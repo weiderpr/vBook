@@ -18,5 +18,6 @@ urlpatterns = [
     path('<int:pk>/reset-checkin/', views_checkin.ReservationCheckInResetView.as_view(), name='reset_checkin'),
     path('checkin/<uuid:token>/', GuestCheckInView.as_view(), name='guest_checkin'),
     path('checkin/<uuid:token>/autorizacao/', views_checkin.GuestAuthorizationPDFView.as_view(), name='guest_authorization_pdf'),
+    path('checkin/<uuid:token>/autorizacao-html/', views_checkin.GuestAuthorizationHTMLView.as_view(), name='guest_authorization_html'),
     path('checkin/<uuid:token>/instrucoes/', views_checkin.GuestPropertyInstructionsView.as_view(), name='guest_instructions'),
 ]

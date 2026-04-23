@@ -407,14 +407,6 @@ class ReservationSendAuthorizationWhatsAppView(LoginRequiredMixin, View):
         results = []
         any_success = False
         
-        # 3. Enviar para o Hóspede
-        guest_phone = reservation.client_phone
-        if guest_phone:
-            caption = f"Olá {reservation.client_name}, segue sua autorização de locação para a propriedade {reservation.property.name}."
-            ok, msg = service.enviar_documento(guest_phone, pdf_bytes, filename, caption)
-            results.append({'to': 'Hóspede', 'ok': ok, 'msg': msg})
-            if ok: any_success = True
-        
         # 4. Enviar para o Condomínio
         condo_phone = reservation.property.condo_phone
         if condo_phone:
@@ -436,6 +428,18 @@ class ReservationSendAuthorizationWhatsAppView(LoginRequiredMixin, View):
             'message': str(_("Mensagem enviada com sucesso!")) if any_success else str(_("Erro ao enviar mensagem via WhatsApp. Verifique a conexão.")),
             'details': results
         })
+
+class GuestAuthorizationHTMLView(View):
+    """
+    Retorna o HTML da autorizacao para o hospede (acesso via token).
+    """
+    def get(self, request, token):
+        reservation = get_object_or_404(Reservation, checkin_token=token)
+        if not reservation.checkin_completed:
+            return HttpResponseForbidden("Check-in nao concluido")
+            
+        html_content = generate_reservation_authorization_html(reservation)
+        return HttpResponse(html_content)
 
 class ReservationAuthorizationHTMLView(LoginRequiredMixin, View):
     """

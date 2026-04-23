@@ -4,15 +4,29 @@
 {% block extra_head %}
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <style>
+    /* Travar o scroll externo para focar no editor */
+    body, html {
+        overflow: hidden;
+    }
+
+    .footer {
+        display: none;
+    }
+
     .property-panel-content {
-        padding-top: 2rem;
+        padding-top: 1rem;
+        height: calc(100vh - 80px);
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
     }
     
     .property-mini-header {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+        flex-shrink: 0;
         display: flex;
         justify-content: space-between;
-        align-items: flex-end;
+        align-items: center;
     }
 
     .instructions-editor-card {
@@ -20,24 +34,55 @@
         backdrop-filter: blur(12px);
         border: 1px solid var(--glass-border);
         border-radius: 16px;
-        padding: 2.5rem;
+        padding: 1.5rem;
         box-shadow: var(--glass-shadow);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
     }
 
+    #instructions-form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    #editor-wrapper {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #cbd5e1;
+        background: white;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Solução Robusta: Altura calculada diretamente no editor */
     #editor {
-        height: 400px;
+        height: calc(100vh - 300px) !important; /* Ajuste manual para garantir a rolagem interna */
         background: white;
         color: #1e293b;
-        border-radius: 0 0 12px 12px;
         font-size: 1.1rem;
+        border: none;
     }
+
     .ql-toolbar.ql-snow {
         background: #f8fafc;
-        border-radius: 12px 12px 0 0;
         border-color: #cbd5e1;
+        border-top: none; border-left: none; border-right: none;
     }
+    
     .ql-container.ql-snow {
-        border-color: #cbd5e1;
+        border: none !important;
+        flex: 1;
+        overflow: hidden;
+    }
+    
+    /* Garantir que o Quill mostre a rolagem */
+    .ql-editor {
+        overflow-y: auto !important;
+        height: 100% !important;
     }
 </style>
 {% endblock %}
@@ -50,16 +95,16 @@
 <div class="property-panel-content">
     <div class="property-mini-header">
         <div>
-            <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">
+            <h1 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
                 {% trans "Instruções de Reserva" %}
             </h1>
-            <p style="color: var(--text-muted); margin: 4px 0 0; font-size: 0.95rem; line-height: 1.4; max-width: 650px;">
-                {% trans "Configure aqui as orientações de check-in, regras da casa e informações úteis. Este conteúdo será exibido automaticamente para o hóspede assim que ele finalizar o formulário de check-in." %}
+            <p style="color: var(--text-muted); margin: 2px 0 0; font-size: 0.85rem;">
+                {% trans "Configure as orientações para seus hóspedes." %}
             </p>
         </div>
         <button type="submit" form="instructions-form" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            {% trans "Salvar Instruções" %}
+            {% trans "Salvar" %}
         </button>
     </div>
 
@@ -68,14 +113,13 @@
             {% csrf_token %}
             {{ form.reservation_instructions }}
             
-            <div id="editor-wrapper" style="border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;">
+            <div id="editor-wrapper">
                 <div id="editor">
                     {% if property.reservation_instructions %}
                         {{ property.reservation_instructions|safe }}
                     {% endif %}
                 </div>
             </div>
-
         </form>
     </div>
 </div>
@@ -88,18 +132,24 @@
             modules: {
                 toolbar: [
                     [{ 'header': [1, 2, 3, false] }],
-                    ['bold', 'italic', 'underline', 'strike'],
+                    ['bold', 'italic', 'underline'],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                     ['link', 'clean']
                 ]
             },
-            placeholder: '{% trans "Escreva aqui as instruções de check-in, regras da casa, senha do Wi-Fi, etc..." %}'
+            placeholder: '{% trans "Escreva aqui as instruções..." %}'
         });
 
         var form = document.getElementById('instructions-form');
         form.onsubmit = function() {
-            var instructions = document.querySelector('input[name=reservation_instructions]');
-            instructions.value = quill.root.innerHTML;
+            var instructionsInput = document.querySelector('input[name=reservation_instructions]');
+            if (!instructionsInput) {
+                instructionsInput = document.createElement('input');
+                instructionsInput.type = 'hidden';
+                instructionsInput.name = 'reservation_instructions';
+                form.appendChild(instructionsInput);
+            }
+            instructionsInput.value = quill.root.innerHTML;
         };
     });
 </script>

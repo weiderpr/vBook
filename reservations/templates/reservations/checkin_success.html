@@ -23,10 +23,10 @@
         </div>
 
         <div style="display: grid; gap: 1rem; margin-bottom: 2.5rem;">
-            <a href="{% url 'guest_authorization_pdf' token=reservation.checkin_token %}" target="_blank" style="background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); color: white; text-decoration: none; padding: 1rem; border-radius: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: transform 0.2s;">
+            <button id="btnDownload" onclick="downloadGuestPDF(this)" style="cursor: pointer; background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); border: none; color: white; text-decoration: none; padding: 1rem; border-radius: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: transform 0.2s;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                {% trans "Abrir Autorização (PDF)" %}
-            </a>
+                {% trans "Baixar Autorização (PDF)" %}
+            </button>
 
             <a href="{% url 'guest_instructions' token=reservation.checkin_token %}" style="background: rgba(255, 255, 255, 0.05); color: white; text-decoration: none; padding: 1rem; border-radius: 12px; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12" y1="8" y2="8"/></svg>
@@ -39,4 +39,111 @@
         </p>
     </div>
 </div>
+
+<div id="processingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.98); z-index: 999999; flex-direction: column; align-items: center; justify-content: center; color: white;">
+    <div class="spinner-large"></div>
+    <p style="margin-top: 1.5rem; font-size: 1.2rem; font-weight: 600;">{% trans "Gerando autorização oficial..." %}</p>
+    <div style="position: absolute; top: -5000px; left: 0;">
+        <div id="vbookAuthHtmlContent" class="vbook-auth-a4-page"></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+    async function downloadGuestPDF(btn) {
+        const overlay = document.getElementById('processingOverlay');
+        overlay.style.display = 'flex';
+
+        try {
+            const response = await fetch("{% url 'guest_authorization_html' token=reservation.checkin_token %}");
+            const html = await response.text();
+            const container = document.getElementById('vbookAuthHtmlContent');
+            container.innerHTML = html;
+
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Solução definitiva para mobile: Forçar largura de desktop no clone e na captura
+            const canvas = await html2canvas(container, {
+                scale: 2.5,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                width: 794,
+                windowWidth: 1200, // Simular viewport de desktop
+                onclone: (clonedDoc) => {
+                    const el = clonedDoc.getElementById('vbookAuthHtmlContent');
+                    el.style.width = '794px';
+                    el.style.display = 'block';
+                    el.style.visibility = 'visible';
+                    // Resetar escalas de mobile
+                    clonedDoc.body.style.width = '1200px';
+                }
+            });
+
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            
+            const guestName = "{{ reservation.client_name }}";
+            const checkinDate = "{{ reservation.start_date|date:'d_m_Y' }}";
+            const firstName = guestName.split(' ')[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            pdf.save(`${firstName}_${checkinDate}.pdf`);
+
+        } catch (error) {
+            console.error(error);
+            alert("{% trans 'Erro ao gerar o PDF. Por favor, tente novamente.' %}");
+        } finally {
+            overlay.style.display = 'none';
+        }
+    }
+</script>
+
+<style>
+    .vbook-auth-a4-page {
+        background: white !important;
+        width: 794px !important;
+        min-height: 1123px !important;
+        padding: 30px 45px !important;
+        color: black !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 14.6px !important;
+        line-height: 1.2 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+    }
+    .vbook-auth-a4-page * { 
+        max-width: none !important;
+        text-transform: none !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+    }
+    .vbook-auth-a4-page p { margin: 0 !important; padding: 0 !important; }
+    .vbook-auth-a4-page table { width: 100% !important; border-collapse: collapse !important; }
+    .vbook-auth-a4-page table td { padding: 8px !important; border: none !important; }
+    .vbook-auth-a4-page table.with-border, 
+    .vbook-auth-a4-page table.with-border td {
+        border: 1px solid #000 !important;
+    }
+    .vbook-auth-a4-page .document-footer {
+        margin-top: auto !important;
+        padding-top: 20px !important;
+    }
+
+    .spinner-large {
+        width: 50px; height: 50px;
+        border: 4px solid rgba(255,255,255,0.1);
+        border-radius: 50%;
+        border-top-color: #00c6ff;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
 {% endblock %}
