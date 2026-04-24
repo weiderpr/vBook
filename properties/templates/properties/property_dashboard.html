@@ -8,7 +8,7 @@
     .property-header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
         margin-bottom: 1.5rem;
         padding-bottom: 1.5rem;
         border-bottom: 1px solid var(--glass-border);
@@ -17,15 +17,16 @@
     .property-info-main {
         display: flex;
         gap: 1.2rem;
+        align-items: center;
     }
     
     .property-thumb-large {
-        width: 100px;
-        height: 100px;
-        border-radius: 10px;
+        width: 80px;
+        height: 80px;
+        border-radius: 12px;
         overflow: hidden;
         border: 2px solid var(--glass-border);
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
     
     .property-thumb-large img {
@@ -35,8 +36,10 @@
     }
     
     .property-details h1 {
-        margin: 0 0 0.3rem 0;
-        font-size: 1.5rem;
+        margin: 0 0 0.2rem 0;
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
     }
     
     .property-location-tag {
@@ -44,43 +47,108 @@
         align-items: center;
         gap: 6px;
         color: var(--text-muted);
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
-    
+
+    /* Stats Row - Premium Design */
     .stats-row {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
-    
-    .stat-card-small {
+
+    .stat-card-premium {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
         padding: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }
-    
-    .stat-card-small .label {
-        font-size: 0.7rem;
+
+    .stat-card-premium:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .stat-icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    /* Colors for each type */
+    .stat-icon-box.availability { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .stat-icon-box.reservations { background: rgba(99, 102, 241, 0.15); color: #6366f1; }
+    .stat-icon-box.revenue { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+
+    .stat-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        font-weight: 600;
         color: var(--text-muted);
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        margin-bottom: 0.3rem;
-        display: block;
+        margin-bottom: 2px;
     }
-    
-    .stat-card-small .value {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: var(--primary);
+
+    .stat-value {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--text-main);
+        line-height: 1.2;
     }
-    
+
+    /* Pulse effect for availability */
+    .pulse-dot {
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        position: relative;
+        display: inline-block;
+        margin-right: 6px;
+    }
+    .pulse-dot::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        border-radius: inherit;
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.8; }
+        100% { transform: scale(3); opacity: 0; }
+    }
+
+    /* Action Grid - Improved Scale */
     .action-grid-large {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         gap: 1rem;
     }
     
     .panel-action-card {
+        background: rgba(255, 255, 255, 0.02);
         padding: 1.5rem;
+        border-radius: 20px;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s;
@@ -90,22 +158,24 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 0.8rem;
+        gap: 1rem;
         text-decoration: none;
         color: inherit;
     }
     
     .panel-action-card:hover {
-        transform: translateY(-3px);
-        border-color: var(--primary);
         background: rgba(255, 255, 255, 0.05);
+        border-color: var(--primary);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.2);
     }
     
     .panel-action-card .icon-circle {
         width: 48px;
         height: 48px;
-        border-radius: 50%;
-        background: rgba(99, 102, 241, 0.1);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -116,28 +186,26 @@
     .panel-action-card:hover .icon-circle {
         background: var(--primary);
         color: white;
-        box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        border-color: transparent;
+        transform: scale(1.1);
     }
     
     .panel-action-card h3 {
         margin: 0;
-        font-size: 1rem;
+        font-size: 0.95rem;
+        font-weight: 700;
         color: var(--text-main);
     }
     
     .panel-action-card p {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         color: var(--text-muted);
         margin: 0;
-        line-height: 1.3;
+        line-height: 1.4;
     }
     
     .property-panel-content {
-        padding-top: 1.5rem;
-    }
-    
-    .property-panel-content {
-        padding-top: 2.5rem;
+        padding-top: 1rem;
     }
 </style>
 {% endblock %}
@@ -154,76 +222,99 @@
                 {% if property.image %}
                     <img src="{{ property.image.url }}" alt="{{ property.name }}">
                 {% else %}
-                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0.3;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.3;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                     </div>
                 {% endif %}
             </div>
             <div class="property-details">
-                <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">{% trans "Propriedade Ativa" %}</span>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                    <span class="pulse-dot"></span>
+                    <span style="font-size: 0.7rem; color: #10b981; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">{% trans "Unidade Operacional" %}</span>
+                </div>
                 <h1>{{ property.name }}</h1>
                 <div class="property-location-tag">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                    {{ property.address_street }}, {{ property.address_number }}{% if property.address_complement %} - {{ property.address_complement }}{% endif %}, {{ property.address_city }} - {{ property.address_state }}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    {{ property.address_city }} - {{ property.address_state }}
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Stats Row -->
     <div class="stats-row">
-        <div class="glass-card stat-card-small">
-            <span class="label">{% trans "Disponibilidade" %}</span>
-            <div class="value">{% trans "Disponível" %}</div>
+        <div class="stat-card-premium">
+            <div class="stat-icon-box availability">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">{% trans "Disponibilidade" %}</span>
+                <div class="stat-value">{% trans "Disponível" %}</div>
+            </div>
         </div>
-        <div class="glass-card stat-card-small">
-            <span class="label">{% trans "Reservas do Mês" %} ({{ month_name }})</span>
-            <div class="value">{{ month_count }}</div>
+
+        <div class="stat-card-premium">
+            <div class="stat-icon-box reservations">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">{% trans "Reservas do Mês" %}</span>
+                <div class="stat-value">{{ month_count }}</div>
+            </div>
         </div>
-        <div class="glass-card stat-card-small">
-            <span class="label">{% trans "Receita Bruta" %} ({{ month_name }})</span>
-            <div class="value">{% trans "R$" %} {{ month_revenue|floatformat:2|localize }}</div>
+
+        <div class="stat-card-premium">
+            <div class="stat-icon-box revenue">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">{% trans "Receita Bruta" %} ({{ month_name }})</span>
+                <div class="stat-value">{% trans "R$" %} {{ month_revenue|floatformat:2|localize }}</div>
+            </div>
         </div>
     </div>
 
+    <!-- Action Grid -->
     <div class="action-grid-large">
-        <a href="{% url 'reservations:list' property.pk %}" class="glass-card panel-action-card">
+        <a href="{% url 'reservations:list' property.pk %}" class="panel-action-card">
             <div class="icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
             </div>
-            <h3>{% trans "Calendário de Reservas" %}</h3>
-            <p>{% trans "Visualize e gerencie a ocupação deste imóvel." %}</p>
+            <h3>{% trans "Calendário" %}</h3>
+            <p>{% trans "Gestão de ocupação." %}</p>
         </a>
         
-        <a href="{% url 'properties:instructions' property.pk %}" class="glass-card panel-action-card">
+        <a href="{% url 'properties:instructions' property.pk %}" class="panel-action-card">
             <div class="icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
-            <h3>{% trans "Instruções de Reserva" %}</h3>
-            <p>{% trans "Orientações de check-in e regras da casa para os hóspedes." %}</p>
+            <h3>{% trans "Instruções" %}</h3>
+            <p>{% trans "Check-in e regras." %}</p>
         </a>
 
-        <a href="{% url 'properties:authorization' property.pk %}" class="glass-card panel-action-card">
+        <a href="{% url 'properties:authorization' property.pk %}" class="panel-action-card">
             <div class="icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <h3>{% trans "Autorização de Locação" %}</h3>
-            <p>{% trans "Configure o modelo de autorização para o condomínio." %}</p>
+            <h3>{% trans "Autorização" %}</h3>
+            <p>{% trans "Condomínio." %}</p>
         </a>
+
         
-        <a href="{% url 'properties:update' property.pk %}" class="glass-card panel-action-card">
+        <a href="{% url 'properties:update' property.pk %}" class="panel-action-card">
             <div class="icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
             </div>
-            <h3>{% trans "Dados Cadastrais" %}</h3>
-            <p>{% trans "Edite as informações e a foto da propriedade." %}</p>
+            <h3>{% trans "Cadastro" %}</h3>
+            <p>{% trans "Dados e fotos." %}</p>
         </a>
 
-        <a href="{% url 'properties:settings' property.pk %}" class="glass-card panel-action-card">
+        <a href="{% url 'properties:settings' property.pk %}" class="panel-action-card">
             <div class="icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <h3>{% trans "Gestão Financeira" %}</h3>
-            <p>{% trans "Controle receitas e despesas desta unidade." %}</p>
+            <h3>{% trans "Financeiro" %}</h3>
+            <p>{% trans "Fluxo de caixa." %}</p>
         </a>
     </div>
 </div>

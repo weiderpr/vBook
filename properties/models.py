@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+import uuid
 
 class Property(models.Model):
     user = models.ForeignKey(
@@ -41,6 +42,10 @@ class Property(models.Model):
     
     reservation_instructions = models.TextField(blank=True, null=True, verbose_name=_("Instruções de Reserva"))
     authorization_template = models.TextField(blank=True, null=True, verbose_name=_("Modelo de Autorização"))
+    share_client_phone = models.BooleanField(
+        default=False, 
+        verbose_name=_("Enviar telefone do cliente para o prestador em caso de serviço")
+    )
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -71,6 +76,7 @@ class PropertyCost(models.Model):
         ('none', _('Nenhum / Próprio')),
         ('platform', _('Plataforma (Booking/Airbnb/etc)')),
         ('broker', _('Corretor / Terceiro')),
+        ('provider', _('Prestador')),
         ('other', _('Outro')),
     ]
     
@@ -117,6 +123,14 @@ class PropertyCost(models.Model):
         default='none',
         verbose_name=_("Beneficiário / Destinatário")
     )
+    provider = models.ForeignKey(
+        'ServiceProvider',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='property_costs',
+        verbose_name=_("Prestador Associado")
+    )
     description = models.TextField(blank=True, null=True, verbose_name=_("Descrição"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -160,3 +174,56 @@ class FinancialHistory(models.Model):
 
     def __str__(self):
         return f"{self.property.name} - {self.month}/{self.year}"
+
+class Service(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        related_name='services',
+        verbose_name=_("Usuário")
+    )
+    name = models.CharField(max_length=100, verbose_name=_("Nome do Serviço"))
+    
+    class Meta:
+        verbose_name = _("Serviço")
+        verbose_name_plural = _("Serviços")
+        ordering = ['name']
+        unique_together = ['user', 'name']
+
+    def __str__(self):
+        return self.name
+
+class ServiceProvider(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        related_name='service_providers', 
+        verbose_name=_("Usuário")
+    )
+    name = models.CharField(max_length=255, verbose_name=_("Nome Completo"))
+    cpf = models.CharField(max_length=14, blank=True, null=True, verbose_name=_("CPF"))
+    phone = models.CharField(max_length=20, verbose_name=_("Telefone"))
+    services = models.ManyToManyField(
+        Service, 
+        blank=True, verbose_name=_("Serviços Prestados")
+    )
+    access_token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    is_active = models.BooleanField(default=True, verbose_name=_("Ativo"))
+    photo = models.ImageField(upload_to="providers/", blank=True, null=True, verbose_name=_("Foto do Prestador"))
+    
+    THEME_CHOICES = [
+        ('dark', _('Escuro')),
+        ('light', _('Claro')),
+    ]
+    theme = models.CharField(max_length=10, choices=THEME_CHOICES, default='dark', verbose_name=_("Tema"))
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Prestador de Serviço")
+        verbose_name_plural = _("Prestadores de Serviço")
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name

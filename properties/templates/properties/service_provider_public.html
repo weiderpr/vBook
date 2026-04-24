@@ -1,0 +1,881 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ provider.name }} - VerticeBook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #0f172a;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --menu-bg: #111827;
+            --form-bg: #1e293b;
+        }
+        
+        body.light-mode {
+            --bg: #f1f5f9;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --menu-bg: #ffffff;
+            --form-bg: #f8fafc;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .menu-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 10px;
+            border-radius: 12px;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        /* Side Menu */
+        .side-menu {
+            position: fixed;
+            top: 0; left: -280px; width: 280px; height: 100%;
+            background: var(--menu-bg);
+            z-index: 1000;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 2rem 1.5rem;
+            border-right: 1px solid var(--glass-border);
+        }
+        .side-menu.active { left: 0; }
+        .menu-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: none;
+        }
+        .menu-overlay.active { display: block; }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .menu-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .content { padding: 1.5rem; }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-pic-large {
+            width: 100px; height: 100px;
+            border-radius: 30px;
+            margin: 0 auto 1.5rem;
+            border: 3px solid var(--primary);
+            overflow: hidden;
+            background: var(--card-bg);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .service-badge {
+            display: inline-flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .badge {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Profile View */
+        .profile-view { display: none; }
+        .profile-view.active { display: block; }
+
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 1.5rem;
+        }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-label {
+            display: block; font-size: 0.7rem; font-weight: 800;
+            color: var(--text-muted); text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .form-control {
+            width: 100%; height: 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0 1rem;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .btn-save {
+            width: 100%; height: 52px;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            border: none; border-radius: 14px;
+            color: white; font-weight: 700; font-size: 1rem;
+            margin-top: 1rem; cursor: pointer;
+            position: relative; z-index: 10;
+        }
+
+        .photo-upload-label {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 12px; border-radius: 12px;
+            border: 1px dashed var(--glass-border);
+            cursor: pointer; color: var(--text-muted);
+            font-size: 0.85rem; justify-content: center;
+        }
+
+        #photo-preview {
+            width: 60px; height: 60px; border-radius: 12px;
+            object-fit: cover; display: none;
+        }
+
+        .btn-complete {
+            width: 100%; padding: 12px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 12px;
+            color: #4ade80;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .btn-complete:hover {
+            background: rgba(34, 197, 94, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 2000; padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-card {
+            background: var(--form-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .modal-icon {
+            width: 64px; height: 64px;
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .modal-text { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5; }
+        .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .btn-cancel {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer;
+        }
+        .btn-confirm {
+            background: #22c55e;
+            border: none;
+            color: white;
+            padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer;
+        }
+
+        .property-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .property-card:hover {
+            background: rgba(255,255,255,0.06);
+            transform: scale(1.02);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            background: none; border: none; padding: 0;
+        }
+
+        .btn-cancel-complete {
+            width: 100%; padding: 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            color: #f87171;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .btn-cancel-complete:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Theme Cards */
+        .theme-card {
+            border: 1px solid var(--glass-border);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            background: var(--card-bg);
+        }
+        .theme-card.selected {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+        .theme-card svg { opacity: 0.6; }
+        .theme-card.selected svg { opacity: 1; }
+
+        /* Messages */
+        .message-toast {
+            padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem;
+            margin-bottom: 1rem; text-align: center;
+            background: rgba(34, 197, 94, 0.1); color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        .message-toast.error {
+            background: rgba(239, 68, 68, 0.1); color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+    </style>
+</head>
+<body class="{% if provider.theme == 'light' %}light-mode{% endif %}">
+    <div id="overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <div id="sideMenu" class="side-menu">
+        <div style="font-weight: 800; font-size: 1.2rem; color: var(--primary); margin-bottom: 2rem;">VerticeBook</div>
+        <a href="#home" class="menu-item active" id="menu-home" onclick="showView('home')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            {% trans "Início" %}
+        </a>
+        <a href="#agenda" class="menu-item" id="menu-agenda" onclick="showView('agenda')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            {% trans "Agenda" %}
+        </a>
+        <a href="#history" class="menu-item" id="menu-history" onclick="showView('history')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            {% trans "Histórico" %}
+        </a>
+        <a href="#profile" class="menu-item" id="menu-profile" onclick="showView('profile')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            {% trans "Meu Perfil" %}
+        </a>
+        <div style="position: absolute; bottom: 2rem; width: calc(100% - 3rem);">
+            <div style="font-size: 0.7rem; color: var(--text-muted); text-align: center;">ID: {{ provider.access_token|truncatechars:12 }}</div>
+        </div>
+    </div>
+
+    <header>
+        <button class="menu-btn" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div style="font-weight: 800; font-size: 1.1rem;">Portal do Prestador</div>
+        <div style="width: 46px;"></div> <!-- Spacer -->
+    </header>
+
+    {% if messages %}
+    <div style="padding: 0 1.5rem; margin-top: 1rem;">
+        {% for message in messages %}
+        <div class="message-toast {{ message.tags }}" id="msg-{{ forloop.counter }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.message-toast').forEach(m => m.style.display = 'none');
+        }, 3000);
+    </script>
+    {% endif %}
+
+    <div class="content">
+        <!-- Home View -->
+        <div id="homeView" class="profile-view active">
+            <div class="welcome-section">
+                <div class="profile-pic-large">
+                    {% if provider.photo %}
+                        <img src="{{ provider.photo.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    {% endif %}
+                </div>
+                <h1>{{ provider.name }}</h1>
+                <div class="service-badge">
+                    {% for s in provider.services.all %}
+                        <span class="badge">{{ s.name }}</span>
+                    {% endfor %}
+                </div>
+                <p>{% trans "Bem-vindo ao seu portal personalizado. Utilize o menu lateral para gerenciar seu perfil." %}</p>
+            </div>
+            
+            {% if next_services %}
+                {% for cost in next_services %}
+                    <div class="form-card" style="margin-bottom: 1rem; padding: 1.2rem; background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-size: 0.7rem; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">{{ cost.reservation.property.name }}</div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">{{ cost.reservation.first_name }}</div>
+                                    {% if cost.reservation.property.share_client_phone and cost.reservation.client_phone %}
+                                        <a href="https://wa.me/{{ cost.reservation.client_phone|cut:' '|cut:'-'|cut:'('|cut:')' }}" target="_blank" style="display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: rgba(34, 197, 94, 0.1); border-radius: 6px; color: #22c55e; text-decoration: none; font-size: 0.75rem; font-weight: 700;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                            {{ cost.reservation.client_phone }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-top: 2px;">{{ cost.description }}</div>
+                            </div>
+                            <div style="width: 40px; height: 40px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border);">
+                            <div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase;">Check-in</div>
+                                <div style="font-size: 0.8rem; font-weight: 600;">{{ cost.reservation.start_date|date:"d/m/Y" }}</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase;">Check-out</div>
+                                <div style="font-size: 0.8rem; font-weight: 600;">{{ cost.reservation.end_date|date:"d/m/Y" }}</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-complete" style="margin-top: 1rem; padding: 10px; font-size: 0.75rem;" onclick="showView('agenda')">
+                            {% trans "Ver na Agenda" %}
+                        </button>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="form-card" style="text-align: center; border-style: dashed; padding: 3rem 1.5rem;">
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">
+                        {% trans "Nenhum serviço pendente no momento." %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Agenda View -->
+        <div id="agendaView" class="profile-view">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.4rem;">{% trans "Minha Agenda" %}</h2>
+            
+            {% if costs %}
+                {% regroup costs by reservation.property as property_list %}
+                {% for prop_group in property_list %}
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; padding-left: 4px;">
+                            <div style="width: 4px; height: 16px; background: var(--primary); border-radius: 2px;"></div>
+                            <h3 style="font-size: 1rem; font-weight: 800; color: var(--text); text-transform: uppercase; letter-spacing: 0.5px;">{{ prop_group.grouper.name }}</h3>
+                        </div>
+                        
+                        {% for cost in prop_group.list %}
+                            <div class="form-card" style="margin-bottom: 1rem; padding: 1.2rem; border-left: 1px solid var(--glass-border);">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                    <div>
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">{{ cost.reservation.first_name }}</div>
+                                            {% if cost.reservation.property.share_client_phone and cost.reservation.client_phone %}
+                                                <a href="https://wa.me/{{ cost.reservation.client_phone|cut:' '|cut:'-'|cut:'('|cut:')' }}" target="_blank" style="display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: rgba(34, 197, 94, 0.1); border-radius: 6px; color: #22c55e; text-decoration: none; font-size: 0.75rem; font-weight: 700;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                                    {{ cost.reservation.client_phone }}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                        <div style="font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-top: 2px;">{{ cost.description }}</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Reserva</div>
+                                        <div style="font-size: 0.8rem; font-weight: 600;">#{{ cost.reservation.id }}</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border);">
+                                    <div>
+                                        <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Check-in</div>
+                                        <div style="font-size: 0.85rem; font-weight: 600;">{{ cost.reservation.start_date|date:"d/m/Y" }}</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Check-out</div>
+                                        <div style="font-size: 0.85rem; font-weight: 600;">{{ cost.reservation.end_date|date:"d/m/Y" }}</div>
+                                    </div>
+                                </div>
+
+                                <button class="btn-complete" onclick="confirmCompletion('{{ cost.id }}', '{{ cost.description }}')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    {% trans "Marcar como Realizado" %}
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="form-card" style="text-align: center; border-style: dashed; padding: 3rem 1.5rem;">
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">
+                        {% trans "Você ainda não tem serviços agendados." %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- History View -->
+        <div id="historyView" class="profile-view">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.4rem;">{% trans "Histórico Realizado" %}</h2>
+
+            <div id="historyPropertyList">
+                {% if completed_costs %}
+                    {% regroup completed_costs by reservation.property as completed_property_list %}
+                    {% for prop_group in completed_property_list %}
+                        <div class="property-card" onclick="showHistoryDetail('{{ prop_group.grouper.id }}')">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text);">{{ prop_group.grouper.name }}</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">{{ prop_group.list|length }} {% trans "serviços realizados" %}</div>
+                                </div>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);"><polyline points="9 18 15 12 9 6"/></svg>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="form-card" style="text-align: center; border-style: dashed; padding: 3rem 1.5rem;">
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">
+                            {% trans "Nenhum histórico disponível." %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div id="historyServiceList" style="display: none;">
+                <button class="back-btn" onclick="hideHistoryDetail()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    {% trans "Voltar para propriedades" %}
+                </button>
+
+                {% if completed_costs %}
+                    {% for prop_group in completed_property_list %}
+                        <div class="history-detail-group" id="prop-detail-{{ prop_group.grouper.id }}" style="display: none;">
+                            <h3 style="font-size: 1rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 1.2rem;">{{ prop_group.grouper.name }}</h3>
+                            
+                            {% for cost in prop_group.list %}
+                                <div class="form-card" style="margin-bottom: 1rem; padding: 1.2rem; background: rgba(255,255,255,0.02);">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                        <div>
+                                            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">{{ cost.reservation.first_name }}</div>
+                                            <div style="font-size: 0.8rem; color: #22c55e; font-weight: 600; margin-top: 2px;">{{ cost.description }}</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Realizado em</div>
+                                            <div style="font-size: 0.8rem; font-weight: 600;">{{ cost.completed_at|date:"d/m/Y H:i" }}</div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn-cancel-complete" onclick="confirmCancelCompletion('{{ cost.id }}', '{{ cost.description }}')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+                                        {% trans "Cancelar Realizado" %}
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Profile View -->
+        <div id="profileView" class="profile-view">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.4rem;">{% trans "Meu Perfil" %}</h2>
+            <div class="form-card">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="next_view" value="home">
+                    
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Nome Completo" %}</label>
+                        <input type="text" name="name" class="form-control" value="{{ provider.name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{% trans "CPF" %}</label>
+                        <input type="text" name="cpf" id="cpfInput" class="form-control" value="{{ provider.cpf|default:'' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Telefone" %}</label>
+                        <input type="text" name="phone" id="phoneInput" class="form-control" value="{{ provider.phone }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Tema do Portal" %}</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <label class="theme-option" style="cursor: pointer;">
+                                <input type="radio" name="theme" value="dark" style="display: none;" {% if provider.theme == 'dark' %}checked{% endif %} onchange="updateTheme('dark')">
+                                <div class="theme-card {% if provider.theme == 'dark' %}selected{% endif %}" id="theme-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                                    {% trans "Escuro" %}
+                                </div>
+                            </label>
+                            <label class="theme-option" style="cursor: pointer;">
+                                <input type="radio" name="theme" value="light" style="display: none;" {% if provider.theme == 'light' %}checked{% endif %} onchange="updateTheme('light')">
+                                <div class="theme-card {% if provider.theme == 'light' %}selected{% endif %}" id="theme-light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                                    {% trans "Claro" %}
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label class="form-label">{% trans "Foto de Perfil" %}</label>
+                        <label for="photoInput" class="photo-upload-label">
+                            <img id="photo-preview-el" src="#" style="display:none; width: 40px; height: 40px; border-radius: 8px; object-fit: cover;">
+                            <div id="upload-text" style="display: flex; align-items: center; gap: 8px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                {% trans "Trocar Foto" %}
+                            </div>
+                        </label>
+                        <input type="file" name="photo" id="photoInput" style="display: none;" onchange="previewPhoto(this)">
+                    </div>
+
+                    <button type="submit" class="btn-save">{% trans "Salvar Alterações" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function showView(viewName, shouldToggleMenu = true) {
+            localStorage.setItem('activeView', viewName);
+            document.querySelectorAll('.profile-view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            
+            if(viewName === 'home') {
+                document.getElementById('homeView').classList.add('active');
+                document.getElementById('menu-home').classList.add('active');
+            } else if(viewName === 'agenda') {
+                document.getElementById('agendaView').classList.add('active');
+                document.getElementById('menu-agenda').classList.add('active');
+            } else if(viewName === 'history') {
+                document.getElementById('historyView').classList.add('active');
+                document.getElementById('menu-history').classList.add('active');
+                
+                // Restore property detail if saved
+                const savedPropId = localStorage.getItem('activeHistoryProp');
+                if (savedPropId) {
+                    showHistoryDetail(savedPropId);
+                } else {
+                    hideHistoryDetail();
+                }
+            } else if(viewName === 'profile') {
+                document.getElementById('profileView').classList.add('active');
+                document.getElementById('menu-profile').classList.add('active');
+            }
+            
+            if (shouldToggleMenu && document.getElementById('sideMenu').classList.contains('active')) {
+                toggleMenu();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1);
+            const savedView = localStorage.getItem('activeView');
+            const viewToShow = (['home', 'agenda', 'history', 'profile'].includes(hash)) ? hash : savedView;
+            
+            if (viewToShow && ['home', 'agenda', 'history', 'profile'].includes(viewToShow)) {
+                showView(viewToShow, false);
+            }
+        });
+
+        function showHistoryDetail(propId) {
+            localStorage.setItem('activeHistoryProp', propId);
+            document.getElementById('historyPropertyList').style.display = 'none';
+            document.getElementById('historyServiceList').style.display = 'block';
+            document.querySelectorAll('.history-detail-group').forEach(g => g.style.display = 'none');
+            const detailEl = document.getElementById('prop-detail-' + propId);
+            if (detailEl) detailEl.style.display = 'block';
+        }
+
+        function hideHistoryDetail() {
+            localStorage.removeItem('activeHistoryProp');
+            document.getElementById('historyPropertyList').style.display = 'block';
+            document.getElementById('historyServiceList').style.display = 'none';
+        }
+
+        function updateTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('theme-light').classList.add('selected');
+                document.getElementById('theme-dark').classList.remove('selected');
+            } else {
+                document.body.classList.remove('light-mode');
+                document.getElementById('theme-dark').classList.add('selected');
+                document.getElementById('theme-light').classList.remove('selected');
+            }
+        }
+
+        function handleProfileSubmit() {
+            localStorage.setItem('activeView', 'home');
+            return true;
+        }
+
+        function previewPhoto(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('photo-preview-el');
+                    const text = document.getElementById('upload-text');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    text.style.display = 'none';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        IMask(document.getElementById('phoneInput'), {
+            mask: [
+                { mask: '(00) 0000-0000' },
+                { mask: '(00) 00000-0000' }
+            ]
+        });
+
+        IMask(document.getElementById('cpfInput'), {
+            mask: '000.000.000-00'
+        });
+
+        let currentCostId = null;
+
+        function confirmCompletion(id, description) {
+            currentCostId = id;
+            document.getElementById('serviceDescription').innerText = description;
+            document.getElementById('completionModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('completionModal').classList.remove('active');
+            currentCostId = null;
+        }
+
+        function executeCompletion() {
+            if (!currentCostId) return;
+            
+            const btn = document.querySelector('.btn-confirm');
+            const originalText = btn.innerText;
+            btn.innerText = "{% trans 'Aguarde...' %}";
+            btn.disabled = true;
+
+            const url = `concluir/${currentCostId}/`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.hash = 'agenda';
+                    window.location.reload();
+                } else {
+                    alert('Erro ao concluir serviço. Tente novamente.');
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro na conexão.');
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        }
+
+        function confirmCancelCompletion(id, description) {
+            currentCostId = id;
+            document.getElementById('cancelServiceDescription').innerText = description;
+            document.getElementById('cancelCompletionModal').classList.add('active');
+        }
+
+        function closeCancelModal() {
+            document.getElementById('cancelCompletionModal').classList.remove('active');
+            currentCostId = null;
+        }
+
+        function executeCancelCompletion() {
+            if (!currentCostId) return;
+            
+            const btn = document.querySelector('.btn-confirm-cancel');
+            const originalText = btn.innerText;
+            btn.innerText = "{% trans 'Aguarde...' %}";
+            btn.disabled = true;
+
+            const url = `cancelar-conclusao/${currentCostId}/`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.hash = 'history';
+                    window.location.reload();
+                } else {
+                    alert('Erro ao cancelar conclusão. Tente novamente.');
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Erro na conexão.');
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        }
+    </script>
+
+    <!-- Completion Modal -->
+    <div id="completionModal" class="modal">
+        <div class="modal-card">
+            <div class="modal-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="modal-title">{% trans "Concluir Serviço?" %}</div>
+            <div class="modal-text">
+                {% trans "Você está confirmando a realização do serviço:" %}<br>
+                <strong id="serviceDescription" style="color: var(--text);"></strong>
+                <br><br>
+                {% trans "Uma vez confirmado, ele sairá da sua agenda ativa." %}
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">{% trans "Cancelar" %}</button>
+                <button class="btn-confirm" onclick="executeCompletion()">{% trans "Confirmar" %}</button>
+            </div>
+        </div>
+    </div>
+    <!-- Cancel Completion Modal -->
+    <div id="cancelCompletionModal" class="modal">
+        <div class="modal-card">
+            <div class="modal-icon" style="background: rgba(239, 68, 68, 0.1); color: #f87171;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+            </div>
+            <div class="modal-title">{% trans "Estornar Realização?" %}</div>
+            <div class="modal-text">
+                {% trans "Você está cancelando a realização do serviço:" %}<br>
+                <strong id="cancelServiceDescription" style="color: var(--text);"></strong>
+                <br><br>
+                {% trans "O serviço voltará para sua agenda de pendentes." %}
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeCancelModal()">{% trans "Voltar" %}</button>
+                <button class="btn-confirm-cancel btn-confirm" style="background: #ef4444;" onclick="executeCancelCompletion()">{% trans "Confirmar Estorno" %}</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

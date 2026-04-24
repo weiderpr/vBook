@@ -318,7 +318,10 @@
                         "value": "{{ cost.value|unlocalize }}",
                         "property_cost_id": "{{ cost.property_cost.pk|default:'' }}",
                         "type": "fixed",
-                        "amount": "{{ cost.value|unlocalize }}"
+                        "amount": "{{ cost.value|unlocalize }}",
+                        "provider_id": "{{ cost.provider.id|default:'' }}",
+                        "provider_name": "{{ cost.provider.name|escapejs|default:'' }}",
+                        "provider_photo": "{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}"
                     },
                 {% endfor %}
             {% else %}
@@ -328,7 +331,10 @@
                         "value": 0,
                         "property_cost_id": "{{ cost.pk }}",
                         "type": "{{ cost.amount_type }}",
-                        "amount": "{{ cost.amount|unlocalize }}"
+                        "amount": "{{ cost.amount|unlocalize }}",
+                        "provider_id": "{{ cost.provider.id|default:'' }}",
+                        "provider_name": "{{ cost.provider.name|escapejs|default:'' }}",
+                        "provider_photo": "{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}"
                     },
                 {% endfor %}
             {% endif %}
@@ -347,13 +353,34 @@
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <input type="hidden" name="cost_property_id[]" value="${data.property_cost_id || ''}">
-                        <input type="text" name="cost_description[]" value="${data.description || ''}" placeholder="{% trans "Descrição" %}" 
-                            style="font-size: 0.8rem; padding: 0.4rem 0.6rem; background: transparent; border: none; border-bottom: 1px dashed var(--glass-border); border-radius: 0; color: var(--text-muted); width: 85%;">
+                        <input type="hidden" name="cost_provider_id[]" class="cost-provider-id" value="${data.provider_id || ''}">
+                        <div style="display: flex; align-items: center; gap: 10px; width: 85%;">
+                            <div class="provider-badge-container" style="display: ${data.provider_id ? 'block' : 'none'};">
+                                <div style="width: 28px; height: 28px; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,0.05); flex-shrink: 0; border: 1px solid var(--glass-border); cursor: pointer;" title="${data.provider_name || ''}" onclick="toggleProviderSearch('${rowId}')">
+                                    <img src="${data.provider_photo || ''}" class="provider-img" style="width: 100%; height: 100%; object-fit: cover; display: ${data.provider_photo ? 'block' : 'none'};">
+                                    <div class="provider-placeholder" style="width: 100%; height: 100%; display: ${data.provider_photo ? 'none' : 'flex'}; align-items: center; justify-content: center; color: var(--text-muted);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-assign-provider" style="display: ${data.provider_id ? 'none' : 'flex'}; width: 28px; height: 28px; border-radius: 6px; background: rgba(255,255,255,0.05); border: 1px dashed var(--glass-border); color: var(--text-muted); align-items: center; justify-content: center; cursor: pointer;" onclick="toggleProviderSearch('${rowId}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+                            </button>
+                            <input type="text" name="cost_description[]" value="${data.description || ''}" placeholder="{% trans "Descrição" %}" 
+                                style="font-size: 0.8rem; padding: 0.4rem 0.6rem; background: transparent; border: none; border-bottom: 1px dashed var(--glass-border); border-radius: 0; color: var(--text-muted); flex: 1;">
+                        </div>
                         <button type="button" class="btn-remove-cost"
                             style="background: none; border: none; color: #ef4444; padding: 5px; cursor: pointer; transition: opacity 0.2s; opacity: 0.6;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg>
                         </button>
                     </div>
+                    
+                    <div class="provider-search-inline" style="display: none; margin-top: 4px; position: relative;">
+                        <input type="text" class="provider-search-input" placeholder="{% trans "Buscar prestador..." %}" 
+                            style="font-size: 0.75rem; padding: 6px 10px; background: rgba(0,0,0,0.2); border: 1px solid var(--primary); border-radius: 8px;">
+                        <div class="provider-search-results" style="position: absolute; top: 100%; left: 0; right: 0; background: #1e293b; border: 1px solid var(--glass-border); border-radius: 8px; z-index: 100; max-height: 150px; overflow-y: auto; display: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);"></div>
+                    </div>
+
                     <input type="text" name="cost_value[]" class="cost-value-input" data-type="${data.type || 'fixed'}" data-amount="${data.amount || 0}" value="${rawValue}" 
                         style="font-size: 1rem; font-weight: 700; padding: 0.5rem 0.8rem; background: rgba(255,255,255,0.05);">
                 </div>
@@ -464,6 +491,88 @@
             valueInput.addEventListener('input', calculateCosts);
         }
         
+        function toggleProviderSearch(rowId) {
+            const row = document.getElementById(rowId);
+            const searchDiv = row.querySelector('.provider-search-inline');
+            const isVisible = searchDiv.style.display === 'block';
+            searchDiv.style.display = isVisible ? 'none' : 'block';
+            if (!isVisible) searchDiv.querySelector('input').focus();
+        }
+
+        window.toggleProviderSearch = toggleProviderSearch; // Make it global for onclick
+
+        function selectProviderForCost(rowId, p) {
+            const row = document.getElementById(rowId);
+            row.querySelector('.cost-provider-id').value = p.id;
+            
+            const badgeContainer = row.querySelector('.provider-badge-container');
+            const assignBtn = row.querySelector('.btn-assign-provider');
+            const imgEl = row.querySelector('.provider-img');
+            const placeholderEl = row.querySelector('.provider-placeholder');
+            
+            badgeContainer.style.display = 'block';
+            assignBtn.style.display = 'none';
+            
+            if (p.photo_url) {
+                imgEl.src = p.photo_url;
+                imgEl.style.display = 'block';
+                placeholderEl.style.display = 'none';
+            } else {
+                imgEl.style.display = 'none';
+                placeholderEl.style.display = 'flex';
+            }
+            
+            row.querySelector('.provider-search-inline').style.display = 'none';
+        }
+
+        // Global event delegation for provider search
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('provider-search-input')) {
+                const q = e.target.value.trim();
+                const resultsDiv = e.target.nextElementSibling;
+                const rowId = e.target.closest('.cost-row').id;
+                
+                if (q.length < 2) {
+                    resultsDiv.style.display = 'none';
+                    return;
+                }
+
+                clearTimeout(e.target.timeout);
+                e.target.timeout = setTimeout(async () => {
+                    try {
+                        const response = await fetch("{% url 'properties:provider_search' %}?q=" + encodeURIComponent(q));
+                        const data = await response.json();
+                        
+                        resultsDiv.innerHTML = '';
+                        if (data.length > 0) {
+                            data.forEach(p => {
+                                const div = document.createElement('div');
+                                div.style.padding = '8px 12px';
+                                div.style.cursor = 'pointer';
+                                div.style.display = 'flex';
+                                div.style.alignItems = 'center';
+                                div.style.gap = '8px';
+                                div.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                                div.innerHTML = `
+                                    <div style="width: 20px; height: 20px; border-radius: 4px; overflow: hidden; background: rgba(255,255,255,0.1); flex-shrink: 0;">
+                                        ${p.photo_url ? `<img src="${p.photo_url}" style="width:100%; height:100%; object-fit:cover;">` : `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`}
+                                    </div>
+                                    <span style="font-size: 0.8rem; color: #fff;">${p.name}</span>
+                                `;
+                                div.onclick = () => selectProviderForCost(rowId, p);
+                                resultsDiv.appendChild(div);
+                            });
+                            resultsDiv.style.display = 'block';
+                        } else {
+                            resultsDiv.style.display = 'none';
+                        }
+                    } catch (err) {
+                        console.error('Error searching providers:', err);
+                    }
+                }, 300);
+            }
+        });
+
         // Initialize rows
         initialCosts.forEach(cost => addCostRow(cost));
         

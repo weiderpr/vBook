@@ -103,6 +103,22 @@
         color: var(--text-muted);
         border: 1px solid var(--glass-border);
     }
+    
+    .status-cancelled {
+        background: rgba(239, 68, 68, 0.15);
+        color: #f87171;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    tr.is-cancelled td {
+        opacity: 0.5;
+        filter: grayscale(0.8);
+    }
+    
+    tr.is-cancelled .actions-group .btn-icon:not(.cancel-toggle) {
+        pointer-events: none;
+        opacity: 0.3;
+    }
 
     .checkin-badge {
         background: rgba(0, 198, 255, 0.15);
@@ -185,13 +201,24 @@
         border-color: rgba(239, 68, 68, 0.2);
     }
 
+    .btn-icon.cancel-toggle:hover {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+        border-color: rgba(245, 158, 11, 0.2);
+    }
+    .btn-icon.cancel-toggle.active:hover {
+        background: rgba(34, 197, 94, 0.1);
+        color: #22c55e;
+        border-color: rgba(34, 197, 94, 0.2);
+    }
+
     .btn-icon.whatsapp:hover, .btn-icon.whatsapp.sent {
         background: rgba(34, 197, 94, 0.1);
         color: #22c55e;
         border-color: rgba(34, 197, 94, 0.2);
     }
 
-    .btn-icon.pdf:hover {
+    .btn-icon.pdf:hover, .btn-icon.pdf.sent {
         background: rgba(0, 198, 255, 0.1);
         color: #00c6ff;
         border-color: rgba(0, 198, 255, 0.2);
@@ -280,7 +307,7 @@
             <tbody>
                 {% now "Y-m-d" as today_str %}
                 {% for res in reservations %}
-                <tr>
+                <tr class="{% if res.is_cancelled %}is-cancelled{% endif %}">
                     <td>
                         <div class="client-cell">
                             <span class="name">{{ res.client_name }}</span>
@@ -302,7 +329,9 @@
                         <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;">
                             {% with res.start_date|date:"Y-m-d" as start_str %}
                             {% with res.end_date|date:"Y-m-d" as end_str %}
-                                {% if today_str < start_str %}
+                                {% if res.is_cancelled %}
+                                    <span class="status-badge status-cancelled">{% trans "Cancelada" %}</span>
+                                {% elif today_str < start_str %}
                                     <span class="status-badge status-upcoming">{% trans "Em breve" %}</span>
                                 {% elif today_str > end_str %}
                                     <span class="status-badge status-past">{% trans "Passada" %}</span>
@@ -333,11 +362,11 @@
                     </td>
                     <td>
                         <div class="actions-group">
-                            <a href="{% url 'reservations:send_whatsapp' property.pk res.pk %}" class="btn-icon whatsapp {% if res.welcome_message_sent %}sent{% endif %}" title="{% trans 'Enviar WhatsApp' %}" onclick="return confirmAction('send_welcome')">
+                            <a href="{% url 'reservations:send_whatsapp' property.pk res.pk %}" class="btn-icon whatsapp {% if res.welcome_message_sent %}sent{% endif %}" title="{% trans 'Enviar solicitação de dados via Whatsapp' %}" onclick="return confirmAction('send_welcome')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                             </a>
                             {% if res.checkin_completed %}
-                                <button class="btn-icon pdf" title="{% trans 'Ver Autorização' %}" 
+                                <button class="btn-icon pdf {% if res.authorization_sent %}sent{% endif %}" title="{% trans 'Ver Autorização' %}" 
                                         data-guest-name="{{ res.client_name }}"
                                         data-checkin-date="{{ res.start_date|date:'d_m_Y' }}"
                                         onclick="openAuthorizationModal('{{ res.pk }}', '{% if res.authorization_sent %}1{% else %}0{% endif %}', this)">
@@ -347,6 +376,16 @@
                             <a href="{% url 'reservations:update' property.pk res.pk %}" class="btn-icon" title="{% trans 'Editar' %}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                             </a>
+                            <form method="post" action="{% url 'reservations:toggle_cancel' property.pk res.pk %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-icon cancel-toggle {% if res.is_cancelled %}active{% endif %}" title="{% if res.is_cancelled %}{% trans 'Restaurar Reserva' %}{% else %}{% trans 'Cancelar Reserva' %}{% endif %}" onclick="return confirmAction('{% if res.is_cancelled %}uncancel{% else %}cancel{% endif %}')">
+                                    {% if res.is_cancelled %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                                    {% else %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                                    {% endif %}
+                                </button>
+                            </form>
                             <a href="{% url 'reservations:delete' property.pk res.pk %}" class="btn-icon delete" title="{% trans 'Excluir' %}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                             </a>
@@ -400,7 +439,9 @@
     function confirmAction(type) {
         const messages = {
             'reset_checkin': '{% trans "Atenção: Isso excluirá os dados preenchidos pelo hóspede (documentos, acompanhantes, etc.) e permitirá um novo preenchimento. Confirmar exclusão?" %}',
-            'send_welcome': '{% trans "Deseja enviar a mensagem de boas-vindas via WhatsApp?" %}'
+            'send_welcome': '{% trans "Deseja enviar a mensagem de boas-vindas via WhatsApp?" %}',
+            'cancel': '{% trans "Tem certeza que deseja cancelar esta reserva? Ela será marcada visualmente mas não será excluída." %}',
+            'uncancel': '{% trans "Deseja restaurar esta reserva?" %}'
         };
         return confirm(messages[type] || '{% trans "Tem certeza?" %}');
     }

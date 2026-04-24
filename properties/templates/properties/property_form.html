@@ -171,6 +171,67 @@
         font-size: 0.85rem;
         margin-top: 5px;
     }
+
+    /* Toggle Switch Style */
+    .toggle-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 1.2rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .toggle-wrapper:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--primary);
+    }
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+    }
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #cbd5e1;
+        transition: .4s;
+        border-radius: 24px;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    input:checked + .slider {
+        background-color: var(--primary);
+    }
+    input:checked + .slider:before {
+        transform: translateX(20px);
+    }
+    .toggle-label-text {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-main);
+    }
 </style>
 {% endblock %}
 
@@ -293,6 +354,21 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Configurações de Serviço -->
+        <div class="form-section">
+            <h3 class="form-section-title">{% trans "Configurações de Serviço" %}</h3>
+            <div class="form-group">
+                <label class="toggle-wrapper" for="{{ form.share_client_phone.id_for_label }}">
+                    <div class="switch">
+                        {{ form.share_client_phone }}
+                        <span class="slider"></span>
+                    </div>
+                    <span class="toggle-label-text">{{ form.share_client_phone.label }}</span>
+                </label>
+                {% if form.share_client_phone.errors %}<div class="field-error">{{ form.share_client_phone.errors.0 }}</div>{% endif %}
+            </div>
+        </div>
 
         <div style="display: flex; gap: 1.5rem; margin-top: 3rem; justify-content: flex-end;">
             {% if object %}
@@ -337,6 +413,24 @@
                     { mask: '(00) 0000-0000' },
                     { mask: '(00) 00000-0000' }
                 ]
+            });
+        });
+
+        const moneyElements = document.querySelectorAll('.money-mask');
+        moneyElements.forEach(function(el) {
+            IMask(el, {
+                mask: 'R$ num',
+                blocks: {
+                    num: {
+                        mask: Number,
+                        thousandsSeparator: '.',
+                        padFractionalZeros: true,
+                        normalizeZeros: true,
+                        radix: ',',
+                        mapToRadix: ['.'],
+                        min: 0
+                    }
+                }
             });
         });
     });

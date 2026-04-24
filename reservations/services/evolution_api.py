@@ -211,7 +211,8 @@ class EvolutionService:
                 f"*{reserva.property.name}*\n"
                 f"*{reserva.start_date.strftime('%d/%m/%Y')}* até *{reserva.end_date.strftime('%d/%m/%Y')}*.\n\n"
                 "Por favor, preencha os dados no link abaixo para a sua autorização no condomínio.\n\n"
-                f"{checkin_url}"
+                f"{checkin_url}\n\n"
+                "Após o envio dos dados, verifique nesse mesmo link as informações da reserva e o documento de autorização, se necessário."
             )
 
             payload = {

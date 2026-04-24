@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from properties.models import Property
 
+_property = property
+
 class Client(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Nome Completo"))
     phone = models.CharField(max_length=20, verbose_name=_("Telefone"))
@@ -117,6 +119,10 @@ class Reservation(models.Model):
         default=False,
         verbose_name=_("Autorização Enviada")
     )
+    is_cancelled = models.BooleanField(
+        default=False,
+        verbose_name=_("Reserva Cancelada")
+    )
     
     authorization_sent_at = models.DateTimeField(
         null=True, 
@@ -133,7 +139,13 @@ class Reservation(models.Model):
         ordering = ['-start_date']
 
     def __str__(self):
-        return f"{self.client_name} - {self.property.name} ({self.start_date})"
+        return f"{self.client_name} ({self.start_date} - {self.end_date})"
+
+    @_property
+    def first_name(self):
+        if self.client_name:
+            return self.client_name.split()[0]
+        return ""
 
     def get_checkin_url(self):
         """Generates the absolute check-in URL"""
@@ -160,6 +172,17 @@ class ReservationCost(models.Model):
         related_name='reservation_instances',
         verbose_name=_("Custo de Referência")
     )
+    provider = models.ForeignKey(
+        'properties.ServiceProvider',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='reservation_costs',
+        verbose_name=_("Prestador")
+    )
+    
+    is_completed = models.BooleanField(default=False, verbose_name=_("Realizado"))
+    completed_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Realizado em"))
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

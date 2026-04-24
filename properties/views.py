@@ -1,7 +1,8 @@
+from datetime import timedelta
 from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseForbidden
-from django.urls import reverse_lazy
+from django.http import HttpResponseForbidden, JsonResponse
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, View
 from django.contrib import messages
@@ -9,8 +10,8 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.db.models import Sum, Q
 
-from .models import Property, PropertyCost, FinancialHistory
-from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm
+from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider
+from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceForm, ServiceProviderForm
 from reservations.models import Reservation, ReservationCost
 
 class PropertyInstructionsUpdateView(LoginRequiredMixin, UpdateView):
@@ -310,7 +311,14 @@ class PropertyCostCreateView(LoginRequiredMixin, CreateView):
             return super().form_valid(form)
         except Property.DoesNotExist:
             messages.error(self.request, _("Propriedade não encontrada."))
-            return self.form_invalid(form)
+            return redirect('properties:list')
+
+    def form_invalid(self, form):
+        property_id = self.kwargs.get('pk')
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{form.fields[field].label}: {error}")
+        return redirect('properties:settings', pk=property_id)
 
     def get_success_url(self):
         return reverse_lazy('properties:settings', kwargs={'pk': self.kwargs.get('pk')})
@@ -340,6 +348,12 @@ class PropertyCostUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         messages.success(self.request, _("Custo atualizado com sucesso!"))
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{form.fields[field].label}: {error}")
+        return redirect('properties:settings', pk=self.get_object().property.pk)
 
     def get_success_url(self):
         return reverse_lazy('properties:settings', kwargs={'pk': self.object.property.pk})
@@ -402,3 +416,226 @@ class PropertyFinancialHistorySaveView(LoginRequiredMixin, View):
         except:
             return Decimal(0)
 
+
+class ServiceProviderListView(LoginRequiredMixin, ListView):
+    model = ServiceProvider
+    template_name = 'properties/service_provider_list.html'
+    context_object_name = 'providers'
+
+    def get_queryset(self):
+        queryset = ServiceProvider.objects.filter(user=self.request.user)
+        name_query = self.request.GET.get("name")
+        if name_query:
+            queryset = queryset.filter(name__icontains=name_query)
+        service_id = self.request.GET.get("service")
+        if service_id:
+            queryset = queryset.filter(services__id=service_id).distinct()
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_item"] = "providers"
+        context["service_form"] = ServiceForm()
+        context["services"] = Service.objects.filter(user=self.request.user)
+        context["current_filters"] = {
+            "name": self.request.GET.get("name", ""),
+            "service": self.request.GET.get("service", "")
+        }
+        return context
+
+class ServiceProviderSearchView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        q = request.GET.get('q', '')
+        providers = ServiceProvider.objects.filter(
+            user=request.user,
+            name__icontains=q
+        )[:10]
+        
+        results = []
+        for p in providers:
+            results.append({
+                'id': p.id,
+                'name': p.name,
+                'photo_url': p.photo.url if p.photo else None
+            })
+        return JsonResponse(results, safe=False)
+
+class ServiceProviderCreateView(LoginRequiredMixin, CreateView):
+    model = ServiceProvider
+    form_class = ServiceProviderForm
+    template_name = 'properties/service_provider_form.html'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_item"] = "providers"
+        return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, _("Prestador cadastrado com sucesso!"))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('properties:provider_list')
+
+class ServiceProviderUpdateView(LoginRequiredMixin, UpdateView):
+    model = ServiceProvider
+    form_class = ServiceProviderForm
+    template_name = 'properties/service_provider_form.html'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_queryset(self):
+        return ServiceProvider.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_item"] = "providers"
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Prestador atualizado com sucesso!"))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('properties:provider_list')
+
+class ServiceProviderDeleteView(LoginRequiredMixin, DeleteView):
+    model = ServiceProvider
+
+    def get_queryset(self):
+        return ServiceProvider.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_item"] = "providers"
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('properties:provider_list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, _("Prestador removido com sucesso!"))
+        return super().delete(request, *args, **kwargs)
+
+class ServiceCreateView(LoginRequiredMixin, CreateView):
+    model = Service
+    form_class = ServiceForm
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        service = form.save()
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success', 'id': service.id, 'name': service.name})
+        messages.success(self.request, _("Serviço cadastrado com sucesso!"))
+        return redirect(self.request.META.get('HTTP_REFERER', '/'))
+
+class ServiceProviderPublicView(View):
+    def get(self, request, token):
+        provider = get_object_or_404(ServiceProvider, access_token=token)
+        # Only show services that are NOT completed and NOT cancelled
+        costs = provider.reservation_costs.filter(
+            is_completed=False, 
+            reservation__is_cancelled=False
+        ).select_related('reservation', 'reservation__property').order_by('reservation__property__name', '-reservation__end_date')
+        
+        # Calculate the first day of the previous month to limit history
+        now = timezone.now()
+        first_day_current = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        first_day_previous = (first_day_current - timedelta(days=1)).replace(day=1)
+
+        # Fetch completed costs for the history section, limited to current and previous month, excluding cancelled
+        completed_costs = provider.reservation_costs.filter(
+            is_completed=True,
+            reservation__is_cancelled=False,
+            completed_at__gte=first_day_previous
+        ).select_related('reservation', 'reservation__property').order_by('reservation__property__id', '-completed_at')
+        
+        # Fetch next service for each property (Home view), excluding cancelled
+        active_costs_for_home = provider.reservation_costs.filter(
+            is_completed=False,
+            reservation__is_cancelled=False
+        ).select_related('reservation', 'reservation__property').order_by('reservation__start_date')
+        next_services = []
+        seen_properties = set()
+        for cost in active_costs_for_home:
+            if cost.reservation.property_id not in seen_properties:
+                next_services.append(cost)
+                seen_properties.add(cost.reservation.property_id)
+
+        return render(request, "properties/service_provider_public.html", {
+            "provider": provider,
+            "costs": costs,
+            "completed_costs": completed_costs,
+            "next_services": next_services
+        })
+
+    def post(self, request, token):
+        provider = get_object_or_404(ServiceProvider, access_token=token)
+        name = request.POST.get("name")
+        phone = request.POST.get("phone")
+        cpf = request.POST.get("cpf")
+        photo = request.FILES.get("photo")
+        theme = request.POST.get("theme")
+        
+        if name: provider.name = name
+        if phone: provider.phone = phone
+        if cpf: provider.cpf = cpf
+        if photo: provider.photo = photo
+        if theme: provider.theme = theme
+        
+        provider.save()
+        messages.success(request, _("Perfil atualizado com sucesso!"))
+        return redirect("properties:provider_public", token=token)
+
+class ServiceProviderCompleteServiceView(View):
+    def post(self, request, token, cost_id):
+        provider = get_object_or_404(ServiceProvider, access_token=token)
+        cost = get_object_or_404(ReservationCost, pk=cost_id, provider=provider)
+        
+        cost.is_completed = True
+        cost.completed_at = timezone.now()
+        cost.save()
+        
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success'})
+            
+        return redirect("properties:provider_public", token=token)
+
+class ServiceProviderCancelCompletionView(View):
+    def post(self, request, token, cost_id):
+        provider = get_object_or_404(ServiceProvider, access_token=token)
+        cost = get_object_or_404(ReservationCost, pk=cost_id, provider=provider)
+        
+        cost.is_completed = False
+        cost.completed_at = None
+        cost.save()
+        
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success'})
+            
+        return redirect("properties:provider_public", token=token)
+
+class ServiceUpdateView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        service = get_object_or_404(Service, pk=pk, user=request.user)
+        name = request.POST.get('name')
+        if name:
+            service.name = name
+            service.save()
+            return JsonResponse({'status': 'success', 'name': service.name})
+        return JsonResponse({'status': 'error', 'message': 'Nome inválido'}, status=400)
+
+class ServiceDeleteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        service = get_object_or_404(Service, pk=pk, user=request.user)
+        service.delete()
+        return JsonResponse({'status': 'success'})

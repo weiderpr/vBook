@@ -62,11 +62,13 @@ class ReservationCreateView(LoginRequiredMixin, PropertyContextMixin, CreateView
         descriptions = self.request.POST.getlist('cost_description[]')
         values = self.request.POST.getlist('cost_value[]')
         property_cost_ids = self.request.POST.getlist('cost_property_id[]')
+        provider_ids = self.request.POST.getlist('cost_provider_id[]')
         
         # Clear existing costs if any (for updates)
         reservation.costs.all().delete()
         
         from decimal import Decimal
+        from properties.models import ServiceProvider
         for i in range(len(descriptions)):
             if descriptions[i]:
                 try:
@@ -78,11 +80,18 @@ class ReservationCreateView(LoginRequiredMixin, PropertyContextMixin, CreateView
                     if i < len(property_cost_ids) and property_cost_ids[i]:
                         prop_cost = PropertyCost.objects.filter(pk=property_cost_ids[i]).first()
                     
+                    provider = None
+                    if i < len(provider_ids) and provider_ids[i]:
+                        provider = ServiceProvider.objects.filter(pk=provider_ids[i]).first()
+                    elif prop_cost:
+                        provider = prop_cost.provider
+                    
                     ReservationCost.objects.create(
                         reservation=reservation,
                         description=descriptions[i],
                         value=val,
-                        property_cost=prop_cost
+                        property_cost=prop_cost,
+                        provider=provider
                     )
                 except (ValueError, IndexError, ArithmeticError):
                     continue
@@ -127,6 +136,19 @@ class ReservationDeleteView(LoginRequiredMixin, PropertyContextMixin, DeleteView
     def get_success_url(self):
         messages.success(self.request, _("Reserva removida com sucesso!"))
         return reverse('reservations:list', kwargs={'property_pk': self.kwargs.get('property_pk')})
+
+from django.views import View
+
+class ReservationToggleCancelView(LoginRequiredMixin, View):
+    def post(self, request, property_pk, pk):
+        reservation = get_object_or_404(Reservation, pk=pk, property__pk=property_pk, property__user=request.user)
+        reservation.is_cancelled = not reservation.is_cancelled
+        reservation.save()
+        
+        status = _("cancelada") if reservation.is_cancelled else _("restaurada")
+        messages.success(request, _(f"Reserva {status} com sucesso!"))
+        
+        return redirect('reservations:list', property_pk=property_pk)
 
 @login_required
 def search_clients(request, property_pk):

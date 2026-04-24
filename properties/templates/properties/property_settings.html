@@ -288,10 +288,26 @@
                                                 </span>
                                             {% endif %}
                                             {% if cost.recipient != 'none' %}
-                                                <span style="font-size: 0.7rem; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 6px; border: 1px solid var(--glass-border); display: inline-flex; align-items: center;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                                                    {{ cost.get_recipient_display }}
-                                                </span>
+                                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                                    <span style="font-size: 0.7rem; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 6px; border: 1px solid var(--glass-border); display: inline-flex; align-items: center; width: fit-content;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                                        {{ cost.get_recipient_display }}
+                                                    </span>
+                                                    {% if cost.recipient == 'provider' and cost.provider %}
+                                                        <div style="display: flex; align-items: center; gap: 8px; background: rgba(99, 102, 241, 0.05); padding: 4px 8px; border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.1); width: fit-content;">
+                                                            <div style="width: 18px; height: 18px; border-radius: 4px; overflow: hidden; background: rgba(255,255,255,0.1); flex-shrink: 0;">
+                                                                {% if cost.provider.photo %}
+                                                                    <img src="{{ cost.provider.photo.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                                                {% else %}
+                                                                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); background: rgba(0,0,0,0.2);">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                            <span style="font-size: 0.75rem; color: var(--text-main); font-weight: 600;">{{ cost.provider.name }}</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
                                             {% endif %}
                                         </div>
                                         {% if cost.description %}
@@ -315,7 +331,10 @@
                                                     amount: '{{ cost.amount|unlocalize }}',
                                                     amount_type: '{{ cost.amount_type }}',
                                                     recipient: '{{ cost.recipient }}',
-                                                    frequency: '{{ cost.frequency }}'
+                                                    frequency: '{{ cost.frequency }}',
+                                                    provider_id: '{{ cost.provider.id|default_if_none:"" }}',
+                                                    provider_name: '{{ cost.provider.name|escapejs|default:"" }}',
+                                                    provider_photo: '{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}'
                                                 })">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                             </button>
@@ -402,7 +421,10 @@
                                                     recipient: '{{ cost.recipient }}',
                                                     frequency: '{{ cost.frequency }}',
                                                     month: '{{ cost.month|unlocalize }}',
-                                                    year: '{{ cost.year|unlocalize }}'
+                                                    year: '{{ cost.year|unlocalize }}',
+                                                    provider_id: '{{ cost.provider.id|default_if_none:"" }}',
+                                                    provider_name: '{{ cost.provider.name|escapejs|default:"" }}',
+                                                    provider_photo: '{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}'
                                                 })">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                             </button>
@@ -488,7 +510,10 @@
                                                     amount_type: '{{ cost.amount_type }}',
                                                     recipient: '{{ cost.recipient }}',
                                                     frequency: '{{ cost.frequency }}',
-                                                    year: '{{ cost.year|unlocalize }}'
+                                                    year: '{{ cost.year|unlocalize }}',
+                                                    provider_id: '{{ cost.provider.id|default_if_none:"" }}',
+                                                    provider_name: '{{ cost.provider.name|escapejs|default:"" }}',
+                                                    provider_photo: '{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}'
                                                 })">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                             </button>
@@ -708,6 +733,30 @@
                         <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px; font-weight: 500;">{{ field.errors.0 }}</div>
                     {% endif %}
                 </div>
+                {% if field.name == 'recipient' %}
+                <div class="form-group provider-search-group" style="display: none; margin-bottom: 1.5rem; background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 16px; border: 1px dashed var(--glass-border);">
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.8rem;">{% trans "Vincular Prestador" %}</label>
+                    <div style="position: relative;">
+                        <input type="text" id="provider_search_input" class="form-control" placeholder="{% trans 'Digite o nome para buscar...' %}" autocomplete="off" style="padding-left: 2.8rem; height: 46px; background: rgba(0,0,0,0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); opacity: 0.5;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </div>
+                    <div id="provider_results" style="margin-top: 10px; background: var(--bg-card); border-radius: 12px; max-height: 200px; overflow-y: auto; border: 1px solid var(--glass-border); display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 10;">
+                        <!-- Results will be injected here -->
+                    </div>
+                    <div id="selected_provider_display" style="margin-top: 10px; display: none; align-items: center; gap: 12px; background: rgba(99, 102, 241, 0.1); padding: 12px; border-radius: 12px; border: 1px solid var(--primary);">
+                        <div id="selected_provider_photo_container" style="width: 36px; height: 36px; border-radius: 10px; overflow: hidden; background: rgba(255,255,255,0.1); flex-shrink: 0;">
+                            <img id="selected_provider_img" src="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                            <div id="selected_provider_placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                        </div>
+                        <div id="selected_provider_name" style="font-weight: 600; color: var(--text-main); flex: 1; font-size: 0.95rem;"></div>
+                        <button type="button" onclick="clearSelectedProvider()" style="background: rgba(239, 68, 68, 0.1); border: none; color: #ef4444; cursor: pointer; width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        </button>
+                    </div>
+                </div>
+                {% endif %}
             {% endfor %}
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem;">
                 <button type="button" class="btn btn-outline" style="padding: 1rem;" onclick="toggleModal(false)">{% trans "Cancelar" %}</button>
@@ -802,6 +851,11 @@
 
             // Update fields visibility based on frequency
             updateFormFields();
+
+            // Clear provider search if new
+            if (frequency) {
+                clearSelectedProvider();
+            }
             
             // Focus on first input
             setTimeout(() => {
@@ -815,6 +869,50 @@
                 }
             }
         }
+    }
+
+    function clearSelectedProvider() {
+        const modal = document.getElementById('costModal');
+        const providerInput = modal.querySelector('input[name="provider"]');
+        const searchGroup = modal.querySelector('.provider-search-group');
+        const display = document.getElementById('selected_provider_display');
+        const searchInput = document.getElementById('provider_search_input');
+        
+        if (providerInput) providerInput.value = '';
+        if (searchInput) searchInput.value = '';
+        if (display) display.style.display = 'none';
+        if (searchInput) searchInput.style.display = 'block';
+        if (searchGroup) {
+            const results = document.getElementById('provider_results');
+            if (results) results.style.display = 'none';
+        }
+    }
+
+    function selectProvider(id, name, photoUrl) {
+        const modal = document.getElementById('costModal');
+        const providerInput = modal.querySelector('input[name="provider"]');
+        const display = document.getElementById('selected_provider_display');
+        const searchInput = document.getElementById('provider_search_input');
+        const nameEl = document.getElementById('selected_provider_name');
+        const imgEl = document.getElementById('selected_provider_img');
+        const placeholderEl = document.getElementById('selected_provider_placeholder');
+        
+        if (providerInput) providerInput.value = id;
+        if (nameEl) nameEl.textContent = name;
+        if (searchInput) searchInput.style.display = 'none';
+        
+        if (photoUrl && imgEl) {
+            imgEl.src = photoUrl;
+            imgEl.style.display = 'block';
+            if (placeholderEl) placeholderEl.style.display = 'none';
+        } else {
+            if (imgEl) imgEl.style.display = 'none';
+            if (placeholderEl) placeholderEl.style.display = 'flex';
+        }
+        
+        if (display) display.style.display = 'flex';
+        const results = document.getElementById('provider_results');
+        if (results) results.style.display = 'none';
     }
 
     function openEditModal(data) {
@@ -846,6 +944,13 @@
         
         if (data.month) form.querySelector('[name="month"]').value = data.month;
         if (data.year) form.querySelector('[name="year"]').value = data.year;
+        
+        // Populate provider if exists
+        if (data.provider_id) {
+            selectProvider(data.provider_id, data.provider_name, data.provider_photo);
+        } else {
+            clearSelectedProvider();
+        }
         
         updateFormFields();
         
@@ -885,8 +990,10 @@
         if (!modal) return;
         
         const frequency = modal.querySelector('select[name="frequency"]').value;
+        const recipient = modal.querySelector('select[name="recipient"]').value;
         const monthGroup = modal.querySelector('.form-group-month');
         const yearGroup = modal.querySelector('.form-group-year');
+        const providerGroup = modal.querySelector('.provider-search-group');
         
         if (frequency === 'monthly') {
             monthGroup.style.display = 'block';
@@ -897,6 +1004,12 @@
         } else {
             monthGroup.style.display = 'none';
             yearGroup.style.display = 'none';
+        }
+
+        if (recipient === 'provider') {
+            providerGroup.style.display = 'block';
+        } else {
+            providerGroup.style.display = 'none';
         }
     }
 
@@ -911,6 +1024,63 @@
         const frequencySelect = document.querySelector('select[name="frequency"]');
         if (frequencySelect) {
             frequencySelect.addEventListener('change', updateFormFields);
+        }
+
+        const recipientSelect = document.querySelector('select[name="recipient"]');
+        if (recipientSelect) {
+            recipientSelect.addEventListener('change', updateFormFields);
+        }
+
+        // Provider Search Logic
+        const providerSearchInput = document.getElementById('provider_search_input');
+        const providerResults = document.getElementById('provider_results');
+        let searchTimeout = null;
+
+        if (providerSearchInput) {
+            providerSearchInput.addEventListener('input', function() {
+                const q = this.value.trim();
+                clearTimeout(searchTimeout);
+                
+                if (q.length < 2) {
+                    providerResults.style.display = 'none';
+                    return;
+                }
+
+                searchTimeout = setTimeout(async () => {
+                    try {
+                        const response = await fetch("{% url 'properties:provider_search' %}?q=" + encodeURIComponent(q));
+                        const data = await response.json();
+                        
+                        providerResults.innerHTML = '';
+                        if (data.length > 0) {
+                            data.forEach(p => {
+                                const div = document.createElement('div');
+                                div.style.padding = '10px 15px';
+                                div.style.cursor = 'pointer';
+                                div.style.display = 'flex';
+                                div.style.alignItems = 'center';
+                                div.style.gap = '12px';
+                                div.style.borderBottom = '1px solid var(--glass-border)';
+                                div.className = 'provider-result-item';
+                                div.innerHTML = `
+                                    <div style="width: 30px; height: 30px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.05); flex-shrink: 0;">
+                                        ${p.photo_url ? `<img src="${p.photo_url}" style="width:100%; height:100%; object-fit:cover;">` : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--text-muted);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>`}
+                                    </div>
+                                    <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-main);">${p.name}</span>
+                                `;
+                                div.onclick = () => selectProvider(p.id, p.name, p.photo_url);
+                                providerResults.appendChild(div);
+                            });
+                            providerResults.style.display = 'block';
+                        } else {
+                            providerResults.innerHTML = '<div style="padding:15px; color:var(--text-muted); font-size:0.85rem; text-align:center;">{% trans "Nenhum prestador encontrado." %}</div>';
+                            providerResults.style.display = 'block';
+                        }
+                    } catch (err) {
+                        console.error('Error fetching providers:', err);
+                    }
+                }, 300);
+            });
         }
 
         const amountInput = document.querySelector('#costForm input[name="amount"]');

@@ -1,0 +1,214 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static %}
+
+{% block title %}
+    {% if object %}
+        {% trans "Editar Prestador" %}
+    {% else %}
+        {% trans "Novo Prestador" %}
+    {% endif %}
+    - VerticeBook
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-panel-content" style="padding-top: 0.5rem;">
+    <div class="property-mini-header" style="margin-bottom: 1.2rem;">
+        <h1 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+            {% if object %}
+                {% trans "Editar Prestador" %}
+            {% else %}
+                {% trans "Novo Prestador" %}
+            {% endif %}
+        </h1>
+    </div>
+
+    <div class="glass-card" style="max-width: 850px; padding: 1.5rem 2.5rem;">
+        <form method="post" id="providerForm">
+            {% csrf_token %}
+            
+            <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+                <!-- Nome Completo -->
+                <div class="form-group">
+                    <label class="form-label">{% trans "Nome Completo" %}</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}<div class="error-msg">{{ form.name.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Serviços Prestados -->
+                <div class="form-group">
+                    <label class="form-label">{% trans "Serviços Prestados" %}</label>
+                    <div class="services-chips-container">
+                        {% for choice in form.services.field.choices %}
+                            <label class="service-chip">
+                                <input type="checkbox" name="services" value="{{ choice.0 }}" 
+                                       {% if choice.0 in form.services.value %}checked{% endif %}>
+                                <div class="chip-content">
+                                    <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    {{ choice.1 }}
+                                </div>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    {% if form.services.errors %}<div class="error-msg">{{ form.services.errors }}</div>{% endif %}
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">{% trans "Telefone" %}</label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}<div class="error-msg">{{ form.phone.errors }}</div>{% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">{% trans "CPF (Opcional)" %}</label>
+                        {{ form.cpf }}
+                        {% if form.cpf.errors %}<div class="error-msg">{{ form.cpf.errors }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <!-- Status Premium Toggle -->
+                <div class="form-group status-box">
+                    <div class="status-info">
+                        <label class="form-label" style="margin-bottom: 2px; color: var(--text-main); font-size: 0.8rem;">{% trans "Acesso Externo" %}</label>
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0;">{% trans "Define se o link do prestador está ativo." %}</p>
+                    </div>
+                    <label class="premium-switch">
+                        {{ form.is_active }}
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
+                <a href="{% url 'properties:provider_list' %}" class="btn btn-outline" style="padding: 0 2rem; height: 42px;">
+                    {% trans "Voltar" %}
+                </a>
+                <button type="submit" class="btn btn-primary" style="padding: 0 3rem; height: 42px; background: linear-gradient(135deg, var(--primary), #a855f7);">
+                    {% trans "Salvar" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .services-chips-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.015);
+        padding: 0.8rem;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .chip-content {
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 100px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .service-chip input:checked + .chip-content {
+        background: rgba(99, 102, 241, 0.12);
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    .service-chip input:checked + .chip-content .check-icon {
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .status-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 0.8rem 1.2rem;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .premium-switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+    }
+
+    .premium-switch input { opacity: 0; width: 0; height: 0; }
+
+    .switch-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: rgba(255, 255, 255, 0.08);
+        transition: .4s;
+        border-radius: 24px;
+    }
+
+    .switch-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked + .switch-slider { background-color: #10b981; }
+    input:checked + .switch-slider:before { transform: translateX(24px); }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .form-control {
+        height: 44px !important;
+        border-radius: 10px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .service-chip input { display: none; }
+</style>
+
+<script src="https://unpkg.com/imask"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.querySelector('.phone-mask');
+        if (phoneInput) {
+            IMask(phoneInput, {
+                mask: [
+                    { mask: '(00) 0000-0000' },
+                    { mask: '(00) 00000-0000' }
+                ]
+            });
+        }
+
+        const cpfInput = document.querySelector('.cpf-mask');
+        if (cpfInput) {
+            IMask(cpfInput, {
+                mask: '000.000.000-00'
+            });
+        }
+    });
+</script>
+{% endblock %}
