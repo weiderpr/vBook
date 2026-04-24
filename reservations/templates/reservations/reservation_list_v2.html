@@ -281,7 +281,6 @@
     <div class="property-mini-header">
         <div>
             <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{% trans "Reservas" %}</h1>
-            <p style="color: var(--text-muted); margin: 4px 0 0;">{{ property.name }}</p>
         </div>
         <a href="{% url 'reservations:create' property.pk %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
@@ -327,18 +326,16 @@
                     </td>
                     <td>
                         <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;">
-                            {% with res.start_date|date:"Y-m-d" as start_str %}
-                            {% with res.end_date|date:"Y-m-d" as end_str %}
-                                {% if res.is_cancelled %}
+                            {% with res.get_status as status %}
+                                {% if status == 'cancelled' %}
                                     <span class="status-badge status-cancelled">{% trans "Cancelada" %}</span>
-                                {% elif today_str < start_str %}
+                                {% elif status == 'upcoming' %}
                                     <span class="status-badge status-upcoming">{% trans "Em breve" %}</span>
-                                {% elif today_str > end_str %}
+                                {% elif status == 'past' %}
                                     <span class="status-badge status-past">{% trans "Passada" %}</span>
                                 {% else %}
                                     <span class="status-badge status-active">{% trans "No Imóvel" %}</span>
                                 {% endif %}
-                            {% endwith %}
                             {% endwith %}
 
                              {% if res.checkin_completed %}

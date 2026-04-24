@@ -417,6 +417,8 @@ nav a:hover {
     padding: 3rem;
     padding-top: 6.8rem; /* Precision calibration for the '2mm' gap */
     min-height: 100vh;
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 .sidebar-menu {

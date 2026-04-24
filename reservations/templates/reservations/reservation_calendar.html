@@ -1,0 +1,434 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static l10n %}
+
+{% block title %}{% trans "Calendário" %} - {{ property.name }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .calendar-container {
+        padding-top: 2rem;
+        width: 100%;
+    }
+
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .month-nav {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        background: var(--bg-card);
+        padding: 0.5rem 1.2rem;
+        border-radius: 14px;
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(10px);
+    }
+
+    .month-nav h2 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--text-main);
+        min-width: 150px;
+        text-align: center;
+    }
+
+    .nav-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+        transition: all 0.2s;
+        text-decoration: none;
+    }
+
+    .nav-btn:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        transform: scale(1.05);
+    }
+
+    .calendar-wrapper {
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--glass-shadow);
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        width: 100%;
+    }
+
+    .day-name {
+        padding: 1.2rem;
+        text-align: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .calendar-day {
+        min-height: 120px;
+        padding: 0.8rem;
+        border-right: 1px solid var(--glass-border);
+        border-bottom: 1px solid var(--glass-border);
+        position: relative;
+        transition: background 0.2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end; /* Push reservations to the bottom part */
+        padding-bottom: 1.5rem;
+    }
+
+    .calendar-grid .calendar-day:nth-child(7n) {
+        border-right: none;
+    }
+
+    .calendar-day.not-current {
+        background: rgba(255, 255, 255, 0.01);
+    }
+    
+    .calendar-day.not-current .day-number {
+        opacity: 0.25;
+    }
+
+    .calendar-day.today {
+        background: rgba(var(--primary-rgb), 0.05);
+    }
+
+    .day-number {
+        position: absolute;
+        top: 0.8rem;
+        left: 0.8rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--text-muted);
+    }
+
+    .today .day-number {
+        background: var(--primary);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(var(--primary-rgb), 0.3);
+    }
+
+    .payment-marker {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--success);
+        background: rgba(34, 197, 94, 0.1);
+        padding: 4px;
+        border-radius: 6px;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    /* Reservation Marks - Precise Timing */
+    .res-marks-container {
+        position: relative;
+        height: 24px;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .res-bar {
+        height: 100%;
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 0 6px;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        cursor: pointer;
+        transition: filter 0.2s, transform 0.1s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: none;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        border-radius: 4px;
+    }
+
+    .res-bar:hover {
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Connectivity Adjustments to remove gaps */
+    .res-bar.is-start {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .res-bar.is-end {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    /* Handle gaps between cells for middle parts - using 0.9rem to overlap 0.8rem padding + 1px border */
+    .res-bar:not(.is-start) {
+        margin-left: -0.9rem;
+        padding-left: 0.9rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .res-bar:not(.is-end) {
+        margin-right: -0.9rem;
+        padding-right: 0.9rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .res-bar span {
+        position: sticky;
+        left: 6px;
+        white-space: nowrap;
+    }
+
+    /* Hide name if not start of reservation in this view */
+    .res-bar:not(.is-start) span {
+        display: none;
+    }
+    
+    .calendar-day.today .day-number {
+        background: var(--primary);
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    .payment-marker {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--success);
+        background: rgba(34, 197, 94, 0.1);
+        padding: 4px;
+        border-radius: 6px;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        cursor: pointer;
+        transition: all 0.2s;
+        z-index: 5;
+    }
+
+    .payment-marker:hover {
+        background: rgba(34, 197, 94, 0.2);
+        transform: scale(1.1);
+    }
+
+    .payment-popover {
+        position: absolute;
+        top: 2.8rem;
+        right: 0.8rem; /* Default: open to the left */
+        width: 220px;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 14px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        padding: 1rem;
+        display: none;
+        z-index: 100;
+        backdrop-filter: blur(20px);
+    }
+
+    /* For days at the left edge of the calendar */
+    .payment-popover.popover-left {
+        right: auto;
+        left: 0.8rem; /* Open to the right */
+    }
+
+    .payment-popover h4 {
+        margin: 0 0 0.8rem 0;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+    }
+
+    .payment-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .payment-item:last-child {
+        border-bottom: none;
+    }
+
+    .payment-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-main);
+    }
+
+    .payment-amount {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--success);
+    }
+
+    @media (max-width: 768px) {
+        .calendar-day {
+            min-height: 70px;
+            padding: 0.3rem;
+        }
+        .day-name {
+            padding: 0.6rem 0.1rem;
+            font-size: 0.55rem;
+        }
+        .res-bar {
+            height: 16px;
+            font-size: 0.55rem;
+            padding: 0 3px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='reservations' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="calendar-container">
+    <div class="calendar-header">
+        <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{% trans "Mapa de Ocupação" %}</h1>
+        
+        <div class="month-nav">
+            <a href="?month={{ prev_month|unlocalize }}&year={{ prev_year|unlocalize }}" class="nav-btn" title="{% trans 'Mês anterior' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </a>
+            <h2>{{ month_name }} {{ current_year|unlocalize }}</h2>
+            <a href="?month={{ next_month|unlocalize }}&year={{ next_year|unlocalize }}" class="nav-btn" title="{% trans 'Próximo mês' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+        </div>
+
+        <a href="{% url 'reservations:create' property.pk %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            {% trans "Nova Reserva" %}
+        </a>
+    </div>
+
+    <div class="calendar-wrapper">
+        <div class="calendar-grid">
+            {% for name in day_names %}
+                <div class="day-name">{{ name }}</div>
+            {% endfor %}
+
+            {% for week in calendar_grid %}
+                {% for day in week %}
+                    <div class="calendar-day {% if not day.is_current_month %}not-current{% endif %} {% if day.is_today %}today{% endif %}">
+                        <span class="day-number">{{ day.date.day }}</span>
+                        
+                        {% if day.has_payment %}
+                            <div class="payment-marker" onclick="togglePaymentPopover(event, 'popover-{{ day.date|date:'Ymd' }}')" title="{% trans 'Ver pagamentos' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            </div>
+                            
+                            <div id="popover-{{ day.date|date:'Ymd' }}" class="payment-popover {% if forloop.counter0 < 3 %}popover-left{% endif %}">
+                                <h4>{% trans "Pagamentos do Dia" %}</h4>
+                                {% for p in day.payments %}
+                                    <div class="payment-item">
+                                        <div class="payment-name">{{ p.name }}</div>
+                                        <div class="payment-amount">R$ {{ p.amount|floatformat:2 }}</div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        
+                        <div class="res-marks-container">
+                            {% for res in day.reservations %}
+                                <a href="{% url 'reservations:update' property.pk res.id %}" 
+                                   class="res-bar {% if res.is_start %}is-start{% endif %} {% if res.is_end %}is-end{% endif %}" 
+                                   style="background: {{ res.color }}; 
+                                          left: calc({{ res.start_pct|unlocalize }}% {% if not res.is_start %}- 0.9rem{% endif %}); 
+                                          width: calc({{ res.width_pct|unlocalize }}% {% if not res.is_start %}+ 0.9rem{% endif %} {% if not res.is_end %}+ 0.9rem{% endif %});">
+                                    <span>{{ res.client_name }}</span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem; display: flex; gap: 2rem; flex-wrap: wrap; background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 12px; height: 12px; background: #3b82f6; border-radius: 3px;"></div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">{% trans "Reserva Confirmada" %}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 12px; height: 12px; background: rgba(255,255,255,0.1); border-radius: 3px; border: 1px dashed var(--glass-border);"></div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">{% trans "Disponível" %}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 12px; height: 12px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 3px; display: flex; align-items: center; justify-content: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">{% trans "Dia com Pagamento" %}</span>
+        </div>
+        <div style="margin-left: auto; font-size: 0.8rem; color: var(--text-muted);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            {% trans "Clique em uma reserva para ver detalhes ou editar." %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePaymentPopover(event, id) {
+        event.stopPropagation();
+        const popover = document.getElementById(id);
+        const isOpen = popover.style.display === 'block';
+        
+        // Close all other popovers
+        document.querySelectorAll('.payment-popover').forEach(p => {
+            p.style.display = 'none';
+        });
+        
+        if (!isOpen) {
+            popover.style.display = 'block';
+        }
+    }
+
+    // Close popover when clicking outside
+    document.addEventListener('click', function() {
+        document.querySelectorAll('.payment-popover').forEach(p => {
+            p.style.display = 'none';
+        });
+    });
+</script>
+{% endblock %}

@@ -302,6 +302,19 @@
                 {{ form.condo_phone }}
                 {% if form.condo_phone.errors %}<div class="field-error">{{ form.condo_phone.errors.0 }}</div>{% endif %}
             </div>
+
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div class="form-group">
+                    <label for="{{ form.default_checkin_time.id_for_label }}">{{ form.default_checkin_time.label }}</label>
+                    {{ form.default_checkin_time }}
+                    {% if form.default_checkin_time.errors %}<div class="field-error">{{ form.default_checkin_time.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.default_checkout_time.id_for_label }}">{{ form.default_checkout_time.label }}</label>
+                    {{ form.default_checkout_time }}
+                    {% if form.default_checkout_time.errors %}<div class="field-error">{{ form.default_checkout_time.errors.0 }}</div>{% endif %}
+                </div>
+            </div>
         </div>
 
         <!-- Endereço -->
@@ -420,9 +433,11 @@
         moneyElements.forEach(function(el) {
             IMask(el, {
                 mask: 'R$ num',
+                lazy: false,  // Always show the prefix
                 blocks: {
                     num: {
                         mask: Number,
+                        scale: 2,
                         thousandsSeparator: '.',
                         padFractionalZeros: true,
                         normalizeZeros: true,

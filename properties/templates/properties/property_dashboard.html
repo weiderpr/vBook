@@ -92,6 +92,7 @@
     .stat-icon-box.availability { background: rgba(16, 185, 129, 0.15); color: #10b981; }
     .stat-icon-box.reservations { background: rgba(99, 102, 241, 0.15); color: #6366f1; }
     .stat-icon-box.revenue { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .stat-icon-box.idle { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
 
     .stat-info {
         display: flex;
@@ -272,41 +273,34 @@
                 <div class="stat-value">{% trans "R$" %} {{ month_revenue|floatformat:2|localize }}</div>
             </div>
         </div>
+
+        <div class="stat-card-premium">
+            <div class="stat-icon-box idle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">{% trans "Dias Ociosos no Mês" %}</span>
+                <div class="stat-value">{{ idle_days }}</div>
+            </div>
+        </div>
     </div>
 
     <!-- Action Grid -->
     <div class="action-grid-large">
-        <a href="{% url 'reservations:list' property.pk %}" class="panel-action-card">
-            <div class="icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-            </div>
-            <h3>{% trans "Calendário" %}</h3>
-            <p>{% trans "Gestão de ocupação." %}</p>
-        </a>
-        
-        <a href="{% url 'properties:instructions' property.pk %}" class="panel-action-card">
-            <div class="icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            </div>
-            <h3>{% trans "Instruções" %}</h3>
-            <p>{% trans "Check-in e regras." %}</p>
-        </a>
-
-        <a href="{% url 'properties:authorization' property.pk %}" class="panel-action-card">
-            <div class="icon-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <h3>{% trans "Autorização" %}</h3>
-            <p>{% trans "Condomínio." %}</p>
-        </a>
-
-        
         <a href="{% url 'properties:update' property.pk %}" class="panel-action-card">
             <div class="icon-circle">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
             </div>
             <h3>{% trans "Cadastro" %}</h3>
-            <p>{% trans "Dados e fotos." %}</p>
+            <p>{% trans "Dados cadastrar da propriedade, fotos e configurações gerais" %}</p>
+        </a>
+
+        <a href="{% url 'reservations:occupancy_map' property.pk %}" class="panel-action-card">
+            <div class="icon-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            </div>
+            <h3>{% trans "Calendário" %}</h3>
+            <p>{% trans "Gestão visual de ocupação da propriedade" %}</p>
         </a>
 
         <a href="{% url 'properties:settings' property.pk %}" class="panel-action-card">
@@ -315,6 +309,22 @@
             </div>
             <h3>{% trans "Financeiro" %}</h3>
             <p>{% trans "Fluxo de caixa." %}</p>
+        </a>
+        
+        <a href="{% url 'properties:instructions' property.pk %}" class="panel-action-card">
+            <div class="icon-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h3>{% trans "Instruções" %}</h3>
+            <p>{% trans "Instruções e regras da propriedade que serão enviadas ao cliente no momento do check in" %}</p>
+        </a>
+
+        <a href="{% url 'properties:authorization' property.pk %}" class="panel-action-card">
+            <div class="icon-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>{% trans "Autorização" %}</h3>
+            <p>{% trans "Modelo para confecção de documento de autorização para envio ao condomínio" %}</p>
         </a>
     </div>
 </div>

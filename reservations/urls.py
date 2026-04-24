@@ -6,6 +6,7 @@ app_name = 'reservations'
 
 urlpatterns = [
     path('', views.ReservationListView.as_view(), name='list'),
+    path('calendario/', views.ReservationCalendarView.as_view(), name='occupancy_map'),
     path('nova/', views.ReservationCreateView.as_view(), name='create'),
     path('buscar-clientes/', views.search_clients, name='search_clients'),
     path('<int:pk>/editar/', views.ReservationUpdateView.as_view(), name='update'),

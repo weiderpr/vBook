@@ -224,7 +224,6 @@
     <div class="property-mini-header">
         <div>
             <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{% trans "Custos" %}</h1>
-            <p style="color: var(--text-muted); margin: 4px 0 0;">{{ property.name }}</p>
         </div>
     </div>
 
@@ -234,13 +233,9 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             {% trans "Custos por reserva" %}
         </div>
-        <div class="tab-link" onclick="openTab('costs_monthly')">
+        <div class="tab-link" onclick="openTab('costs_payments')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            {% trans "Custos mensais" %}
-        </div>
-        <div class="tab-link" onclick="openTab('costs_yearly')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            {% trans "Custos Anuais" %}
+            {% trans "Pagamentos" %}
         </div>
         <div class="tab-link" onclick="openTab('costs_history')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
@@ -332,7 +327,10 @@
                                                     amount_type: '{{ cost.amount_type }}',
                                                     recipient: '{{ cost.recipient }}',
                                                     frequency: '{{ cost.frequency }}',
-                                                    provider_id: '{{ cost.provider.id|default_if_none:"" }}',
+                                                    payment_date: '{{ cost.payment_date|date:"Y-m-d" }}',
+                                                    month: '{{ cost.month|default:0|unlocalize }}',
+                                                    year: '{{ cost.year|default:0|unlocalize }}',
+                                                    provider_id: '{{ cost.provider_id|default:"" }}',
                                                     provider_name: '{{ cost.provider.name|escapejs|default:"" }}',
                                                     provider_photo: '{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}'
                                                 })">
@@ -362,37 +360,41 @@
         </div>
     </div>
 
-    <!-- Costs Monthly Tab -->
-    <div id="costs_monthly" class="tab-content">
+    <!-- Payments Tab -->
+    <div id="costs_payments" class="tab-content">
         <div class="glass-card" style="max-width: 100%; padding: 2.5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
                 <div>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">{% trans "Custos mensais" %}</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Despesas fixas recorrentes mensalmente (ex: Condomínio, IPTU)." %}</p>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">{% trans "Pagamentos" %}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Despesas fixas (ex: Condomínio, IPTU, Seguros)." %}</p>
                 </div>
                 <button class="btn btn-primary" onclick="toggleModal(true, 'monthly')" style="display: inline-flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
-                    <span style="line-height: normal; display: block;">{% trans "Novo Custo" %}</span>
+                    <span style="line-height: normal; display: block;">{% trans "Novo Pagamento" %}</span>
                 </button>
             </div>
 
-            {% if costs_monthly %}
+            {% if costs_payments %}
                 <div style="overflow-x: auto; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--glass-border);">
                     <table class="costs-table">
                         <thead>
                             <tr>
-                                <th>{% trans "Custo / Período" %}</th>
+                                <th>{% trans "Custo / Data de Pagamento" %}</th>
                                 <th>{% trans "Valor" %}</th>
                                 <th style="text-align: right; padding-right: 1.5rem;">{% trans "Ações" %}</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {% for cost in costs_monthly %}
-                                <tr>
+                        <tbody id="payments_list_body">
+                            {% for cost in costs_payments %}
+                                <tr data-cost-id="{{ cost.pk }}">
                                     <td>
                                         <div class="cost-name">{{ cost.name }}</div>
                                         <div style="display: flex; gap: 8px; margin-top: 6px;">
-                                            {% if cost.get_period_display %}
+                                            {% if cost.payment_date %}
+                                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                                    {{ cost.payment_date|date:"d/m/Y" }}
+                                                </span>
+                                            {% elif cost.get_period_display %}
                                                 <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
                                                     {{ cost.get_period_display }}
                                                 </span>
@@ -403,29 +405,26 @@
                                         {% endif %}
                                     </td>
                                     <td style="font-weight: 700; color: var(--text-main); font-size: 1.05rem;">
-                                        {% if cost.amount_type == 'fixed' %}
-                                            <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 2px;">R$</span>{{ cost.amount|floatformat:2|localize }}
-                                        {% else %}
-                                            {{ cost.amount|floatformat:1|localize }}<span style="font-size: 0.95rem; color: var(--primary); margin-left: 1px;">%</span>
-                                        {% endif %}
+                                        <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 2px;">R$</span>{{ cost.amount|floatformat:2|localize }}
                                     </td>
                                     <td style="padding-right: 1.5rem;">
                                         <div class="action-btns">
                                             <button type="button" class="btn-action-small btn-edit-small" title="{% trans 'Editar Custo' %}"
-                                                onclick="openEditModal({
-                                                    id: '{{ cost.pk }}',
-                                                    name: '{{ cost.name|escapejs }}',
-                                                    description: '{{ cost.description|escapejs }}',
-                                                    amount: '{{ cost.amount|unlocalize }}',
-                                                    amount_type: '{{ cost.amount_type }}',
-                                                    recipient: '{{ cost.recipient }}',
-                                                    frequency: '{{ cost.frequency }}',
-                                                    month: '{{ cost.month|unlocalize }}',
-                                                    year: '{{ cost.year|unlocalize }}',
-                                                    provider_id: '{{ cost.provider.id|default_if_none:"" }}',
-                                                    provider_name: '{{ cost.provider.name|escapejs|default:"" }}',
-                                                    provider_photo: '{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}'
-                                                })">
+                                                onclick='openEditModal({
+                                                    id: "{{ cost.pk }}",
+                                                    name: "{{ cost.name|escapejs }}",
+                                                    description: "{{ cost.description|escapejs }}",
+                                                    amount: "{{ cost.amount|unlocalize }}",
+                                                    amount_type: "{{ cost.amount_type }}",
+                                                    recipient: "{{ cost.recipient }}",
+                                                    frequency: "{{ cost.frequency }}",
+                                                    payment_date: "{{ cost.payment_date|date:"Y-m-d" }}",
+                                                    month: "{{ cost.month|default:0|unlocalize }}",
+                                                    year: "{{ cost.year|default:0|unlocalize }}",
+                                                    provider_id: "{{ cost.provider_id|default:"" }}",
+                                                    provider_name: "{{ cost.provider.name|escapejs|default:"" }}",
+                                                    provider_photo: "{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}"
+                                                })'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                             </button>
                                             <form action="{% url 'properties:cost_delete' cost.pk %}" method="post" style="display: inline;">
@@ -440,102 +439,18 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    <div id="payments_loading" style="display: none; padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                        <div class="spinner-border spinner-border-sm" role="status" style="margin-right: 8px;"></div>
+                        {% trans "Carregando mais..." %}
+                    </div>
+                    <div id="payments_sentinel" style="height: 10px;"></div>
                 </div>
             {% else %}
                 <div style="text-align: center; padding: 4rem 2rem; background: rgba(255,255,255,0.01); border-radius: 20px; border: 1px dashed var(--glass-border);">
                     <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.3; color: var(--text-muted);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">{% trans "Nenhum custo mensal cadastrado." %}</p>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-
-    <!-- Costs Yearly Tab -->
-    <div id="costs_yearly" class="tab-content">
-        <div class="glass-card" style="max-width: 100%; padding: 2.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
-                <div>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem;">{% trans "Custos Anuais" %}</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Encargos anuais (ex: Taxas de Licenciamento, Seguros)." %}</p>
-                </div>
-                <button class="btn btn-primary" onclick="toggleModal(true, 'yearly')" style="display: inline-flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
-                    <span style="line-height: normal; display: block;">{% trans "Novo Custo" %}</span>
-                </button>
-            </div>
-
-            {% if costs_yearly %}
-                <div style="overflow-x: auto; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--glass-border);">
-                    <table class="costs-table">
-                        <thead>
-                            <tr>
-                                <th>{% trans "Custo / Ano" %}</th>
-                                <th>{% trans "Valor" %}</th>
-                                <th style="text-align: right; padding-right: 1.5rem;">{% trans "Ações" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for cost in costs_yearly %}
-                                <tr>
-                                    <td>
-                                        <div class="cost-name">{{ cost.name }}</div>
-                                        <div style="display: flex; gap: 8px; margin-top: 6px;">
-                                            {% if cost.get_period_display %}
-                                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
-                                                    {{ cost.get_period_display }}
-                                                </span>
-                                            {% endif %}
-                                        </div>
-                                        {% if cost.description %}
-                                            <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 6px; font-weight: 400; opacity: 0.8;">{{ cost.description }}</div>
-                                        {% endif %}
-                                    </td>
-                                    <td style="font-weight: 700; color: var(--text-main); font-size: 1.05rem;">
-                                        {% if cost.amount_type == 'fixed' %}
-                                            <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 2px;">R$</span>{{ cost.amount|floatformat:2|localize }}
-                                        {% else %}
-                                            {{ cost.amount|floatformat:1|localize }}<span style="font-size: 0.95rem; color: var(--primary); margin-left: 1px;">%</span>
-                                        {% endif %}
-                                    </td>
-                                    <td style="padding-right: 1.5rem;">
-                                        <div class="action-btns">
-                                            <button type="button" class="btn-action-small btn-edit-small" title="{% trans 'Editar Custo' %}"
-                                                onclick="openEditModal({
-                                                    id: '{{ cost.pk }}',
-                                                    name: '{{ cost.name|escapejs }}',
-                                                    description: '{{ cost.description|escapejs }}',
-                                                    amount: '{{ cost.amount|unlocalize }}',
-                                                    amount_type: '{{ cost.amount_type }}',
-                                                    recipient: '{{ cost.recipient }}',
-                                                    frequency: '{{ cost.frequency }}',
-                                                    year: '{{ cost.year|unlocalize }}',
-                                                    provider_id: '{{ cost.provider.id|default_if_none:"" }}',
-                                                    provider_name: '{{ cost.provider.name|escapejs|default:"" }}',
-                                                    provider_photo: '{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}'
-                                                })">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                                            </button>
-                                            <form action="{% url 'properties:cost_delete' cost.pk %}" method="post" style="display: inline;">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn-action-small btn-delete-small delete-confirm-btn" title="{% trans 'Excluir Custo' %}" data-confirm="{% trans 'Tem certeza que deseja excluir este custo?' %}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
-                <div style="text-align: center; padding: 4rem 2rem; background: rgba(255,255,255,0.01); border-radius: 20px; border: 1px dashed var(--glass-border);">
-                    <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.3; color: var(--text-muted);"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                    </div>
-                    <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">{% trans "Nenhum custo anual cadastrado." %}</p>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">{% trans "Nenhum pagamento cadastrado." %}</p>
                 </div>
             {% endif %}
         </div>
@@ -716,17 +631,17 @@
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.5rem;">
             <div>
                 <h3 id="modalTitle" style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.2rem;">{% trans "Novo Custo" %}</h3>
-                                <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Preencha os dados do encargo financeiro." %}</p>
-                            </div>
-                            <span style="cursor: pointer; padding: 8px; background: var(--bg-card); border-radius: 10px; color: var(--text-muted);" onclick="toggleModal(false);">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
-                            </span>
-                        </div>
-                        
-                        <form id="costForm" action="{% url 'properties:cost_create' property.pk %}" method="post">
+                <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Preencha os dados do encargo financeiro." %}</p>
+            </div>
+            <span style="cursor: pointer; padding: 8px; background: var(--bg-card); border-radius: 10px; color: var(--text-muted);" onclick="toggleModal(false);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+            </span>
+        </div>
+        
+        <form id="costForm" action="{% url 'properties:cost_create' property.pk %}" method="post">
             {% csrf_token %}
             {% for field in cost_form %}
-                <div class="form-group form-group-{{ field.name }}" style="margin-bottom: 1.5rem; {% if field.name == 'month' or field.name == 'year' %}display: none;{% endif %}">
+                <div class="form-group form-group-{{ field.name }}" style="margin-bottom: 1.5rem; {% if field.field.widget.input_type == 'hidden' or field.name == 'frequency' %}display: none;{% endif %}">
                     <label style="display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.6rem;">{{ field.label }}</label>
                     {{ field }}
                     {% if field.errors %}
@@ -844,9 +759,8 @@
                 title.textContent = "{% trans "Novo Custo" %}";
                 submitBtn.textContent = "{% trans "Salvar Custo" %}";
                 
-                const frequencySelect = form.querySelector('select[name="frequency"]');
+                const frequencySelect = form.querySelector('[name="frequency"]');
                 frequencySelect.value = frequency;
-                frequencySelect.disabled = true;
             }
 
             // Update fields visibility based on frequency
@@ -855,6 +769,11 @@
             // Clear provider search if new
             if (frequency) {
                 clearSelectedProvider();
+            }
+            
+            // Re-apply mask
+            if (typeof applyAmountMask === 'function') {
+                applyAmountMask();
             }
             
             // Focus on first input
@@ -935,13 +854,13 @@
         form.querySelector('input[name="name"]').value = data.name;
         form.querySelector('textarea[name="description"]').value = data.description || '';
         form.querySelector('input[name="amount"]').value = data.amount;
-        form.querySelector('select[name="amount_type"]').value = data.amount_type;
-        form.querySelector('select[name="recipient"]').value = data.recipient;
+        form.querySelector('[name="amount_type"]').value = data.amount_type;
+        form.querySelector('[name="recipient"]').value = data.recipient;
         
-        const frequencySelect = form.querySelector('select[name="frequency"]');
+        const frequencySelect = form.querySelector('[name="frequency"]');
         frequencySelect.value = data.frequency;
-        frequencySelect.disabled = true;
         
+        if (data.payment_date) form.querySelector('[name="payment_date"]').value = data.payment_date;
         if (data.month) form.querySelector('[name="month"]').value = data.month;
         if (data.year) form.querySelector('[name="year"]').value = data.year;
         
@@ -956,7 +875,7 @@
         
         // Re-apply mask after population
         const amountInput = form.querySelector('input[name="amount"]');
-        const amountTypeSelect = form.querySelector('select[name="amount_type"]');
+        const amountTypeSelect = form.querySelector('[name="amount_type"]');
         
         if (typeof VMasker !== 'undefined' && amountInput) {
             if (amountTypeSelect.value === 'fixed') {
@@ -989,21 +908,15 @@
         const modal = document.getElementById('costModal');
         if (!modal) return;
         
-        const frequency = modal.querySelector('select[name="frequency"]').value;
-        const recipient = modal.querySelector('select[name="recipient"]').value;
-        const monthGroup = modal.querySelector('.form-group-month');
-        const yearGroup = modal.querySelector('.form-group-year');
+        const frequency = modal.querySelector('[name="frequency"]').value;
+        const recipient = modal.querySelector('[name="recipient"]').value;
+        const paymentDateGroup = modal.querySelector('.form-group-payment_date');
         const providerGroup = modal.querySelector('.provider-search-group');
         
-        if (frequency === 'monthly') {
-            monthGroup.style.display = 'block';
-            yearGroup.style.display = 'block';
-        } else if (frequency === 'yearly') {
-            monthGroup.style.display = 'none';
-            yearGroup.style.display = 'block';
+        if (frequency === 'per_booking') {
+            paymentDateGroup.style.display = 'none';
         } else {
-            monthGroup.style.display = 'none';
-            yearGroup.style.display = 'none';
+            paymentDateGroup.style.display = 'block';
         }
 
         if (recipient === 'provider') {
@@ -1026,7 +939,7 @@
             frequencySelect.addEventListener('change', updateFormFields);
         }
 
-        const recipientSelect = document.querySelector('select[name="recipient"]');
+        const recipientSelect = document.querySelector('[name="recipient"]');
         if (recipientSelect) {
             recipientSelect.addEventListener('change', updateFormFields);
         }
@@ -1083,17 +996,17 @@
             });
         }
 
-        const amountInput = document.querySelector('#costForm input[name="amount"]');
-        const amountTypeSelect = document.querySelector('#costForm select[name="amount_type"]');
-
         function applyAmountMask() {
-            if (typeof VMasker === 'undefined' || !amountInput) return;
+            const currentAmountInput = document.querySelector('#costForm input[name="amount"]');
+            const currentAmountTypeSelect = document.querySelector('#costForm [name="amount_type"]');
+            
+            if (typeof VMasker === 'undefined' || !currentAmountInput) return;
 
-            // Unbind existing mask if any (not strictly needed with VMasker but good practice)
-            VMasker(amountInput).unMask();
+            // Unbind existing mask
+            VMasker(currentAmountInput).unMask();
 
-            if (amountTypeSelect.value === 'fixed') {
-                VMasker(amountInput).maskMoney({
+            if (!currentAmountTypeSelect || currentAmountTypeSelect.value === 'fixed') {
+                VMasker(currentAmountInput).maskMoney({
                     precision: 2,
                     separator: ',',
                     delimiter: '.',
@@ -1101,13 +1014,13 @@
                     zeroCents: false
                 });
             } else {
-                // For percentage, we use a simpler numeric mask or no mask
-                VMasker(amountInput).maskNumber();
+                VMasker(currentAmountInput).maskNumber();
             }
         }
 
-        if (amountTypeSelect) {
-            amountTypeSelect.addEventListener('change', applyAmountMask);
+        const amountTypeSelectGlobal = document.querySelector('#costForm [name="amount_type"]');
+        if (amountTypeSelectGlobal) {
+            amountTypeSelectGlobal.addEventListener('change', applyAmountMask);
         }
 
         // Initialize mask on load
@@ -1144,6 +1057,119 @@
                 unit: ''
             });
         });
+
+        // Infinite Scroll for Payments
+        let currentPage = 1;
+        let hasMore = {% if costs_payments|length == 20 %}true{% else %}false{% endif %};
+        let isLoading = false;
+        const paymentsBody = document.getElementById('payments_list_body');
+        const paymentsSentinel = document.getElementById('payments_sentinel');
+        const paymentsLoading = document.getElementById('payments_loading');
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function renderCostRow(cost) {
+            // Escape double quotes for JSON in onclick
+            const costJson = JSON.stringify(cost).replace(/"/g, '&quot;');
+            
+            return `
+                <tr data-cost-id="${cost.id}">
+                    <td>
+                        <div class="cost-name">${cost.name}</div>
+                        <div style="display: flex; gap: 8px; margin-top: 6px;">
+                            ${cost.payment_date_display ? `
+                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                    ${cost.payment_date_display}
+                                </span>
+                            ` : cost.period_display ? `
+                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                    ${cost.period_display}
+                                </span>
+                            ` : ''}
+                        </div>
+                        ${cost.description ? `<div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 6px; font-weight: 400; opacity: 0.8;">${cost.description}</div>` : ''}
+                    </td>
+                    <td style="font-weight: 700; color: var(--text-main); font-size: 1.05rem;">
+                        <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 2px;">R$</span>${cost.amount.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                    </td>
+                    <td style="padding-right: 1.5rem;">
+                        <div class="action-btns">
+                            <button type="button" class="btn-action-small btn-edit-small" title="Editar Custo"
+                                onclick="openEditModal(${costJson})">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            </button>
+                            <form action="/propriedades/configuracoes/custos/${cost.id}/excluir/" method="post" style="display: inline;">
+                                <input type="hidden" name="csrfmiddlewaretoken" value="${getCookie('csrftoken')}">
+                                <button type="submit" class="btn-action-small btn-delete-small delete-confirm-btn" title="Excluir Custo" data-confirm="Tem certeza que deseja excluir este custo?">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        async function loadMorePayments() {
+            if (isLoading || !hasMore) return;
+            
+            isLoading = true;
+            paymentsLoading.style.display = 'block';
+            currentPage++;
+            
+            try {
+                const response = await fetch(`{% url 'properties:cost_list_api' property.pk %}?page=${currentPage}`);
+                const data = await response.json();
+                
+                if (data.results && data.results.length > 0) {
+                    data.results.forEach(cost => {
+                        const rowHtml = renderCostRow(cost);
+                        paymentsBody.insertAdjacentHTML('beforeend', rowHtml);
+                    });
+                    
+                    // Re-attach delete confirmations for new rows
+                    document.querySelectorAll('.delete-confirm-btn').forEach(btn => {
+                        btn.onclick = function(e) {
+                            const message = this.getAttribute('data-confirm');
+                            if (!confirm(message)) {
+                                e.preventDefault();
+                            }
+                        };
+                    });
+                }
+                
+                hasMore = data.has_more;
+            } catch (err) {
+                console.error('Error loading costs:', err);
+                hasMore = false;
+            } finally {
+                isLoading = false;
+                paymentsLoading.style.display = 'none';
+            }
+        }
+
+        if (paymentsSentinel) {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    loadMorePayments();
+                }
+            }, { threshold: 0.1 });
+            
+            observer.observe(paymentsSentinel);
+        }
     });
 
     // Escape to close modal

@@ -185,28 +185,99 @@
                     {{ form.notes }}
                     {% if form.notes.errors %}<div class="field-error">{{ form.notes.errors.0 }}</div>{% endif %}
                 </div>
+
+                <div style="margin-top: 1.5rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+                    <button type="button" id="toggle-times-btn" style="background: none; border: none; color: var(--primary); font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span id="toggle-times-text">{% trans "Personalizar horários de check-in/out" %}</span>
+                    </button>
+                    
+                    <div id="times-section" style="display: none; margin-top: 1rem; padding: 1.2rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="{{ form.checkin_time.id_for_label }}">{{ form.checkin_time.label }}</label>
+                                {{ form.checkin_time }}
+                                {% if form.checkin_time.errors %}<div class="field-error">{{ form.checkin_time.errors.0 }}</div>{% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.checkout_time.id_for_label }}">{{ form.checkout_time.label }}</label>
+                                {{ form.checkout_time }}
+                                {% if form.checkout_time.errors %}<div class="field-error">{{ form.checkout_time.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.8rem; display: flex; align-items: center; gap: 6px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            {% trans "Estes horários serão usados especificamente para esta reserva, substituindo os padrões da propriedade." %}
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Reservation Costs Sidebar -->
-            <div class="costs-sidebar" style="background: rgba(0, 0, 0, 0.1); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border); align-self: start;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">{% trans "Custos / Encargos" %}</h3>
-                    <button type="button" id="add-cost-btn" class="btn-add-small" title="{% trans "Adicionar Custo" %}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
-                    </button>
-                </div>
+            <!-- Reservation Sidebar (Costs & Payments) -->
+            <div class="reservation-sidebar" style="display: flex; flex-direction: column; gap: 2rem; align-self: start;">
                 
-                <div id="cost-items-container" style="display: flex; flex-direction: column; gap: 12px;">
-                    <!-- Costs will be rendered here by JS -->
-                </div>
-                
-                <div id="no-costs-msg" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 0.85rem; {% if reservation_costs or property_costs %}display: none;{% endif %}">
-                    {% trans "Nenhum custo automatizado para esta propriedade." %}
+                <!-- Financial Summary Card -->
+                <div class="financial-card" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(0, 198, 255, 0.03)); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3); position: sticky; top: 2rem;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        {% trans "Resumo Financeiro" %}
+                    </h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">{% trans "Valor da Reserva" %}</span>
+                            <span id="summary-total-value" style="font-weight: 600; color: var(--text-main);">R$ 0,00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">{% trans "Total Pago" %}</span>
+                            <span id="summary-total-paid" style="font-weight: 600; color: #22c55e;">R$ 0,00</span>
+                        </div>
+                        <div style="margin-top: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-main);">{% trans "Saldo a Receber" %}</span>
+                            <span id="summary-balance" style="font-size: 1.1rem; font-weight: 800; color: #f59e0b;">R$ 0,00</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">{% trans "Total de Custos" %}</span>
-                    <span id="costs-total-display" style="font-weight: 700; color: var(--primary);">R$ 0,00</span>
+                <!-- Payments Section -->
+                <div class="payments-sidebar" style="background: rgba(0, 0, 0, 0.1); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main);">{% trans "Pagamentos / Adiantamentos" %}</h3>
+                        <button type="button" id="add-payment-btn" class="btn-add-small" title="{% trans "Adicionar Pagamento" %}" style="background: rgba(34, 197, 94, 0.1); color: #22c55e; border-color: rgba(34, 197, 94, 0.2);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                        </button>
+                    </div>
+                    
+                    <div id="payment-items-container" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Payments will be rendered here by JS -->
+                    </div>
+                    
+                    <div id="no-payments-msg" style="text-align: center; padding: 1.5rem 1rem; color: var(--text-muted); font-size: 0.8rem; {% if reservation_payments %}display: none;{% endif %}">
+                        {% trans "Nenhum pagamento registrado." %}
+                    </div>
+                </div>
+
+                <!-- Reservation Costs Sidebar -->
+                <div class="costs-sidebar" style="background: rgba(0, 0, 0, 0.1); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main);">{% trans "Custos / Encargos" %}</h3>
+                        <button type="button" id="add-cost-btn" class="btn-add-small" title="{% trans "Adicionar Custo" %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                        </button>
+                    </div>
+                    
+                    <div id="cost-items-container" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Costs will be rendered here by JS -->
+                    </div>
+                    
+                    <div id="no-costs-msg" style="text-align: center; padding: 1.5rem 1rem; color: var(--text-muted); font-size: 0.8rem; {% if reservation_costs or property_costs %}display: none;{% endif %}">
+                        {% trans "Nenhum custo automatizado." %}
+                    </div>
+
+                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">{% trans "Total de Custos" %}</span>
+                        <span id="costs-total-display" style="font-weight: 700; color: var(--primary);">R$ 0,00</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -232,6 +303,26 @@
         const phoneInput = document.getElementById('{{ form.client_phone.id_for_label }}');
         const valueInput = document.getElementById('{{ form.total_value.id_for_label }}');
         const suggestionsBox = document.getElementById('client-suggestions');
+        
+        // --- Check-in/out Times Toggle ---
+        const toggleTimesBtn = document.getElementById('toggle-times-btn');
+        const timesSection = document.getElementById('times-section');
+        const toggleTimesText = document.getElementById('toggle-times-text');
+        
+        {% if form.checkin_time.errors or form.checkout_time.errors or object.checkin_time or object.checkout_time %}
+            timesSection.style.display = 'block';
+            toggleTimesText.textContent = '{% trans "Ocultar personalização de horários" %}';
+        {% endif %}
+
+        toggleTimesBtn.addEventListener('click', function() {
+            if (timesSection.style.display === 'none') {
+                timesSection.style.display = 'block';
+                toggleTimesText.textContent = '{% trans "Ocultar personalização de horários" %}';
+            } else {
+                timesSection.style.display = 'none';
+                toggleTimesText.textContent = '{% trans "Personalizar horários de check-in/out" %}';
+            }
+        });
 
         // 1. Masks Implementation
         if (typeof VMasker !== 'undefined') {
@@ -340,6 +431,19 @@
             {% endif %}
         ];
 
+        // Initial Payments from context
+        const initialPayments = [
+            {% if reservation_payments %}
+                {% for payment in reservation_payments %}
+                    {
+                        "description": "{{ payment.description|escapejs }}",
+                        "value": "{{ payment.value|unlocalize }}",
+                        "date": "{{ payment.payment_date|date:'Y-m-d' }}"
+                    },
+                {% endfor %}
+            {% endif %}
+        ];
+
         function addCostRow(data = {}) {
             const rowId = 'cost_' + Math.random().toString(36).substr(2, 9);
             const div = document.createElement('div');
@@ -426,6 +530,114 @@
             });
         }
 
+        function addPaymentRow(data = {}) {
+            const rowId = 'payment_' + Math.random().toString(36).substr(2, 9);
+            const div = document.createElement('div');
+            div.className = 'payment-row';
+            div.id = rowId;
+            div.style = "background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 1rem; border: 1px solid var(--glass-border);";
+            
+            const rawValue = data.value !== undefined ? parseFloat(data.value) : 0;
+
+            div.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <input type="text" name="payment_description[]" value="${data.description || ''}" placeholder="{% trans "Ex: Adiantamento, Extra..." %}" 
+                            style="font-size: 0.8rem; padding: 0.4rem 0.6rem; background: transparent; border: none; border-bottom: 1px dashed var(--glass-border); border-radius: 0; color: var(--text-muted); flex: 1; margin-right: 10px;">
+                        <button type="button" class="btn-remove-payment"
+                            style="background: none; border: none; color: #ef4444; padding: 5px; cursor: pointer; transition: opacity 0.2s; opacity: 0.6;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <input type="date" name="payment_date[]" value="${data.date || '{% now "Y-m-d" %}'}" 
+                            style="font-size: 0.8rem; padding: 0.4rem 0.6rem; width: 140px; background: rgba(255,255,255,0.05);">
+                        <input type="text" name="payment_value[]" class="payment-value-input" value="${rawValue}" 
+                            style="font-size: 0.9rem; font-weight: 700; padding: 0.4rem 0.6rem; flex: 1; background: rgba(255,255,255,0.05); color: #22c55e;">
+                    </div>
+                </div>
+            `;
+            
+            const paymentsContainer = document.getElementById('payment-items-container');
+            const noPaymentsMsg = document.getElementById('no-payments-msg');
+            
+            paymentsContainer.appendChild(div);
+            if (noPaymentsMsg) noPaymentsMsg.style.display = 'none';
+
+            // Handle removal
+            div.querySelector('.btn-remove-payment').addEventListener('click', function() {
+                div.remove();
+                updateFinancialSummary();
+                if (paymentsContainer.children.length === 0 && noPaymentsMsg) {
+                    noPaymentsMsg.style.display = 'block';
+                }
+            });
+
+            // Apply masks to the new input
+            const valInput = div.querySelector('.payment-value-input');
+            if (typeof VMasker !== 'undefined') {
+                VMasker(valInput).maskMoney({
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+                
+                valInput.value = VMasker.toMoney(Math.round(rawValue * 100), {
+                    precision: 2,
+                    separator: ',',
+                    delimiter: '.',
+                    unit: 'R$',
+                    zeroCents: false
+                });
+            }
+
+            valInput.addEventListener('input', updateFinancialSummary);
+        }
+
+        function updateFinancialSummary() {
+            // 1. Get Reservation Total
+            const totalValueDigits = valueInput.value.replace(/\D/g, '');
+            const totalValue = (parseFloat(totalValueDigits) || 0) / 100;
+            
+            // 2. Get Total Paid
+            let totalPaid = 0;
+            document.querySelectorAll('.payment-value-input').forEach(input => {
+                const digits = input.value.replace(/\D/g, '');
+                totalPaid += (parseFloat(digits) || 0) / 100;
+            });
+            
+            const balance = totalValue - totalPaid;
+            
+            // 3. Update Displays
+            if (typeof VMasker !== 'undefined') {
+                const fmt = (val) => VMasker.toMoney(Math.round(val * 100), {
+                    precision: 2, separator: ',', delimiter: '.', unit: 'R$', zeroCents: false
+                });
+                
+                document.getElementById('summary-total-value').textContent = fmt(totalValue);
+                document.getElementById('summary-total-paid').textContent = fmt(totalPaid);
+                
+                const balanceEl = document.getElementById('summary-balance');
+                balanceEl.textContent = fmt(balance);
+                
+                // Visual feedback for balance
+                if (balance <= 0 && totalValue > 0) {
+                    balanceEl.style.color = '#22c55e'; // Green if fully paid
+                    balanceEl.textContent = '{% trans "Pago" %}';
+                } else if (balance > 0) {
+                    balanceEl.style.color = '#f59e0b'; // Amber if pending
+                } else {
+                    balanceEl.style.color = 'var(--text-muted)';
+                }
+            }
+            
+            // Also trigger cost calculation if total value changed
+            calculateCosts();
+        }
+
         function calculateCosts() {
             // Bulletproof parsing: get all digits and divide by 100
             const digits = valueInput.value.replace(/\D/g, '');
@@ -487,8 +699,13 @@
             addCostBtn.addEventListener('click', () => addCostRow());
         }
         
+        const addPaymentBtn = document.getElementById('add-payment-btn');
+        if (addPaymentBtn) {
+            addPaymentBtn.addEventListener('click', () => addPaymentRow());
+        }
+        
         if (valueInput) {
-            valueInput.addEventListener('input', calculateCosts);
+            valueInput.addEventListener('input', updateFinancialSummary);
         }
         
         function toggleProviderSearch(rowId) {
@@ -575,9 +792,10 @@
 
         // Initialize rows
         initialCosts.forEach(cost => addCostRow(cost));
+        initialPayments.forEach(p => addPaymentRow(p));
         
         // Initial calculation
-        calculateCosts();
+        updateFinancialSummary();
     });
 </script>
 {% endblock %}

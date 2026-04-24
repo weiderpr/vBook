@@ -46,6 +46,8 @@ class Property(models.Model):
         default=False, 
         verbose_name=_("Enviar telefone do cliente para o prestador em caso de serviço")
     )
+    default_checkin_time = models.TimeField(blank=True, null=True, verbose_name=_("Horário padrão de check-in"))
+    default_checkout_time = models.TimeField(blank=True, null=True, verbose_name=_("Horário padrão de check-out"))
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -116,6 +118,11 @@ class PropertyCost(models.Model):
         null=True,
         blank=True,
         verbose_name=_("Ano")
+    )
+    payment_date = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("Data do Pagamento")
     )
     recipient = models.CharField(
         max_length=20, 

@@ -1,4 +1,5 @@
-from datetime import timedelta
+import calendar
+from datetime import timedelta, date
 from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseForbidden, JsonResponse
@@ -66,7 +67,8 @@ class PropertyDashboardView(LoginRequiredMixin, DetailView):
         today = timezone.now().date()
         month_reservations = self.object.reservations.filter(
             end_date__month=today.month, 
-            end_date__year=today.year
+            end_date__year=today.year,
+            is_cancelled=False
         )
         
         # Portuguese month names mapping
@@ -79,6 +81,30 @@ class PropertyDashboardView(LoginRequiredMixin, DetailView):
         context['month_name'] = meses[today.month - 1]
         context['month_count'] = month_reservations.count()
         context['month_revenue'] = month_reservations.aggregate(Sum('total_value'))['total_value__sum'] or 0
+        
+        # Idle Days Logic (Nights without guests)
+        unused_weekday, total_days = calendar.monthrange(today.year, today.month)
+        month_start = date(today.year, today.month, 1)
+        month_end = date(today.year, today.month, total_days)
+        
+        # Get reservations that overlap with this month
+        all_res = self.object.reservations.filter(
+            start_date__lte=month_end,
+            end_date__gt=month_start,
+            is_cancelled=False
+        ).values('start_date', 'end_date')
+        
+        reserved_nights = set()
+        for res in all_res:
+            s = max(res['start_date'], month_start)
+            e = min(res['end_date'], month_end + timedelta(days=1))
+            curr = s
+            while curr < e:
+                if curr.month == today.month:
+                    reserved_nights.add(curr)
+                curr += timedelta(days=1)
+        
+        context['idle_days'] = total_days - len(reserved_nights)
         
         return context
 
@@ -145,8 +171,8 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
         
         costs = self.object.costs.all()
         context['costs_booking'] = costs.filter(frequency='per_booking')
-        context['costs_monthly'] = costs.filter(frequency='monthly')
-        context['costs_yearly'] = costs.filter(frequency='yearly')
+        # Initially load only the first 20 payments, the rest will be loaded via API
+        context['costs_payments'] = costs.exclude(frequency='per_booking').order_by('-payment_date', '-id')[:20]
         
         context['cost_form'] = PropertyCostForm()
         
@@ -154,12 +180,12 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
         acquisition_date = self.object.acquisition_date
         today = timezone.now().date()
         
-        # 1. Fetch all reservations and their costs in bulk
-        reservations = self.object.reservations.all()
+        # 1. Fetch all reservations and their costs in bulk (EXCLUDING CANCELLED)
+        reservations = self.object.reservations.filter(is_cancelled=False)
         res_data = {} # Key: (month, year), Value: {'gross': D, 'costs': D}
         
         for res in reservations:
-            # We use end_date (Checkout) for month/year alignment as requested
+            # We use end_date (Checkout) for month/year alignment
             key = (res.end_date.month, res.end_date.year)
             if key not in res_data:
                 res_data[key] = {'gross': Decimal(0), 'costs': Decimal(0)}
@@ -171,12 +197,18 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
             key = (rc.reservation.end_date.month, rc.reservation.end_date.year)
             res_data[key]['costs'] += rc.value
             
-        # 2. Fetch all monthly property costs in bulk
+        # 2. Fetch all other property costs in bulk
         prop_costs_data = {} # Key: (month, year), Value: sum
-        monthly_costs = self.object.costs.filter(frequency='monthly')
-        for pc in monthly_costs:
-            if pc.month and pc.year:
-                key = (pc.month, pc.year)
+        other_costs = self.object.costs.exclude(frequency='per_booking')
+        for pc in other_costs:
+            m, y = None, None
+            if pc.payment_date:
+                m, y = pc.payment_date.month, pc.payment_date.year
+            elif pc.month and pc.year:
+                m, y = pc.month, pc.year
+                
+            if m and y:
+                key = (m, y)
                 prop_costs_data[key] = prop_costs_data.get(key, Decimal(0)) + pc.amount
                 
         # 3. Fetch all manual financial history in bulk
@@ -188,7 +220,7 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
             
         financial_structure = []
         
-        # Iterate from acquisition to today using dictionaries (O(1) lookups)
+        # Iterate from acquisition to today
         curr_year = acquisition_date.year
         curr_month = acquisition_date.month
         
@@ -197,8 +229,6 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
             has_reservations = key in res_data
             has_prop_costs = key in prop_costs_data
             
-            # Only lock if there are REAL reservations. 
-            # Monthly property costs shouldn't lock the row, so users can still inform gross revenue.
             is_locked = has_reservations
             
             gross = Decimal(0)
@@ -207,18 +237,14 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
             if is_locked:
                 gross = res_data[key]['gross']
                 costs_sum = res_data[key]['costs']
-                
-                # Add monthly costs to system costs if they exist
                 if has_prop_costs:
                     costs_sum += prop_costs_data[key]
             else:
-                # Manual entry mode
                 history = history_data.get(key)
                 if history:
                     gross = history['gross']
                     costs_sum = history['costs']
                 elif has_prop_costs:
-                    # Optional: pre-populate costs from property costs if no history exists yet
                     costs_sum = prop_costs_data[key]
             
             net = gross - costs_sum
@@ -359,6 +385,49 @@ class PropertyCostUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('properties:settings', kwargs={'pk': self.object.property.pk})
 
 
+class PropertyCostListAPIView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        prop = get_object_or_404(Property, pk=pk, user=request.user)
+        try:
+            page = int(request.GET.get('page', 1))
+            limit = int(request.GET.get('limit', 20))
+        except (ValueError, TypeError):
+            page = 1
+            limit = 20
+            
+        offset = (page - 1) * limit
+        
+        all_payments = prop.costs.exclude(frequency='per_booking').order_by('-payment_date', '-id')
+        costs = all_payments[offset:offset+limit]
+        total_count = all_payments.count()
+        
+        data = []
+        for cost in costs:
+            data.append({
+                'id': cost.pk,
+                'name': cost.name,
+                'description': cost.description or '',
+                'amount': float(cost.amount),
+                'amount_type': cost.amount_type,
+                'recipient': cost.recipient,
+                'frequency': cost.frequency,
+                'payment_date': cost.payment_date.strftime('%Y-%m-%d') if cost.payment_date else None,
+                'payment_date_display': cost.payment_date.strftime('%d/%m/%Y') if cost.payment_date else '',
+                'month': cost.month or 0,
+                'year': cost.year or 0,
+                'period_display': cost.get_period_display(),
+                'recipient_display': cost.get_recipient_display(),
+                'provider_id': cost.provider_id,
+                'provider_name': cost.provider.name if cost.provider else '',
+                'provider_photo': cost.provider.photo.url if cost.provider and cost.provider.photo else None,
+            })
+            
+        return JsonResponse({
+            'results': data,
+            'has_more': total_count > offset + limit
+        })
+
+
 class PropertyFinancialHistorySaveView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         property_id = self.kwargs.get('pk')
@@ -377,8 +446,9 @@ class PropertyFinancialHistorySaveView(LoginRequiredMixin, View):
                 m = int(m_str)
                 y = int(y_str)
                 
-                # Security: Check if locked in real-time (has reservations)
-                has_res = prop.reservations.filter(start_date__year=y, start_date__month=m).exists()
+                # Security: Check if locked in real-time (has non-cancelled reservations)
+                # We use end_date (checkout) to match the accounting logic used in the UI and reports
+                has_res = prop.reservations.filter(end_date__year=y, end_date__month=m, is_cancelled=False).exists()
                 
                 if not has_res:
                     gross_clean = self._clean_currency(gross_values[i])
@@ -404,12 +474,21 @@ class PropertyFinancialHistorySaveView(LoginRequiredMixin, View):
         if not value: return Decimal(0)
         
         # Remove currency symbol and spaces
-        clean = value.replace('R$', '').replace(' ', '')
+        clean = str(value).replace('R$', '').replace(' ', '')
         
         # In PT-BR (1.234,56):
-        # 1. Remove all dots (thousands separator)
-        # 2. Replace the comma with a dot (decimal separator)
-        clean = clean.replace('.', '').replace(',', '.')
+        # We assume the last comma or dot is the decimal separator if there's only one.
+        # If there are both, the comma is decimal.
+        if ',' in clean:
+            clean = clean.replace('.', '').replace(',', '.')
+        # If there's a dot but no comma, it's ambiguous, but in our system (VMasker) 
+        # a dot without a comma is likely a thousand separator (e.g. 1.000)
+        # However, we'll try to be safe.
+        elif '.' in clean:
+            # Check if it looks like a thousand separator (3 digits after dot)
+            parts = clean.split('.')
+            if len(parts[-1]) == 3:
+                clean = clean.replace('.', '')
             
         try:
             return Decimal(clean)
@@ -639,3 +718,145 @@ class ServiceDeleteView(LoginRequiredMixin, View):
         service = get_object_or_404(Service, pk=pk, user=request.user)
         service.delete()
         return JsonResponse({'status': 'success'})
+
+class PropertyReportsView(LoginRequiredMixin, DetailView):
+    model = Property
+    template_name = 'properties/property_reports.html'
+    context_object_name = 'property'
+
+    def get_queryset(self):
+        return Property.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_item'] = 'reports'
+        
+        # 1. Handle Year Selection
+        today = timezone.now().date()
+        selected_year = self.request.GET.get('year')
+        try:
+            if selected_year:
+                selected_year = str(selected_year).replace('.', '').replace(',', '')
+            selected_year = int(selected_year)
+        except (TypeError, ValueError):
+            selected_year = today.year
+            
+        context['selected_year'] = selected_year
+        
+        # Available years for selector (from acquisition to today)
+        acquisition_date = self.object.acquisition_date or (timezone.now().date() - timedelta(days=365))
+        context['years_range'] = range(acquisition_date.year, today.year + 1)
+        
+        # 2. Build months list for the SELECTED YEAR
+        months_list = []
+        for m in range(1, 13):
+            months_list.append({
+                'month': m,
+                'year': selected_year,
+                'name': self._get_month_name(m),
+                'key': (m, selected_year)
+            })
+        
+        # 3. Data containers
+        costs_by_name = {} # { "Cleaning": { 'values': {(m,y): val}, 'total': T } }
+        monthly_revenue = {} # { (m,y): val }
+        monthly_costs_total = {} # { (m,y): sum }
+        
+        # 4. Fetch Revenue and Reservation Costs
+        reservations = self.object.reservations.filter(is_cancelled=False).prefetch_related('costs')
+        for res in reservations:
+            # Use end_date as accounting reference
+            key = (res.end_date.month, res.end_date.year)
+            monthly_revenue[key] = monthly_revenue.get(key, Decimal(0)) + res.total_value
+            
+            for rc in res.costs.all():
+                name = rc.description
+                if name not in costs_by_name:
+                    costs_by_name[name] = {'values': {}, 'total': Decimal(0)}
+                
+                costs_by_name[name]['values'][key] = costs_by_name[name]['values'].get(key, Decimal(0)) + rc.value
+                costs_by_name[name]['total'] += rc.value
+                monthly_costs_total[key] = monthly_costs_total.get(key, Decimal(0)) + rc.value
+                
+        # 5. Fetch Monthly Property Costs
+        prop_costs = self.object.costs.filter(frequency='monthly')
+        for pc in prop_costs:
+            if pc.month and pc.year:
+                key = (pc.month, pc.year)
+                name = pc.name
+                if name not in costs_by_name:
+                    costs_by_name[name] = {'values': {}, 'total': Decimal(0)}
+                
+                costs_by_name[name]['values'][key] = costs_by_name[name]['values'].get(key, Decimal(0)) + pc.amount
+                costs_by_name[name]['total'] += pc.amount
+                monthly_costs_total[key] = monthly_costs_total.get(key, Decimal(0)) + pc.amount
+
+        # 6. Fetch Manual Financial History (Optional entries for months without full data)
+        histories = self.object.financial_histories.filter(year=selected_year)
+        for h in histories:
+            key = (h.month, h.year)
+            
+            # Add to revenue if manual revenue exists
+            if h.gross_value > 0:
+                monthly_revenue[key] = monthly_revenue.get(key, Decimal(0)) + h.gross_value
+            
+            # Add to costs if manual costs exist
+            if h.costs > 0:
+                name = _("Ajustes Manuais")
+                if name not in costs_by_name:
+                    costs_by_name[name] = {'values': {}, 'total': Decimal(0)}
+                
+                costs_by_name[name]['values'][key] = costs_by_name[name]['values'].get(key, Decimal(0)) + h.costs
+                costs_by_name[name]['total'] += h.costs
+                monthly_costs_total[key] = monthly_costs_total.get(key, Decimal(0)) + h.costs
+
+        # 7. Calculate Totals and ROI per month
+        summary_rows = {
+            'revenue': {'values': {}, 'total': Decimal(0)},
+            'costs': {'values': {}, 'total': Decimal(0)},
+            'balance': {'values': {}, 'total': Decimal(0)},
+            'roi': {'values': {}, 'total': Decimal(0)}
+        }
+        
+        grand_total_revenue = Decimal(0)
+        grand_total_costs = Decimal(0)
+        
+        for m in months_list:
+            key = m['key']
+            rev = monthly_revenue.get(key, Decimal(0))
+            cost = monthly_costs_total.get(key, Decimal(0))
+            balance = rev - cost
+            roi = (balance / rev * 100) if rev > 0 else Decimal(0)
+            
+            summary_rows['revenue']['values'][key] = rev
+            summary_rows['revenue']['total'] += rev
+            
+            summary_rows['costs']['values'][key] = cost
+            summary_rows['costs']['total'] += cost
+            
+            summary_rows['balance']['values'][key] = balance
+            summary_rows['balance']['total'] += balance
+            
+            summary_rows['roi']['values'][key] = roi
+            
+            grand_total_revenue += rev
+            grand_total_costs += cost
+
+        # Global ROI (Net Balance / Total Revenue)
+        grand_total_roi = (summary_rows['balance']['total'] / grand_total_revenue * 100) if grand_total_revenue > 0 else Decimal(0)
+        summary_rows['roi']['total'] = grand_total_roi
+        
+        context['months'] = months_list
+        context['costs_by_name'] = costs_by_name
+        context['sorted_cost_names'] = sorted(costs_by_name.keys())
+        context['summary_rows'] = summary_rows
+        
+        return context
+
+    def _get_month_name(self, month_index):
+        meses = [
+            _('Jan'), _('Fev'), _('Mar'), _('Abr'), 
+            _('Mai'), _('Jun'), _('Jul'), _('Ago'), 
+            _('Set'), _('Out'), _('Nov'), _('Dez')
+        ]
+        return meses[month_index - 1]

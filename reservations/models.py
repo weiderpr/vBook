@@ -129,6 +129,9 @@ class Reservation(models.Model):
         blank=True,
         verbose_name=_("Data de Envio da Autorização")
     )
+
+    checkin_time = models.TimeField(null=True, blank=True, verbose_name=_("Horário de check-in"))
+    checkout_time = models.TimeField(null=True, blank=True, verbose_name=_("Horário de check-out"))
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -146,6 +149,44 @@ class Reservation(models.Model):
         if self.client_name:
             return self.client_name.split()[0]
         return ""
+
+    def get_status(self):
+        from django.utils import timezone
+        import datetime
+        
+        if self.is_cancelled:
+            return 'cancelled'
+            
+        now = timezone.now()
+        
+        # Fallback to property defaults or fixed times if everything is missing
+        checkin_t = self.checkin_time or self.property.default_checkin_time or datetime.time(14, 0)
+        checkout_t = self.checkout_time or self.property.default_checkout_time or datetime.time(11, 0)
+        
+        # Combine date and time
+        start_dt = datetime.datetime.combine(self.start_date, checkin_t)
+        end_dt = datetime.datetime.combine(self.end_date, checkout_t)
+        
+        if timezone.is_aware(now):
+            tz = timezone.get_current_timezone()
+            start_dt = timezone.make_aware(start_dt, tz)
+            end_dt = timezone.make_aware(end_dt, tz)
+            
+        if now < start_dt:
+            return 'upcoming'
+        elif now > end_dt:
+            return 'past'
+        else:
+            return 'active'
+
+    @_property
+    def total_paid(self):
+        from django.db.models import Sum
+        return self.payments.aggregate(total=Sum('value'))['total'] or 0
+
+    @_property
+    def remaining_balance(self):
+        return self.total_value - self.total_paid
 
     def get_checkin_url(self):
         """Generates the absolute check-in URL"""
@@ -213,3 +254,29 @@ class Companion(models.Model):
 
     def __str__(self):
         return f"{self.name} (Acompação de {self.reservation})"
+
+class ReservationPayment(models.Model):
+    reservation = models.ForeignKey(
+        Reservation, 
+        on_delete=models.CASCADE, 
+        related_name='payments',
+        verbose_name=_("Reserva")
+    )
+    description = models.CharField(max_length=255, verbose_name=_("Descrição"))
+    value = models.DecimalField(
+        max_digits=12, 
+        decimal_places=2, 
+        verbose_name=_("Valor")
+    )
+    payment_date = models.DateField(verbose_name=_("Data do Pagamento"))
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Pagamento da Reserva")
+        verbose_name_plural = _("Pagamentos da Reserva")
+        ordering = ['payment_date']
+
+    def __str__(self):
+        return f"{self.description}: {self.value} ({self.reservation})"

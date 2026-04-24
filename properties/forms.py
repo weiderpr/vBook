@@ -7,17 +7,23 @@ class CustomClearableFileInput(forms.ClearableFileInput):
     template_name = 'properties/widgets/clearable_file_input.html'
 
 class PropertyForm(forms.ModelForm):
-    acquisition_value = forms.CharField(label=_("Valor da aquisição"))
+    acquisition_value = forms.CharField(
+        label=_("Valor da aquisição"),
+        widget=forms.TextInput(attrs={'placeholder': '0,00', 'class': 'money-mask'})
+    )
 
     class Meta:
         model = Property
         fields = [
             'name', 'description', 'image', 'signature', 'address_street', 'address_number',
             'address_complement', 'address_city', 'address_state',
-            'acquisition_date', 'acquisition_value', 'condo_phone', 'share_client_phone'
+            'acquisition_date', 'acquisition_value', 'condo_phone', 'share_client_phone',
+            'default_checkin_time', 'default_checkout_time'
         ]
         widgets = {
             'acquisition_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'default_checkin_time': forms.TimeInput(attrs={'type': 'time'}),
+            'default_checkout_time': forms.TimeInput(attrs={'type': 'time'}),
             'description': forms.Textarea(attrs={'rows': 4}),
             'image': CustomClearableFileInput(),
             'signature': CustomClearableFileInput(),
@@ -31,7 +37,13 @@ class PropertyForm(forms.ModelForm):
         self.fields['address_city'].widget.attrs.update({'placeholder': _("Sua cidade")})
         self.fields['address_state'].widget.attrs.update({'placeholder': _("Seu estado")})
         self.fields['condo_phone'].widget.attrs.update({'placeholder': _("(00) 00000-0000"), 'class': 'phone-mask'})
-        self.fields['acquisition_value'].widget.attrs.update({'placeholder': '0,00', 'class': 'money-mask'})
+        
+        # Ensure classes are preserved if already set
+        current_classes = self.fields['acquisition_value'].widget.attrs.get('class', '')
+        if 'money-mask' not in current_classes:
+            self.fields['acquisition_value'].widget.attrs['class'] = f"{current_classes} money-mask".strip()
+        
+        self.fields['acquisition_value'].widget.attrs.update({'placeholder': '0,00'})
         
         if self.instance and self.instance.pk and self.instance.acquisition_value:
             self.initial['acquisition_value'] = f"{self.instance.acquisition_value:.2f}".replace('.', ',')
@@ -60,26 +72,40 @@ class PropertyForm(forms.ModelForm):
         return value
 
 class PropertyCostForm(forms.ModelForm):
-    amount = forms.CharField(label=_("Valor"))
+    amount = forms.CharField(
+        label=_("Valor"),
+        widget=forms.TextInput(attrs={'placeholder': '0,00', 'class': 'money-mask'})
+    )
 
     class Meta:
         model = PropertyCost
-        fields = ['name', 'amount', 'amount_type', 'frequency', 'month', 'year', 'recipient', 'provider', 'description']
+        fields = ['name', 'amount', 'amount_type', 'frequency', 'payment_date', 'month', 'year', 'recipient', 'provider', 'description']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 2, 'placeholder': _("Opcional: Detalhes sobre este custo")}),
             'name': forms.TextInput(attrs={'placeholder': _("Ex: Condomínio, IPTU, Limpeza")}),
             'provider': forms.HiddenInput(),
+            'payment_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'amount_type': forms.HiddenInput(),
+            'month': forms.HiddenInput(),
+            'year': forms.HiddenInput(),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        
+        # Ensure classes are preserved
+        current_classes = self.fields['amount'].widget.attrs.get('class', '')
+        if 'money-mask' not in current_classes:
+            self.fields['amount'].widget.attrs['class'] = f"{current_classes} money-mask".strip()
+            
         self.fields['amount'].widget.attrs.update({'placeholder': '0,00'})
         
-        # Set defaults for month and year
-        today = timezone.now()
-        self.fields['month'].initial = today.month
-        self.fields['year'].initial = today.year
-        self.fields['year'].widget.attrs.update({'placeholder': today.year})
+        # Set default amount_type to fixed
+        self.fields['amount_type'].initial = 'fixed'
+        
+        # Set default payment_date to today if creating new
+        if not self.instance.pk:
+            self.fields['payment_date'].initial = timezone.now().date()
 
     def clean_amount(self):
         value = self.cleaned_data.get('amount')
@@ -107,22 +133,20 @@ class PropertyCostForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         frequency = cleaned_data.get('frequency')
+        payment_date = cleaned_data.get('payment_date')
         
-        if frequency == 'per_booking':
-            # For per-booking costs, we don't need month or year
+        if frequency != 'per_booking':
+            if not payment_date:
+                self.add_error('payment_date', _("A data do pagamento é obrigatória."))
+            else:
+                # Sync month and year for backward compatibility and aggregation
+                cleaned_data['month'] = payment_date.month
+                cleaned_data['year'] = payment_date.year
+        else:
+            # For per-booking costs, we don't need payment_date
             cleaned_data['month'] = None
             cleaned_data['year'] = None
-        elif frequency == 'yearly':
-            # For yearly costs, we only need year
-            cleaned_data['month'] = None
-            if not cleaned_data.get('year'):
-                self.add_error('year', _("O ano é obrigatório para custos anuais."))
-        elif frequency == 'monthly':
-            # For monthly costs, both are needed
-            if not cleaned_data.get('month'):
-                self.add_error('month', _("O mês é obrigatório para custos mensais."))
-            if not cleaned_data.get('year'):
-                self.add_error('year', _("O ano é obrigatório para custos mensais."))
+            cleaned_data['payment_date'] = None
         
         return cleaned_data
 

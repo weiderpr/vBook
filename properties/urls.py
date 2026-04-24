@@ -13,9 +13,11 @@ urlpatterns = [
     path('<int:pk>/instrucoes/', views.PropertyInstructionsUpdateView.as_view(), name='instructions'),
     path('<int:pk>/autorizacao/', views.PropertyAuthorizationUpdateView.as_view(), name='authorization'),
     path('<int:pk>/configuracoes/custos/novo/', views.PropertyCostCreateView.as_view(), name='cost_create'),
+    path('<int:pk>/configuracoes/custos/api/', views.PropertyCostListAPIView.as_view(), name='cost_list_api'),
     path('configuracoes/custos/<int:pk>/editar/', views.PropertyCostUpdateView.as_view(), name='cost_update'),
     path('configuracoes/custos/<int:pk>/excluir/', views.PropertyCostDeleteView.as_view(), name='cost_delete'),
     path('configuracoes/historico/salvar/<int:pk>/', views.PropertyFinancialHistorySaveView.as_view(), name='history_save'),
+    path('<int:pk>/relatorios/', views.PropertyReportsView.as_view(), name='reports'),
     
     # Prestadores de Serviço (Globais)
     path('prestadores/', views.ServiceProviderListView.as_view(), name='provider_list'),
