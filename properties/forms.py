@@ -169,13 +169,6 @@ class PropertyAuthorizationForm(forms.ModelForm):
 
 from .models import Service, ServiceProvider
 
-class ServiceForm(forms.ModelForm):
-    class Meta:
-        model = Service
-        fields = ['name']
-        widgets = {
-            'name': forms.TextInput(attrs={'placeholder': _("Ex: Limpeza, Piscineiro, Elétrica"), 'class': 'form-control'})
-        }
 
 class ServiceProviderForm(forms.ModelForm):
     class Meta:
@@ -192,5 +185,5 @@ class ServiceProviderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        if user:
-            self.fields['services'].queryset = Service.objects.filter(user=user)
+        # Services are now global, no need to filter by user
+        self.fields['services'].queryset = Service.objects.all()

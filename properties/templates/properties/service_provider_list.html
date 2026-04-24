@@ -203,10 +203,6 @@
             </p>
         </div>
         <div style="display: flex; gap: 1rem;">
-            <button onclick="document.getElementById('serviceModal').classList.add('active')" class="btn btn-outline" style="display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 1.2rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                {% trans "Categorias" %}
-            </button>
             <a href="{% url 'properties:provider_create' %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 1.2rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 {% trans "Novo" %}
@@ -294,7 +290,7 @@
                         <a href="{% url 'properties:provider_update' provider.pk %}" class="btn-action-small" title="{% trans 'Editar' %}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                         </a>
-                        <form action="{% url 'properties:provider_delete' provider.pk %}" method="post" onsubmit="return confirm('{% trans "Tem certeza que deseja remover este prestador?" %}')" style="display: inline;">
+                        <form action="{% url 'properties:provider_delete' provider.pk %}" method="post" onsubmit="return confirm('{% trans 'Tem certeza que deseja remover este prestador?' %}')" style="display: inline;">
                             {% csrf_token %}
                             <button type="submit" class="btn-action-small" style="color: #ef4444;" title="{% trans 'Excluir' %}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
@@ -320,145 +316,12 @@
     {% endif %}
 </div>
 
-<!-- Modal para Gerenciar Serviços -->
-<div id="serviceModal" class="vbook-modal">
-    <div class="vbook-modal-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <h3 style="margin: 0; color: var(--text-main);">{% trans "Categorias" %}</h3>
-            <button onclick="document.getElementById('serviceModal').classList.remove('active')" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-        
-        <form id="serviceForm" onsubmit="saveService(event)">
-            <div style="margin-bottom: 1.5rem;">
-                <div style="display: flex; gap: 0; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid var(--glass-border); overflow: hidden; height: 50px;">
-                    <input type="text" id="serviceName" class="form-control" placeholder="{% trans 'Nova categoria...' %}" required 
-                           style="background: transparent; border: none; flex: 1; padding: 0 1rem; color: var(--text-main); font-size: 0.95rem; outline: none;">
-                    <button type="submit" class="btn btn-primary" style="border-radius: 0; width: 60px; height: 100%; border: none; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary), #a855f7);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <div style="max-height: 250px; overflow-y: auto; border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
-            <ul id="serviceList" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
-                {% for service in services %}
-                    <li id="service-item-{{ service.pk }}" class="service-item">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                            <span class="service-name-text">{{ service.name }}</span>
-                        </div>
-                        <div style="display: flex; gap: 8px;">
-                            <button onclick="editService({{ service.pk }}, '{{ service.name }}')" class="btn-action-small" style="width: 32px; height: 32px;" title="{% trans 'Editar' %}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
-                            </button>
-                            <button onclick="deleteService({{ service.pk }})" class="btn-action-small" style="width: 32px; height: 32px; color: #ef4444;" title="{% trans 'Excluir' %}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
-                            </button>
-                        </div>
-                    </li>
-                {% empty %}
-                    <li id="no-services-msg" style="color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 2rem;">
-                        {% trans "Nenhuma cadastrada." %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
-
 <script>
     function copyToClipboard(elementId) {
         const text = document.getElementById(elementId).innerText;
         navigator.clipboard.writeText(text.trim()).then(() => {
             showToast("{% trans 'Link copiado com sucesso!' %}", "success");
         });
-    }
-
-    async function saveService(event) {
-        event.preventDefault();
-        const nameInput = document.getElementById('serviceName');
-        const name = nameInput.value;
-        
-        try {
-            const response = await fetch("{% url 'properties:service_create' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "X-CSRFToken": "{{ csrf_token }}",
-                    "X-Requested-With": "XMLHttpRequest"
-                },
-                body: `name=${encodeURIComponent(name)}`
-            });
-            
-            const data = await response.json();
-            if (data.status === 'success') {
-                const list = document.getElementById('serviceList');
-                const noMsg = document.getElementById('no-services-msg');
-                if (noMsg) noMsg.remove();
-                
-                const li = document.createElement('li');
-                li.id = `service-item-${data.id}`;
-                li.className = "service-item";
-                li.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                        <span class="service-name-text">${data.name}</span>
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <button onclick="editService(${data.id}, '${data.name}')" class="btn-action-small" style="width: 32px; height: 32px;" title="{% trans 'Editar' %}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
-                        </button>
-                        <button onclick="deleteService(${data.id})" class="btn-action-small" style="width: 32px; height: 32px; color: #ef4444;" title="{% trans 'Excluir' %}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
-                        </button>
-                    </div>
-                `;
-                list.insertBefore(li, list.firstChild);
-                
-                nameInput.value = '';
-                showToast("{% trans 'Categoria criada!' %}", "success");
-            }
-        } catch (error) {
-            console.error(error);
-            showToast("{% trans 'Erro ao salvar serviço' %}", "error");
-        }
-    }
-
-    async function deleteService(id) {
-        if (!confirm("{% trans 'Deseja realmente excluir esta categoria?' %}")) return;
-        try {
-            const response = await fetch(`/propriedades/servicos/${id}/excluir/`, {
-                method: "POST",
-                headers: { "X-CSRFToken": "{{ csrf_token }}" }
-            });
-            if (response.ok) {
-                document.getElementById(`service-item-${id}`).remove();
-                showToast("{% trans 'Categoria removida!' %}", "success");
-            }
-        } catch (e) { console.error(e); }
-    }
-
-    async function editService(id, currentName) {
-        const newName = prompt("{% trans 'Novo nome para a categoria:' %}", currentName);
-        if (!newName || newName === currentName) return;
-        try {
-            const response = await fetch(`/propriedades/servicos/${id}/editar/`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "X-CSRFToken": "{{ csrf_token }}"
-                },
-                body: `name=${encodeURIComponent(newName)}`
-            });
-            const data = await response.json();
-            if (data.status === 'success') {
-                document.querySelector(`#service-item-${id} .service-name-text`).innerText = data.name;
-                showToast("{% trans 'Categoria atualizada!' %}", "success");
-            }
-        } catch (e) { console.error(e); }
     }
 </script>
 {% endblock %}

@@ -28,6 +28,9 @@ class CustomUser(AbstractUser):
     whatsapp_instance_key = models.CharField(max_length=255, blank=True, null=True, verbose_name="Chave da Instância WhatsApp")
     whatsapp_connected = models.BooleanField(default=False, verbose_name="WhatsApp Conectado")
 
+    # Admin field
+    is_admin = models.BooleanField(default=False, verbose_name="Administrador")
+
     # Use email as the identifier for login
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'full_name']

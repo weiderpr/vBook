@@ -1,0 +1,32 @@
+{% extends 'administration/admin_base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Excluir Categoria" %} - VerticeBook{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-header" style="margin-bottom: 2rem;">
+    <h1 class="dashboard-title">{% trans "Confirmar Exclusão" %}</h1>
+    <p class="dashboard-subtitle">{% trans "Esta ação não pode ser desfeita e pode afetar prestadores vinculados." %}</p>
+</div>
+
+<div class="card-premium" style="max-width: 600px; text-align: center; padding: 3rem;">
+    <div style="margin-bottom: 2rem; color: #ef4444;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+    </div>
+    
+    <h2 style="margin-bottom: 1rem;">{% trans "Deseja excluir a categoria" %}?</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.1rem;">
+        <strong>{{ object.name }}</strong>
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+            <a href="{% url 'administration:service_category_list' %}" class="btn btn-outline">{% trans "Cancelar" %}</a>
+            <button type="submit" class="btn btn-danger" style="background: #ef4444; border-color: #ef4444; color: white;">
+                {% trans "Excluir Permanentemente" %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

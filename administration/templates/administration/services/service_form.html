@@ -1,0 +1,95 @@
+{% extends 'administration/admin_base.html' %}
+{% load static i18n %}
+
+{% block title %}
+    {% if object %}
+        {% trans "Editar Categoria" %}: {{ object.name }}
+    {% else %}
+        {% trans "Nova Categoria" %}
+    {% endif %} - VerticeBook
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-header" style="margin-bottom: 2rem;">
+    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+        <a href="{% url 'administration:service_category_list' %}" style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.05); color: var(--text-muted);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </a>
+        <h1 class="dashboard-title">
+            {% if object %}
+                {% trans "Editar Categoria" %}
+            {% else %}
+                {% trans "Nova Categoria" %}
+            {% endif %}
+        </h1>
+    </div>
+    <p class="dashboard-subtitle">
+        {% if object %}
+            {% trans "Atualize o nome da categoria" %}
+        {% else %}
+            {% trans "Cadastre uma nova categoria de serviço global" %}
+        {% endif %}
+    </p>
+</div>
+
+<div class="card-premium" style="max-width: 600px;">
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 2rem;">
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="form-error">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--glass-border); padding-top: 2rem;">
+            <a href="{% url 'administration:service_category_list' %}" class="btn btn-outline">{% trans "Cancelar" %}</a>
+            <button type="submit" class="btn btn-primary">
+                {% if object %}
+                    {% trans "Salvar Alterações" %}
+                {% else %}
+                    {% trans "Criar Categoria" %}
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .form-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+    .form-control {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1.5px solid var(--glass-border);
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        color: var(--text-main);
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+    }
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+    }
+    .form-error {
+        color: #ff7675;
+        font-size: 0.8rem;
+        margin-top: 4px;
+    }
+</style>
+{% endblock %}

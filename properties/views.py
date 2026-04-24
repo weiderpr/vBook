@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.db.models import Sum, Q
 
 from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider
-from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceForm, ServiceProviderForm
+from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
 from reservations.models import Reservation, ReservationCost
 
 class PropertyInstructionsUpdateView(LoginRequiredMixin, UpdateView):
@@ -514,8 +514,8 @@ class ServiceProviderListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["active_item"] = "providers"
-        context["service_form"] = ServiceForm()
-        context["services"] = Service.objects.filter(user=self.request.user)
+        # Services are now global
+        context["services"] = Service.objects.all()
         context["current_filters"] = {
             "name": self.request.GET.get("name", ""),
             "service": self.request.GET.get("service", "")
@@ -605,17 +605,6 @@ class ServiceProviderDeleteView(LoginRequiredMixin, DeleteView):
         messages.success(self.request, _("Prestador removido com sucesso!"))
         return super().delete(request, *args, **kwargs)
 
-class ServiceCreateView(LoginRequiredMixin, CreateView):
-    model = Service
-    form_class = ServiceForm
-    
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        service = form.save()
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({'status': 'success', 'id': service.id, 'name': service.name})
-        messages.success(self.request, _("Serviço cadastrado com sucesso!"))
-        return redirect(self.request.META.get('HTTP_REFERER', '/'))
 
 class ServiceProviderPublicView(View):
     def get(self, request, token):
@@ -703,21 +692,6 @@ class ServiceProviderCancelCompletionView(View):
             
         return redirect("properties:provider_public", token=token)
 
-class ServiceUpdateView(LoginRequiredMixin, View):
-    def post(self, request, pk):
-        service = get_object_or_404(Service, pk=pk, user=request.user)
-        name = request.POST.get('name')
-        if name:
-            service.name = name
-            service.save()
-            return JsonResponse({'status': 'success', 'name': service.name})
-        return JsonResponse({'status': 'error', 'message': 'Nome inválido'}, status=400)
-
-class ServiceDeleteView(LoginRequiredMixin, View):
-    def post(self, request, pk):
-        service = get_object_or_404(Service, pk=pk, user=request.user)
-        service.delete()
-        return JsonResponse({'status': 'success'})
 
 class PropertyReportsView(LoginRequiredMixin, DetailView):
     model = Property

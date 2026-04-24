@@ -184,19 +184,12 @@ class FinancialHistory(models.Model):
         return f"{self.property.name} - {self.month}/{self.year}"
 
 class Service(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, 
-        on_delete=models.CASCADE, 
-        related_name='services',
-        verbose_name=_("Usuário")
-    )
-    name = models.CharField(max_length=100, verbose_name=_("Nome do Serviço"))
+    name = models.CharField(max_length=100, verbose_name=_("Nome do Serviço"), unique=True)
     
     class Meta:
         verbose_name = _("Serviço")
         verbose_name_plural = _("Serviços")
         ordering = ['name']
-        unique_together = ['user', 'name']
 
     def __str__(self):
         return self.name

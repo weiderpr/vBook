@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'core',
     'properties',
     'reservations',
+    'administration',
     'django.contrib.humanize',
 ]
 
