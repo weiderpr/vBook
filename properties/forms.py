@@ -18,12 +18,13 @@ class PropertyForm(forms.ModelForm):
             'name', 'description', 'image', 'signature', 'address_street', 'address_number',
             'address_complement', 'address_city', 'address_state',
             'acquisition_date', 'acquisition_value', 'condo_phone', 'share_client_phone',
-            'default_checkin_time', 'default_checkout_time'
+            'default_checkin_time', 'default_checkout_time', 'color'
         ]
         widgets = {
             'acquisition_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
             'default_checkin_time': forms.TimeInput(attrs={'type': 'time'}),
             'default_checkout_time': forms.TimeInput(attrs={'type': 'time'}),
+            'color': forms.TextInput(attrs={'type': 'color'}),
             'description': forms.Textarea(attrs={'rows': 4}),
             'image': CustomClearableFileInput(),
             'signature': CustomClearableFileInput(),

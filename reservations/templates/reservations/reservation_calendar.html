@@ -1,5 +1,5 @@
 {% extends 'dashboard_layout.html' %}
-{% load i18n static l10n %}
+{% load i18n static l10n property_tags %}
 
 {% block title %}{% trans "Calendário" %} - {{ property.name }} - VerticeBook{% endblock %}
 
@@ -151,6 +151,7 @@
         height: 24px;
         margin-top: 10px;
         width: 100%;
+        overflow: visible;
     }
 
     .res-bar {
@@ -165,13 +166,11 @@
         top: 0;
         z-index: 1;
         cursor: pointer;
-        transition: filter 0.2s, transform 0.1s;
+        transition: filter 0.2s, transform 0.1s, z-index 0s;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
         text-decoration: none;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         border-radius: 4px;
+        border: 1px solid rgba(0,0,0,0.05);
     }
 
     .res-bar:hover {
@@ -183,6 +182,7 @@
     .res-bar.is-start {
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
+        z-index: 2;
     }
 
     .res-bar.is-end {
@@ -190,25 +190,36 @@
         border-bottom-right-radius: 10px;
     }
 
-    /* Handle gaps between cells for middle parts - using 0.9rem to overlap 0.8rem padding + 1px border */
-    .res-bar:not(.is-start) {
-        margin-left: -0.9rem;
-        padding-left: 0.9rem;
+    /* Handle gaps between cells for middle parts */
+    .res-bar.is-continuation {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+        border-left: none;
     }
 
-    .res-bar:not(.is-end) {
-        margin-right: -0.9rem;
-        padding-right: 0.9rem;
+    .res-bar.is-middle {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+        border-right: none;
+    }
+
+    .res-bar.is-row-start {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none;
+    }
+
+    .res-bar.is-row-end {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: none;
     }
 
     .res-bar span {
-        position: sticky;
-        left: 6px;
+        position: relative;
+        z-index: 2;
         white-space: nowrap;
+        pointer-events: none;
     }
 
     /* Hide name if not start of reservation in this view */
@@ -299,6 +310,202 @@
         color: var(--success);
     }
 
+    .res-popover {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 280px;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        padding: 1.2rem;
+        display: none;
+        z-index: 1000;
+        backdrop-filter: blur(25px);
+        text-align: left;
+        cursor: default;
+        white-space: normal;
+        margin-top: 10px;
+    }
+
+    .res-popover.popover-left {
+        left: 0;
+        transform: none;
+    }
+
+    .res-popover.popover-right {
+        left: auto;
+        right: 0;
+        transform: none;
+    }
+
+    .res-popover h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .popover-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .popover-info-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .popover-info-item span:last-child {
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .popover-costs {
+        border-top: 1px solid var(--glass-border);
+        padding-top: 0.8rem;
+        margin-top: 0.8rem;
+    }
+
+    .popover-costs h4 {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+    }
+
+    .popover-cost-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .popover-cost-value {
+        font-weight: 600;
+        color: var(--danger);
+    }
+
+    .popover-link {
+        display: block;
+        margin-top: 1rem;
+        padding: 8px;
+        background: var(--primary);
+        color: white;
+        text-align: center;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 700;
+        transition: opacity 0.2s;
+    }
+
+    .popover-link:hover {
+        opacity: 0.9;
+    }
+
+    .res-popover-float {
+        position: absolute;
+        width: 300px;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        padding: 1.4rem;
+        z-index: 9999;
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+    }
+
+    .res-popover-float h3 {
+        margin: 0 0 1rem 0;
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--text-main);
+        padding-right: 1.5rem;
+    }
+
+    .res-popover-close {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.2rem;
+        cursor: pointer;
+        line-height: 1;
+        padding: 2px 6px;
+        border-radius: 6px;
+        transition: background 0.2s;
+    }
+    .res-popover-close:hover { background: rgba(255,255,255,0.1); }
+
+    .rpg-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 1rem;
+    }
+
+    .rpg-info-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+    }
+
+    .rpg-info-item span:first-child { color: var(--text-muted); }
+    .rpg-info-item span:last-child  { font-weight: 700; color: var(--text-main); }
+
+    .rpg-costs {
+        border-top: 1px solid var(--glass-border);
+        padding-top: 0.8rem;
+        margin-top: 0.8rem;
+    }
+
+    .rpg-costs h4 {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+    }
+
+    .rpg-cost-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.82rem;
+        padding: 3px 0;
+        color: var(--text-main);
+    }
+
+    .rpg-cost-val {
+        font-weight: 600;
+        color: var(--danger, #ef4444);
+    }
+
+    .rpg-link {
+        display: block;
+        margin-top: 1rem;
+        padding: 9px 12px;
+        background: var(--primary);
+        color: white;
+        text-align: center;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 700;
+        transition: opacity 0.2s;
+    }
+    .rpg-link:hover { opacity: 0.85; }
+
     @media (max-width: 768px) {
         .calendar-day {
             min-height: 70px;
@@ -312,6 +519,9 @@
             height: 16px;
             font-size: 0.55rem;
             padding: 0 3px;
+        }
+        .res-popover-float {
+            width: 240px;
         }
     }
 </style>
@@ -350,7 +560,8 @@
 
             {% for week in calendar_grid %}
                 {% for day in week %}
-                    <div class="calendar-day {% if not day.is_current_month %}not-current{% endif %} {% if day.is_today %}today{% endif %}">
+                    <div class="calendar-day {% if not day.is_current_month %}not-current{% endif %} {% if day.is_today %}today{% endif %}" 
+                         style="z-index: {{ 100|subtract:forloop.parentloop.counter0|add:100|subtract:forloop.counter0 }};">
                         <span class="day-number">{{ day.date.day }}</span>
                         
                         {% if day.has_payment %}
@@ -371,13 +582,18 @@
                         
                         <div class="res-marks-container">
                             {% for res in day.reservations %}
-                                <a href="{% url 'reservations:update' property.pk res.id %}" 
-                                   class="res-bar {% if res.is_start %}is-start{% endif %} {% if res.is_end %}is-end{% endif %}" 
-                                   style="background: {{ res.color }}; 
-                                          left: calc({{ res.start_pct|unlocalize }}% {% if not res.is_start %}- 0.9rem{% endif %}); 
-                                          width: calc({{ res.width_pct|unlocalize }}% {% if not res.is_start %}+ 0.9rem{% endif %} {% if not res.is_end %}+ 0.9rem{% endif %});">
+                                <div class="res-bar {% if res.is_start %}is-start{% endif %} {% if res.is_end %}is-end{% endif %} {% if not res.is_start and not res.is_row_start %}is-continuation{% endif %} {% if not res.is_end and not res.is_row_end %}is-middle{% endif %} {% if res.is_row_start %}is-row-start{% endif %} {% if res.is_row_end %}is-row-end{% endif %}" 
+                                   style="background: {{ res.color }};
+                                          left: calc({{ res.start_pct|unlocalize }}%{% if not res.is_start and not res.is_row_start %} - 0.9rem{% endif %});
+                                          width: calc({{ res.width_pct|unlocalize }}%{% if not res.is_start and not res.is_row_start %} + 0.9rem{% endif %}{% if not res.is_end and not res.is_row_end %} + 0.9rem{% endif %});"
+                                   data-client="{{ res.client_name|escapejs }}"
+                                   data-guests="{{ res.guests_count }}"
+                                   data-total="R$ {{ res.total_value|floatformat:2 }}"
+                                   data-url="{% url 'reservations:update' property.pk res.id %}"
+                                   data-costs="{% for c in res.costs %}{{ c.description|escapejs }}|{{ c.value|floatformat:2 }}{% if not forloop.last %};;{% endif %}{% endfor %}"
+                                   onclick="showResPopover(event, this)">
                                     <span>{{ res.client_name }}</span>
-                                </a>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -415,20 +631,101 @@
         const isOpen = popover.style.display === 'block';
         
         // Close all other popovers
-        document.querySelectorAll('.payment-popover').forEach(p => {
-            p.style.display = 'none';
-        });
+        closeAllPopovers();
         
         if (!isOpen) {
             popover.style.display = 'block';
         }
     }
 
-    // Close popover when clicking outside
-    document.addEventListener('click', function() {
+    function toggleResPopover(event, id) {
+        event.stopPropagation();
+        const popover = document.getElementById(id);
+        const isOpen = popover.style.display === 'block';
+        
+        // Close all other popovers
+        closeAllPopovers();
+        
+        if (!isOpen) {
+            popover.style.display = 'block';
+        }
+    }
+
+    function closeAllPopovers() {
+        const pop = document.getElementById('res-popover-single');
+        if (pop) pop.style.display = 'none';
         document.querySelectorAll('.payment-popover').forEach(p => {
             p.style.display = 'none';
         });
+    }
+
+    function showResPopover(event, el) {
+        event.stopPropagation();
+        const pop = document.getElementById('res-popover-single');
+
+        document.getElementById('rps-name').textContent   = el.dataset.client;
+        document.getElementById('rps-guests').textContent = el.dataset.guests;
+        document.getElementById('rps-total').textContent  = el.dataset.total;
+        document.getElementById('rps-link').href          = el.dataset.url;
+
+        const costsWrap = document.getElementById('rps-costs-wrap');
+        const costsList = document.getElementById('rps-costs-list');
+        costsList.innerHTML = '';
+        if (el.dataset.costs) {
+            el.dataset.costs.split(';;').forEach(function(entry) {
+                const parts = entry.split('|');
+                const row = document.createElement('div');
+                row.className = 'rpg-cost-item';
+                row.innerHTML = '<span>' + parts[0] + '</span><span class="rpg-cost-val">R$ ' + parts[1] + '</span>';
+                costsList.appendChild(row);
+            });
+            costsWrap.style.display = 'block';
+        } else {
+            costsWrap.style.display = 'none';
+        }
+
+        pop.style.display = 'block';
+        const rect = pop.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        let x = event.clientX + window.scrollX + 10;
+        let y = event.clientY + window.scrollY + 10;
+
+        if (event.clientX + rect.width + 20 > vw) {
+            x = event.clientX + window.scrollX - rect.width - 10;
+        }
+        if (event.clientY + rect.height + 20 > vh) {
+            y = event.clientY + window.scrollY - rect.height - 10;
+        }
+
+        pop.style.left = x + 'px';
+        pop.style.top  = y + 'px';
+    }
+
+    // Close popover when clicking outside
+    document.addEventListener('click', function(e) {
+        closeAllPopovers();
     });
 </script>
+
+<div id="res-popover-single" class="res-popover-float" style="display:none;">
+    <button class="res-popover-close" onclick="closeAllPopovers()" aria-label="Fechar">&times;</button>
+    <h3 id="rps-name"></h3>
+    <div class="rpg-info">
+        <div class="rpg-info-item">
+            <span>Hóspedes</span>
+            <span id="rps-guests"></span>
+        </div>
+        <div class="rpg-info-item">
+            <span>Valor Total</span>
+            <span id="rps-total"></span>
+        </div>
+    </div>
+    <div id="rps-costs-wrap" class="rpg-costs" style="display:none;">
+        <h4>Custos</h4>
+        <div id="rps-costs-list"></div>
+    </div>
+    <a id="rps-link" href="#" class="rpg-link">Ver Detalhes da Reserva &rarr;</a>
+</div>
+
 {% endblock %}

@@ -41,7 +41,7 @@
             grid-template-columns: 1fr;
         }
     }
-    select, textarea, input:not([type="checkbox"]) {
+    select, textarea, input:not([type="checkbox"]):not([type="color"]) {
         width: 100%;
         padding: 0.8rem 1rem;
         border-radius: 10px;
@@ -51,6 +51,15 @@
         font-family: inherit;
         font-size: 0.95rem;
         transition: all 0.3s;
+    }
+    input[type="color"] {
+        width: 60px;
+        height: 40px;
+        padding: 4px;
+        border-radius: 8px;
+        border: 1px solid var(--glass-border);
+        background: var(--bg-card);
+        cursor: pointer;
     }
     select:focus, textarea:focus, input:focus {
         outline: none;
@@ -297,10 +306,20 @@
                 {% if form.description.errors %}<div class="field-error">{{ form.description.errors.0 }}</div>{% endif %}
             </div>
 
-            <div class="form-group" style="margin-top: 1.5rem; max-width: 300px;">
-                <label for="{{ form.condo_phone.id_for_label }}">{{ form.condo_phone.label }}</label>
-                {{ form.condo_phone }}
-                {% if form.condo_phone.errors %}<div class="field-error">{{ form.condo_phone.errors.0 }}</div>{% endif %}
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div class="form-group">
+                    <label for="{{ form.condo_phone.id_for_label }}">{{ form.condo_phone.label }}</label>
+                    {{ form.condo_phone }}
+                    {% if form.condo_phone.errors %}<div class="field-error">{{ form.condo_phone.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.color.id_for_label }}">{{ form.color.label }}</label>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        {{ form.color }}
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">{% trans "Cor para o calendário global" %}</span>
+                    </div>
+                    {% if form.color.errors %}<div class="field-error">{{ form.color.errors.0 }}</div>{% endif %}
+                </div>
             </div>
 
             <div class="grid-2" style="margin-top: 1.5rem;">

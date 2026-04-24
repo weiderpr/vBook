@@ -288,7 +288,7 @@ class ReservationCalendarView(LoginRequiredMixin, PropertyContextMixin, ListView
             is_cancelled=False,
             start_date__lte=end_of_grid,
             end_date__gte=start_of_grid
-        ).order_by('start_date')
+        ).prefetch_related('costs').order_by('start_date')
         
         # 4.5. Fetch Payments for this month
         payments_qs = property_obj.costs.filter(
@@ -310,8 +310,10 @@ class ReservationCalendarView(LoginRequiredMixin, PropertyContextMixin, ListView
         grid = []
         for week in month_days:
             week_data = []
-            for day in week:
+            for week_pos, day in enumerate(week):
                 day_reservations = []
+                is_first_in_row = (week_pos == 0)
+                is_last_in_row = (week_pos == 6)
                 for res in reservations:
                     if res.start_date <= day <= res.end_date:
                         is_start = res.start_date == day
@@ -323,17 +325,22 @@ class ReservationCalendarView(LoginRequiredMixin, PropertyContextMixin, ListView
                         
                         if is_start:
                             t = res.checkin_time or property_obj.default_checkin_time or time(14, 0)
-                            start_pct = (t.hour * 60 + t.minute) / 14.4 # (h*60+m) / 1440 * 100
+                            start_pct = round((t.hour * 60 + t.minute) / 14.4, 2) # (h*60+m) / 1440 * 100
                         
                         if is_end:
                             t = res.checkout_time or property_obj.default_checkout_time or time(11, 0)
-                            end_pct = (t.hour * 60 + t.minute) / 14.4
+                            end_pct = round((t.hour * 60 + t.minute) / 14.4, 2)
                             
                         day_reservations.append({
                             'id': res.id,
                             'client_name': res.client_name,
+                            'total_value': res.total_value,
+                            'guests_count': res.guests_count,
+                            'costs': res.costs.all(),
                             'is_start': is_start,
                             'is_end': is_end,
+                            'is_row_start': is_first_in_row and not is_start,
+                            'is_row_end': is_last_in_row and not is_end,
                             'start_pct': start_pct,
                             'end_pct': end_pct,
                             'width_pct': max(end_pct - start_pct, 5), # Minimum 5% width
@@ -366,3 +373,157 @@ class ReservationCalendarView(LoginRequiredMixin, PropertyContextMixin, ListView
     def _get_color_for_reservation(self, res_id):
         # Professional blue for a sober look
         return '#3b82f6'
+
+class GlobalReservationCalendarView(LoginRequiredMixin, ListView):
+    model = Reservation
+    template_name = 'reservations/global_calendar.html'
+    context_object_name = 'reservations'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # 1. Get Month/Year from GET
+        today = date.today()
+        month = int(self.request.GET.get('month', today.month))
+        year = int(self.request.GET.get('year', today.year))
+        
+        # Ensure month is within 1-12
+        if month < 1:
+            month = 12
+            year -= 1
+        elif month > 12:
+            month = 1
+            year += 1
+            
+        context['current_month'] = month
+        context['current_year'] = year
+        context['month_name'] = self._get_month_name(month)
+        
+        # 2. Navigation logic
+        prev_month = month - 1
+        prev_year = year
+        if prev_month < 1:
+            prev_month = 12
+            prev_year -= 1
+            
+        next_month = month + 1
+        next_year = year
+        if next_month > 12:
+            next_month = 1
+            next_year += 1
+            
+        context['prev_month'] = prev_month
+        context['prev_year'] = prev_year
+        context['next_month'] = next_month
+        context['next_year'] = next_year
+        
+        # 3. Calendar Grid Generation
+        cal = calendar.Calendar(firstweekday=6) # Sunday start
+        month_days = cal.monthdatescalendar(year, month)
+        
+        # 4. Fetch Properties and Reservations for this month
+        properties = Property.objects.filter(user=self.request.user)
+        context['properties'] = properties
+        
+        start_of_grid = month_days[0][0]
+        end_of_grid = month_days[-1][-1]
+        
+        reservations = Reservation.objects.filter(
+            property__user=self.request.user,
+            is_cancelled=False,
+            start_date__lte=end_of_grid,
+            end_date__gte=start_of_grid
+        ).select_related('property').prefetch_related('costs').order_by('start_date')
+        
+        # 4.5 Fetch property costs (payments) for the period — all user properties
+        from properties.models import PropertyCost
+        costs_qs = PropertyCost.objects.filter(
+            property__user=self.request.user,
+            payment_date__range=(start_of_grid, end_of_grid)
+        ).select_related('property').order_by('payment_date', 'property__name')
+
+        # Group: payment_days[date] = [{'property_name': ..., 'property_color': ..., 'name': ..., 'amount': ...}, ...]
+        payment_days = {}
+        for cost in costs_qs:
+            d = cost.payment_date
+            if d not in payment_days:
+                payment_days[d] = []
+            payment_days[d].append({
+                'property_name': cost.property.name,
+                'property_color': cost.property.color,
+                'name': cost.name,
+                'amount': cost.amount,
+            })
+
+        # 5. Prepare Grid Data
+        grid = []
+        for week in month_days:
+            week_data = []
+            for week_pos, day in enumerate(week):
+                day_slots = []
+                is_first_in_row = (week_pos == 0)
+                is_last_in_row = (week_pos == 6)
+                for prop in properties:
+                    prop_reservations = []
+                    for res in reservations:
+                        if res.property_id == prop.id and res.start_date <= day <= res.end_date:
+                            is_start = res.start_date == day
+                            is_end = res.end_date == day
+
+                            start_pct = 0.0
+                            end_pct = 100.0
+
+                            if is_start:
+                                t = res.checkin_time or prop.default_checkin_time or time(14, 0)
+                                start_pct = round((t.hour * 60 + t.minute) / 14.4, 2)
+
+                            if is_end:
+                                t = res.checkout_time or prop.default_checkout_time or time(11, 0)
+                                end_pct = round((t.hour * 60 + t.minute) / 14.4, 2)
+
+                            width_pct = max(round(end_pct - start_pct, 2), 5)
+
+                            prop_reservations.append({
+                                'id': res.id,
+                                'client_name': res.client_name,
+                                'total_value': res.total_value,
+                                'guests_count': res.guests_count,
+                                'costs': res.costs.all(),
+                                'is_start': is_start,
+                                'is_end': is_end,
+                                'is_row_start': is_first_in_row and not is_start,
+                                'is_row_end': is_last_in_row and not is_end,
+                                'color': prop.color,
+                                'start_pct': start_pct,
+                                'end_pct': end_pct,
+                                'width_pct': width_pct,
+                            })
+
+                    day_slots.append({
+                        'property': prop,
+                        'reservations': prop_reservations
+                    })
+
+                day_payments = payment_days.get(day, [])
+                week_data.append({
+                    'date': day,
+                    'is_current_month': day.month == month,
+                    'is_today': day == today,
+                    'slots': day_slots,
+                    'payments': day_payments,
+                    'has_payment': bool(day_payments),
+                })
+            grid.append(week_data)
+            
+        context['calendar_grid'] = grid
+        context['day_names'] = [_('Dom'), _('Seg'), _('Ter'), _('Qua'), _('Qui'), _('Sex'), _('Sáb')]
+        
+        return context
+
+    def _get_month_name(self, month_index):
+        meses = [
+            _('Janeiro'), _('Fevereiro'), _('Março'), _('Abril'), 
+            _('Maio'), _('Junho'), _('Julho'), _('Agosto'), 
+            _('Setembro'), _('Outubro'), _('Novembro'), _('Dezembro')
+        ]
+        return meses[month_index - 1]

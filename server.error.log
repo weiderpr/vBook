@@ -2820,3 +2820,169 @@ NameError: name 'View' is not defined
 [2026-04-24 14:36:23 -0300] [257232] [WARNING] Worker (pid:283023) was sent SIGHUP!
 [2026-04-24 14:36:23 -0300] [257232] [WARNING] Worker (pid:283048) was sent SIGHUP!
 [2026-04-24 14:36:23 -0300] [257232] [WARNING] Worker (pid:283050) was sent SIGHUP!
+[2026-04-24 14:39:40 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:39:40 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:39:40 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:39:40 -0300] [283931] [INFO] Booting worker with pid: 283931
+[2026-04-24 14:39:42 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:39:42 -0300] [283953] [INFO] Booting worker with pid: 283953
+[2026-04-24 14:39:44 -0300] [283960] [INFO] Booting worker with pid: 283960
+[2026-04-24 14:39:44 -0300] [257232] [WARNING] Worker (pid:283230) was sent SIGHUP!
+[2026-04-24 14:39:44 -0300] [257232] [WARNING] Worker (pid:283232) was sent SIGHUP!
+[2026-04-24 14:39:44 -0300] [257232] [WARNING] Worker (pid:283255) was sent SIGHUP!
+[2026-04-24 14:39:44 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:41:48 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:41:48 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:41:48 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:41:48 -0300] [284269] [INFO] Booting worker with pid: 284269
+[2026-04-24 14:41:48 -0300] [284271] [INFO] Booting worker with pid: 284271
+[2026-04-24 14:41:48 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:41:50 -0300] [257232] [WARNING] Worker (pid:283931) was sent SIGHUP!
+[2026-04-24 14:41:50 -0300] [284294] [INFO] Booting worker with pid: 284294
+[2026-04-24 14:41:50 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:41:50 -0300] [257232] [WARNING] Worker (pid:283953) was sent SIGHUP!
+[2026-04-24 14:41:50 -0300] [257232] [WARNING] Worker (pid:283960) was sent SIGHUP!
+[2026-04-24 14:44:13 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:44:13 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:44:13 -0300] [284627] [INFO] Booting worker with pid: 284627
+[2026-04-24 14:44:13 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:44:15 -0300] [284653] [INFO] Booting worker with pid: 284653
+[2026-04-24 14:44:15 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:44:17 -0300] [257232] [WARNING] Worker (pid:284269) was sent SIGHUP!
+[2026-04-24 14:44:17 -0300] [257232] [WARNING] Worker (pid:284271) was sent SIGHUP!
+[2026-04-24 14:44:17 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:44:17 -0300] [257232] [WARNING] Worker (pid:284294) was sent SIGHUP!
+[2026-04-24 14:44:17 -0300] [284657] [INFO] Booting worker with pid: 284657
+[2026-04-24 14:45:13 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:45:13 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:45:13 -0300] [284815] [INFO] Booting worker with pid: 284815
+[2026-04-24 14:45:13 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:45:15 -0300] [284838] [INFO] Booting worker with pid: 284838
+[2026-04-24 14:45:15 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:45:17 -0300] [257232] [WARNING] Worker (pid:284627) was sent SIGHUP!
+[2026-04-24 14:45:17 -0300] [284842] [INFO] Booting worker with pid: 284842
+[2026-04-24 14:45:17 -0300] [257232] [WARNING] Worker (pid:284653) was sent SIGHUP!
+[2026-04-24 14:45:17 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:45:17 -0300] [257232] [WARNING] Worker (pid:284657) was sent SIGHUP!
+[2026-04-24 14:51:02 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:51:02 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:51:02 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:51:02 -0300] [285749] [INFO] Booting worker with pid: 285749
+[2026-04-24 14:51:02 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:51:02 -0300] [285751] [INFO] Booting worker with pid: 285751
+[2026-04-24 14:51:04 -0300] [285771] [INFO] Booting worker with pid: 285771
+[2026-04-24 14:51:04 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:51:04 -0300] [257232] [WARNING] Worker (pid:284815) was sent SIGHUP!
+[2026-04-24 14:51:04 -0300] [257232] [WARNING] Worker (pid:284838) was sent SIGHUP!
+[2026-04-24 14:51:04 -0300] [257232] [WARNING] Worker (pid:284842) was sent SIGHUP!
+[2026-04-24 14:54:23 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:54:23 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:54:23 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:54:23 -0300] [286214] [INFO] Booting worker with pid: 286214
+[2026-04-24 14:54:23 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:54:23 -0300] [286216] [INFO] Booting worker with pid: 286216
+[2026-04-24 14:54:25 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:54:25 -0300] [286239] [INFO] Booting worker with pid: 286239
+[2026-04-24 14:54:25 -0300] [257232] [WARNING] Worker (pid:285749) was sent SIGHUP!
+[2026-04-24 14:54:25 -0300] [257232] [WARNING] Worker (pid:285751) was sent SIGHUP!
+[2026-04-24 14:54:25 -0300] [257232] [WARNING] Worker (pid:285771) was sent SIGHUP!
+[2026-04-24 14:56:50 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:56:50 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:56:50 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:56:50 -0300] [286598] [INFO] Booting worker with pid: 286598
+[2026-04-24 14:56:50 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:56:50 -0300] [286600] [INFO] Booting worker with pid: 286600
+[2026-04-24 14:56:50 -0300] [286602] [INFO] Booting worker with pid: 286602
+[2026-04-24 14:56:50 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:56:50 -0300] [257232] [WARNING] Worker (pid:286214) was sent SIGHUP!
+[2026-04-24 14:56:50 -0300] [257232] [WARNING] Worker (pid:286216) was sent SIGHUP!
+[2026-04-24 14:56:50 -0300] [257232] [WARNING] Worker (pid:286239) was sent SIGHUP!
+[2026-04-24 14:57:29 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:57:29 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:57:29 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:57:29 -0300] [286727] [INFO] Booting worker with pid: 286727
+[2026-04-24 14:57:31 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:57:31 -0300] [286750] [INFO] Booting worker with pid: 286750
+[2026-04-24 14:57:33 -0300] [286754] [INFO] Booting worker with pid: 286754
+[2026-04-24 14:57:33 -0300] [257232] [WARNING] Worker (pid:286598) was sent SIGHUP!
+[2026-04-24 14:57:33 -0300] [257232] [WARNING] Worker (pid:286600) was sent SIGHUP!
+[2026-04-24 14:57:33 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:57:33 -0300] [257232] [WARNING] Worker (pid:286602) was sent SIGHUP!
+[2026-04-24 14:59:46 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 14:59:46 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 14:59:46 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:59:46 -0300] [287065] [INFO] Booting worker with pid: 287065
+[2026-04-24 14:59:48 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:59:48 -0300] [287085] [INFO] Booting worker with pid: 287085
+[2026-04-24 14:59:50 -0300] [257232] [WARNING] Worker (pid:286727) was sent SIGHUP!
+[2026-04-24 14:59:50 -0300] [257232] [WARNING] Worker (pid:286750) was sent SIGHUP!
+[2026-04-24 14:59:50 -0300] [257232] [WARNING] Worker (pid:286754) was sent SIGHUP!
+[2026-04-24 14:59:50 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 14:59:50 -0300] [287094] [INFO] Booting worker with pid: 287094
+[2026-04-24 15:02:25 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 15:02:25 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 15:02:25 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 15:02:25 -0300] [287442] [INFO] Booting worker with pid: 287442
+[2026-04-24 15:02:27 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 15:02:27 -0300] [287465] [INFO] Booting worker with pid: 287465
+[2026-04-24 15:02:27 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 15:02:27 -0300] [257232] [WARNING] Worker (pid:287065) was sent SIGHUP!
+[2026-04-24 15:02:27 -0300] [257232] [WARNING] Worker (pid:287085) was sent SIGHUP!
+[2026-04-24 15:02:27 -0300] [257232] [WARNING] Worker (pid:287094) was sent SIGHUP!
+[2026-04-24 15:02:27 -0300] [287467] [INFO] Booting worker with pid: 287467
+[2026-04-24 16:57:03 -0300] [257232] [INFO] Handling signal: hup
+[2026-04-24 16:57:03 -0300] [257232] [INFO] Hang up: Master
+[2026-04-24 16:57:03 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 16:57:03 -0300] [293688] [INFO] Booting worker with pid: 293688
+[2026-04-24 16:57:05 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 16:57:05 -0300] [293705] [INFO] Booting worker with pid: 293705
+[2026-04-24 16:57:07 -0300] [257232] [WARNING] Worker (pid:287442) was sent SIGHUP!
+[2026-04-24 16:57:07 -0300] [257232] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 16:57:07 -0300] [257232] [WARNING] Worker (pid:287465) was sent SIGHUP!
+[2026-04-24 16:57:07 -0300] [293717] [INFO] Booting worker with pid: 293717
+[2026-04-24 16:57:07 -0300] [257232] [WARNING] Worker (pid:287467) was sent SIGHUP!
+[2026-04-24 16:57:37 -0300] [257232] [INFO] Handling signal: term
+[2026-04-24 19:57:37 +0000] [293705] [INFO] Worker exiting (pid: 293705)
+[2026-04-24 19:57:37 +0000] [293717] [INFO] Worker exiting (pid: 293717)
+[2026-04-24 19:57:37 +0000] [293688] [INFO] Worker exiting (pid: 293688)
+[2026-04-24 16:57:38 -0300] [257232] [INFO] Shutting down: Master
+[2026-04-24 16:59:01 -0300] [294046] [INFO] Starting gunicorn 25.3.0
+[2026-04-24 16:59:01 -0300] [294046] [INFO] Listening at: http://127.0.0.1:8000 (294046)
+[2026-04-24 16:59:01 -0300] [294046] [INFO] Using worker: sync
+[2026-04-24 16:59:01 -0300] [294048] [INFO] Booting worker with pid: 294048
+[2026-04-24 16:59:01 -0300] [294049] [INFO] Booting worker with pid: 294049
+[2026-04-24 16:59:01 -0300] [294050] [INFO] Booting worker with pid: 294050
+[2026-04-24 16:59:02 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:02:45 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 17:02:45 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 17:02:45 -0300] [294579] [INFO] Booting worker with pid: 294579
+[2026-04-24 17:02:45 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:02:47 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:02:47 -0300] [294601] [INFO] Booting worker with pid: 294601
+[2026-04-24 17:02:49 -0300] [294606] [INFO] Booting worker with pid: 294606
+[2026-04-24 17:02:49 -0300] [294046] [WARNING] Worker (pid:294048) was sent SIGHUP!
+[2026-04-24 17:02:49 -0300] [294046] [WARNING] Worker (pid:294049) was sent SIGHUP!
+[2026-04-24 17:02:49 -0300] [294046] [WARNING] Worker (pid:294050) was sent SIGHUP!
+[2026-04-24 17:02:49 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:06:30 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 17:06:30 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 17:06:30 -0300] [295083] [INFO] Booting worker with pid: 295083
+[2026-04-24 17:06:30 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:06:30 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:06:30 -0300] [295085] [INFO] Booting worker with pid: 295085
+[2026-04-24 17:06:30 -0300] [295087] [INFO] Booting worker with pid: 295087
+[2026-04-24 17:06:30 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:06:30 -0300] [294046] [WARNING] Worker (pid:294579) was sent SIGHUP!
+[2026-04-24 17:06:30 -0300] [294046] [WARNING] Worker (pid:294601) was sent SIGHUP!
+[2026-04-24 17:06:30 -0300] [294046] [WARNING] Worker (pid:294606) was sent SIGHUP!
+[2026-04-24 17:14:23 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 17:14:23 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 17:14:23 -0300] [296088] [INFO] Booting worker with pid: 296088
+[2026-04-24 17:14:23 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:14:23 -0300] [296090] [INFO] Booting worker with pid: 296090
+[2026-04-24 17:14:24 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:14:24 -0300] [296093] [INFO] Booting worker with pid: 296093
+[2026-04-24 17:14:24 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 17:14:24 -0300] [294046] [WARNING] Worker (pid:295083) was sent SIGHUP!
+[2026-04-24 17:14:24 -0300] [294046] [WARNING] Worker (pid:295085) was sent SIGHUP!
+[2026-04-24 17:14:24 -0300] [294046] [WARNING] Worker (pid:295087) was sent SIGHUP!

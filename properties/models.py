@@ -48,6 +48,7 @@ class Property(models.Model):
     )
     default_checkin_time = models.TimeField(blank=True, null=True, verbose_name=_("Horário padrão de check-in"))
     default_checkout_time = models.TimeField(blank=True, null=True, verbose_name=_("Horário padrão de check-out"))
+    color = models.CharField(max_length=7, default='#3b82f6', verbose_name=_("Cor no Calendário"))
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
