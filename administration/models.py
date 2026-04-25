@@ -22,3 +22,27 @@ class Condo(models.Model):
 
     def __str__(self):
         return self.name
+
+class Plan(models.Model):
+    PERIODICITY_CHOICES = [
+        ('monthly', _('Mensal')),
+        ('once', _('Única')),
+    ]
+    
+    description = models.CharField(max_length=255, verbose_name=_("Descrição"))
+    periodicity = models.CharField(max_length=20, choices=PERIODICITY_CHOICES, default='monthly', verbose_name=_("Periodicidade"))
+    base_value = models.DecimalField(max_digits=12, decimal_places=2, verbose_name=_("Valor base"))
+    duration_days = models.PositiveIntegerField(verbose_name=_("Duração em dias"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Ativo"))
+    requires_payment = models.BooleanField(default=True, verbose_name=_("Necessita Pagamento"))
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Plano")
+        verbose_name_plural = _("Planos")
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.description

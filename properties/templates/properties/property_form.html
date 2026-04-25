@@ -286,6 +286,13 @@
                 {% if form.name.errors %}<div class="field-error">{{ form.name.errors.0 }}</div>{% endif %}
             </div>
 
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="{{ form.condo.id_for_label }}">{{ form.condo.label }}</label>
+                {{ form.condo }}
+                {% if form.condo.errors %}<div class="field-error">{{ form.condo.errors.0 }}</div>{% endif %}
+                <small class="text-muted" style="font-size: 0.8rem; display: block; margin-top: 4px;">{% trans "Opcional. Associe a um condomínio para usar modelos de autorização pré-definidos." %}</small>
+            </div>
+
             <div class="grid-2">
                 <div class="form-group">
                     <label style="margin-bottom: 0.5rem; display: block;">{{ form.image.label }}</label>
@@ -339,7 +346,7 @@
         <!-- Endereço -->
         <div class="form-section">
             <h3 class="form-section-title">{% trans "Localização" %}</h3>
-            <div class="grid-3">
+            <div class="grid-2">
                 <div class="form-group">
                     <label for="{{ form.address_street.id_for_label }}">{{ form.address_street.label }}</label>
                     {{ form.address_street }}
@@ -349,6 +356,13 @@
                     <label for="{{ form.address_number.id_for_label }}">{{ form.address_number.label }}</label>
                     {{ form.address_number }}
                     {% if form.address_number.errors %}<div class="field-error">{{ form.address_number.errors.0 }}</div>{% endif %}
+                </div>
+            </div>
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div class="form-group">
+                    <label for="{{ form.address_neighborhood.id_for_label }}">{{ form.address_neighborhood.label }}</label>
+                    {{ form.address_neighborhood }}
+                    {% if form.address_neighborhood.errors %}<div class="field-error">{{ form.address_neighborhood.errors.0 }}</div>{% endif %}
                 </div>
                 <div class="form-group">
                     <label for="{{ form.address_complement.id_for_label }}">{{ form.address_complement.label }}</label>
@@ -467,6 +481,42 @@
                 }
             });
         });
+
+        // Condo address auto-fill
+        const condoSelect = document.getElementById('{{ form.condo.id_for_label }}');
+        if (condoSelect) {
+            condoSelect.addEventListener('change', function() {
+                const condoId = this.value;
+                if (!condoId) return;
+
+                // Check if address fields are empty
+                const streetField = document.getElementById('{{ form.address_street.id_for_label }}');
+                const numberField = document.getElementById('{{ form.address_number.id_for_label }}');
+                const neighborhoodField = document.getElementById('{{ form.address_neighborhood.id_for_label }}');
+                const cityField = document.getElementById('{{ form.address_city.id_for_label }}');
+                const stateField = document.getElementById('{{ form.address_state.id_for_label }}');
+
+                // We only fill if street is empty (common sign of new registration or clean form)
+                if (streetField.value.trim() === '') {
+                    console.log('Fetching condo data for ID:', condoId);
+                    const url = "{% url 'administration:condo_detail_json' pk=0 %}".replace('0', condoId);
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.address_street) streetField.value = data.address_street;
+                            if (data.address_number) numberField.value = data.address_number;
+                            if (data.address_neighborhood) neighborhoodField.value = data.address_neighborhood;
+                            if (data.address_city) cityField.value = data.address_city;
+                            if (data.address_state) stateField.value = data.address_state;
+                            
+                            // Visual feedback
+                            streetField.style.background = 'rgba(108, 92, 231, 0.05)';
+                            setTimeout(() => streetField.style.background = '', 1000);
+                        })
+                        .catch(err => console.error('Error fetching condo data:', err));
+                }
+            });
+        }
     });
 </script>
 {% endblock %}

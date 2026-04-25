@@ -1,6 +1,6 @@
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
@@ -140,4 +140,57 @@ class CondoDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, _("Condomínio excluído com sucesso!"))
+        return super().delete(request, *args, **kwargs)
+
+from django.http import JsonResponse
+
+class CondoDetailAjaxView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        condo = get_object_or_404(Condo, pk=pk)
+        data = {
+            'name': condo.name,
+            'address_street': condo.address_street,
+            'address_number': condo.address_number,
+            'address_neighborhood': condo.address_neighborhood,
+            'address_city': condo.address_city,
+            'address_state': condo.address_state,
+            'authorization_template': condo.authorization_template,
+        }
+        return JsonResponse(data)
+
+from .models import Plan
+from .forms import PlanForm
+
+class PlanListView(AdminRequiredMixin, ListView):
+    model = Plan
+    template_name = 'administration/plans/plan_list.html'
+    context_object_name = 'plans'
+
+class PlanCreateView(AdminRequiredMixin, CreateView):
+    model = Plan
+    form_class = PlanForm
+    template_name = 'administration/plans/plan_form.html'
+    success_url = reverse_lazy('administration:plan_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, _("Plano criado com sucesso!"))
+        return super().form_valid(form)
+
+class PlanUpdateView(AdminRequiredMixin, UpdateView):
+    model = Plan
+    form_class = PlanForm
+    template_name = 'administration/plans/plan_form.html'
+    success_url = reverse_lazy('administration:plan_list')
+    
+    def form_valid(self, form):
+        messages.success(self.request, _("Plano atualizado com sucesso!"))
+        return super().form_valid(form)
+
+class PlanDeleteView(AdminRequiredMixin, DeleteView):
+    model = Plan
+    template_name = 'administration/plans/plan_confirm_delete.html'
+    success_url = reverse_lazy('administration:plan_list')
+    
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, _("Plano excluído com sucesso!"))
         return super().delete(request, *args, **kwargs)

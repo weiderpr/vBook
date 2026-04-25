@@ -5904,3 +5904,1314 @@ ImportError: cannot import name 'ServiceForm' from 'properties.forms' (/root/ver
 [2026-04-24 22:47:04 +0000] [312767] [INFO] Worker exiting (pid: 312767)
 [2026-04-24 22:47:04 +0000] [312769] [INFO] Worker exiting (pid: 312769)
 [2026-04-24 22:47:04 +0000] [312765] [INFO] Worker exiting (pid: 312765)
+[2026-04-24 19:55:11 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 19:55:11 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 19:55:11 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 19:55:11 -0300] [314935] [INFO] Booting worker with pid: 314935
+[2026-04-24 19:55:11 -0300] [314937] [INFO] Booting worker with pid: 314937
+[2026-04-24 19:55:11 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 19:55:11 -0300] [314939] [INFO] Booting worker with pid: 314939
+[2026-04-24 22:55:11 +0000] [313389] [INFO] Worker exiting (pid: 313389)
+[2026-04-24 22:55:11 +0000] [313409] [INFO] Worker exiting (pid: 313409)
+[2026-04-24 22:55:11 +0000] [313407] [INFO] Worker exiting (pid: 313407)
+[2026-04-24 19:55:11 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:06:48 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:06:48 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:06:48 -0300] [316975] [INFO] Booting worker with pid: 316975
+[2026-04-24 20:06:48 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:06:50 -0300] [316998] [INFO] Booting worker with pid: 316998
+[2026-04-24 20:06:50 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:06:52 -0300] [317006] [INFO] Booting worker with pid: 317006
+[2026-04-24 20:06:52 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:06:52 +0000] [314935] [INFO] Worker exiting (pid: 314935)
+[2026-04-24 23:06:52 +0000] [314937] [INFO] Worker exiting (pid: 314937)
+[2026-04-24 23:06:52 +0000] [314939] [INFO] Worker exiting (pid: 314939)
+[2026-04-24 23:09:38 +0000] [316998] [ERROR] Error handling request GET /propriedades/3/painel/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/middleware/locale.py", line 24, in process_request
+    ) = is_language_prefix_patterns_used(urlconf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/conf/urls/i18n.py", line 31, in is_language_prefix_patterns_used
+    for url_pattern in get_resolver(urlconf).url_patterns:
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 12, in <module>
+    path('propriedades/', include('properties.urls')),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/properties/urls.py", line 2, in <module>
+    from . import views
+  File "/root/verticebook/properties/views.py", line 15, in <module>
+    from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+  File "/root/verticebook/properties/forms.py", line 9, in <module>
+    class PropertyForm(forms.ModelForm):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/models.py", line 336, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (address_neighborhood) specified for Property
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 12, in <module>
+    path('propriedades/', include('properties.urls')),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/properties/urls.py", line 2, in <module>
+    from . import views
+  File "/root/verticebook/properties/views.py", line 15, in <module>
+    from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+  File "/root/verticebook/properties/forms.py", line 9, in <module>
+    class PropertyForm(forms.ModelForm):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/models.py", line 336, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (address_neighborhood) specified for Property
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 12, in <module>
+    path('propriedades/', include('properties.urls')),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/properties/urls.py", line 2, in <module>
+    from . import views
+  File "/root/verticebook/properties/views.py", line 15, in <module>
+    from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+  File "/root/verticebook/properties/forms.py", line 9, in <module>
+    class PropertyForm(forms.ModelForm):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/models.py", line 336, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (address_neighborhood) specified for Property
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 12, in <module>
+    path('propriedades/', include('properties.urls')),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/properties/urls.py", line 2, in <module>
+    from . import views
+  File "/root/verticebook/properties/views.py", line 15, in <module>
+    from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+  File "/root/verticebook/properties/forms.py", line 9, in <module>
+    class PropertyForm(forms.ModelForm):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/models.py", line 336, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (address_neighborhood) specified for Property
+[2026-04-24 23:10:20 +0000] [316998] [ERROR] Error handling request GET /propriedades/3/autorizacao/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/middleware/locale.py", line 24, in process_request
+    ) = is_language_prefix_patterns_used(urlconf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/conf/urls/i18n.py", line 31, in is_language_prefix_patterns_used
+    for url_pattern in get_resolver(urlconf).url_patterns:
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 12, in <module>
+    path('propriedades/', include('properties.urls')),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/properties/urls.py", line 2, in <module>
+    from . import views
+  File "/root/verticebook/properties/views.py", line 15, in <module>
+    from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+  File "/root/verticebook/properties/forms.py", line 9, in <module>
+    class PropertyForm(forms.ModelForm):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/models.py", line 336, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (address_neighborhood) specified for Property
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 12, in <module>
+    path('propriedades/', include('properties.urls')),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/properties/urls.py", line 2, in <module>
+    from . import views
+  File "/root/verticebook/properties/views.py", line 15, in <module>
+    from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+  File "/root/verticebook/properties/forms.py", line 9, in <module>
+    class PropertyForm(forms.ModelForm):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/models.py", line 336, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (address_neighborhood) specified for Property
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 12, in <module>
+    path('propriedades/', include('properties.urls')),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/properties/urls.py", line 2, in <module>
+    from . import views
+  File "/root/verticebook/properties/views.py", line 15, in <module>
+    from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+  File "/root/verticebook/properties/forms.py", line 9, in <module>
+    class PropertyForm(forms.ModelForm):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/models.py", line 336, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (address_neighborhood) specified for Property
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 12, in <module>
+    path('propriedades/', include('properties.urls')),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/properties/urls.py", line 2, in <module>
+    from . import views
+  File "/root/verticebook/properties/views.py", line 15, in <module>
+    from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+  File "/root/verticebook/properties/forms.py", line 9, in <module>
+    class PropertyForm(forms.ModelForm):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/models.py", line 336, in __new__
+    raise FieldError(message)
+django.core.exceptions.FieldError: Unknown field(s) (address_neighborhood) specified for Property
+[2026-04-24 20:10:29 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:10:29 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:10:29 -0300] [317731] [INFO] Booting worker with pid: 317731
+[2026-04-24 20:10:29 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:10:29 -0300] [317733] [INFO] Booting worker with pid: 317733
+[2026-04-24 20:10:29 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:10:29 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:10:29 +0000] [316975] [INFO] Worker exiting (pid: 316975)
+[2026-04-24 23:10:29 +0000] [316998] [INFO] Worker exiting (pid: 316998)
+[2026-04-24 20:10:29 -0300] [317735] [INFO] Booting worker with pid: 317735
+[2026-04-24 23:10:29 +0000] [317006] [INFO] Worker exiting (pid: 317006)
+[2026-04-24 20:13:23 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:13:23 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:13:23 -0300] [318276] [INFO] Booting worker with pid: 318276
+[2026-04-24 20:13:23 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:13:23 -0300] [318278] [INFO] Booting worker with pid: 318278
+[2026-04-24 20:13:23 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:13:25 +0000] [317735] [INFO] Worker exiting (pid: 317735)
+[2026-04-24 20:13:25 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:13:25 +0000] [317733] [INFO] Worker exiting (pid: 317733)
+[2026-04-24 23:13:25 +0000] [317731] [INFO] Worker exiting (pid: 317731)
+[2026-04-24 20:13:25 -0300] [318300] [INFO] Booting worker with pid: 318300
+[2026-04-24 20:17:22 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:17:22 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:17:22 -0300] [318983] [INFO] Booting worker with pid: 318983
+[2026-04-24 20:17:22 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:17:24 -0300] [319006] [INFO] Booting worker with pid: 319006
+[2026-04-24 20:17:24 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:17:24 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:17:24 +0000] [318276] [INFO] Worker exiting (pid: 318276)
+[2026-04-24 23:17:24 +0000] [318300] [INFO] Worker exiting (pid: 318300)
+[2026-04-24 23:17:24 +0000] [318278] [INFO] Worker exiting (pid: 318278)
+[2026-04-24 20:17:24 -0300] [319008] [INFO] Booting worker with pid: 319008
+[2026-04-24 20:21:33 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:21:33 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:21:33 -0300] [319685] [INFO] Booting worker with pid: 319685
+[2026-04-24 20:21:33 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:21:33 -0300] [319687] [INFO] Booting worker with pid: 319687
+[2026-04-24 20:21:33 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:21:33 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:21:33 +0000] [318983] [INFO] Worker exiting (pid: 318983)
+[2026-04-24 23:21:33 +0000] [319006] [INFO] Worker exiting (pid: 319006)
+[2026-04-24 23:21:33 +0000] [319008] [INFO] Worker exiting (pid: 319008)
+[2026-04-24 20:21:33 -0300] [319689] [INFO] Booting worker with pid: 319689
+[2026-04-24 20:24:12 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:24:12 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:24:12 -0300] [320146] [INFO] Booting worker with pid: 320146
+[2026-04-24 20:24:12 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:24:14 -0300] [320173] [INFO] Booting worker with pid: 320173
+[2026-04-24 20:24:14 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:24:14 +0000] [319685] [INFO] Worker exiting (pid: 319685)
+[2026-04-24 23:24:14 +0000] [319687] [INFO] Worker exiting (pid: 319687)
+[2026-04-24 23:24:14 +0000] [319689] [INFO] Worker exiting (pid: 319689)
+[2026-04-24 20:24:14 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:24:14 -0300] [320175] [INFO] Booting worker with pid: 320175
+[2026-04-24 20:46:37 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:46:37 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:46:37 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:46:37 -0300] [323799] [INFO] Booting worker with pid: 323799
+[2026-04-24 20:46:37 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:46:37 -0300] [323801] [INFO] Booting worker with pid: 323801
+[2026-04-24 20:46:37 -0300] [323803] [INFO] Booting worker with pid: 323803
+[2026-04-24 20:46:37 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:46:37 +0000] [320146] [INFO] Worker exiting (pid: 320146)
+[2026-04-24 23:46:37 +0000] [320175] [INFO] Worker exiting (pid: 320175)
+[2026-04-24 23:46:37 +0000] [320173] [INFO] Worker exiting (pid: 320173)
+[2026-04-24 20:49:07 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:49:07 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:49:07 -0300] [324278] [INFO] Booting worker with pid: 324278
+[2026-04-24 20:49:07 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:49:07 -0300] [324280] [INFO] Booting worker with pid: 324280
+[2026-04-24 20:49:07 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:49:07 -0300] [324282] [INFO] Booting worker with pid: 324282
+[2026-04-24 20:49:07 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:49:07 +0000] [323799] [INFO] Worker exiting (pid: 323799)
+[2026-04-24 23:49:07 +0000] [323801] [INFO] Worker exiting (pid: 323801)
+[2026-04-24 23:49:07 +0000] [323803] [INFO] Worker exiting (pid: 323803)
+[2026-04-24 20:51:46 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 20:51:46 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 20:51:46 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:51:46 -0300] [324754] [INFO] Booting worker with pid: 324754
+[2026-04-24 20:51:46 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 20:51:46 -0300] [324756] [INFO] Booting worker with pid: 324756
+[2026-04-24 20:51:46 -0300] [324758] [INFO] Booting worker with pid: 324758
+[2026-04-24 20:51:46 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:51:46 +0000] [324278] [INFO] Worker exiting (pid: 324278)
+[2026-04-24 23:51:46 +0000] [324282] [INFO] Worker exiting (pid: 324282)
+[2026-04-24 23:51:46 +0000] [324280] [INFO] Worker exiting (pid: 324280)
+[2026-04-24 21:45:22 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 21:45:22 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 21:45:22 -0300] [332531] [INFO] Booting worker with pid: 332531
+[2026-04-24 21:45:22 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:45:22 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:45:22 -0300] [332533] [INFO] Booting worker with pid: 332533
+[2026-04-24 21:45:24 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:45:24 -0300] [294046] [WARNING] Worker (pid:324754) was sent SIGHUP!
+[2026-04-24 21:45:24 -0300] [294046] [WARNING] Worker (pid:324756) was sent SIGHUP!
+[2026-04-24 21:45:24 -0300] [294046] [WARNING] Worker (pid:324758) was sent SIGHUP!
+[2026-04-24 21:45:24 -0300] [332558] [INFO] Booting worker with pid: 332558
+[2026-04-25 00:45:37 +0000] [332558] [ERROR] Error handling request GET /
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/middleware/locale.py", line 24, in process_request
+    ) = is_language_prefix_patterns_used(urlconf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/conf/urls/i18n.py", line 31, in is_language_prefix_patterns_used
+    for url_pattern in get_resolver(urlconf).url_patterns:
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 5, in <module>
+    from core.views import landing_view, dashboard_view
+  File "/root/verticebook/core/views.py", line 7, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 5, in <module>
+    from core.views import landing_view, dashboard_view
+  File "/root/verticebook/core/views.py", line 7, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 5, in <module>
+    from core.views import landing_view, dashboard_view
+  File "/root/verticebook/core/views.py", line 7, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 5, in <module>
+    from core.views import landing_view, dashboard_view
+  File "/root/verticebook/core/views.py", line 7, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
+[2026-04-25 00:45:38 +0000] [332533] [ERROR] Error handling request GET /
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/middleware/locale.py", line 24, in process_request
+    ) = is_language_prefix_patterns_used(urlconf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/conf/urls/i18n.py", line 31, in is_language_prefix_patterns_used
+    for url_pattern in get_resolver(urlconf).url_patterns:
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 5, in <module>
+    from core.views import landing_view, dashboard_view
+  File "/root/verticebook/core/views.py", line 7, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 5, in <module>
+    from core.views import landing_view, dashboard_view
+  File "/root/verticebook/core/views.py", line 7, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 5, in <module>
+    from core.views import landing_view, dashboard_view
+  File "/root/verticebook/core/views.py", line 7, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 5, in <module>
+    from core.views import landing_view, dashboard_view
+  File "/root/verticebook/core/views.py", line 7, in <module>
+    @login_required
+     ^^^^^^^^^^^^^^
+NameError: name 'login_required' is not defined
+[2026-04-24 21:46:07 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 21:46:07 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 21:46:07 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:46:07 -0300] [332779] [INFO] Booting worker with pid: 332779
+[2026-04-24 21:46:09 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:46:09 -0300] [332807] [INFO] Booting worker with pid: 332807
+[2026-04-24 21:46:09 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:46:09 -0300] [294046] [WARNING] Worker (pid:332531) was sent SIGHUP!
+[2026-04-24 21:46:09 -0300] [294046] [WARNING] Worker (pid:332533) was sent SIGHUP!
+[2026-04-24 21:46:09 -0300] [294046] [WARNING] Worker (pid:332558) was sent SIGHUP!
+[2026-04-24 21:46:09 -0300] [332809] [INFO] Booting worker with pid: 332809
+[2026-04-24 21:50:31 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 21:50:31 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 21:50:31 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:50:31 -0300] [333719] [INFO] Booting worker with pid: 333719
+[2026-04-24 21:50:33 -0300] [333741] [INFO] Booting worker with pid: 333741
+[2026-04-24 21:50:33 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:50:35 -0300] [333748] [INFO] Booting worker with pid: 333748
+[2026-04-24 21:50:35 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 21:50:35 -0300] [294046] [WARNING] Worker (pid:332779) was sent SIGHUP!
+[2026-04-24 21:50:35 -0300] [294046] [WARNING] Worker (pid:332807) was sent SIGHUP!
+[2026-04-24 21:50:35 -0300] [294046] [WARNING] Worker (pid:332809) was sent SIGHUP!

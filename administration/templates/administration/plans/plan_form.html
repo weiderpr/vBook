@@ -1,0 +1,160 @@
+{% extends 'administration/admin_base.html' %}
+{% load i18n static %}
+
+{% block title %}
+    {% if object %}
+        {% trans "Editar Plano" %}: {{ object.description }}
+    {% else %}
+        {% trans "Novo Plano" %}
+    {% endif %} - VerticeBook
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+    <div>
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+            <a href="{% url 'administration:plan_list' %}" style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.05); color: var(--text-muted);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </a>
+            <h1 class="dashboard-title" style="margin: 0;">
+                {% if object %}
+                    {% trans "Editar Plano" %}
+                {% else %}
+                    {% trans "Novo Plano" %}
+                {% endif %}
+            </h1>
+        </div>
+        <p class="dashboard-subtitle" style="margin: 0;">
+            {% trans "Configure os detalhes técnicos e comerciais do plano" %}
+        </p>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+        <a href="{% url 'administration:plan_list' %}" class="btn btn-outline">{% trans "Cancelar" %}</a>
+        <button type="submit" form="plan-form" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            {% if object %}
+                {% trans "Salvar Alterações" %}
+            {% else %}
+                {% trans "Criar Plano" %}
+            {% endif %}
+        </button>
+    </div>
+</div>
+
+<div class="card-premium" style="max-width: 800px;">
+    <form method="post" id="plan-form">
+        {% csrf_token %}
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- Descrição (Full Width) -->
+            <div class="form-group" style="grid-column: span 2;">
+                <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                {{ form.description }}
+                {% if form.description.errors %}<div class="form-error">{{ form.description.errors }}</div>{% endif %}
+            </div>
+
+            <!-- Periodicidade -->
+            <div class="form-group">
+                <label for="{{ form.periodicity.id_for_label }}" class="form-label">{{ form.periodicity.label }}</label>
+                {{ form.periodicity }}
+                {% if form.periodicity.errors %}<div class="form-error">{{ form.periodicity.errors }}</div>{% endif %}
+            </div>
+
+            <!-- Duração -->
+            <div class="form-group">
+                <label for="{{ form.duration_days.id_for_label }}" class="form-label">{{ form.duration_days.label }}</label>
+                {{ form.duration_days }}
+                {% if form.duration_days.errors %}<div class="form-error">{{ form.duration_days.errors }}</div>{% endif %}
+            </div>
+
+            <!-- Valor Base -->
+            <div class="form-group">
+                <label for="{{ form.base_value.id_for_label }}" class="form-label">{{ form.base_value.label }}</label>
+                {{ form.base_value }}
+                {% if form.base_value.errors %}<div class="form-error">{{ form.base_value.errors }}</div>{% endif %}
+            </div>
+
+        <div style="grid-column: span 2; display: flex; gap: 2rem; background: rgba(255,255,255,0.02); padding: 1.2rem; border-radius: 12px; border: 1px solid var(--glass-border); margin-top: 0.5rem;">
+            <div class="form-check" style="display: flex; align-items: center; gap: 10px;">
+                {{ form.is_active }}
+                <label for="{{ form.is_active.id_for_label }}" style="font-weight: 600; font-size: 0.9rem; cursor: pointer; color: var(--text-main);">
+                    {{ form.is_active.label }}
+                </label>
+            </div>
+            <div class="form-check" style="display: flex; align-items: center; gap: 10px;">
+                {{ form.requires_payment }}
+                <label for="{{ form.requires_payment.id_for_label }}" style="font-weight: 600; font-size: 0.9rem; cursor: pointer; color: var(--text-main);">
+                    {{ form.requires_payment.label }}
+                </label>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://unpkg.com/imask"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const moneyElements = document.querySelectorAll('.money-mask');
+        moneyElements.forEach(function(el) {
+            IMask(el, {
+                mask: 'R$ num',
+                lazy: false,
+                blocks: {
+                    num: {
+                        mask: Number,
+                        scale: 2,
+                        thousandsSeparator: '.',
+                        padFractionalZeros: true,
+                        normalizeZeros: true,
+                        radix: ',',
+                        mapToRadix: ['.'],
+                        min: 0
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .form-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+    .form-control {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1.5px solid var(--glass-border);
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        color: var(--text-main);
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+    }
+    .form-error {
+        color: #ff7675;
+        font-size: 0.8rem;
+        margin-top: 4px;
+    }
+    input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+        cursor: pointer;
+    }
+</style>
+{% endblock %}

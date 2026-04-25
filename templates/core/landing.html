@@ -1,5 +1,100 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static humanize i18n %}
+
+{% block extra_head %}
+<style>
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+    .pricing-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+    }
+    .pricing-card:hover {
+        transform: translateY(-10px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .pricing-card.popular {
+        background: rgba(108, 92, 231, 0.05);
+        border-color: var(--primary);
+    }
+    .pricing-card.popular::before {
+        content: '{% trans "Mais Popular" %}';
+        position: absolute;
+        top: 20px;
+        right: -35px;
+        background: var(--primary);
+        color: white;
+        padding: 8px 40px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        transform: rotate(45deg);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .pricing-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .pricing-header h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-main);
+    }
+    .pricing-price {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--primary);
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 4px;
+    }
+    .pricing-price span {
+        font-size: 1rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+    .pricing-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2.5rem 0;
+        flex-grow: 1;
+    }
+    .pricing-features li {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+    .pricing-features li svg {
+        color: #00b894;
+        flex-shrink: 0;
+    }
+    .pricing-btn {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 12px;
+        font-weight: 700;
+        transition: all 0.3s;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -9,7 +104,6 @@
             <h1>Domine a Gestão da sua <span>Locação de Temporada</span></h1>
             <p>Reduza custos, otimize manutenções e maximize seus retornos financeiros com uma plataforma administrativa inteligente e focada em resultados.</p>
             <div class="hero-btns">
-                <a href="{% url 'register' %}" class="btn btn-primary" style="margin-right: 1.5rem;">Começar Grátis</a>
                 <a href="#features" class="btn btn-outline">Ver Funcionalidades</a>
             </div>
         </div>
@@ -95,15 +189,71 @@
         </div>
     </div>
 </section>
-
-<!-- Final CTA -->
-<section class="section" style="text-align: center;">
+<!-- Pricing Section -->
+<section id="pricing" class="section section-pricing" style="background: rgba(255,255,255,0.01);">
     <div class="container">
-        <div class="glass-card" style="max-width: 800px; margin: 0 auto; padding: 4rem;">
-            <h2>Pronto para elevar o nível da sua gestão?</h2>
-            <p style="margin-bottom: 2rem;">Junte-se a administradores que já otimizaram seus retornos com o VerticeBook.</p>
-            <a href="{% url 'register' %}" class="btn btn-primary" style="font-size: 1.2rem;">Criar Minha Conta Agora</a>
+        <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Planos que cabem no seu <span>Negócio</span></h2>
+            <p style="max-width: 700px; margin: 0 auto;">Escolha a opção ideal para o seu volume de propriedades e comece a otimizar sua gestão hoje mesmo.</p>
+        </div>
+
+        <div class="pricing-grid">
+            {% for plan in plans %}
+            <div class="pricing-card {% if forloop.counter == 2 %}popular{% endif %}">
+                <div class="pricing-header">
+                    <h3>{{ plan.description }}</h3>
+                    <div class="pricing-price">
+                        <span style="font-size: 1.5rem; align-self: flex-start; margin-top: 10px;">R$</span>
+                        {{ plan.base_value|floatformat:0 }}
+                        <span>/{{ plan.get_periodicity_display|lower }}</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        {% trans "Válido por" %} {{ plan.duration_days }} {% trans "dias" %}
+                    </p>
+                </div>
+
+                <ul class="pricing-features">
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        {% trans "Gestão de Propriedades Ilimitada" %}
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        {% trans "Calendário Global de Reservas" %}
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        {% trans "Relatórios Financeiros Avançados" %}
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        {% trans "Controle de Manutenção e Vistorias" %}
+                    </li>
+                    {% if forloop.counter > 1 %}
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        {% trans "Suporte Prioritário 24/7" %}
+                    </li>
+                    {% endif %}
+                    {% if forloop.last %}
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        {% trans "Multiusuários e Permissões" %}
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <a href="{% url 'register' %}?plan={{ plan.id }}" class="btn {% if forloop.counter == 2 %}btn-primary{% else %}btn-outline{% endif %} pricing-btn">
+                    {% trans "Escolher Plano" %}
+                </a>
+            </div>
+            {% empty %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-muted);">
+                {% trans "Nenhum plano disponível no momento. Por favor, entre em contato." %}
+            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+
 {% endblock %}

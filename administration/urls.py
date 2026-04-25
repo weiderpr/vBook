@@ -23,4 +23,11 @@ urlpatterns = [
     path('condominios/novo/', views.CondoCreateView.as_view(), name='condo_create'),
     path('condominios/<int:pk>/editar/', views.CondoUpdateView.as_view(), name='condo_edit'),
     path('condominios/<int:pk>/excluir/', views.CondoDeleteView.as_view(), name='condo_delete'),
+    path('condominios/<int:pk>/json/', views.CondoDetailAjaxView.as_view(), name='condo_detail_json'),
+    
+    # Planos
+    path('planos/', views.PlanListView.as_view(), name='plan_list'),
+    path('planos/novo/', views.PlanCreateView.as_view(), name='plan_create'),
+    path('planos/<int:pk>/editar/', views.PlanUpdateView.as_view(), name='plan_edit'),
+    path('planos/<int:pk>/excluir/', views.PlanDeleteView.as_view(), name='plan_delete'),
 ]

@@ -1,0 +1,32 @@
+{% extends 'administration/admin_base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Excluir Plano" %} - VerticeBook{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-header" style="margin-bottom: 2rem;">
+    <h1 class="dashboard-title">{% trans "Excluir Plano" %}</h1>
+    <p class="dashboard-subtitle">{% trans "Tem certeza que deseja excluir este plano?" %}</p>
+</div>
+
+<div class="card-premium" style="max-width: 600px; text-align: center; padding: 3rem;">
+    <div style="width: 64px; height: 64px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+    </div>
+    
+    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-main);">{{ object.description }}</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2.5rem;">
+        {% trans "Esta ação não poderá ser desfeita. Todos os dados associados a este plano serão impactados." %}
+    </p>
+
+    <form method="post" style="display: flex; gap: 1rem; justify-content: center;">
+        {% csrf_token %}
+        <a href="{% url 'administration:plan_list' %}" class="btn btn-outline" style="min-width: 120px;">
+            {% trans "Cancelar" %}
+        </a>
+        <button type="submit" class="btn btn-primary" style="background: #ef4444; border-color: #ef4444; min-width: 120px;">
+            {% trans "Confirmar Exclusão" %}
+        </button>
+    </form>
+</div>
+{% endblock %}

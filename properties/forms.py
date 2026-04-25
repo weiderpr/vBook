@@ -15,8 +15,8 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
-            'name', 'description', 'image', 'signature', 'address_street', 'address_number',
-            'address_complement', 'address_city', 'address_state',
+            'name', 'condo', 'description', 'image', 'signature', 'address_street', 'address_number',
+            'address_neighborhood', 'address_complement', 'address_city', 'address_state',
             'acquisition_date', 'acquisition_value', 'condo_phone', 'share_client_phone',
             'default_checkin_time', 'default_checkout_time', 'color'
         ]
@@ -35,9 +35,12 @@ class PropertyForm(forms.ModelForm):
         # Adding placeholders for better UX
         self.fields['name'].widget.attrs.update({'placeholder': _("Ex: Apartamento em Ipanema")})
         self.fields['address_street'].widget.attrs.update({'placeholder': _("Rua, Avenida, etc.")})
+        self.fields['address_neighborhood'].widget.attrs.update({'placeholder': _("Bairro")})
         self.fields['address_city'].widget.attrs.update({'placeholder': _("Sua cidade")})
         self.fields['address_state'].widget.attrs.update({'placeholder': _("Seu estado")})
         self.fields['condo_phone'].widget.attrs.update({'placeholder': _("(00) 00000-0000"), 'class': 'phone-mask'})
+        self.fields['condo'].empty_label = _("Sem condomínio (Independente)")
+        self.fields['condo'].widget.attrs.update({'class': 'form-select'})
         
         # Ensure classes are preserved if already set
         current_classes = self.fields['acquisition_value'].widget.attrs.get('class', '')

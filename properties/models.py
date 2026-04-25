@@ -13,10 +13,19 @@ class Property(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Nome da propriedade"))
     description = models.TextField(verbose_name=_("Descrição da propriedade"))
     condo_phone = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Telefone do Condomínio"))
+    condo = models.ForeignKey(
+        'administration.Condo', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='properties',
+        verbose_name=_("Condomínio")
+    )
     
     # Address structured fields
     address_street = models.CharField(max_length=255, verbose_name=_("Rua"))
     address_number = models.CharField(max_length=20, verbose_name=_("Número"))
+    address_neighborhood = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Bairro"))
     address_complement = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Complemento"))
     address_city = models.CharField(max_length=100, verbose_name=_("Cidade"))
     address_state = models.CharField(max_length=100, verbose_name=_("Estado"))

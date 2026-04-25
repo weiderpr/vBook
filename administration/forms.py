@@ -31,3 +31,43 @@ class CondoForm(forms.ModelForm):
             'requires_authorization': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'authorization_template': forms.Textarea(attrs={'id': 'editor'}),
         }
+
+from .models import Plan
+
+class PlanForm(forms.ModelForm):
+    base_value = forms.CharField(
+        label=_("Valor base"),
+        widget=forms.TextInput(attrs={'placeholder': '0,00', 'class': 'money-mask'})
+    )
+
+    class Meta:
+        model = Plan
+        fields = ['description', 'periodicity', 'base_value', 'duration_days', 'is_active', 'requires_payment']
+        widgets = {
+            'periodicity': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            if field not in ['is_active', 'requires_payment']:
+                current_classes = self.fields[field].widget.attrs.get('class', '')
+                self.fields[field].widget.attrs['class'] = f"{current_classes} form-control".strip()
+        
+        if self.instance and self.instance.pk:
+            self.initial['base_value'] = f"{self.instance.base_value:.2f}".replace('.', ',')
+
+    def clean_base_value(self):
+        value = self.cleaned_data.get('base_value')
+        if not value: return 0
+        if isinstance(value, str):
+            import re
+            clean_value = re.sub(r'[^\d.,]', '', value)
+            if ',' in clean_value:
+                clean_value = clean_value.replace('.', '').replace(',', '.')
+            try:
+                from decimal import Decimal
+                return Decimal(clean_value)
+            except:
+                raise forms.ValidationError(_("Valor inválido."))
+        return value
