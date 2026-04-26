@@ -32,7 +32,25 @@ class CondoForm(forms.ModelForm):
             'authorization_template': forms.Textarea(attrs={'id': 'editor'}),
         }
 
-from .models import Plan
+from .models import Plan, SystemSetting
+
+class SystemSettingForm(forms.ModelForm):
+    class Meta:
+        model = SystemSetting
+        fields = [
+            'active_gateway',
+            'mercadopago_public_key', 'mercadopago_access_token', 'mercadopago_webhook_secret',
+            'stripe_public_key', 'stripe_secret_key', 'stripe_webhook_secret'
+        ]
+        widgets = {
+            'active_gateway': forms.Select(attrs={'class': 'form-control'}),
+            'mercadopago_public_key': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'APP_USR-...'}),
+            'mercadopago_access_token': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'APP_USR-...', 'render_value': True}),
+            'mercadopago_webhook_secret': forms.PasswordInput(attrs={'class': 'form-control', 'render_value': True}),
+            'stripe_public_key': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'pk_live_...'}),
+            'stripe_secret_key': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'sk_live_...', 'render_value': True}),
+            'stripe_webhook_secret': forms.PasswordInput(attrs={'class': 'form-control', 'render_value': True}),
+        }
 
 class PlanForm(forms.ModelForm):
     base_value = forms.CharField(

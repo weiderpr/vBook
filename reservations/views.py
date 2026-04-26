@@ -121,7 +121,7 @@ class ReservationCreateView(LoginRequiredMixin, PropertyContextMixin, CreateView
                     date_val = dates[i] if i < len(dates) and dates[i] else None
                     if not date_val:
                         from django.utils import timezone
-                        date_val = timezone.now().date()
+                        date_val = timezone.localtime(timezone.now()).date()
                     
                     ReservationPayment.objects.create(
                         reservation=reservation,

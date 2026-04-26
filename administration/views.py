@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, View
+from datetime import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -9,6 +10,8 @@ from properties.models import Service
 from .models import Condo
 from .forms import ServiceCategoryForm, CondoForm
 from accounts.forms import UserAdminForm, UserRegistrationForm
+from subscriptions.models import Subscription
+from django.http import JsonResponse
 
 class AdminRequiredMixin(UserPassesTestMixin):
     def test_func(self):
@@ -67,6 +70,69 @@ class UserDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, _("Usuário excluído com sucesso!"))
         return super().delete(request, *args, **kwargs)
+
+class UserPlanDetailAjaxView(LoginRequiredMixin, AdminRequiredMixin, View):
+    def get(self, request, pk):
+        user = get_object_or_404(CustomUser, pk=pk)
+        try:
+            subscription = Subscription.objects.get(user=user)
+            payments = [
+                {
+                    'date': p.created_at.strftime('%d/%m/%Y %H:%M'),
+                    'amount': f"R$ {p.amount}",
+                    'status': p.status,
+                    'id': p.mp_payment_id[:15]
+                } for p in subscription.payments.all()
+            ]
+            data = {
+                'plan_description': subscription.plan.description,
+                'status_display': subscription.get_status_display(),
+                'status': subscription.status,
+                'start_date': subscription.start_date.strftime('%d/%m/%Y') if subscription.start_date else '-',
+                'end_date': subscription.end_date.strftime('%d/%m/%Y') if subscription.end_date else '-',
+                'end_date_raw': subscription.end_date.strftime('%Y-%m-%d') if subscription.end_date else '',
+                'base_value': f"R$ {subscription.plan.base_value}",
+                'update_url': f"/book/administrador/usuarios/{user.pk}/alterar-vencimento/",
+                'periodicity': subscription.plan.get_periodicity_display(),
+                'payments': payments
+            }
+        except Subscription.DoesNotExist:
+            data = {'error': _("Este usuário ainda não possui um plano assinado.")}
+        return JsonResponse(data)
+
+class UserPlanRemoveView(LoginRequiredMixin, AdminRequiredMixin, View):
+    def post(self, request, pk):
+        user = get_object_or_404(CustomUser, pk=pk)
+        Subscription.objects.filter(user=user).delete()
+        messages.success(request, _("Plano removido com sucesso do usuário %s.") % user.full_name)
+        return redirect('administration:user_list')
+
+class UserPlanUpdateDateView(LoginRequiredMixin, AdminRequiredMixin, View):
+    def post(self, request, pk):
+        user = get_object_or_404(CustomUser, pk=pk)
+        subscription = get_object_or_404(Subscription, user=user)
+        new_date_str = request.POST.get('new_date')
+        if new_date_str:
+            try:
+                # Usar datetime.strptime e depois tornar aware se necessário, 
+                # mas o Django costuma lidar bem com datetime ingênuo se USE_TZ=True 
+                # e o modelo espera datetime.
+                from django.utils import timezone
+                naive_date = datetime.strptime(new_date_str, '%Y-%m-%d')
+                aware_date = timezone.make_aware(naive_date)
+                subscription.end_date = aware_date
+                
+                # Sincroniza o status com base na nova data
+                if aware_date > timezone.now():
+                    subscription.status = 'active'
+                else:
+                    subscription.status = 'expired'
+                
+                subscription.save()
+                messages.success(request, _("Vencimento do plano de %s alterado com sucesso para %s.") % (user.full_name, new_date_str))
+            except ValueError:
+                messages.error(request, _("Data inválida."))
+        return redirect('administration:user_list')
 
 # CRUD Categorias de Serviço
 class ServiceCategoryListView(LoginRequiredMixin, AdminRequiredMixin, ListView):
@@ -194,3 +260,19 @@ class PlanDeleteView(AdminRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, _("Plano excluído com sucesso!"))
         return super().delete(request, *args, **kwargs)
+
+from .models import SystemSetting
+from .forms import SystemSettingForm
+
+class SystemSettingUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView):
+    model = SystemSetting
+    form_class = SystemSettingForm
+    template_name = 'administration/settings/settings_form.html'
+    success_url = reverse_lazy('administration:settings')
+
+    def get_object(self, queryset=None):
+        return SystemSetting.get_settings()
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Configurações atualizadas com sucesso!"))
+        return super().form_valid(form)

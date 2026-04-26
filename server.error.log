@@ -7215,3 +7215,2265 @@ NameError: name 'login_required' is not defined
 [2026-04-24 21:50:35 -0300] [294046] [WARNING] Worker (pid:332779) was sent SIGHUP!
 [2026-04-24 21:50:35 -0300] [294046] [WARNING] Worker (pid:332807) was sent SIGHUP!
 [2026-04-24 21:50:35 -0300] [294046] [WARNING] Worker (pid:332809) was sent SIGHUP!
+[2026-04-24 22:15:17 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:15:17 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:15:17 -0300] [340024] [INFO] Booting worker with pid: 340024
+[2026-04-24 22:15:17 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:15:17 -0300] [340026] [INFO] Booting worker with pid: 340026
+[2026-04-24 22:15:17 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:15:19 -0300] [294046] [WARNING] Worker (pid:333719) was sent SIGHUP!
+[2026-04-24 22:15:19 -0300] [294046] [WARNING] Worker (pid:333741) was sent SIGHUP!
+[2026-04-24 22:15:19 -0300] [294046] [WARNING] Worker (pid:333748) was sent SIGHUP!
+[2026-04-24 22:15:19 -0300] [340051] [INFO] Booting worker with pid: 340051
+[2026-04-24 22:15:19 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:16:16 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:16:16 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:16:16 -0300] [340338] [INFO] Booting worker with pid: 340338
+[2026-04-24 22:16:16 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:16:16 -0300] [340340] [INFO] Booting worker with pid: 340340
+[2026-04-24 22:16:16 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:16:18 -0300] [340365] [INFO] Booting worker with pid: 340365
+[2026-04-24 22:16:18 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:16:18 -0300] [294046] [WARNING] Worker (pid:340024) was sent SIGHUP!
+[2026-04-24 22:16:18 -0300] [294046] [WARNING] Worker (pid:340026) was sent SIGHUP!
+[2026-04-24 22:16:18 -0300] [294046] [WARNING] Worker (pid:340051) was sent SIGHUP!
+[2026-04-24 22:20:08 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:20:08 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:20:08 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:20:08 -0300] [341243] [INFO] Booting worker with pid: 341243
+[2026-04-24 22:20:10 -0300] [341265] [INFO] Booting worker with pid: 341265
+[2026-04-24 22:20:10 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:20:10 -0300] [341267] [INFO] Booting worker with pid: 341267
+[2026-04-24 22:20:10 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:20:10 -0300] [294046] [WARNING] Worker (pid:340338) was sent SIGHUP!
+[2026-04-24 22:20:10 -0300] [294046] [WARNING] Worker (pid:340340) was sent SIGHUP!
+[2026-04-24 22:20:10 -0300] [294046] [WARNING] Worker (pid:340365) was sent SIGHUP!
+[2026-04-24 22:24:02 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:24:02 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:24:02 -0300] [342263] [INFO] Booting worker with pid: 342263
+[2026-04-24 22:24:02 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:24:04 -0300] [342284] [INFO] Booting worker with pid: 342284
+[2026-04-24 22:24:04 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:24:04 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:24:04 -0300] [342286] [INFO] Booting worker with pid: 342286
+[2026-04-24 22:24:04 -0300] [294046] [WARNING] Worker (pid:341243) was sent SIGHUP!
+[2026-04-24 22:24:04 -0300] [294046] [WARNING] Worker (pid:341265) was sent SIGHUP!
+[2026-04-24 22:24:04 -0300] [294046] [WARNING] Worker (pid:341267) was sent SIGHUP!
+[2026-04-24 22:31:59 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:31:59 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:31:59 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:31:59 -0300] [344077] [INFO] Booting worker with pid: 344077
+[2026-04-24 22:31:59 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:31:59 -0300] [344079] [INFO] Booting worker with pid: 344079
+[2026-04-24 22:32:01 -0300] [344102] [INFO] Booting worker with pid: 344102
+[2026-04-24 22:32:01 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:32:01 -0300] [294046] [WARNING] Worker (pid:342263) was sent SIGHUP!
+[2026-04-24 22:32:01 -0300] [294046] [WARNING] Worker (pid:342284) was sent SIGHUP!
+[2026-04-24 22:32:01 -0300] [294046] [WARNING] Worker (pid:342286) was sent SIGHUP!
+[2026-04-24 22:36:17 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:36:17 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:36:18 -0300] [345135] [INFO] Booting worker with pid: 345135
+[2026-04-24 22:36:18 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:36:18 -0300] [345137] [INFO] Booting worker with pid: 345137
+[2026-04-24 22:36:18 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:36:20 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:36:20 -0300] [294046] [WARNING] Worker (pid:344077) was sent SIGHUP!
+[2026-04-24 22:36:20 -0300] [294046] [WARNING] Worker (pid:344079) was sent SIGHUP!
+[2026-04-24 22:36:20 -0300] [294046] [WARNING] Worker (pid:344102) was sent SIGHUP!
+[2026-04-24 22:36:20 -0300] [345160] [INFO] Booting worker with pid: 345160
+[2026-04-24 22:41:26 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:41:26 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:41:26 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:41:26 -0300] [346377] [INFO] Booting worker with pid: 346377
+[2026-04-24 22:41:28 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:41:28 -0300] [346406] [INFO] Booting worker with pid: 346406
+[2026-04-24 22:41:30 -0300] [346412] [INFO] Booting worker with pid: 346412
+[2026-04-24 22:41:30 -0300] [294046] [WARNING] Worker (pid:345135) was sent SIGHUP!
+[2026-04-24 22:41:30 -0300] [294046] [WARNING] Worker (pid:345137) was sent SIGHUP!
+[2026-04-24 22:41:30 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:41:30 -0300] [294046] [WARNING] Worker (pid:345160) was sent SIGHUP!
+[2026-04-24 22:50:09 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:50:09 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:50:09 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:50:09 -0300] [348282] [INFO] Booting worker with pid: 348282
+[2026-04-24 22:50:11 -0300] [348307] [INFO] Booting worker with pid: 348307
+[2026-04-24 22:50:11 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:50:13 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:50:13 -0300] [294046] [WARNING] Worker (pid:346377) was sent SIGHUP!
+[2026-04-24 22:50:13 -0300] [348311] [INFO] Booting worker with pid: 348311
+[2026-04-24 22:50:13 -0300] [294046] [WARNING] Worker (pid:346406) was sent SIGHUP!
+[2026-04-24 22:50:13 -0300] [294046] [WARNING] Worker (pid:346412) was sent SIGHUP!
+[2026-04-24 22:54:30 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:54:30 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:54:30 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:54:30 -0300] [349251] [INFO] Booting worker with pid: 349251
+[2026-04-24 22:54:30 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:54:30 -0300] [349253] [INFO] Booting worker with pid: 349253
+[2026-04-24 22:54:30 -0300] [349255] [INFO] Booting worker with pid: 349255
+[2026-04-24 22:54:30 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:54:30 -0300] [294046] [WARNING] Worker (pid:348282) was sent SIGHUP!
+[2026-04-24 22:54:30 -0300] [294046] [WARNING] Worker (pid:348307) was sent SIGHUP!
+[2026-04-24 22:54:30 -0300] [294046] [WARNING] Worker (pid:348311) was sent SIGHUP!
+[2026-04-24 22:56:53 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 22:56:53 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 22:56:53 -0300] [349802] [INFO] Booting worker with pid: 349802
+[2026-04-24 22:56:53 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:56:53 -0300] [349804] [INFO] Booting worker with pid: 349804
+[2026-04-24 22:56:53 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:56:53 -0300] [349806] [INFO] Booting worker with pid: 349806
+[2026-04-24 22:56:53 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 22:56:53 -0300] [294046] [WARNING] Worker (pid:349251) was sent SIGHUP!
+[2026-04-24 22:56:53 -0300] [294046] [WARNING] Worker (pid:349253) was sent SIGHUP!
+[2026-04-24 22:56:53 -0300] [294046] [WARNING] Worker (pid:349255) was sent SIGHUP!
+[2026-04-24 23:00:38 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 23:00:38 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 23:00:38 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:00:38 -0300] [350637] [INFO] Booting worker with pid: 350637
+[2026-04-24 23:00:40 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:00:40 -0300] [350657] [INFO] Booting worker with pid: 350657
+[2026-04-24 23:00:42 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:00:42 -0300] [294046] [WARNING] Worker (pid:349802) was sent SIGHUP!
+[2026-04-24 23:00:42 -0300] [294046] [WARNING] Worker (pid:349804) was sent SIGHUP!
+[2026-04-24 23:00:42 -0300] [294046] [WARNING] Worker (pid:349806) was sent SIGHUP!
+[2026-04-24 23:00:42 -0300] [350669] [INFO] Booting worker with pid: 350669
+[2026-04-24 23:06:00 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 23:06:00 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 23:06:00 -0300] [352048] [INFO] Booting worker with pid: 352048
+[2026-04-24 23:06:00 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:06:02 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:06:02 -0300] [352073] [INFO] Booting worker with pid: 352073
+[2026-04-24 23:06:04 -0300] [294046] [WARNING] Worker (pid:350637) was sent SIGHUP!
+[2026-04-24 23:06:04 -0300] [294046] [WARNING] Worker (pid:350657) was sent SIGHUP!
+[2026-04-24 23:06:04 -0300] [294046] [WARNING] Worker (pid:350669) was sent SIGHUP!
+[2026-04-24 23:06:04 -0300] [352079] [INFO] Booting worker with pid: 352079
+[2026-04-24 23:06:04 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:09:18 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 23:09:18 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 23:09:18 -0300] [352848] [INFO] Booting worker with pid: 352848
+[2026-04-24 23:09:18 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:09:18 -0300] [352850] [INFO] Booting worker with pid: 352850
+[2026-04-24 23:09:18 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:09:20 -0300] [294046] [WARNING] Worker (pid:352048) was sent SIGHUP!
+[2026-04-24 23:09:20 -0300] [294046] [WARNING] Worker (pid:352073) was sent SIGHUP!
+[2026-04-24 23:09:20 -0300] [294046] [WARNING] Worker (pid:352079) was sent SIGHUP!
+[2026-04-24 23:09:20 -0300] [352873] [INFO] Booting worker with pid: 352873
+[2026-04-24 23:09:20 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:13:47 -0300] [294046] [INFO] Handling signal: hup
+[2026-04-24 23:13:47 -0300] [294046] [INFO] Hang up: Master
+[2026-04-24 23:13:47 -0300] [353854] [INFO] Booting worker with pid: 353854
+[2026-04-24 23:13:47 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:13:49 -0300] [353880] [INFO] Booting worker with pid: 353880
+[2026-04-24 23:13:49 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:13:51 -0300] [294046] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-24 23:13:51 -0300] [294046] [WARNING] Worker (pid:352848) was sent SIGHUP!
+[2026-04-24 23:13:51 -0300] [294046] [WARNING] Worker (pid:352850) was sent SIGHUP!
+[2026-04-24 23:13:51 -0300] [353887] [INFO] Booting worker with pid: 353887
+[2026-04-24 23:13:51 -0300] [294046] [WARNING] Worker (pid:352873) was sent SIGHUP!
+[2026-04-25 09:35:50 +0000] [353887] [INFO] Worker exiting (pid: 353887)
+[2026-04-25 09:35:50 +0000] [353880] [INFO] Worker exiting (pid: 353880)
+[2026-04-25 09:35:50 +0000] [353854] [INFO] Worker exiting (pid: 353854)
+[2026-04-25 06:35:50 -0300] [294046] [INFO] Handling signal: term
+[2026-04-25 06:35:50 -0300] [294046] [INFO] Worker (pid:353854) was sent SIGTERM!
+[2026-04-25 06:35:50 -0300] [294046] [INFO] Worker (pid:353880) was sent SIGTERM!
+[2026-04-25 06:35:50 -0300] [294046] [INFO] Worker (pid:353887) was sent SIGTERM!
+[2026-04-25 06:35:50 -0300] [294046] [INFO] Shutting down: Master
+[2026-04-25 06:35:51 -0300] [392506] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 06:35:51 -0300] [392506] [INFO] Listening at: http://127.0.0.1:8000 (392506)
+[2026-04-25 06:35:51 -0300] [392506] [INFO] Using worker: sync
+[2026-04-25 06:35:51 -0300] [392507] [INFO] Booting worker with pid: 392507
+[2026-04-25 06:35:51 -0300] [392512] [INFO] Booting worker with pid: 392512
+[2026-04-25 06:35:51 -0300] [392513] [INFO] Booting worker with pid: 392513
+[2026-04-25 06:35:51 -0300] [392506] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 06:51:51 -0300] [394494] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 06:51:51 -0300] [394494] [INFO] Listening at: http://127.0.0.1:8000 (394494)
+[2026-04-25 06:51:51 -0300] [394494] [INFO] Using worker: sync
+[2026-04-25 06:51:51 -0300] [394497] [INFO] Booting worker with pid: 394497
+[2026-04-25 06:51:51 -0300] [394500] [INFO] Booting worker with pid: 394500
+[2026-04-25 06:51:51 -0300] [394503] [INFO] Booting worker with pid: 394503
+[2026-04-25 06:51:52 -0300] [394494] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 06:54:41 -0300] [394989] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 06:54:41 -0300] [394989] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:54:41 -0300] [394989] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:54:42 -0300] [394989] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:54:42 -0300] [394989] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:54:43 -0300] [394989] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:54:43 -0300] [394989] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:54:44 -0300] [394989] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:54:44 -0300] [394989] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:54:45 -0300] [394989] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:54:45 -0300] [394989] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:54:46 -0300] [394989] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 06:58:23 -0300] [395456] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 06:58:23 -0300] [395456] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:58:23 -0300] [395456] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:58:24 -0300] [395456] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:58:24 -0300] [395456] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:58:25 -0300] [395456] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:58:25 -0300] [395456] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:58:26 -0300] [395456] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:58:26 -0300] [395456] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:58:27 -0300] [395456] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 06:58:27 -0300] [395456] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 06:58:28 -0300] [395456] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 07:00:20 -0300] [395754] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:00:20 -0300] [395754] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:00:20 -0300] [395754] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:00:21 -0300] [395754] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:00:21 -0300] [395754] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:00:22 -0300] [395754] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:00:22 -0300] [395754] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:00:23 -0300] [395754] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:00:23 -0300] [395754] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:00:24 -0300] [395754] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:00:24 -0300] [395754] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:00:25 -0300] [395754] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 07:02:09 -0300] [396027] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:02:09 -0300] [396027] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:09 -0300] [396027] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:10 -0300] [396027] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:10 -0300] [396027] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:11 -0300] [396027] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:11 -0300] [396027] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:12 -0300] [396027] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:12 -0300] [396027] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:13 -0300] [396027] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:13 -0300] [396027] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:14 -0300] [396027] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 07:02:34 -0300] [396144] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:02:34 -0300] [396144] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:34 -0300] [396144] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:35 -0300] [396144] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:35 -0300] [396144] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:36 -0300] [396144] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:36 -0300] [396144] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:37 -0300] [396144] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:37 -0300] [396144] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:38 -0300] [396144] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:02:38 -0300] [396144] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:02:39 -0300] [396144] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 07:04:51 -0300] [396434] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:04:51 -0300] [396434] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:04:51 -0300] [396434] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:04:52 -0300] [396434] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:04:52 -0300] [396434] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:04:53 -0300] [396434] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:04:53 -0300] [396434] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:04:54 -0300] [396434] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:04:54 -0300] [396434] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:04:55 -0300] [396434] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:04:55 -0300] [396434] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:04:56 -0300] [396434] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 07:10:02 -0300] [397040] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:10:02 -0300] [397040] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:10:02 -0300] [397040] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:10:03 -0300] [397040] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:10:03 -0300] [397040] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:10:04 -0300] [397040] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:10:04 -0300] [397040] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:10:05 -0300] [397040] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:10:05 -0300] [397040] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:10:06 -0300] [397040] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:10:06 -0300] [397040] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:10:07 -0300] [397040] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 07:12:17 -0300] [397461] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:12:17 -0300] [397461] [INFO] Listening at: http://127.0.0.1:8000 (397461)
+[2026-04-25 07:12:17 -0300] [397461] [INFO] Using worker: sync
+[2026-04-25 07:12:17 -0300] [397462] [INFO] Booting worker with pid: 397462
+[2026-04-25 07:12:17 -0300] [397463] [INFO] Booting worker with pid: 397463
+[2026-04-25 07:12:17 -0300] [397464] [INFO] Booting worker with pid: 397464
+[2026-04-25 07:12:17 -0300] [397461] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 07:19:02 -0300] [398252] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:19:02 -0300] [398252] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:19:02 -0300] [398252] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:19:03 -0300] [398252] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:19:03 -0300] [398252] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:19:04 -0300] [398252] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:19:04 -0300] [398252] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:19:05 -0300] [398252] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:19:05 -0300] [398252] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:19:06 -0300] [398252] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:19:06 -0300] [398252] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:19:07 -0300] [398252] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 07:23:31 -0300] [398749] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:23:31 -0300] [398749] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:23:31 -0300] [398749] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:23:32 -0300] [398749] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:23:32 -0300] [398749] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:23:33 -0300] [398749] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:23:33 -0300] [398749] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:23:34 -0300] [398749] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:23:34 -0300] [398749] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:23:35 -0300] [398749] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:23:35 -0300] [398749] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:23:36 -0300] [398749] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 07:23:48 -0300] [398821] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:23:48 -0300] [398821] [INFO] Listening at: http://127.0.0.1:8000 (398821)
+[2026-04-25 07:23:48 -0300] [398821] [INFO] Using worker: sync
+[2026-04-25 07:23:48 -0300] [398823] [INFO] Booting worker with pid: 398823
+[2026-04-25 07:23:48 -0300] [398824] [INFO] Booting worker with pid: 398824
+[2026-04-25 07:23:48 -0300] [398825] [INFO] Booting worker with pid: 398825
+[2026-04-25 07:23:48 -0300] [398821] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 07:26:34 -0300] [399147] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:26:34 -0300] [399147] [INFO] Listening at: http://127.0.0.1:8000 (399147)
+[2026-04-25 07:26:34 -0300] [399147] [INFO] Using worker: sync
+[2026-04-25 07:26:34 -0300] [399149] [INFO] Booting worker with pid: 399149
+[2026-04-25 07:26:34 -0300] [399150] [INFO] Booting worker with pid: 399150
+[2026-04-25 07:26:34 -0300] [399151] [INFO] Booting worker with pid: 399151
+[2026-04-25 07:26:34 -0300] [399147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 07:59:16 -0300] [402440] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 07:59:16 -0300] [402440] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:59:16 -0300] [402440] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:59:17 -0300] [402440] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:59:17 -0300] [402440] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:59:18 -0300] [402440] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:59:18 -0300] [402440] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:59:19 -0300] [402440] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:59:19 -0300] [402440] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:59:20 -0300] [402440] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 07:59:20 -0300] [402440] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 07:59:21 -0300] [402440] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 08:00:11 -0300] [402574] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:00:11 -0300] [402574] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:00:11 -0300] [402574] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:00:12 -0300] [402574] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:00:12 -0300] [402574] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:00:13 -0300] [402574] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:00:13 -0300] [402574] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:00:14 -0300] [402574] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:00:14 -0300] [402574] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:00:15 -0300] [402574] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:00:15 -0300] [402574] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:00:16 -0300] [402574] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 08:02:02 -0300] [402809] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:02:02 -0300] [402809] [INFO] Listening at: http://127.0.0.1:8000 (402809)
+[2026-04-25 08:02:02 -0300] [402809] [INFO] Using worker: sync
+[2026-04-25 08:02:02 -0300] [402811] [INFO] Booting worker with pid: 402811
+[2026-04-25 08:02:02 -0300] [402812] [INFO] Booting worker with pid: 402812
+[2026-04-25 08:02:02 -0300] [402813] [INFO] Booting worker with pid: 402813
+[2026-04-25 08:02:02 -0300] [402809] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 08:15:02 -0300] [404161] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:15:02 -0300] [404161] [INFO] Listening at: http://127.0.0.1:8000 (404161)
+[2026-04-25 08:15:02 -0300] [404161] [INFO] Using worker: sync
+[2026-04-25 08:15:02 -0300] [404163] [INFO] Booting worker with pid: 404163
+[2026-04-25 08:15:02 -0300] [404164] [INFO] Booting worker with pid: 404164
+[2026-04-25 08:15:02 -0300] [404165] [INFO] Booting worker with pid: 404165
+[2026-04-25 08:15:03 -0300] [404161] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 08:18:50 -0300] [404592] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:18:50 -0300] [404592] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:18:50 -0300] [404592] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:18:51 -0300] [404592] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:18:51 -0300] [404592] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:18:52 -0300] [404592] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:18:52 -0300] [404592] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:18:53 -0300] [404592] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:18:53 -0300] [404592] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:18:54 -0300] [404592] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:18:54 -0300] [404592] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:18:55 -0300] [404592] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 08:25:46 -0300] [405281] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:25:46 -0300] [405281] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:25:46 -0300] [405281] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:25:47 -0300] [405281] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:25:47 -0300] [405281] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:25:48 -0300] [405281] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:25:48 -0300] [405281] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:25:49 -0300] [405281] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:25:49 -0300] [405281] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:25:50 -0300] [405281] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:25:50 -0300] [405281] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:25:51 -0300] [405281] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 08:31:31 -0300] [405907] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:31:31 -0300] [405907] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:31:31 -0300] [405907] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:31:32 -0300] [405907] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:31:32 -0300] [405907] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:31:33 -0300] [405907] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:31:33 -0300] [405907] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:31:34 -0300] [405907] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:31:34 -0300] [405907] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:31:35 -0300] [405907] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 08:31:35 -0300] [405907] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 08:31:36 -0300] [405907] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 08:34:27 -0300] [406309] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:34:27 -0300] [406309] [INFO] Listening at: http://127.0.0.1:8000 (406309)
+[2026-04-25 08:34:27 -0300] [406309] [INFO] Using worker: sync
+[2026-04-25 08:34:27 -0300] [406311] [INFO] Booting worker with pid: 406311
+[2026-04-25 08:34:27 -0300] [406312] [INFO] Booting worker with pid: 406312
+[2026-04-25 08:34:27 -0300] [406313] [INFO] Booting worker with pid: 406313
+[2026-04-25 08:34:27 -0300] [406309] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 08:36:52 -0300] [406658] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:36:52 -0300] [406658] [INFO] Listening at: http://127.0.0.1:8000 (406658)
+[2026-04-25 08:36:52 -0300] [406658] [INFO] Using worker: sync
+[2026-04-25 08:36:52 -0300] [406660] [INFO] Booting worker with pid: 406660
+[2026-04-25 08:36:52 -0300] [406661] [INFO] Booting worker with pid: 406661
+[2026-04-25 08:36:52 -0300] [406662] [INFO] Booting worker with pid: 406662
+[2026-04-25 08:36:52 -0300] [406658] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 08:41:10 -0300] [407451] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:41:10 -0300] [407451] [INFO] Listening at: http://127.0.0.1:8000 (407451)
+[2026-04-25 08:41:10 -0300] [407451] [INFO] Using worker: sync
+[2026-04-25 08:41:10 -0300] [407456] [INFO] Booting worker with pid: 407456
+[2026-04-25 08:41:10 -0300] [407457] [INFO] Booting worker with pid: 407457
+[2026-04-25 08:41:10 -0300] [407458] [INFO] Booting worker with pid: 407458
+[2026-04-25 08:41:10 -0300] [407451] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 08:43:29 -0300] [407709] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:43:29 -0300] [407709] [INFO] Listening at: http://127.0.0.1:8000 (407709)
+[2026-04-25 08:43:29 -0300] [407709] [INFO] Using worker: sync
+[2026-04-25 08:43:29 -0300] [407711] [INFO] Booting worker with pid: 407711
+[2026-04-25 08:43:29 -0300] [407712] [INFO] Booting worker with pid: 407712
+[2026-04-25 08:43:29 -0300] [407713] [INFO] Booting worker with pid: 407713
+[2026-04-25 08:43:29 -0300] [407709] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 08:48:10 -0300] [408174] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:48:10 -0300] [408174] [INFO] Listening at: http://127.0.0.1:8000 (408174)
+[2026-04-25 08:48:10 -0300] [408174] [INFO] Using worker: sync
+[2026-04-25 08:48:10 -0300] [408176] [INFO] Booting worker with pid: 408176
+[2026-04-25 08:48:10 -0300] [408177] [INFO] Booting worker with pid: 408177
+[2026-04-25 08:48:10 -0300] [408178] [INFO] Booting worker with pid: 408178
+[2026-04-25 08:48:11 -0300] [408174] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 08:57:57 -0300] [409104] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:57:57 -0300] [409104] [INFO] Listening at: http://127.0.0.1:8000 (409104)
+[2026-04-25 08:57:57 -0300] [409104] [INFO] Using worker: sync
+[2026-04-25 08:57:57 -0300] [409105] [INFO] Booting worker with pid: 409105
+[2026-04-25 08:57:57 -0300] [409106] [INFO] Booting worker with pid: 409106
+[2026-04-25 08:57:57 -0300] [409107] [INFO] Booting worker with pid: 409107
+[2026-04-25 08:57:57 -0300] [409104] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 08:59:45 -0300] [409321] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 08:59:45 -0300] [409321] [INFO] Listening at: http://127.0.0.1:8000 (409321)
+[2026-04-25 08:59:45 -0300] [409321] [INFO] Using worker: sync
+[2026-04-25 08:59:45 -0300] [409323] [INFO] Booting worker with pid: 409323
+[2026-04-25 08:59:45 -0300] [409324] [INFO] Booting worker with pid: 409324
+[2026-04-25 08:59:45 -0300] [409325] [INFO] Booting worker with pid: 409325
+[2026-04-25 08:59:45 -0300] [409321] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 09:00:46 -0300] [409469] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:00:46 -0300] [409469] [INFO] Listening at: http://127.0.0.1:8000 (409469)
+[2026-04-25 09:00:46 -0300] [409469] [INFO] Using worker: sync
+[2026-04-25 09:00:46 -0300] [409471] [INFO] Booting worker with pid: 409471
+[2026-04-25 09:00:46 -0300] [409472] [INFO] Booting worker with pid: 409472
+[2026-04-25 09:00:46 -0300] [409473] [INFO] Booting worker with pid: 409473
+[2026-04-25 09:00:46 -0300] [409469] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 09:03:03 -0300] [409757] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:03:03 -0300] [409757] [INFO] Listening at: http://127.0.0.1:8000 (409757)
+[2026-04-25 09:03:03 -0300] [409757] [INFO] Using worker: sync
+[2026-04-25 09:03:03 -0300] [409759] [INFO] Booting worker with pid: 409759
+[2026-04-25 09:03:03 -0300] [409760] [INFO] Booting worker with pid: 409760
+[2026-04-25 09:03:03 -0300] [409761] [INFO] Booting worker with pid: 409761
+[2026-04-25 09:03:04 -0300] [409757] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 09:04:51 -0300] [410007] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:04:51 -0300] [410007] [INFO] Listening at: http://127.0.0.1:8000 (410007)
+[2026-04-25 09:04:51 -0300] [410007] [INFO] Using worker: sync
+[2026-04-25 09:04:51 -0300] [410009] [INFO] Booting worker with pid: 410009
+[2026-04-25 09:04:51 -0300] [410010] [INFO] Booting worker with pid: 410010
+[2026-04-25 09:04:51 -0300] [410011] [INFO] Booting worker with pid: 410011
+[2026-04-25 09:04:51 -0300] [410007] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 09:20:39 -0300] [412112] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:20:39 -0300] [412112] [INFO] Listening at: http://127.0.0.1:8000 (412112)
+[2026-04-25 09:20:39 -0300] [412112] [INFO] Using worker: sync
+[2026-04-25 09:20:39 -0300] [412113] [INFO] Booting worker with pid: 412113
+[2026-04-25 09:20:39 -0300] [412114] [INFO] Booting worker with pid: 412114
+[2026-04-25 09:20:39 -0300] [412115] [INFO] Booting worker with pid: 412115
+[2026-04-25 09:20:39 -0300] [412112] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 09:48:45 -0300] [414766] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:48:45 -0300] [414766] [INFO] Listening at: http://127.0.0.1:8000 (414766)
+[2026-04-25 09:48:45 -0300] [414766] [INFO] Using worker: sync
+[2026-04-25 09:48:45 -0300] [414768] [INFO] Booting worker with pid: 414768
+[2026-04-25 09:48:45 -0300] [414769] [INFO] Booting worker with pid: 414769
+[2026-04-25 09:48:45 -0300] [414770] [INFO] Booting worker with pid: 414770
+[2026-04-25 09:48:45 -0300] [414766] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 09:55:20 -0300] [415560] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:55:20 -0300] [415560] [INFO] Listening at: http://127.0.0.1:8000 (415560)
+[2026-04-25 09:55:20 -0300] [415560] [INFO] Using worker: sync
+[2026-04-25 09:55:20 -0300] [415562] [INFO] Booting worker with pid: 415562
+[2026-04-25 09:55:20 -0300] [415563] [INFO] Booting worker with pid: 415563
+[2026-04-25 09:55:20 -0300] [415564] [INFO] Booting worker with pid: 415564
+[2026-04-25 09:55:20 -0300] [415560] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 12:55:38 +0000] [415564] [ERROR] Error handling request GET /assinaturas/checkout/3/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/middleware/locale.py", line 24, in process_request
+    ) = is_language_prefix_patterns_used(urlconf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/conf/urls/i18n.py", line 31, in is_language_prefix_patterns_used
+    for url_pattern in get_resolver(urlconf).url_patterns:
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 15, in <module>
+    path('assinaturas/', include('subscriptions.urls')),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/subscriptions/urls.py", line 11, in <module>
+    path('webhook/', views.mercadopago_webhook, name='mp_webhook'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'subscriptions.views' has no attribute 'mercadopago_webhook'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 15, in <module>
+    path('assinaturas/', include('subscriptions.urls')),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/subscriptions/urls.py", line 11, in <module>
+    path('webhook/', views.mercadopago_webhook, name='mp_webhook'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'subscriptions.views' has no attribute 'mercadopago_webhook'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 15, in <module>
+    path('assinaturas/', include('subscriptions.urls')),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/subscriptions/urls.py", line 11, in <module>
+    path('webhook/', views.mercadopago_webhook, name='mp_webhook'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'subscriptions.views' has no attribute 'mercadopago_webhook'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 15, in <module>
+    path('assinaturas/', include('subscriptions.urls')),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/subscriptions/urls.py", line 11, in <module>
+    path('webhook/', views.mercadopago_webhook, name='mp_webhook'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'subscriptions.views' has no attribute 'mercadopago_webhook'
+[2026-04-25 12:55:42 +0000] [415563] [ERROR] Error handling request GET /assinaturas/checkout/3/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/middleware/locale.py", line 24, in process_request
+    ) = is_language_prefix_patterns_used(urlconf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/conf/urls/i18n.py", line 31, in is_language_prefix_patterns_used
+    for url_pattern in get_resolver(urlconf).url_patterns:
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 15, in <module>
+    path('assinaturas/', include('subscriptions.urls')),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/subscriptions/urls.py", line 11, in <module>
+    path('webhook/', views.mercadopago_webhook, name='mp_webhook'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'subscriptions.views' has no attribute 'mercadopago_webhook'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 15, in <module>
+    path('assinaturas/', include('subscriptions.urls')),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/subscriptions/urls.py", line 11, in <module>
+    path('webhook/', views.mercadopago_webhook, name='mp_webhook'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'subscriptions.views' has no attribute 'mercadopago_webhook'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 15, in <module>
+    path('assinaturas/', include('subscriptions.urls')),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/subscriptions/urls.py", line 11, in <module>
+    path('webhook/', views.mercadopago_webhook, name='mp_webhook'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'subscriptions.views' has no attribute 'mercadopago_webhook'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 15, in <module>
+    path('assinaturas/', include('subscriptions.urls')),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/subscriptions/urls.py", line 11, in <module>
+    path('webhook/', views.mercadopago_webhook, name='mp_webhook'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'subscriptions.views' has no attribute 'mercadopago_webhook'
+[2026-04-25 09:56:39 -0300] [415765] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:56:39 -0300] [415765] [INFO] Listening at: http://127.0.0.1:8000 (415765)
+[2026-04-25 09:56:39 -0300] [415765] [INFO] Using worker: sync
+[2026-04-25 09:56:39 -0300] [415767] [INFO] Booting worker with pid: 415767
+[2026-04-25 09:56:39 -0300] [415768] [INFO] Booting worker with pid: 415768
+[2026-04-25 09:56:39 -0300] [415769] [INFO] Booting worker with pid: 415769
+[2026-04-25 09:56:39 -0300] [415765] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 09:57:34 -0300] [415902] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:57:34 -0300] [415902] [INFO] Listening at: http://127.0.0.1:8000 (415902)
+[2026-04-25 09:57:34 -0300] [415902] [INFO] Using worker: sync
+[2026-04-25 09:57:34 -0300] [415904] [INFO] Booting worker with pid: 415904
+[2026-04-25 09:57:34 -0300] [415905] [INFO] Booting worker with pid: 415905
+[2026-04-25 09:57:34 -0300] [415906] [INFO] Booting worker with pid: 415906
+[2026-04-25 09:57:34 -0300] [415902] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 09:58:55 -0300] [416157] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 09:58:55 -0300] [416157] [INFO] Listening at: http://127.0.0.1:8000 (416157)
+[2026-04-25 09:58:55 -0300] [416157] [INFO] Using worker: sync
+[2026-04-25 09:58:55 -0300] [416159] [INFO] Booting worker with pid: 416159
+[2026-04-25 09:58:55 -0300] [416160] [INFO] Booting worker with pid: 416160
+[2026-04-25 09:58:55 -0300] [416161] [INFO] Booting worker with pid: 416161
+[2026-04-25 09:58:55 -0300] [416157] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 11:33:39 -0300] [416157] [INFO] Handling signal: term
+[2026-04-25 14:33:39 +0000] [416159] [INFO] Worker exiting (pid: 416159)
+[2026-04-25 14:33:39 +0000] [416160] [INFO] Worker exiting (pid: 416160)
+[2026-04-25 14:33:39 +0000] [416161] [INFO] Worker exiting (pid: 416161)
+[2026-04-25 11:33:39 -0300] [416157] [INFO] Worker (pid:416159) was sent SIGTERM!
+[2026-04-25 11:33:39 -0300] [416157] [INFO] Worker (pid:416160) was sent SIGTERM!
+[2026-04-25 11:33:39 -0300] [416157] [INFO] Worker (pid:416161) was sent SIGTERM!
+[2026-04-25 11:33:39 -0300] [416157] [INFO] Shutting down: Master
+[2026-04-25 11:33:41 -0300] [420396] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 11:33:41 -0300] [420396] [INFO] Listening at: http://127.0.0.1:8000 (420396)
+[2026-04-25 11:33:41 -0300] [420396] [INFO] Using worker: sync
+[2026-04-25 11:33:41 -0300] [420397] [INFO] Booting worker with pid: 420397
+[2026-04-25 11:33:41 -0300] [420398] [INFO] Booting worker with pid: 420398
+[2026-04-25 11:33:41 -0300] [420399] [INFO] Booting worker with pid: 420399
+[2026-04-25 11:33:41 -0300] [420396] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 11:39:42 -0300] [420396] [INFO] Handling signal: term
+[2026-04-25 14:39:42 +0000] [420397] [INFO] Worker exiting (pid: 420397)
+[2026-04-25 14:39:42 +0000] [420399] [INFO] Worker exiting (pid: 420399)
+[2026-04-25 14:39:42 +0000] [420398] [INFO] Worker exiting (pid: 420398)
+[2026-04-25 11:39:43 -0300] [420396] [INFO] Shutting down: Master
+[2026-04-25 11:39:44 -0300] [421441] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 11:39:44 -0300] [421441] [INFO] Listening at: http://127.0.0.1:8000 (421441)
+[2026-04-25 11:39:44 -0300] [421441] [INFO] Using worker: sync
+[2026-04-25 11:39:45 -0300] [421443] [INFO] Booting worker with pid: 421443
+[2026-04-25 11:39:45 -0300] [421444] [INFO] Booting worker with pid: 421444
+[2026-04-25 11:39:45 -0300] [421446] [INFO] Booting worker with pid: 421446
+[2026-04-25 11:39:45 -0300] [421441] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 11:42:11 -0300] [421441] [INFO] Handling signal: term
+[2026-04-25 14:42:11 +0000] [421443] [INFO] Worker exiting (pid: 421443)
+[2026-04-25 14:42:11 +0000] [421446] [INFO] Worker exiting (pid: 421446)
+[2026-04-25 14:42:11 +0000] [421444] [INFO] Worker exiting (pid: 421444)
+[2026-04-25 11:42:12 -0300] [421441] [INFO] Shutting down: Master
+[2026-04-25 11:42:13 -0300] [421911] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 11:42:13 -0300] [421911] [INFO] Listening at: http://127.0.0.1:8000 (421911)
+[2026-04-25 11:42:13 -0300] [421911] [INFO] Using worker: sync
+[2026-04-25 11:42:13 -0300] [421913] [INFO] Booting worker with pid: 421913
+[2026-04-25 11:42:13 -0300] [421914] [INFO] Booting worker with pid: 421914
+[2026-04-25 11:42:13 -0300] [421917] [INFO] Booting worker with pid: 421917
+[2026-04-25 11:42:14 -0300] [421911] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 11:43:44 -0300] [421911] [INFO] Handling signal: term
+[2026-04-25 14:43:44 +0000] [421914] [INFO] Worker exiting (pid: 421914)
+[2026-04-25 14:43:44 +0000] [421917] [INFO] Worker exiting (pid: 421917)
+[2026-04-25 14:43:44 +0000] [421913] [INFO] Worker exiting (pid: 421913)
+[2026-04-25 11:43:45 -0300] [421911] [INFO] Shutting down: Master
+[2026-04-25 11:43:46 -0300] [422174] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 11:43:46 -0300] [422174] [INFO] Listening at: http://127.0.0.1:8000 (422174)
+[2026-04-25 11:43:46 -0300] [422174] [INFO] Using worker: sync
+[2026-04-25 11:43:46 -0300] [422176] [INFO] Booting worker with pid: 422176
+[2026-04-25 11:43:46 -0300] [422177] [INFO] Booting worker with pid: 422177
+[2026-04-25 11:43:46 -0300] [422178] [INFO] Booting worker with pid: 422178
+[2026-04-25 11:43:46 -0300] [422174] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 11:45:01 -0300] [422174] [INFO] Handling signal: term
+[2026-04-25 14:45:01 +0000] [422178] [INFO] Worker exiting (pid: 422178)
+[2026-04-25 14:45:01 +0000] [422177] [INFO] Worker exiting (pid: 422177)
+[2026-04-25 14:45:01 +0000] [422176] [INFO] Worker exiting (pid: 422176)
+[2026-04-25 11:45:03 -0300] [422174] [INFO] Shutting down: Master
+[2026-04-25 11:45:03 -0300] [422377] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 11:45:03 -0300] [422377] [INFO] Listening at: http://127.0.0.1:8000 (422377)
+[2026-04-25 11:45:03 -0300] [422377] [INFO] Using worker: sync
+[2026-04-25 11:45:03 -0300] [422378] [INFO] Booting worker with pid: 422378
+[2026-04-25 11:45:03 -0300] [422379] [INFO] Booting worker with pid: 422379
+[2026-04-25 11:45:03 -0300] [422380] [INFO] Booting worker with pid: 422380
+[2026-04-25 11:45:04 -0300] [422377] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 14:51:25 +0000] [422379] [INFO] Worker exiting (pid: 422379)
+[2026-04-25 11:51:25 -0300] [422377] [INFO] Handling signal: term
+[2026-04-25 14:51:25 +0000] [422380] [INFO] Worker exiting (pid: 422380)
+[2026-04-25 14:51:25 +0000] [422378] [INFO] Worker exiting (pid: 422378)
+[2026-04-25 11:51:26 -0300] [422377] [INFO] Shutting down: Master
+[2026-04-25 11:51:27 -0300] [423492] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 11:51:27 -0300] [423492] [INFO] Listening at: http://127.0.0.1:8000 (423492)
+[2026-04-25 11:51:27 -0300] [423492] [INFO] Using worker: sync
+[2026-04-25 11:51:27 -0300] [423494] [INFO] Booting worker with pid: 423494
+[2026-04-25 11:51:27 -0300] [423495] [INFO] Booting worker with pid: 423495
+[2026-04-25 11:51:27 -0300] [423496] [INFO] Booting worker with pid: 423496
+[2026-04-25 11:51:28 -0300] [423492] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:00:22 +0000] [423496] [INFO] Worker exiting (pid: 423496)
+[2026-04-25 15:00:22 +0000] [423495] [INFO] Worker exiting (pid: 423495)
+[2026-04-25 12:00:22 -0300] [423492] [INFO] Handling signal: term
+[2026-04-25 15:00:22 +0000] [423494] [INFO] Worker exiting (pid: 423494)
+[2026-04-25 12:00:22 -0300] [423492] [INFO] Worker (pid:423494) was sent SIGTERM!
+[2026-04-25 12:00:23 -0300] [423492] [INFO] Shutting down: Master
+[2026-04-25 12:00:24 -0300] [424966] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 12:00:24 -0300] [424966] [INFO] Listening at: http://127.0.0.1:8000 (424966)
+[2026-04-25 12:00:24 -0300] [424966] [INFO] Using worker: sync
+[2026-04-25 12:00:24 -0300] [424968] [INFO] Booting worker with pid: 424968
+[2026-04-25 12:00:24 -0300] [424969] [INFO] Booting worker with pid: 424969
+[2026-04-25 12:00:24 -0300] [424970] [INFO] Booting worker with pid: 424970
+[2026-04-25 12:00:24 -0300] [424966] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 12:04:27 -0300] [424966] [INFO] Handling signal: term
+[2026-04-25 15:04:27 +0000] [424969] [INFO] Worker exiting (pid: 424969)
+[2026-04-25 15:04:27 +0000] [424968] [INFO] Worker exiting (pid: 424968)
+[2026-04-25 15:04:27 +0000] [424970] [INFO] Worker exiting (pid: 424970)
+[2026-04-25 12:04:29 -0300] [424966] [INFO] Shutting down: Master
+[2026-04-25 12:04:30 -0300] [425561] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 12:04:30 -0300] [425561] [INFO] Listening at: http://127.0.0.1:8000 (425561)
+[2026-04-25 12:04:30 -0300] [425561] [INFO] Using worker: sync
+[2026-04-25 12:04:30 -0300] [425566] [INFO] Booting worker with pid: 425566
+[2026-04-25 12:04:30 -0300] [425567] [INFO] Booting worker with pid: 425567
+[2026-04-25 12:04:30 -0300] [425568] [INFO] Booting worker with pid: 425568
+[2026-04-25 12:04:30 -0300] [425561] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:08:11 +0000] [425566] [INFO] Worker exiting (pid: 425566)
+[2026-04-25 12:08:11 -0300] [425561] [INFO] Handling signal: term
+[2026-04-25 15:08:11 +0000] [425568] [INFO] Worker exiting (pid: 425568)
+[2026-04-25 15:08:11 +0000] [425567] [INFO] Worker exiting (pid: 425567)
+[2026-04-25 12:08:11 -0300] [425561] [INFO] Worker (pid:425566) was sent SIGTERM!
+[2026-04-25 12:08:11 -0300] [425561] [INFO] Worker (pid:425568) was sent SIGTERM!
+[2026-04-25 12:08:11 -0300] [425561] [INFO] Shutting down: Master
+[2026-04-25 12:08:13 -0300] [426153] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 12:08:13 -0300] [426153] [INFO] Listening at: http://127.0.0.1:8000 (426153)
+[2026-04-25 12:08:13 -0300] [426153] [INFO] Using worker: sync
+[2026-04-25 12:08:13 -0300] [426155] [INFO] Booting worker with pid: 426155
+[2026-04-25 12:08:13 -0300] [426156] [INFO] Booting worker with pid: 426156
+[2026-04-25 12:08:13 -0300] [426158] [INFO] Booting worker with pid: 426158
+[2026-04-25 12:08:13 -0300] [426153] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 12:10:22 -0300] [426153] [INFO] Handling signal: term
+[2026-04-25 15:10:22 +0000] [426156] [INFO] Worker exiting (pid: 426156)
+[2026-04-25 15:10:22 +0000] [426155] [INFO] Worker exiting (pid: 426155)
+[2026-04-25 15:10:22 +0000] [426158] [INFO] Worker exiting (pid: 426158)
+[2026-04-25 12:10:23 -0300] [426153] [INFO] Worker (pid:426155) was sent SIGTERM!
+[2026-04-25 12:10:23 -0300] [426153] [INFO] Shutting down: Master
+[2026-04-25 12:10:25 -0300] [426530] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 12:10:25 -0300] [426530] [INFO] Listening at: http://127.0.0.1:8000 (426530)
+[2026-04-25 12:10:25 -0300] [426530] [INFO] Using worker: sync
+[2026-04-25 12:10:25 -0300] [426532] [INFO] Booting worker with pid: 426532
+[2026-04-25 12:10:25 -0300] [426533] [INFO] Booting worker with pid: 426533
+[2026-04-25 12:10:25 -0300] [426534] [INFO] Booting worker with pid: 426534
+[2026-04-25 12:10:25 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:27:28 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:27:28 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:27:28 -0300] [435735] [INFO] Booting worker with pid: 435735
+[2026-04-25 15:27:28 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:27:30 -0300] [435758] [INFO] Booting worker with pid: 435758
+[2026-04-25 15:27:30 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:27:30 +0000] [426533] [INFO] Worker exiting (pid: 426533)
+[2026-04-25 18:27:30 +0000] [426534] [INFO] Worker exiting (pid: 426534)
+[2026-04-25 18:27:30 +0000] [426532] [INFO] Worker exiting (pid: 426532)
+[2026-04-25 15:27:30 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:27:30 -0300] [435760] [INFO] Booting worker with pid: 435760
+[2026-04-25 15:29:55 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:29:55 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:29:55 -0300] [436187] [INFO] Booting worker with pid: 436187
+[2026-04-25 15:29:55 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:29:57 -0300] [436207] [INFO] Booting worker with pid: 436207
+[2026-04-25 15:29:57 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:29:59 -0300] [436215] [INFO] Booting worker with pid: 436215
+[2026-04-25 15:29:59 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:30:00 +0000] [435760] [INFO] Worker exiting (pid: 435760)
+[2026-04-25 18:30:00 +0000] [435735] [INFO] Worker exiting (pid: 435735)
+[2026-04-25 18:30:00 +0000] [435758] [INFO] Worker exiting (pid: 435758)
+[2026-04-25 15:30:21 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:30:21 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:30:21 -0300] [436286] [INFO] Booting worker with pid: 436286
+[2026-04-25 15:30:21 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:30:21 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:30:21 -0300] [436288] [INFO] Booting worker with pid: 436288
+[2026-04-25 15:30:21 -0300] [436290] [INFO] Booting worker with pid: 436290
+[2026-04-25 15:30:21 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:30:21 +0000] [436187] [INFO] Worker exiting (pid: 436187)
+[2026-04-25 18:30:21 +0000] [436207] [INFO] Worker exiting (pid: 436207)
+[2026-04-25 18:30:21 +0000] [436215] [INFO] Worker exiting (pid: 436215)
+[2026-04-25 15:34:32 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:34:32 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:34:32 -0300] [436929] [INFO] Booting worker with pid: 436929
+[2026-04-25 15:34:32 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:34:34 -0300] [436950] [INFO] Booting worker with pid: 436950
+[2026-04-25 15:34:34 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:34:34 +0000] [436290] [INFO] Worker exiting (pid: 436290)
+[2026-04-25 18:34:34 +0000] [436288] [INFO] Worker exiting (pid: 436288)
+[2026-04-25 18:34:34 +0000] [436286] [INFO] Worker exiting (pid: 436286)
+[2026-04-25 15:34:34 -0300] [436952] [INFO] Booting worker with pid: 436952
+[2026-04-25 15:34:34 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:34:55 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:34:55 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:34:55 -0300] [437019] [INFO] Booting worker with pid: 437019
+[2026-04-25 15:34:55 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:34:57 -0300] [437046] [INFO] Booting worker with pid: 437046
+[2026-04-25 15:34:57 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:34:59 -0300] [437048] [INFO] Booting worker with pid: 437048
+[2026-04-25 18:34:59 +0000] [436929] [INFO] Worker exiting (pid: 436929)
+[2026-04-25 18:34:59 +0000] [436952] [INFO] Worker exiting (pid: 436952)
+[2026-04-25 18:34:59 +0000] [436950] [INFO] Worker exiting (pid: 436950)
+[2026-04-25 15:34:59 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:39:42 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:39:42 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:39:42 -0300] [437683] [INFO] Booting worker with pid: 437683
+[2026-04-25 15:39:42 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:39:42 -0300] [437685] [INFO] Booting worker with pid: 437685
+[2026-04-25 15:39:42 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:39:44 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:39:44 +0000] [437048] [INFO] Worker exiting (pid: 437048)
+[2026-04-25 18:39:44 +0000] [437046] [INFO] Worker exiting (pid: 437046)
+[2026-04-25 18:39:44 +0000] [437019] [INFO] Worker exiting (pid: 437019)
+[2026-04-25 15:39:44 -0300] [437704] [INFO] Booting worker with pid: 437704
+[2026-04-25 15:42:53 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:42:53 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:42:53 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:42:53 -0300] [438163] [INFO] Booting worker with pid: 438163
+[2026-04-25 15:42:55 -0300] [438181] [INFO] Booting worker with pid: 438181
+[2026-04-25 15:42:55 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:42:57 +0000] [437683] [INFO] Worker exiting (pid: 437683)
+[2026-04-25 18:42:57 +0000] [437685] [INFO] Worker exiting (pid: 437685)
+[2026-04-25 18:42:57 +0000] [437704] [INFO] Worker exiting (pid: 437704)
+[2026-04-25 15:42:57 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:42:57 -0300] [438192] [INFO] Booting worker with pid: 438192
+[2026-04-25 15:46:21 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:46:21 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:46:21 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:46:21 -0300] [438606] [INFO] Booting worker with pid: 438606
+[2026-04-25 15:46:23 -0300] [438629] [INFO] Booting worker with pid: 438629
+[2026-04-25 15:46:23 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:46:25 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:46:25 +0000] [438163] [INFO] Worker exiting (pid: 438163)
+[2026-04-25 18:46:25 +0000] [438181] [INFO] Worker exiting (pid: 438181)
+[2026-04-25 18:46:25 +0000] [438192] [INFO] Worker exiting (pid: 438192)
+[2026-04-25 15:46:25 -0300] [438634] [INFO] Booting worker with pid: 438634
+[2026-04-25 15:47:58 -0300] [426530] [INFO] Handling signal: hup
+[2026-04-25 15:47:58 -0300] [426530] [INFO] Hang up: Master
+[2026-04-25 15:47:58 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:47:58 -0300] [438865] [INFO] Booting worker with pid: 438865
+[2026-04-25 15:47:58 -0300] [438867] [INFO] Booting worker with pid: 438867
+[2026-04-25 15:47:58 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 15:47:58 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:47:58 +0000] [438606] [INFO] Worker exiting (pid: 438606)
+[2026-04-25 18:47:58 +0000] [438629] [INFO] Worker exiting (pid: 438629)
+[2026-04-25 18:47:58 +0000] [438634] [INFO] Worker exiting (pid: 438634)
+[2026-04-25 15:47:58 -0300] [438869] [INFO] Booting worker with pid: 438869
+[2026-04-25 17:01:48 -0300] [426530] [ERROR] Worker (pid:438867) was sent SIGKILL! Perhaps out of memory?
+[2026-04-25 17:01:48 -0300] [443164] [INFO] Booting worker with pid: 443164
+[2026-04-25 17:01:48 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:01:48 -0300] [426530] [ERROR] Worker (pid:438865) was sent SIGKILL! Perhaps out of memory?
+[2026-04-25 17:01:48 -0300] [426530] [ERROR] Worker (pid:438869) was sent SIGKILL! Perhaps out of memory?
+[2026-04-25 17:01:48 -0300] [443166] [INFO] Booting worker with pid: 443166
+[2026-04-25 17:01:48 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:01:48 -0300] [426530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:01:48 -0300] [443168] [INFO] Booting worker with pid: 443168
+[2026-04-25 17:01:48 -0300] [443171] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:01:48 -0300] [443171] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 17:01:48 -0300] [443171] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 17:01:49 -0300] [443171] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 17:01:49 -0300] [443171] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 17:01:50 -0300] [443171] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 17:01:50 -0300] [443171] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 17:01:51 -0300] [443171] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 17:01:51 -0300] [443171] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 17:01:52 -0300] [443171] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 17:01:52 -0300] [443171] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 17:01:53 -0300] [443171] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-25 17:07:28 -0300] [443853] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:07:28 -0300] [443853] [INFO] Listening at: http://127.0.0.1:8000 (443853)
+[2026-04-25 17:07:28 -0300] [443853] [INFO] Using worker: sync
+[2026-04-25 17:07:28 -0300] [443855] [INFO] Booting worker with pid: 443855
+[2026-04-25 17:07:28 -0300] [443856] [INFO] Booting worker with pid: 443856
+[2026-04-25 17:07:28 -0300] [443857] [INFO] Booting worker with pid: 443857
+[2026-04-25 17:07:28 -0300] [443853] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:13:49 -0300] [444590] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:13:49 -0300] [444590] [INFO] Listening at: http://127.0.0.1:8000 (444590)
+[2026-04-25 17:13:49 -0300] [444590] [INFO] Using worker: sync
+[2026-04-25 17:13:49 -0300] [444592] [INFO] Booting worker with pid: 444592
+[2026-04-25 17:13:49 -0300] [444593] [INFO] Booting worker with pid: 444593
+[2026-04-25 17:13:49 -0300] [444594] [INFO] Booting worker with pid: 444594
+[2026-04-25 17:13:49 -0300] [444590] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:17:07 -0300] [444972] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:17:07 -0300] [444972] [INFO] Listening at: http://127.0.0.1:8000 (444972)
+[2026-04-25 17:17:07 -0300] [444972] [INFO] Using worker: sync
+[2026-04-25 17:17:07 -0300] [444973] [INFO] Booting worker with pid: 444973
+[2026-04-25 17:17:07 -0300] [444975] [INFO] Booting worker with pid: 444975
+[2026-04-25 17:17:07 -0300] [444977] [INFO] Booting worker with pid: 444977
+[2026-04-25 17:17:07 -0300] [444972] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:20:51 -0300] [445366] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:20:51 -0300] [445366] [INFO] Listening at: http://127.0.0.1:8000 (445366)
+[2026-04-25 17:20:51 -0300] [445366] [INFO] Using worker: sync
+[2026-04-25 17:20:51 -0300] [445368] [INFO] Booting worker with pid: 445368
+[2026-04-25 17:20:51 -0300] [445369] [INFO] Booting worker with pid: 445369
+[2026-04-25 17:20:51 -0300] [445370] [INFO] Booting worker with pid: 445370
+[2026-04-25 17:20:51 -0300] [445366] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:24:43 -0300] [445763] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:24:43 -0300] [445763] [INFO] Listening at: http://127.0.0.1:8000 (445763)
+[2026-04-25 17:24:43 -0300] [445763] [INFO] Using worker: sync
+[2026-04-25 17:24:43 -0300] [445765] [INFO] Booting worker with pid: 445765
+[2026-04-25 17:24:43 -0300] [445766] [INFO] Booting worker with pid: 445766
+[2026-04-25 17:24:43 -0300] [445767] [INFO] Booting worker with pid: 445767
+[2026-04-25 17:24:43 -0300] [445763] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:26:11 -0300] [445960] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:26:11 -0300] [445960] [INFO] Listening at: http://127.0.0.1:8000 (445960)
+[2026-04-25 17:26:11 -0300] [445960] [INFO] Using worker: sync
+[2026-04-25 17:26:11 -0300] [445962] [INFO] Booting worker with pid: 445962
+[2026-04-25 17:26:12 -0300] [445963] [INFO] Booting worker with pid: 445963
+[2026-04-25 17:26:12 -0300] [445964] [INFO] Booting worker with pid: 445964
+[2026-04-25 17:26:12 -0300] [445960] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:28:20 -0300] [446236] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:28:20 -0300] [446236] [INFO] Listening at: http://127.0.0.1:8000 (446236)
+[2026-04-25 17:28:20 -0300] [446236] [INFO] Using worker: sync
+[2026-04-25 17:28:20 -0300] [446238] [INFO] Booting worker with pid: 446238
+[2026-04-25 17:28:20 -0300] [446239] [INFO] Booting worker with pid: 446239
+[2026-04-25 17:28:20 -0300] [446240] [INFO] Booting worker with pid: 446240
+[2026-04-25 17:28:20 -0300] [446236] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:29:27 -0300] [446374] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:29:27 -0300] [446374] [INFO] Listening at: http://127.0.0.1:8000 (446374)
+[2026-04-25 17:29:27 -0300] [446374] [INFO] Using worker: sync
+[2026-04-25 17:29:27 -0300] [446376] [INFO] Booting worker with pid: 446376
+[2026-04-25 17:29:27 -0300] [446377] [INFO] Booting worker with pid: 446377
+[2026-04-25 17:29:27 -0300] [446378] [INFO] Booting worker with pid: 446378
+[2026-04-25 17:29:27 -0300] [446374] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:34:42 -0300] [446873] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:34:42 -0300] [446873] [INFO] Listening at: http://127.0.0.1:8000 (446873)
+[2026-04-25 17:34:42 -0300] [446873] [INFO] Using worker: sync
+[2026-04-25 17:34:42 -0300] [446875] [INFO] Booting worker with pid: 446875
+[2026-04-25 17:34:42 -0300] [446876] [INFO] Booting worker with pid: 446876
+[2026-04-25 17:34:42 -0300] [446877] [INFO] Booting worker with pid: 446877
+[2026-04-25 17:34:42 -0300] [446873] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:37:40 -0300] [447247] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:37:40 -0300] [447247] [INFO] Listening at: http://127.0.0.1:8000 (447247)
+[2026-04-25 17:37:40 -0300] [447247] [INFO] Using worker: sync
+[2026-04-25 17:37:40 -0300] [447249] [INFO] Booting worker with pid: 447249
+[2026-04-25 17:37:41 -0300] [447250] [INFO] Booting worker with pid: 447250
+[2026-04-25 17:37:41 -0300] [447251] [INFO] Booting worker with pid: 447251
+[2026-04-25 17:37:41 -0300] [447247] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:41:23 -0300] [447707] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:41:23 -0300] [447707] [INFO] Listening at: http://127.0.0.1:8000 (447707)
+[2026-04-25 17:41:23 -0300] [447707] [INFO] Using worker: sync
+[2026-04-25 17:41:23 -0300] [447709] [INFO] Booting worker with pid: 447709
+[2026-04-25 17:41:23 -0300] [447710] [INFO] Booting worker with pid: 447710
+[2026-04-25 17:41:23 -0300] [447711] [INFO] Booting worker with pid: 447711
+[2026-04-25 17:41:23 -0300] [447707] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:45:12 -0300] [448168] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:45:12 -0300] [448168] [INFO] Listening at: http://127.0.0.1:8000 (448168)
+[2026-04-25 17:45:12 -0300] [448168] [INFO] Using worker: sync
+[2026-04-25 17:45:12 -0300] [448170] [INFO] Booting worker with pid: 448170
+[2026-04-25 17:45:12 -0300] [448171] [INFO] Booting worker with pid: 448171
+[2026-04-25 17:45:12 -0300] [448172] [INFO] Booting worker with pid: 448172
+[2026-04-25 17:45:12 -0300] [448168] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:47:27 -0300] [448412] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:47:27 -0300] [448412] [INFO] Listening at: http://127.0.0.1:8000 (448412)
+[2026-04-25 17:47:27 -0300] [448412] [INFO] Using worker: sync
+[2026-04-25 17:47:27 -0300] [448414] [INFO] Booting worker with pid: 448414
+[2026-04-25 17:47:27 -0300] [448415] [INFO] Booting worker with pid: 448415
+[2026-04-25 17:47:27 -0300] [448416] [INFO] Booting worker with pid: 448416
+[2026-04-25 17:47:27 -0300] [448412] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:50:02 -0300] [448702] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:50:02 -0300] [448702] [INFO] Listening at: http://127.0.0.1:8000 (448702)
+[2026-04-25 17:50:02 -0300] [448702] [INFO] Using worker: sync
+[2026-04-25 17:50:02 -0300] [448704] [INFO] Booting worker with pid: 448704
+[2026-04-25 17:50:02 -0300] [448705] [INFO] Booting worker with pid: 448705
+[2026-04-25 17:50:02 -0300] [448706] [INFO] Booting worker with pid: 448706
+[2026-04-25 17:50:02 -0300] [448702] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:50:48 -0300] [448839] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:50:48 -0300] [448839] [INFO] Listening at: http://127.0.0.1:8000 (448839)
+[2026-04-25 17:50:48 -0300] [448839] [INFO] Using worker: sync
+[2026-04-25 17:50:48 -0300] [448841] [INFO] Booting worker with pid: 448841
+[2026-04-25 17:50:48 -0300] [448842] [INFO] Booting worker with pid: 448842
+[2026-04-25 17:50:48 -0300] [448843] [INFO] Booting worker with pid: 448843
+[2026-04-25 17:50:49 -0300] [448839] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:52:01 -0300] [449016] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:52:01 -0300] [449016] [INFO] Listening at: http://127.0.0.1:8000 (449016)
+[2026-04-25 17:52:01 -0300] [449016] [INFO] Using worker: sync
+[2026-04-25 17:52:01 -0300] [449018] [INFO] Booting worker with pid: 449018
+[2026-04-25 17:52:02 -0300] [449019] [INFO] Booting worker with pid: 449019
+[2026-04-25 17:52:02 -0300] [449020] [INFO] Booting worker with pid: 449020
+[2026-04-25 17:52:02 -0300] [449016] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 17:54:42 -0300] [449297] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 17:54:42 -0300] [449297] [INFO] Listening at: http://127.0.0.1:8000 (449297)
+[2026-04-25 17:54:42 -0300] [449297] [INFO] Using worker: sync
+[2026-04-25 17:54:42 -0300] [449298] [INFO] Booting worker with pid: 449298
+[2026-04-25 17:54:42 -0300] [449299] [INFO] Booting worker with pid: 449299
+[2026-04-25 17:54:42 -0300] [449300] [INFO] Booting worker with pid: 449300
+[2026-04-25 17:54:42 -0300] [449297] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:04:32 -0300] [450332] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 18:04:32 -0300] [450332] [INFO] Listening at: http://127.0.0.1:8000 (450332)
+[2026-04-25 18:04:32 -0300] [450332] [INFO] Using worker: sync
+[2026-04-25 18:04:32 -0300] [450333] [INFO] Booting worker with pid: 450333
+[2026-04-25 18:04:32 -0300] [450334] [INFO] Booting worker with pid: 450334
+[2026-04-25 18:04:32 -0300] [450335] [INFO] Booting worker with pid: 450335
+[2026-04-25 18:04:32 -0300] [450332] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:07:56 -0300] [450699] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 18:07:56 -0300] [450699] [INFO] Listening at: http://127.0.0.1:8000 (450699)
+[2026-04-25 18:07:56 -0300] [450699] [INFO] Using worker: sync
+[2026-04-25 18:07:56 -0300] [450701] [INFO] Booting worker with pid: 450701
+[2026-04-25 18:07:56 -0300] [450702] [INFO] Booting worker with pid: 450702
+[2026-04-25 18:07:57 -0300] [450703] [INFO] Booting worker with pid: 450703
+[2026-04-25 18:07:57 -0300] [450699] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:13:07 -0300] [451265] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 18:13:07 -0300] [451265] [INFO] Listening at: http://127.0.0.1:8000 (451265)
+[2026-04-25 18:13:07 -0300] [451265] [INFO] Using worker: sync
+[2026-04-25 18:13:07 -0300] [451266] [INFO] Booting worker with pid: 451266
+[2026-04-25 18:13:07 -0300] [451267] [INFO] Booting worker with pid: 451267
+[2026-04-25 18:13:07 -0300] [451268] [INFO] Booting worker with pid: 451268
+[2026-04-25 18:13:07 -0300] [451265] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 18:15:16 -0300] [451533] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 18:15:16 -0300] [451533] [INFO] Listening at: http://127.0.0.1:8000 (451533)
+[2026-04-25 18:15:16 -0300] [451533] [INFO] Using worker: sync
+[2026-04-25 18:15:16 -0300] [451535] [INFO] Booting worker with pid: 451535
+[2026-04-25 18:15:16 -0300] [451541] [INFO] Booting worker with pid: 451541
+[2026-04-25 18:15:16 -0300] [451546] [INFO] Booting worker with pid: 451546
+[2026-04-25 18:15:17 -0300] [451533] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:15:42 -0300] [451533] [INFO] Handling signal: hup
+[2026-04-25 19:15:42 -0300] [451533] [INFO] Hang up: Master
+[2026-04-25 19:15:42 -0300] [458873] [INFO] Booting worker with pid: 458873
+[2026-04-25 19:15:42 -0300] [451533] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:15:44 -0300] [458898] [INFO] Booting worker with pid: 458898
+[2026-04-25 19:15:44 -0300] [451533] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:15:46 -0300] [451533] [WARNING] Worker (pid:451535) was sent SIGHUP!
+[2026-04-25 19:15:46 -0300] [451533] [WARNING] Worker (pid:451541) was sent SIGHUP!
+[2026-04-25 19:15:46 -0300] [451533] [WARNING] Worker (pid:451546) was sent SIGHUP!
+[2026-04-25 19:15:46 -0300] [458914] [INFO] Booting worker with pid: 458914
+[2026-04-25 19:15:46 -0300] [451533] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:16:37 -0300] [451533] [INFO] Handling signal: term
+[2026-04-25 22:16:37 +0000] [458898] [INFO] Worker exiting (pid: 458898)
+[2026-04-25 22:16:37 +0000] [458914] [INFO] Worker exiting (pid: 458914)
+[2026-04-25 22:16:37 +0000] [458873] [INFO] Worker exiting (pid: 458873)
+[2026-04-25 19:16:38 -0300] [451533] [INFO] Shutting down: Master
+[2026-04-25 19:16:40 -0300] [459238] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:16:40 -0300] [459238] [INFO] Listening at: http://127.0.0.1:8000 (459238)
+[2026-04-25 19:16:40 -0300] [459238] [INFO] Using worker: sync
+[2026-04-25 19:16:40 -0300] [459241] [INFO] Booting worker with pid: 459241
+[2026-04-25 19:16:40 -0300] [459248] [INFO] Booting worker with pid: 459248
+[2026-04-25 19:16:40 -0300] [459249] [INFO] Booting worker with pid: 459249
+[2026-04-25 19:16:40 -0300] [459238] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:25:04 -0300] [461205] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:25:04 -0300] [461205] [INFO] Listening at: http://127.0.0.1:8000 (461205)
+[2026-04-25 19:25:04 -0300] [461205] [INFO] Using worker: sync
+[2026-04-25 19:25:04 -0300] [461210] [INFO] Booting worker with pid: 461210
+[2026-04-25 19:25:05 -0300] [461211] [INFO] Booting worker with pid: 461211
+[2026-04-25 19:25:05 -0300] [461212] [INFO] Booting worker with pid: 461212
+[2026-04-25 19:25:05 -0300] [461205] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:32:16 -0300] [462775] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:32:16 -0300] [462775] [INFO] Listening at: http://127.0.0.1:8000 (462775)
+[2026-04-25 19:32:16 -0300] [462775] [INFO] Using worker: sync
+[2026-04-25 19:32:16 -0300] [462777] [INFO] Booting worker with pid: 462777
+[2026-04-25 19:32:16 -0300] [462780] [INFO] Booting worker with pid: 462780
+[2026-04-25 19:32:16 -0300] [462783] [INFO] Booting worker with pid: 462783
+[2026-04-25 19:32:16 -0300] [462775] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:34:22 +0000] [462780] [ERROR] Error handling request GET /mobile/home/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 308, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/middleware/locale.py", line 24, in process_request
+    ) = is_language_prefix_patterns_used(urlconf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/conf/urls/i18n.py", line 31, in is_language_prefix_patterns_used
+    for url_pattern in get_resolver(urlconf).url_patterns:
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 17, in <module>
+    path('mobile/', include('mobile.urls')),
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/mobile/urls.py", line 8, in <module>
+    path('reservas-hoje/', views.mobile_reservations_today, name='reservations_today'),
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'mobile.views' has no attribute 'mobile_reservations_today'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 17, in <module>
+    path('mobile/', include('mobile.urls')),
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/mobile/urls.py", line 8, in <module>
+    path('reservas-hoje/', views.mobile_reservations_today, name='reservations_today'),
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'mobile.views' has no attribute 'mobile_reservations_today'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 17, in <module>
+    path('mobile/', include('mobile.urls')),
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/mobile/urls.py", line 8, in <module>
+    path('reservas-hoje/', views.mobile_reservations_today, name='reservations_today'),
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'mobile.views' has no attribute 'mobile_reservations_today'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 57, in inner
+    response = response_for_exception(request, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 141, in response_for_exception
+    response = handle_uncaught_exception(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 182, in handle_uncaught_exception
+    return debug.technical_500_response(request, *exc_info)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csp.py", line 21, in _wrapped_sync_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 73, in technical_500_response
+    html = reporter.get_traceback_html()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 435, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 416, in get_traceback_data
+    c["raising_view_name"] = get_caller(self.request)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/debug.py", line 106, in get_caller
+    resolver_match = resolve(request.path)
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 25, in resolve
+    return get_resolver(urlconf).resolve(path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 676, in resolve
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/verticebook/urls.py", line 17, in <module>
+    path('mobile/', include('mobile.urls')),
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/verticebook/mobile/urls.py", line 8, in <module>
+    path('reservas-hoje/', views.mobile_reservations_today, name='reservations_today'),
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'mobile.views' has no attribute 'mobile_reservations_today'
+[2026-04-25 19:35:13 -0300] [463445] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:35:13 -0300] [463445] [INFO] Listening at: http://127.0.0.1:8000 (463445)
+[2026-04-25 19:35:13 -0300] [463445] [INFO] Using worker: sync
+[2026-04-25 19:35:13 -0300] [463447] [INFO] Booting worker with pid: 463447
+[2026-04-25 19:35:13 -0300] [463448] [INFO] Booting worker with pid: 463448
+[2026-04-25 19:35:13 -0300] [463451] [INFO] Booting worker with pid: 463451
+[2026-04-25 19:35:13 -0300] [463445] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:40:39 -0300] [464617] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:40:39 -0300] [464617] [INFO] Listening at: http://127.0.0.1:8000 (464617)
+[2026-04-25 19:40:39 -0300] [464617] [INFO] Using worker: sync
+[2026-04-25 19:40:39 -0300] [464619] [INFO] Booting worker with pid: 464619
+[2026-04-25 19:40:39 -0300] [464620] [INFO] Booting worker with pid: 464620
+[2026-04-25 19:40:39 -0300] [464621] [INFO] Booting worker with pid: 464621
+[2026-04-25 19:40:39 -0300] [464617] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:45:35 -0300] [465644] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:45:35 -0300] [465644] [INFO] Listening at: http://127.0.0.1:8000 (465644)
+[2026-04-25 19:45:35 -0300] [465644] [INFO] Using worker: sync
+[2026-04-25 19:45:35 -0300] [465646] [INFO] Booting worker with pid: 465646
+[2026-04-25 19:45:35 -0300] [465647] [INFO] Booting worker with pid: 465647
+[2026-04-25 19:45:35 -0300] [465648] [INFO] Booting worker with pid: 465648
+[2026-04-25 19:45:35 -0300] [465644] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:48:53 -0300] [466377] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:48:53 -0300] [466377] [INFO] Listening at: http://127.0.0.1:8000 (466377)
+[2026-04-25 19:48:53 -0300] [466377] [INFO] Using worker: sync
+[2026-04-25 19:48:53 -0300] [466378] [INFO] Booting worker with pid: 466378
+[2026-04-25 19:48:53 -0300] [466379] [INFO] Booting worker with pid: 466379
+[2026-04-25 19:48:53 -0300] [466380] [INFO] Booting worker with pid: 466380
+[2026-04-25 19:48:54 -0300] [466377] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:51:48 -0300] [466993] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:51:48 -0300] [466993] [INFO] Listening at: http://127.0.0.1:8000 (466993)
+[2026-04-25 19:51:48 -0300] [466993] [INFO] Using worker: sync
+[2026-04-25 19:51:48 -0300] [466995] [INFO] Booting worker with pid: 466995
+[2026-04-25 19:51:48 -0300] [466996] [INFO] Booting worker with pid: 466996
+[2026-04-25 19:51:48 -0300] [466997] [INFO] Booting worker with pid: 466997
+[2026-04-25 19:51:49 -0300] [466993] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:52:59 -0300] [467303] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:52:59 -0300] [467303] [INFO] Listening at: http://127.0.0.1:8000 (467303)
+[2026-04-25 19:52:59 -0300] [467303] [INFO] Using worker: sync
+[2026-04-25 19:52:59 -0300] [467305] [INFO] Booting worker with pid: 467305
+[2026-04-25 19:52:59 -0300] [467309] [INFO] Booting worker with pid: 467309
+[2026-04-25 19:52:59 -0300] [467310] [INFO] Booting worker with pid: 467310
+[2026-04-25 19:52:59 -0300] [467303] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:55:15 -0300] [467833] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:55:15 -0300] [467833] [INFO] Listening at: http://127.0.0.1:8000 (467833)
+[2026-04-25 19:55:15 -0300] [467833] [INFO] Using worker: sync
+[2026-04-25 19:55:15 -0300] [467835] [INFO] Booting worker with pid: 467835
+[2026-04-25 19:55:15 -0300] [467836] [INFO] Booting worker with pid: 467836
+[2026-04-25 19:55:16 -0300] [467837] [INFO] Booting worker with pid: 467837
+[2026-04-25 19:55:16 -0300] [467833] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 19:55:32 -0300] [467924] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 19:55:32 -0300] [467924] [INFO] Listening at: http://127.0.0.1:8000 (467924)
+[2026-04-25 19:55:32 -0300] [467924] [INFO] Using worker: sync
+[2026-04-25 19:55:32 -0300] [467926] [INFO] Booting worker with pid: 467926
+[2026-04-25 19:55:32 -0300] [467927] [INFO] Booting worker with pid: 467927
+[2026-04-25 19:55:32 -0300] [467928] [INFO] Booting worker with pid: 467928
+[2026-04-25 19:55:32 -0300] [467924] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 20:01:22 -0300] [469206] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 20:01:22 -0300] [469206] [INFO] Listening at: http://127.0.0.1:8000 (469206)
+[2026-04-25 20:01:22 -0300] [469206] [INFO] Using worker: sync
+[2026-04-25 20:01:22 -0300] [469207] [INFO] Booting worker with pid: 469207
+[2026-04-25 20:01:22 -0300] [469208] [INFO] Booting worker with pid: 469208
+[2026-04-25 20:01:22 -0300] [469209] [INFO] Booting worker with pid: 469209
+[2026-04-25 20:01:22 -0300] [469206] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 20:03:56 -0300] [469782] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 20:03:56 -0300] [469782] [INFO] Listening at: http://127.0.0.1:8000 (469782)
+[2026-04-25 20:03:56 -0300] [469782] [INFO] Using worker: sync
+[2026-04-25 20:03:56 -0300] [469784] [INFO] Booting worker with pid: 469784
+[2026-04-25 20:03:56 -0300] [469785] [INFO] Booting worker with pid: 469785
+[2026-04-25 20:03:56 -0300] [469786] [INFO] Booting worker with pid: 469786
+[2026-04-25 20:03:56 -0300] [469782] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 20:08:35 -0300] [470712] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 20:08:35 -0300] [470712] [INFO] Listening at: http://127.0.0.1:8000 (470712)
+[2026-04-25 20:08:35 -0300] [470712] [INFO] Using worker: sync
+[2026-04-25 20:08:35 -0300] [470714] [INFO] Booting worker with pid: 470714
+[2026-04-25 20:08:35 -0300] [470715] [INFO] Booting worker with pid: 470715
+[2026-04-25 20:08:35 -0300] [470718] [INFO] Booting worker with pid: 470718
+[2026-04-25 20:08:35 -0300] [470712] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 20:10:26 -0300] [471245] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 20:10:26 -0300] [471245] [INFO] Listening at: http://127.0.0.1:8000 (471245)
+[2026-04-25 20:10:26 -0300] [471245] [INFO] Using worker: sync
+[2026-04-25 20:10:26 -0300] [471247] [INFO] Booting worker with pid: 471247
+[2026-04-25 20:10:26 -0300] [471249] [INFO] Booting worker with pid: 471249
+[2026-04-25 20:10:26 -0300] [471250] [INFO] Booting worker with pid: 471250
+[2026-04-25 20:10:26 -0300] [471245] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 20:11:17 -0300] [471463] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 20:11:17 -0300] [471463] [INFO] Listening at: http://127.0.0.1:8000 (471463)
+[2026-04-25 20:11:17 -0300] [471463] [INFO] Using worker: sync
+[2026-04-25 20:11:17 -0300] [471465] [INFO] Booting worker with pid: 471465
+[2026-04-25 20:11:17 -0300] [471466] [INFO] Booting worker with pid: 471466
+[2026-04-25 20:11:17 -0300] [471467] [INFO] Booting worker with pid: 471467
+[2026-04-25 20:11:18 -0300] [471463] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:24:23 -0300] [482154] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 21:24:23 -0300] [482154] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 21:24:23 -0300] [482154] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 21:24:24 -0300] [482154] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 21:24:24 -0300] [482154] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 21:24:25 -0300] [482154] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 21:24:25 -0300] [482154] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 21:24:26 -0300] [482154] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 21:24:26 -0300] [482154] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 21:24:27 -0300] [482154] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-25 21:24:27 -0300] [482154] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-25 21:24:28 -0300] [482154] [ERROR] Can't connect to ('127.0.0.1', 8000)
+[2026-04-26 00:25:23 +0000] [471465] [INFO] Parent changed, shutting down: <Worker 471465>
+[2026-04-26 00:25:23 +0000] [471465] [INFO] Worker exiting (pid: 471465)
+[2026-04-26 00:25:33 +0000] [471467] [INFO] Parent changed, shutting down: <Worker 471467>
+[2026-04-26 00:25:33 +0000] [471467] [INFO] Worker exiting (pid: 471467)
+[2026-04-26 00:25:37 +0000] [471466] [INFO] Parent changed, shutting down: <Worker 471466>
+[2026-04-26 00:25:37 +0000] [471466] [INFO] Worker exiting (pid: 471466)
+[2026-04-25 21:25:55 -0300] [482832] [INFO] Starting gunicorn 25.3.0
+[2026-04-25 21:25:55 -0300] [482832] [INFO] Listening at: http://127.0.0.1:8000 (482832)
+[2026-04-25 21:25:55 -0300] [482832] [INFO] Using worker: sync
+[2026-04-25 21:25:55 -0300] [482834] [INFO] Booting worker with pid: 482834
+[2026-04-25 21:25:55 -0300] [482835] [INFO] Booting worker with pid: 482835
+[2026-04-25 21:25:55 -0300] [482836] [INFO] Booting worker with pid: 482836
+[2026-04-25 21:25:55 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:42:26 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 21:42:26 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 21:42:26 -0300] [487854] [INFO] Booting worker with pid: 487854
+[2026-04-25 21:42:26 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:42:26 -0300] [487856] [INFO] Booting worker with pid: 487856
+[2026-04-25 21:42:26 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:42:28 -0300] [487880] [INFO] Booting worker with pid: 487880
+[2026-04-26 00:42:28 +0000] [482835] [INFO] Worker exiting (pid: 482835)
+[2026-04-26 00:42:28 +0000] [482836] [INFO] Worker exiting (pid: 482836)
+[2026-04-26 00:42:28 +0000] [482834] [INFO] Worker exiting (pid: 482834)
+[2026-04-25 21:42:28 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:49:01 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 21:49:01 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 21:49:01 -0300] [489759] [INFO] Booting worker with pid: 489759
+[2026-04-25 21:49:01 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:49:01 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:49:01 -0300] [489761] [INFO] Booting worker with pid: 489761
+[2026-04-26 00:49:03 +0000] [487880] [INFO] Worker exiting (pid: 487880)
+[2026-04-26 00:49:03 +0000] [487856] [INFO] Worker exiting (pid: 487856)
+[2026-04-25 21:49:03 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:49:03 -0300] [489795] [INFO] Booting worker with pid: 489795
+[2026-04-26 00:49:03 +0000] [487854] [INFO] Worker exiting (pid: 487854)
+[2026-04-25 21:52:24 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 21:52:24 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 21:52:24 -0300] [490653] [INFO] Booting worker with pid: 490653
+[2026-04-25 21:52:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:52:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:52:24 -0300] [490655] [INFO] Booting worker with pid: 490655
+[2026-04-25 21:52:24 -0300] [490657] [INFO] Booting worker with pid: 490657
+[2026-04-25 21:52:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 00:52:24 +0000] [489761] [INFO] Worker exiting (pid: 489761)
+[2026-04-26 00:52:24 +0000] [489795] [INFO] Worker exiting (pid: 489795)
+[2026-04-26 00:52:24 +0000] [489759] [INFO] Worker exiting (pid: 489759)
+[2026-04-25 21:55:06 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 21:55:06 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 21:55:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:55:06 -0300] [491353] [INFO] Booting worker with pid: 491353
+[2026-04-25 21:55:08 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:55:08 -0300] [491371] [INFO] Booting worker with pid: 491371
+[2026-04-25 21:55:08 -0300] [491373] [INFO] Booting worker with pid: 491373
+[2026-04-25 21:55:08 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:55:08 -0300] [490653] [INFO] Worker exiting (pid: 490653)
+[2026-04-25 21:55:08 -0300] [490655] [INFO] Worker exiting (pid: 490655)
+[2026-04-25 21:55:08 -0300] [490657] [INFO] Worker exiting (pid: 490657)
+[2026-04-25 21:57:11 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 21:57:11 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 21:57:11 -0300] [491883] [INFO] Booting worker with pid: 491883
+[2026-04-25 21:57:11 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:57:11 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:57:11 -0300] [491885] [INFO] Booting worker with pid: 491885
+[2026-04-25 21:57:11 -0300] [491887] [INFO] Booting worker with pid: 491887
+[2026-04-25 21:57:11 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:57:11 -0300] [491353] [INFO] Worker exiting (pid: 491353)
+[2026-04-25 21:57:11 -0300] [491373] [INFO] Worker exiting (pid: 491373)
+[2026-04-25 21:57:11 -0300] [491371] [INFO] Worker exiting (pid: 491371)
+[2026-04-25 21:59:05 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 21:59:05 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 21:59:05 -0300] [492385] [INFO] Booting worker with pid: 492385
+[2026-04-25 21:59:05 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:59:07 -0300] [492418] [INFO] Booting worker with pid: 492418
+[2026-04-25 21:59:07 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:59:09 -0300] [491887] [INFO] Worker exiting (pid: 491887)
+[2026-04-25 21:59:09 -0300] [491885] [INFO] Worker exiting (pid: 491885)
+[2026-04-25 21:59:09 -0300] [492423] [INFO] Booting worker with pid: 492423
+[2026-04-25 21:59:09 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 21:59:09 -0300] [491883] [INFO] Worker exiting (pid: 491883)
+[2026-04-25 22:00:37 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:00:37 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:00:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:00:37 -0300] [492806] [INFO] Booting worker with pid: 492806
+[2026-04-25 22:00:37 -0300] [492808] [INFO] Booting worker with pid: 492808
+[2026-04-25 22:00:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:00:39 -0300] [492418] [INFO] Worker exiting (pid: 492418)
+[2026-04-25 22:00:39 -0300] [492423] [INFO] Worker exiting (pid: 492423)
+[2026-04-25 22:00:39 -0300] [492830] [INFO] Booting worker with pid: 492830
+[2026-04-25 22:00:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:00:39 -0300] [492385] [INFO] Worker exiting (pid: 492385)
+[2026-04-25 22:02:53 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:02:53 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:02:53 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:02:53 -0300] [493391] [INFO] Booting worker with pid: 493391
+[2026-04-25 22:02:53 -0300] [493393] [INFO] Booting worker with pid: 493393
+[2026-04-25 22:02:53 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:02:55 -0300] [493420] [INFO] Booting worker with pid: 493420
+[2026-04-25 22:02:55 -0300] [492830] [INFO] Worker exiting (pid: 492830)
+[2026-04-25 22:02:55 -0300] [492808] [INFO] Worker exiting (pid: 492808)
+[2026-04-25 22:02:55 -0300] [492806] [INFO] Worker exiting (pid: 492806)
+[2026-04-25 22:02:55 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:04:43 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:04:43 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:04:43 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:04:43 -0300] [493873] [INFO] Booting worker with pid: 493873
+[2026-04-25 22:04:43 -0300] [493875] [INFO] Booting worker with pid: 493875
+[2026-04-25 22:04:43 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:04:43 -0300] [493877] [INFO] Booting worker with pid: 493877
+[2026-04-25 22:04:43 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:04:43 -0300] [493391] [INFO] Worker exiting (pid: 493391)
+[2026-04-25 22:04:43 -0300] [493393] [INFO] Worker exiting (pid: 493393)
+[2026-04-25 22:04:43 -0300] [493420] [INFO] Worker exiting (pid: 493420)
+[2026-04-25 22:06:48 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:06:48 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:06:48 -0300] [494442] [INFO] Booting worker with pid: 494442
+[2026-04-25 22:06:48 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:06:48 -0300] [494444] [INFO] Booting worker with pid: 494444
+[2026-04-25 22:06:48 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:06:48 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:06:48 -0300] [493873] [INFO] Worker exiting (pid: 493873)
+[2026-04-25 22:06:48 -0300] [493875] [INFO] Worker exiting (pid: 493875)
+[2026-04-25 22:06:48 -0300] [493877] [INFO] Worker exiting (pid: 493877)
+[2026-04-25 22:06:48 -0300] [494446] [INFO] Booting worker with pid: 494446
+[2026-04-25 22:09:55 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:09:55 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:09:55 -0300] [495297] [INFO] Booting worker with pid: 495297
+[2026-04-25 22:09:55 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:09:55 -0300] [495299] [INFO] Booting worker with pid: 495299
+[2026-04-25 22:09:55 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:09:57 -0300] [494444] [INFO] Worker exiting (pid: 494444)
+[2026-04-25 22:09:57 -0300] [494446] [INFO] Worker exiting (pid: 494446)
+[2026-04-25 22:09:57 -0300] [495325] [INFO] Booting worker with pid: 495325
+[2026-04-25 22:09:57 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:09:57 -0300] [494442] [INFO] Worker exiting (pid: 494442)
+[2026-04-25 22:10:56 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:10:56 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:10:56 -0300] [495586] [INFO] Booting worker with pid: 495586
+[2026-04-25 22:10:56 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:10:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:10:58 -0300] [495614] [INFO] Booting worker with pid: 495614
+[2026-04-25 22:10:58 -0300] [495616] [INFO] Booting worker with pid: 495616
+[2026-04-25 22:10:58 -0300] [495297] [INFO] Worker exiting (pid: 495297)
+[2026-04-25 22:10:58 -0300] [495299] [INFO] Worker exiting (pid: 495299)
+[2026-04-25 22:10:58 -0300] [495325] [INFO] Worker exiting (pid: 495325)
+[2026-04-25 22:10:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:12:21 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:12:21 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:12:22 -0300] [495974] [INFO] Booting worker with pid: 495974
+[2026-04-25 22:12:22 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:12:22 -0300] [495976] [INFO] Booting worker with pid: 495976
+[2026-04-25 22:12:22 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:12:22 -0300] [495978] [INFO] Booting worker with pid: 495978
+[2026-04-25 22:12:22 -0300] [495614] [INFO] Worker exiting (pid: 495614)
+[2026-04-25 22:12:22 -0300] [495586] [INFO] Worker exiting (pid: 495586)
+[2026-04-25 22:12:22 -0300] [495616] [INFO] Worker exiting (pid: 495616)
+[2026-04-25 22:12:22 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:14:08 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:14:08 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:14:08 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:14:08 -0300] [496451] [INFO] Booting worker with pid: 496451
+[2026-04-25 22:14:10 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:14:10 -0300] [496475] [INFO] Booting worker with pid: 496475
+[2026-04-25 22:14:10 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:14:10 -0300] [496478] [INFO] Booting worker with pid: 496478
+[2026-04-25 22:14:10 -0300] [495976] [INFO] Worker exiting (pid: 495976)
+[2026-04-25 22:14:10 -0300] [495978] [INFO] Worker exiting (pid: 495978)
+[2026-04-25 22:14:10 -0300] [495974] [INFO] Worker exiting (pid: 495974)
+[2026-04-25 22:17:24 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:17:24 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:17:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:17:24 -0300] [497312] [INFO] Booting worker with pid: 497312
+[2026-04-25 22:17:26 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:17:26 -0300] [497346] [INFO] Booting worker with pid: 497346
+[2026-04-25 22:17:28 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:17:28 -0300] [496478] [INFO] Worker exiting (pid: 496478)
+[2026-04-25 22:17:28 -0300] [496475] [INFO] Worker exiting (pid: 496475)
+[2026-04-25 22:17:28 -0300] [496451] [INFO] Worker exiting (pid: 496451)
+[2026-04-25 22:17:28 -0300] [497360] [INFO] Booting worker with pid: 497360
+[2026-04-25 22:20:21 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:20:21 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:20:21 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:20:21 -0300] [498069] [INFO] Booting worker with pid: 498069
+[2026-04-25 22:20:23 -0300] [498088] [INFO] Booting worker with pid: 498088
+[2026-04-25 22:20:23 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:20:23 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:20:23 -0300] [497346] [INFO] Worker exiting (pid: 497346)
+[2026-04-25 22:20:23 -0300] [497360] [INFO] Worker exiting (pid: 497360)
+[2026-04-25 22:20:23 -0300] [497312] [INFO] Worker exiting (pid: 497312)
+[2026-04-25 22:20:23 -0300] [498091] [INFO] Booting worker with pid: 498091
+[2026-04-25 22:26:51 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:26:51 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:26:51 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:26:51 -0300] [499679] [INFO] Booting worker with pid: 499679
+[2026-04-25 22:26:51 -0300] [499681] [INFO] Booting worker with pid: 499681
+[2026-04-25 22:26:51 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:26:51 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:26:51 -0300] [498088] [INFO] Worker exiting (pid: 498088)
+[2026-04-25 22:26:51 -0300] [498091] [INFO] Worker exiting (pid: 498091)
+[2026-04-25 22:26:51 -0300] [498069] [INFO] Worker exiting (pid: 498069)
+[2026-04-25 22:26:51 -0300] [499683] [INFO] Booting worker with pid: 499683
+[2026-04-25 22:28:32 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:28:32 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:28:32 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:28:32 -0300] [500127] [INFO] Booting worker with pid: 500127
+[2026-04-25 22:28:34 -0300] [500145] [INFO] Booting worker with pid: 500145
+[2026-04-25 22:28:34 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:28:34 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:28:34 -0300] [499683] [INFO] Worker exiting (pid: 499683)
+[2026-04-25 22:28:34 -0300] [499681] [INFO] Worker exiting (pid: 499681)
+[2026-04-25 22:28:34 -0300] [499679] [INFO] Worker exiting (pid: 499679)
+[2026-04-25 22:28:34 -0300] [500148] [INFO] Booting worker with pid: 500148
+[2026-04-25 22:30:30 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-25 22:30:30 -0300] [482832] [INFO] Hang up: Master
+[2026-04-25 22:30:30 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:30:30 -0300] [500654] [INFO] Booting worker with pid: 500654
+[2026-04-25 22:30:32 -0300] [500672] [INFO] Booting worker with pid: 500672
+[2026-04-25 22:30:32 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:30:34 -0300] [500127] [INFO] Worker exiting (pid: 500127)
+[2026-04-25 22:30:34 -0300] [500148] [INFO] Worker exiting (pid: 500148)
+[2026-04-25 22:30:34 -0300] [500145] [INFO] Worker exiting (pid: 500145)
+[2026-04-25 22:30:34 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-25 22:30:34 -0300] [500683] [INFO] Booting worker with pid: 500683
+[2026-04-26 10:38:05 -0300] [482832] [WARNING] Worker (pid:500654) was sent SIGHUP!
+[2026-04-26 10:38:05 -0300] [507834] [INFO] Booting worker with pid: 507834
+[2026-04-26 10:38:05 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:38:50 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 10:38:50 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 10:38:50 -0300] [508046] [INFO] Booting worker with pid: 508046
+[2026-04-26 10:38:50 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:38:52 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:38:52 -0300] [508069] [INFO] Booting worker with pid: 508069
+[2026-04-26 10:38:52 -0300] [507834] [INFO] Worker exiting (pid: 507834)
+[2026-04-26 10:38:52 -0300] [500672] [INFO] Worker exiting (pid: 500672)
+[2026-04-26 10:38:52 -0300] [500683] [INFO] Worker exiting (pid: 500683)
+[2026-04-26 10:38:52 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:38:52 -0300] [508071] [INFO] Booting worker with pid: 508071
+[2026-04-26 10:40:47 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 10:40:47 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 10:40:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:40:47 -0300] [508391] [INFO] Booting worker with pid: 508391
+[2026-04-26 10:40:49 -0300] [508412] [INFO] Booting worker with pid: 508412
+[2026-04-26 10:40:49 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:40:51 -0300] [508419] [INFO] Booting worker with pid: 508419
+[2026-04-26 10:40:51 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:40:51 -0300] [508069] [INFO] Worker exiting (pid: 508069)
+[2026-04-26 10:40:51 -0300] [508046] [INFO] Worker exiting (pid: 508046)
+[2026-04-26 10:40:51 -0300] [508071] [INFO] Worker exiting (pid: 508071)
+[2026-04-26 10:44:34 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 10:44:34 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 10:44:34 -0300] [508870] [INFO] Booting worker with pid: 508870
+[2026-04-26 10:44:34 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:44:34 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:44:34 -0300] [508872] [INFO] Booting worker with pid: 508872
+[2026-04-26 10:44:34 -0300] [508874] [INFO] Booting worker with pid: 508874
+[2026-04-26 10:44:34 -0300] [508391] [INFO] Worker exiting (pid: 508391)
+[2026-04-26 10:44:34 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:44:34 -0300] [508412] [INFO] Worker exiting (pid: 508412)
+[2026-04-26 10:44:34 -0300] [508419] [INFO] Worker exiting (pid: 508419)
+[2026-04-26 10:46:44 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 10:46:44 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 10:46:44 -0300] [509157] [INFO] Booting worker with pid: 509157
+[2026-04-26 10:46:44 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:46:44 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:46:44 -0300] [509159] [INFO] Booting worker with pid: 509159
+[2026-04-26 10:46:46 -0300] [509177] [INFO] Booting worker with pid: 509177
+[2026-04-26 10:46:46 -0300] [508872] [INFO] Worker exiting (pid: 508872)
+[2026-04-26 10:46:46 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:46:46 -0300] [508870] [INFO] Worker exiting (pid: 508870)
+[2026-04-26 10:46:46 -0300] [508874] [INFO] Worker exiting (pid: 508874)
+[2026-04-26 10:50:51 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 10:50:51 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 10:50:51 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:50:51 -0300] [509708] [INFO] Booting worker with pid: 509708
+[2026-04-26 10:50:53 -0300] [509728] [INFO] Booting worker with pid: 509728
+[2026-04-26 10:50:53 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:50:53 -0300] [509731] [INFO] Booting worker with pid: 509731
+[2026-04-26 10:50:53 -0300] [509157] [INFO] Worker exiting (pid: 509157)
+[2026-04-26 10:50:53 -0300] [509159] [INFO] Worker exiting (pid: 509159)
+[2026-04-26 10:50:53 -0300] [509177] [INFO] Worker exiting (pid: 509177)
+[2026-04-26 10:50:53 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:53:13 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 10:53:13 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 10:53:13 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:53:13 -0300] [510024] [INFO] Booting worker with pid: 510024
+[2026-04-26 10:53:13 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:53:13 -0300] [510026] [INFO] Booting worker with pid: 510026
+[2026-04-26 10:53:15 -0300] [510044] [INFO] Booting worker with pid: 510044
+[2026-04-26 10:53:15 -0300] [509708] [INFO] Worker exiting (pid: 509708)
+[2026-04-26 10:53:15 -0300] [509728] [INFO] Worker exiting (pid: 509728)
+[2026-04-26 10:53:15 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:53:15 -0300] [509731] [INFO] Worker exiting (pid: 509731)
+[2026-04-26 10:58:07 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 10:58:07 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 10:58:07 -0300] [510642] [INFO] Booting worker with pid: 510642
+[2026-04-26 10:58:07 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:58:07 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:58:07 -0300] [510644] [INFO] Booting worker with pid: 510644
+[2026-04-26 10:58:09 -0300] [510024] [INFO] Worker exiting (pid: 510024)
+[2026-04-26 10:58:09 -0300] [510026] [INFO] Worker exiting (pid: 510026)
+[2026-04-26 10:58:09 -0300] [510044] [INFO] Worker exiting (pid: 510044)
+[2026-04-26 10:58:09 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 10:58:09 -0300] [510663] [INFO] Booting worker with pid: 510663
+[2026-04-26 11:00:51 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:00:51 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:00:51 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:00:51 -0300] [511013] [INFO] Booting worker with pid: 511013
+[2026-04-26 11:00:53 -0300] [511031] [INFO] Booting worker with pid: 511031
+[2026-04-26 11:00:53 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:00:55 -0300] [511041] [INFO] Booting worker with pid: 511041
+[2026-04-26 11:00:55 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:00:55 -0300] [510642] [INFO] Worker exiting (pid: 510642)
+[2026-04-26 11:00:55 -0300] [510644] [INFO] Worker exiting (pid: 510644)
+[2026-04-26 11:00:55 -0300] [510663] [INFO] Worker exiting (pid: 510663)

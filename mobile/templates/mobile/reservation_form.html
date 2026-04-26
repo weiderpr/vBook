@@ -1,0 +1,215 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f172a">
+    <title>{{ title }} - VerticeBook</title>
+    <link rel="manifest" href="/book/static/manifest.json?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0072ff;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --input-bg: #1e293b;
+            --input-border: rgba(255, 255, 255, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            padding: 1.5rem;
+            padding-top: 5rem;
+        }
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 1rem 1.5rem; background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px); z-index: 100;
+            display: flex; align-items: center; gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .back-btn {
+            color: white; text-decoration: none; display: flex; align-items: center;
+        }
+        .title { font-size: 1.1rem; font-weight: 700; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .form-label {
+            display: block; font-size: 0.75rem; font-weight: 700;
+            color: var(--text-dim); margin-bottom: 0.3rem;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .form-input {
+            width: 100%; background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 8px; padding: 0.4rem 0.5rem;
+            color: white; font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem; transition: border-color 0.3s;
+            height: 38px;
+        }
+        .form-input:focus {
+            outline: none; border-color: var(--primary);
+            background: rgba(0, 114, 255, 0.05);
+        }
+        textarea.form-input { min-height: 80px; height: auto; resize: none; }
+        
+        .btn-submit {
+            width: 100%; background: var(--primary); color: white;
+            border: none; border-radius: 16px; padding: 1rem;
+            font-size: 1rem; font-weight: 700; margin-top: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 114, 255, 0.3);
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .btn-submit:active { transform: scale(0.98); }
+        
+        .form-errors {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171; padding: 1rem; border-radius: 12px;
+            margin-bottom: 1.5rem; font-size: 0.9rem;
+        }
+
+        .date-time-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .date-time-grid .form-group {
+            margin-bottom: 0;
+        }
+        .date-time-grid .form-label {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.7rem;
+        }
+        .date-time-grid .form-input {
+            padding: 0.4rem 0.4rem;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'mobile:property_detail' property.pk %}" class="back-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </a>
+        <h1 class="title">{{ title }}</h1>
+    </header>
+
+    <form method="post" id="reservationForm">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+            <div class="form-errors">
+                <p>{% trans "Por favor, corrija os erros abaixo." %}</p>
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label class="form-label">{% trans "Hóspede" %}</label>
+            {{ form.client_name }}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{% trans "Telefone" %}</label>
+            {{ form.client_phone }}
+        </div>
+
+        <div class="date-time-grid">
+            <div class="form-group">
+                <label class="form-label">{% trans "Check-in" %}</label>
+                {{ form.start_date }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">{% trans "Hora" %}</label>
+                {{ form.checkin_time }}
+            </div>
+        </div>
+
+        <div class="date-time-grid">
+            <div class="form-group">
+                <label class="form-label">{% trans "Check-out" %}</label>
+                {{ form.end_date }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">{% trans "Hora" %}</label>
+                {{ form.checkout_time }}
+            </div>
+        </div>
+
+        <div class="date-time-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">{% trans "Valor Total" %}</label>
+                {{ form.total_value }}
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">{% trans "Hóspedes" %}</label>
+                {{ form.guests_count }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">{% trans "Observações" %}</label>
+            {{ form.notes }}
+        </div>
+
+        <button type="submit" class="btn-submit">{% trans "Salvar Reserva" %}</button>
+    </form>
+
+    <script>
+        // Add classes to Django form widgets
+        document.querySelectorAll('input, textarea, select').forEach(el => {
+            el.classList.add('form-input');
+        });
+
+        // Phone Mask and Keyboard
+        const phoneInput = document.querySelector('input[name="client_phone"]');
+        if (phoneInput) {
+            phoneInput.setAttribute('type', 'tel');
+            phoneInput.setAttribute('inputmode', 'tel');
+            phoneInput.addEventListener('input', (e) => {
+                let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+                e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+            });
+        }
+
+        // Value Mask (Currency) and Keyboard
+        const valueInput = document.querySelector('input[name="total_value"]');
+        if (valueInput) {
+            valueInput.setAttribute('inputmode', 'numeric');
+            
+            const formatCurrency = (val) => {
+                let v = String(val).replace(/\D/g, '');
+                if (v === '') return '';
+                return (parseInt(v) / 100).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                });
+            };
+
+            // Format initial value
+            if (valueInput.value) {
+                valueInput.value = formatCurrency(valueInput.value);
+            }
+
+            valueInput.addEventListener('input', (e) => {
+                e.target.value = formatCurrency(e.target.value);
+            });
+        }
+
+        // Guests Keyboard (Numeric only)
+        const guestsInput = document.querySelector('input[name="guests_count"]');
+        if (guestsInput) {
+            guestsInput.setAttribute('inputmode', 'numeric');
+        }
+    </script>
+</body>
+</html>

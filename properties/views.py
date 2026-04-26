@@ -64,7 +64,7 @@ class PropertyDashboardView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         
         # Financial Stats Logic
-        today = timezone.now().date()
+        today = timezone.localtime(timezone.now()).date()
         month_reservations = self.object.reservations.filter(
             end_date__month=today.month, 
             end_date__year=today.year,
@@ -178,7 +178,7 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
         
         # Financial Structure Logic: OPTIMIZED with Bulk Fetch
         acquisition_date = self.object.acquisition_date
-        today = timezone.now().date()
+        today = timezone.localtime(timezone.now()).date()
         
         # 1. Fetch all reservations and their costs in bulk (EXCLUDING CANCELLED)
         reservations = self.object.reservations.filter(is_cancelled=False)
@@ -706,7 +706,7 @@ class PropertyReportsView(LoginRequiredMixin, DetailView):
         context['active_item'] = 'reports'
         
         # 1. Handle Year Selection
-        today = timezone.now().date()
+        today = timezone.localtime(timezone.now()).date()
         selected_year = self.request.GET.get('year')
         try:
             if selected_year:

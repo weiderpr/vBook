@@ -11,6 +11,9 @@ urlpatterns = [
     path('usuarios/novo/', views.UserCreateView.as_view(), name='user_create'),
     path('usuarios/<int:pk>/editar/', views.UserUpdateView.as_view(), name='user_edit'),
     path('usuarios/<int:pk>/excluir/', views.UserDeleteView.as_view(), name='user_delete'),
+    path('usuarios/<int:pk>/plano/', views.UserPlanDetailAjaxView.as_view(), name='user_plan_json'),
+    path('usuarios/<int:pk>/remover-plano/', views.UserPlanRemoveView.as_view(), name='user_plan_remove'),
+    path('usuarios/<int:pk>/alterar-vencimento/', views.UserPlanUpdateDateView.as_view(), name='user_plan_update_date'),
 
     # Categorias de Serviço
     path('categorias-servico/', views.ServiceCategoryListView.as_view(), name='service_category_list'),
@@ -30,4 +33,7 @@ urlpatterns = [
     path('planos/novo/', views.PlanCreateView.as_view(), name='plan_create'),
     path('planos/<int:pk>/editar/', views.PlanUpdateView.as_view(), name='plan_edit'),
     path('planos/<int:pk>/excluir/', views.PlanDeleteView.as_view(), name='plan_delete'),
+
+    # Configurações Globais
+    path('configuracoes/', views.SystemSettingUpdateView.as_view(), name='settings'),
 ]

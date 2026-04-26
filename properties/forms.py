@@ -109,7 +109,7 @@ class PropertyCostForm(forms.ModelForm):
         
         # Set default payment_date to today if creating new
         if not self.instance.pk:
-            self.fields['payment_date'].initial = timezone.now().date()
+            self.fields['payment_date'].initial = timezone.localtime(timezone.now()).date()
 
     def clean_amount(self):
         value = self.cleaned_data.get('amount')

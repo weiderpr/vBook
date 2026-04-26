@@ -4,25 +4,58 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.utils import translation
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 import json
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm
 from reservations.services.evolution_api import EvolutionService
+from administration.models import Plan
+from core.utils import is_mobile
 
 def register_view(request):
+    plan_id = request.GET.get('plan')
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
+            
+            # Vincular plano e tratar pagamento
+            plan_id = request.POST.get('plan_id')
+            if plan_id:
+                try:
+                    plan = Plan.objects.get(id=plan_id)
+                    from subscriptions.models import Subscription
+                    
+                    # Cria a assinatura (Ativa se for grátis, Pendente se for pago)
+                    Subscription.objects.get_or_create(
+                        user=user,
+                        defaults={
+                            'plan': plan, 
+                            'status': 'active' if not plan.requires_payment else 'pending'
+                        }
+                    )
+                    
+                    if plan.requires_payment:
+                        return redirect('subscriptions:checkout', plan_id=plan.id)
+                except Plan.DoesNotExist:
+                    pass
+            
+            if is_mobile(request):
+                return redirect('mobile:home')
             return redirect('dashboard')
     else:
         form = UserRegistrationForm()
-    return render(request, 'accounts/register.html', {'form': form})
+    return render(request, 'accounts/register.html', {
+        'form': form,
+        'plan_id': plan_id
+    })
 
 @login_required
 def profile_view(request):
+    from subscriptions.models import Subscription
+    subscription = Subscription.objects.filter(user=request.user).first()
+    
     if request.method == 'POST':
         if 'update_profile' in request.POST:
             profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user)
@@ -43,10 +76,29 @@ def profile_view(request):
         profile_form = UserProfileForm(instance=request.user)
         password_form = PasswordChangeForm(request.user)
     
+    # Fetch available paid plans for the modal
+    available_plans = Plan.objects.filter(is_active=True, requires_payment=True).order_by('base_value')
+    
+    # Calculate current balance in days
+    subscription_days_remaining = 0
+    payments = []
+    if subscription:
+        payments = subscription.payments.all() # Ordering is already descending by default in Meta
+        if subscription.end_date and subscription.status == 'active':
+            now = timezone.now()
+            if subscription.end_date > now:
+                delta = subscription.end_date - now
+                subscription_days_remaining = delta.days
+
     return render(request, 'accounts/profile.html', {
         'profile_form': profile_form,
-        'password_form': password_form
+        'password_form': password_form,
+        'subscription': subscription,
+        'available_plans': available_plans,
+        'subscription_days_remaining': subscription_days_remaining,
+        'payment_history': payments
     })
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -54,6 +106,20 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            
+            # Se for super-admin, vai direto para o dashboard
+            if getattr(user, 'is_admin', False):
+                return redirect('dashboard')
+                
+            # Verifica se tem assinatura válida
+            from subscriptions.models import Subscription
+            subscription = Subscription.objects.filter(user=user).first()
+            # Se o plano não for válido (vencido ou pendente), vai para o perfil
+            if not subscription or not subscription.is_valid:
+                return redirect('profile')
+                
+            if is_mobile(request):
+                return redirect('mobile:home')
             return redirect('dashboard')
     else:
         form = UserLoginForm()

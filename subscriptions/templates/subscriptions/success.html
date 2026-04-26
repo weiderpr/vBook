@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block content %}
+<div class="container" style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
+    <div style="text-align: center; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 4rem; border-radius: 32px; backdrop-filter: blur(10px); max-width: 500px;">
+        <div style="width: 80px; height: 80px; background: #00b894; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2 style="color: var(--text-main); margin-bottom: 1rem;">{% trans "Pagamento Confirmado!" %}</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">{% trans "Sua assinatura foi ativada com sucesso. Agora você tem acesso total a todas as funcionalidades do VerticeBook." %}</p>
+        <a href="{% url 'dashboard' %}" class="btn btn-primary" style="padding: 1rem 2rem;">{% trans "Ir para o Dashboard" %}</a>
+    </div>
+</div>
+{% endblock %}

@@ -141,6 +141,32 @@ class Reservation(models.Model):
         verbose_name_plural = _("Reservas")
         ordering = ['-start_date']
 
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            self.apply_default_costs()
+
+    def apply_default_costs(self):
+        from properties.models import PropertyCost
+        default_costs = PropertyCost.objects.filter(
+            property=self.property,
+            frequency='per_booking'
+        )
+        for pc in default_costs:
+            value = pc.amount
+            if pc.amount_type == 'percentage':
+                # Calculate percentage based on total reservation value
+                value = (self.total_value * pc.amount) / 100
+            
+            ReservationCost.objects.create(
+                reservation=self,
+                description=pc.name,
+                value=value,
+                property_cost=pc,
+                provider=pc.provider
+            )
+
     def __str__(self):
         return f"{self.client_name} ({self.start_date} - {self.end_date})"
 

@@ -9,6 +9,7 @@
         <h2>{% trans "Criar Conta" %}</h2>
         <form method="POST">
             {% csrf_token %}
+            <input type="hidden" name="plan_id" value="{{ plan_id|default:'' }}">
             {% for field in form %}
                 <div class="form-group">
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>

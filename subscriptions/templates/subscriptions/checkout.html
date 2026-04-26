@@ -1,0 +1,409 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block extra_head %}
+{% if active_gateway == 'mercadopago' %}
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+{% elif active_gateway == 'stripe' %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endif %}
+<style>
+    .checkout-container {
+        max-width: 600px;
+        margin: 120px auto 4rem auto;
+        padding: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+    .checkout-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 2.5rem;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    .plan-summary {
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+        text-align: center;
+    }
+    .plan-summary h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, var(--primary), #a29bfe);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .price-tag {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--text-main);
+        margin: 1rem 0;
+    }
+    .price-tag span {
+        font-size: 1rem;
+        color: var(--text-muted);
+        font-weight: 400;
+    }
+</style>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Esconder qualquer navegação ou menu de usuário */
+    nav, .navbar, .sidebar, header, .user-menu, .mobile-nav, .top-header {
+        display: none !important;
+    }
+    /* Ajustar o container principal para centralizar o checkout */
+    main, .content-wrapper, .dashboard-main, .container-fluid {
+        padding-top: 80px !important;
+        margin-left: 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        min-height: 100vh !important;
+    }
+    
+    .tab-btn.active {
+        background: var(--primary) !important;
+        box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+    }
+    .tab-btn:hover:not(.active) {
+        background: rgba(255,255,255,0.05);
+    }
+    .spinner-border {
+        width: 1.2rem;
+        height: 1.2rem;
+        border: 2px solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spinner .75s linear infinite;
+    }
+    @keyframes spinner { to { transform: rotate(360deg); } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="checkout-container">
+        <div class="checkout-card glass-card">
+            {% if active_gateway == 'mercadopago' %}
+            <div class="plan-summary">
+                <h2 style="margin-bottom: 0.5rem;">{% trans "Finalizar Assinatura" %}</h2>
+                <p style="color: var(--text-muted);">{{ plan.description }}</p>
+                <div class="price-tag">
+                    <span style="font-size: 1.2rem; opacity: 0.8;">R$</span> {{ plan.base_value }}
+                </div>
+            </div>
+
+            <!-- Tabs Navigation (MP Only) -->
+            <div class="checkout-tabs" style="display: flex; gap: 1rem; margin-bottom: 2rem; background: rgba(0,0,0,0.2); padding: 0.5rem; border-radius: 12px;">
+                <button onclick="switchTab('pix')" id="tab-pix" class="tab-btn active" style="flex: 1; padding: 1rem; border: none; border-radius: 8px; background: transparent; color: white; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600; font-family: inherit;">
+                    PIX
+                </button>
+                <button onclick="switchTab('card')" id="tab-card" class="tab-btn" style="flex: 1; padding: 1rem; border: none; border-radius: 8px; background: transparent; color: white; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-weight: 600; font-family: inherit;">
+                    {% trans "Cartão" %}
+                </button>
+            </div>
+
+            <!-- PIX Content -->
+            <div id="content-pix" class="tab-content">
+                <div id="pix-initial-view" style="text-align: center; padding: 1rem;">
+                    <button onclick="processInstantPix()" id="btn-generate-pix" class="btn btn-primary" style="width: 100%; padding: 1.2rem; font-size: 1.1rem; font-weight: 700;">
+                        <span id="pix-btn-text">{% trans "Gerar QR Code PIX" %}</span>
+                        <div id="pix-spinner" class="spinner-border spinner-border-sm" style="display: none;"></div>
+                    </button>
+                </div>
+                <div id="pix-qr-container" style="display: none;"></div>
+            </div>
+
+            <!-- Card Content -->
+            <div id="content-card" class="tab-content" style="display: none; min-height: 400px;">
+                <div id="payment_brick_container"></div>
+                <div id="card-error-display" style="color: #ff7675; text-align: center; margin-top: 1rem; font-weight: bold;"></div>
+            </div>
+            {% elif active_gateway == 'stripe' %}
+            <div class="plan-summary">
+                <h2 style="margin-bottom: 0.5rem;">{% trans "Finalizar Assinatura" %}</h2>
+                <p style="color: var(--text-muted);">{{ plan.description }}</p>
+                <div class="price-tag">
+                    <span style="font-size: 1.2rem; opacity: 0.8;">R$</span> {{ plan.base_value }}
+                </div>
+            </div>
+
+            <form id="payment-form" style="margin-top: 2rem;">
+                <div id="payment-element" style="margin-bottom: 1.5rem;">
+                    <!-- Stripe Elements will be injected here -->
+                </div>
+                <button id="submit" class="btn btn-primary" style="width: 100%; padding: 1.2rem; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span id="button-text">{% trans "Pagar Agora" %}</span>
+                    <div id="stripe-spinner" class="spinner-border spinner-border-sm" style="display: none;"></div>
+                </button>
+                <div id="payment-message" style="color: #ff7675; text-align: center; margin-top: 1rem; font-size: 0.9rem; display: none;"></div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    {% if active_gateway == 'mercadopago' %}
+    const mp = new MercadoPago("{{ public_key }}", { locale: 'pt-BR' });
+    const bricksBuilder = mp.bricks();
+    let paymentBrickController;
+
+    // Alternar entre abas
+    window.switchTab = (tab) => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        
+        document.getElementById(`tab-${tab}`).classList.add('active');
+        document.getElementById(`content-${tab}`).style.display = 'block';
+
+        if (tab === 'card' && !paymentBrickController) {
+            renderCardBrick();
+        }
+    };
+
+    // Renderizar apenas Cartão no Brick
+    const renderCardBrick = async () => {
+        if (paymentBrickController) return;
+
+        try {
+            const amountStr = "{{ plan.base_value }}".replace(',', '.');
+            const amount = parseFloat(amountStr);
+            
+            paymentBrickController = await bricksBuilder.create("payment", "payment_brick_container", {
+                initialization: {
+                    amount: amount,
+                    payer: { email: "{{ request.user.email }}" },
+                },
+                customization: {
+                    paymentMethods: {
+                        creditCard: "all",
+                        debitCard: "all",
+                        maxInstallments: 12
+                    },
+                    visual: {
+                        theme: "dark"
+                    }
+                },
+                callbacks: {
+                    onReady: () => {
+                        document.getElementById('card-error-display').innerText = "";
+                    },
+                    onSubmit: ({ formData }) => {
+                        return new Promise((resolve, reject) => {
+                            processPayment(formData, resolve, reject);
+                        });
+                    },
+                    onError: (error) => {
+                        console.error("Erro no Brick:", error);
+                        document.getElementById('card-error-display').innerText = "{% trans 'Erro ao carregar formulário de cartão.' %}";
+                    },
+                },
+            });
+        } catch (e) {
+            console.error("Falha fatal ao criar Brick:", e);
+        }
+    };
+
+    // Processar PIX Instantâneo
+    window.processInstantPix = async () => {
+        const btn = document.getElementById('btn-generate-pix');
+        const text = document.getElementById('pix-btn-text');
+        const spinner = document.getElementById('pix-spinner');
+        
+        btn.disabled = true;
+        text.style.opacity = '0.5';
+        spinner.style.display = 'inline-block';
+
+        try {
+            const response = await fetch("{% url 'subscriptions:process_payment' %}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    payment_method_id: 'pix',
+                    plan_id: "{{ plan.id }}",
+                    payer: { email: "{{ request.user.email }}" }
+                }),
+            });
+            const data = await response.json();
+            
+            if (data.status === 'pending' && data.qr_code_base64) {
+                showPixQRCode(data);
+            } else {
+                alert("{% trans 'Erro ao gerar PIX.' %}");
+                btn.disabled = false;
+                text.style.opacity = '1';
+                spinner.style.display = 'none';
+            }
+        } catch (error) {
+            alert("{% trans 'Erro de conexão.' %}");
+            btn.disabled = false;
+        }
+    };
+
+    const showPixQRCode = (data) => {
+        document.getElementById('pix-initial-view').style.display = 'none';
+        const container = document.getElementById('pix-qr-container');
+        container.style.display = 'block';
+        container.innerHTML = `
+            <div style="text-align: center; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid var(--glass-border);">
+                <img src="data:image/png;base64,${data.qr_code_base64}" style="width: 220px; border: 10px solid white; border-radius: 12px; margin-bottom: 1.5rem;">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">{% trans "Copia e Cola:" %}</p>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                    <input type="text" value="${data.qr_code}" id="pix_code" readonly style="flex: 1; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 8px; color: white; font-size: 0.8rem;">
+                    <button onclick="copyCode()" class="btn btn-primary" style="padding: 0.8rem;">Copy</button>
+                </div>
+                <div style="color: #f1c40f; font-size: 0.85rem;">{% trans "Aguardando confirmação..." %}</div>
+            </div>
+        `;
+        window.copyCode = () => {
+            const el = document.getElementById("pix_code");
+            el.select();
+            navigator.clipboard.writeText(el.value);
+            alert("Copiado!");
+        };
+        startPolling(data.id);
+    };
+
+    const startPolling = (paymentId) => {
+        setInterval(async () => {
+            try {
+                const resp = await fetch(`/book/assinaturas/payment-status/${paymentId}/`);
+                const result = await resp.json();
+                if (result.status === 'approved') window.location.href = "{% url 'subscriptions:payment_success' %}";
+            } catch (e) {}
+        }, 4000);
+    };
+
+    const processPayment = (formData, resolve, reject) => {
+        fetch("{% url 'subscriptions:process_payment' %}", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...formData, plan_id: "{{ plan.id }}" }),
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === 'approved') {
+                window.location.href = "{% url 'subscriptions:payment_success' %}";
+                resolve();
+            } else {
+                alert("{% trans 'Erro:' %} " + (data.message || data.status));
+                reject();
+            }
+        })
+        .catch(e => {
+            alert("{% trans 'Erro de rede.' %}");
+            reject();
+        });
+    };
+    {% elif active_gateway == 'stripe' %}
+    const stripe = Stripe("{{ public_key }}");
+    let elements;
+
+    initialize();
+
+    async function initialize() {
+        const response = await fetch("{% url 'subscriptions:create_stripe_intent' %}", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({ plan_id: "{{ plan.id }}" }),
+            credentials: 'include'
+        });
+        const { client_secret, error } = await response.json();
+
+        if (error) {
+            showMessage(error);
+            setLoading(false);
+            return;
+        }
+
+        const appearance = {
+            theme: 'night',
+            variables: {
+                colorPrimary: '#00b894',
+                colorBackground: '#1a1a1a',
+                colorText: '#ffffff',
+                colorDanger: '#df1b41',
+                fontFamily: 'Inter, system-ui, sans-serif',
+                spacingUnit: '4px',
+                borderRadius: '8px',
+            },
+        };
+        elements = stripe.elements({ appearance, clientSecret: client_secret });
+
+        const paymentElementOptions = {
+            layout: "tabs",
+        };
+
+        const paymentElement = elements.create("payment", paymentElementOptions);
+        paymentElement.mount("#payment-element");
+    }
+
+    const form = document.getElementById("payment-form");
+    form.addEventListener("submit", handleSubmit);
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        
+        if (!stripe || !elements) {
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    // URL de retorno após o pagamento (Stripe redirecionará para cá)
+                    return_url: window.location.origin + "{% url 'subscriptions:payment_success' %}",
+                },
+            });
+
+            // Se chegarmos aqui, houve um erro imediato (ex: validação)
+            if (error) {
+                showMessage(error.message || "{% trans 'Ocorreu um erro ao processar o pagamento.' %}");
+            }
+        } catch (err) {
+            console.error("Erro fatal Stripe:", err);
+            showMessage("{% trans 'Erro de conexão com o Stripe.' %}");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    function showMessage(messageText) {
+        const messageContainer = document.querySelector("#payment-message");
+        messageContainer.style.display = "block";
+        messageContainer.textContent = messageText;
+
+        setTimeout(function () {
+            messageContainer.style.display = "none";
+            messageContainer.textContent = "";
+        }, 4000);
+    }
+
+    function setLoading(isLoading) {
+        if (isLoading) {
+            document.querySelector("#submit").disabled = true;
+            document.querySelector("#stripe-spinner").style.display = "inline-block";
+            document.querySelector("#button-text").style.opacity = "0.5";
+        } else {
+            document.querySelector("#submit").disabled = false;
+            document.querySelector("#stripe-spinner").style.display = "none";
+            document.querySelector("#button-text").style.opacity = "1";
+        }
+    }
+    {% endif %}
+</script>
+{% endblock %}

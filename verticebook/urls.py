@@ -12,7 +12,9 @@ urlpatterns = [
     path('propriedades/', include('properties.urls')),
     path('propriedades/<int:property_pk>/reservas/', include('reservations.urls')),
     path('checkin/<uuid:token>/', include('reservations.urls_guest_checkin')),
+    path('assinaturas/', include('subscriptions.urls')),
     path('administrador/', include('administration.urls', namespace='administration')),
+    path('mobile/', include('mobile.urls')),
 ]
 
 if settings.DEBUG:

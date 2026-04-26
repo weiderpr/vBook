@@ -46,3 +46,40 @@ class Plan(models.Model):
 
     def __str__(self):
         return self.description
+
+class SystemSetting(models.Model):
+    GATEWAY_CHOICES = [
+        ('mercadopago', 'Mercado Pago'),
+        ('stripe', 'Stripe'),
+    ]
+    
+    active_gateway = models.CharField(
+        _("Gateway de Pagamento Ativo"),
+        max_length=20,
+        choices=GATEWAY_CHOICES,
+        default='mercadopago'
+    )
+    
+    # Mercado Pago Credentials
+    mercadopago_public_key = models.CharField(_("Mercado Pago Public Key"), max_length=255, blank=True)
+    mercadopago_access_token = models.CharField(_("Mercado Pago Access Token"), max_length=255, blank=True)
+    mercadopago_webhook_secret = models.CharField(_("Mercado Pago Webhook Secret"), max_length=255, blank=True)
+    
+    # Stripe Credentials
+    stripe_public_key = models.CharField(_("Stripe Public Key"), max_length=255, blank=True)
+    stripe_secret_key = models.CharField(_("Stripe Secret Key"), max_length=255, blank=True)
+    stripe_webhook_secret = models.CharField(_("Stripe Webhook Secret"), max_length=255, blank=True)
+    
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Configuração do Sistema")
+        verbose_name_plural = _("Configurações do Sistema")
+
+    def __str__(self):
+        return f"Configurações ({self.get_active_gateway_display()})"
+    
+    @classmethod
+    def get_settings(cls):
+        obj, created = cls.objects.get_or_create(id=1)
+        return obj

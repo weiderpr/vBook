@@ -1,0 +1,246 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f172a">
+    <title>{{ title }} - VerticeBook</title>
+    <link rel="manifest" href="/book/static/manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0072ff;
+            --primary-light: #00c6ff;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: var(--bg-dark); color: var(--text-main); padding: 1.5rem; padding-top: 5rem; }
+        
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 1.5rem;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
+            z-index: 100; display: flex; align-items: center; gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .back-btn {
+            background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white; width: 36px; height: 36px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; text-decoration: none;
+        }
+        .title { font-size: 1.1rem; font-weight: 700; }
+
+        .card-premium {
+            background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px; padding: 1.5rem; margin-bottom: 1.5rem;
+        }
+
+        .guest-info { display: flex; flex-direction: column; gap: 0.5rem; }
+        .guest-name { font-size: 1.4rem; font-weight: 800; }
+        .guest-phone { font-size: 0.95rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.5rem; }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 0.4rem 0.8rem; border-radius: 10px;
+            font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+        .status-upcoming { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+        .status-active { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .status-past { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
+
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: 0.85rem; font-weight: 800; color: var(--text-dim);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .info-item { display: flex; flex-direction: column; gap: 0.25rem; }
+        .info-label { font-size: 0.75rem; color: var(--text-dim); font-weight: 600; }
+        .info-value { font-size: 0.95rem; font-weight: 700; }
+
+        .service-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .service-item:last-child { border-bottom: none; }
+        .provider-avatar {
+            width: 40px; height: 40px; border-radius: 12px; object-fit: cover;
+            background: var(--primary); display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: white;
+        }
+        .service-details { flex: 1; display: flex; flex-direction: column; }
+        .service-name { font-size: 0.9rem; font-weight: 700; }
+        .service-provider { font-size: 0.75rem; color: var(--text-dim); }
+        .service-price { font-size: 0.9rem; font-weight: 800; color: var(--danger); }
+        .service-status { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; }
+
+        .finance-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.5rem 0;
+        }
+        .finance-total { font-size: 1.1rem; font-weight: 800; color: var(--primary-light); }
+        .finance-paid { color: var(--success); font-weight: 700; }
+        .finance-remaining { color: var(--warning); font-weight: 700; }
+
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+        .btn-action {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 0.8rem; border-radius: 16px; font-weight: 700; font-size: 0.9rem;
+            text-decoration: none; transition: transform 0.2s;
+        }
+        .btn-action:active { transform: scale(0.95); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-outline { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1); color: white; }
+        .btn-whatsapp { background: #25d366; color: white; grid-column: span 2; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'mobile:property_detail' property.pk %}" class="back-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </a>
+        <h1 class="title">{% trans "Detalhes da Reserva" %}</h1>
+    </header>
+
+    <div class="card-premium">
+        <div class="guest-info">
+            <h2 class="guest-name">{{ reservation.client_name }}</h2>
+            <div class="guest-phone">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 18.92z"/></svg>
+                {{ reservation.client_phone }}
+            </div>
+            {% with status=reservation.get_status %}
+                <span class="status-badge status-{{ status }}">
+                    {% if status == 'upcoming' %}{% trans "Futura" %}
+                    {% elif status == 'active' %}{% trans "No apartamento" %}
+                    {% elif status == 'past' %}{% trans "Passada" %}
+                    {% endif %}
+                </span>
+            {% endwith %}
+        </div>
+    </div>
+
+    <div class="card-premium">
+        <div class="info-grid">
+            <div class="info-item">
+                <span class="info-label">{% trans "Check-in" %}</span>
+                <span class="info-value">{{ reservation.start_date|date:"d/m/Y" }}</span>
+                <span class="info-label" style="font-size: 0.65rem;">{{ reservation.checkin_time|time:"H:i" }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">{% trans "Check-out" %}</span>
+                <span class="info-value">{{ reservation.end_date|date:"d/m/Y" }}</span>
+                <span class="info-label" style="font-size: 0.65rem;">{{ reservation.checkout_time|time:"H:i" }}</span>
+            </div>
+            <div class="info-item" style="grid-column: span 2; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+                <span class="info-label">{% trans "Hóspedes" %}</span>
+                <span class="info-value">{{ reservation.guests_count }} {% trans "pessoas" %}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h3 class="section-title">{% trans "Serviços e Custos" %}</h3>
+    </div>
+    <div class="card-premium" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
+        {% for cost in reservation.costs.all %}
+            <div class="service-item">
+                <div class="provider-avatar">
+                    {% if cost.provider and cost.provider.photo %}
+                        <img src="{{ cost.provider.photo.url }}" style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;">
+                    {% else %}
+                        {{ cost.description|slice:":1" }}
+                    {% endif %}
+                </div>
+                <div class="service-details">
+                    <span class="service-name">{{ cost.description }}</span>
+                    {% if cost.provider %}
+                        <span class="service-provider">{{ cost.provider.name }}</span>
+                    {% endif %}
+                    <span class="service-status {% if cost.is_completed %}finance-paid{% else %}finance-remaining{% endif %}">
+                        {% if cost.is_completed %}{% trans "Realizado" %}{% else %}{% trans "Pendente" %}{% endif %}
+                    </span>
+                </div>
+                <span class="service-price">R$ {{ cost.value|floatformat:2 }}</span>
+            </div>
+        {% empty %}
+            <p style="font-size: 0.85rem; color: var(--text-dim); text-align: center; padding: 1rem;">{% trans "Nenhum custo registrado." %}</p>
+        {% endfor %}
+    </div>
+
+    <div class="section-header">
+        <h3 class="section-title">{% trans "Financeiro" %}</h3>
+    </div>
+    <div class="card-premium">
+        <div class="finance-item">
+            <span class="info-label">{% trans "Valor Total" %}</span>
+            <span class="finance-total">R$ {{ reservation.total_value|floatformat:2 }}</span>
+        </div>
+        <div class="finance-item">
+            <span class="info-label">{% trans "Total Recebido" %}</span>
+            <span class="finance-paid">R$ {{ total_paid|floatformat:2 }}</span>
+        </div>
+        <div class="finance-item" style="border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 0.5rem; padding-top: 1rem;">
+            <span class="info-label">{% trans "Saldo Pendente" %}</span>
+            <span class="finance-remaining" style="font-size: 1.1rem;">R$ {{ remaining|floatformat:2 }}</span>
+        </div>
+    </div>
+
+    <div class="action-grid">
+        <a href="tel:{{ reservation.client_phone }}" class="btn-action btn-outline">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 18.92z"/></svg>
+            {% trans "Ligar" %}
+        </a>
+        <a href="{% url 'mobile:reservation_edit' reservation.pk %}" class="btn-action btn-outline">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+            {% trans "Editar" %}
+        </a>
+        {% trans "A mensagem de boas-vindas já foi enviada. Deseja enviar novamente?" as confirm_msg %}
+        <a href="{% url 'mobile:send_whatsapp_reservation' property.pk reservation.pk %}" 
+           class="btn-action btn-whatsapp"
+           {% if reservation.welcome_message_sent %}
+           onclick="return confirm('{{ confirm_msg|escapejs }}')"
+           {% endif %}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 18.92z"/></svg>
+            {% if reservation.welcome_message_sent %}
+                {% trans "Reenviar Boas-vindas (WA)" %}
+            {% else %}
+                {% trans "Enviar Boas-vindas (WA)" %}
+            {% endif %}
+        </a>
+    </div>
+
+    {% if reservation.welcome_message_sent %}
+        <div style="text-align: center; margin-top: 0.5rem;">
+            <span style="font-size: 0.7rem; font-weight: 700; color: #4ade80; text-transform: uppercase; letter-spacing: 0.5px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><polyline points="20 6 9 17 4 12"/></svg>
+                {% trans "Mensagem enviada anteriormente" %}
+            </span>
+        </div>
+    {% endif %}
+
+    {% if reservation.notes %}
+        <div class="section-header" style="margin-top: 1.5rem;">
+            <h3 class="section-title">{% trans "Observações" %}</h3>
+        </div>
+        <div class="card-premium">
+            <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-main);">{{ reservation.notes }}</p>
+        </div>
+    {% endif %}
+
+    <div style="height: 2rem;"></div>
+</body>
+</html>

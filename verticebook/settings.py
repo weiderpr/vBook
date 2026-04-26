@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,7 +45,9 @@ INSTALLED_APPS = [
     'properties',
     'reservations',
     'administration',
+    'subscriptions',
     'django.contrib.humanize',
+    'mobile',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'core.middleware.language.UserLanguageMiddleware',  # Custom language persistence
     'django.contrib.messages.middleware.MessageMiddleware',
+    'subscriptions.middleware.SubscriptionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -71,6 +77,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'properties.context_processors.user_properties',
+                'subscriptions.context_processors.subscription_info',
             ],
         },
     },
@@ -126,6 +133,11 @@ CSRF_USE_SESSIONS = False
 # SESSION_COOKIE_PATH = '/book/' 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+# Session Security Settings
+SESSION_COOKIE_AGE = 3600  # 1 hour in seconds
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 
 
 # Password validation
@@ -152,7 +164,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -175,7 +187,7 @@ LOCALE_PATHS = [
 
 STATIC_URL = '/book/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = '/var/www/verticebook/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media files

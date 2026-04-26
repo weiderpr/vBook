@@ -1,0 +1,974 @@
+[2026-04-25 14:44:07] ENVIANDO PAYLOAD: {
+  "transaction_amount": 1.0,
+  "description": "Assinatura VerticeBook - Plano teste 1",
+  "payment_method_id": "pix",
+  "payer": {
+    "email": "teste@teste.com",
+    "first_name": "Teste",
+    "last_name": "VBook"
+  },
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "external_reference": "SUB-12-1777128247"
+}
+[2026-04-25 14:44:08] RESPOSTA RECEBIDA: {
+  "accounts_info": null,
+  "acquirer_reconciliation": [],
+  "additional_info": {
+    "tracking_id": "platform:3.12.3,so:so;,type:SDK2.4.0,security:none"
+  },
+  "authorization_code": null,
+  "binary_mode": false,
+  "brand_id": null,
+  "build_version": "3.153.0-rc-3",
+  "call_for_authorize_id": null,
+  "callback_url": null,
+  "captured": true,
+  "card": {},
+  "charges_details": [
+    {
+      "accounts": {
+        "from": "collector",
+        "to": "mp"
+      },
+      "amounts": {
+        "original": 0.01,
+        "refunded": 0
+      },
+      "client_id": 0,
+      "date_created": "2026-04-25T10:44:08.309-04:00",
+      "external_charge_id": "01KQ2HJ4YP4HQY8H2FA397ZB7D",
+      "id": "155614165919-001",
+      "last_updated": "2026-04-25T10:44:08.309-04:00",
+      "metadata": {
+        "reason": "",
+        "source": "proc-svc-charges",
+        "source_detail": "processing_fee_charge"
+      },
+      "name": "mercadopago_fee",
+      "refund_charges": [],
+      "reserve_id": null,
+      "type": "fee",
+      "update_charges": []
+    }
+  ],
+  "charges_execution_info": {
+    "internal_execution": {
+      "date": "2026-04-25T10:44:08.288-04:00",
+      "execution_id": "01KQ2HJ4XW7742XSFNYSX1A026"
+    }
+  },
+  "collector_id": 19951474,
+  "corporation_id": null,
+  "counter_currency": null,
+  "coupon_amount": 0,
+  "currency_id": "BRL",
+  "date_approved": null,
+  "date_created": "2026-04-25T10:44:08.307-04:00",
+  "date_last_updated": "2026-04-25T10:44:08.307-04:00",
+  "date_of_expiration": "2026-04-26T10:44:08.112-04:00",
+  "deduction_schema": null,
+  "description": "Assinatura VerticeBook - Plano teste 1",
+  "differential_pricing_id": null,
+  "external_reference": "SUB-12-1777128247",
+  "fee_details": [],
+  "financing_group": null,
+  "id": 155614165919,
+  "installments": 1,
+  "integrator_id": null,
+  "issuer_id": "12501",
+  "live_mode": true,
+  "marketplace_owner": null,
+  "merchant_account_id": null,
+  "merchant_number": null,
+  "metadata": {},
+  "money_release_date": null,
+  "money_release_schema": null,
+  "money_release_status": "released",
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "operation_type": "regular_payment",
+  "order": {},
+  "payer": {
+    "email": null,
+    "entity_type": null,
+    "first_name": null,
+    "id": "1592623221",
+    "identification": {
+      "number": null,
+      "type": null
+    },
+    "last_name": null,
+    "operator_id": null,
+    "phone": {
+      "area_code": null,
+      "extension": null,
+      "number": null
+    },
+    "type": null
+  },
+  "payment_method": {
+    "id": "pix",
+    "issuer_id": "12501",
+    "type": "bank_transfer"
+  },
+  "payment_method_id": "pix",
+  "payment_type_id": "bank_transfer",
+  "platform_id": null,
+  "point_of_interaction": {
+    "application_data": {
+      "name": null,
+      "operating_system": null,
+      "version": null
+    },
+    "business_info": {
+      "branch": "Merchant Services",
+      "sub_unit": "sdk",
+      "unit": "online_payments"
+    },
+    "location": {
+      "source": null,
+      "state_id": null
+    },
+    "transaction_data": {
+      "bank_info": {
+        "collector": {
+          "account_alias": null,
+          "account_holder_name": "Weider Pereira Rodrigues",
+          "account_id": null,
+          "long_name": null,
+          "transfer_account_id": null
+        },
+        "is_same_bank_account_owner": null,
+        "origin_bank_id": null,
+        "origin_wallet_id": null,
+        "payer": {
+          "account_id": null,
+          "branch": null,
+          "external_account_id": null,
+          "id": null,
+          "identification": {},
+          "long_name": null
+        }
+      },
+      "bank_transfer_id": null,
+      "e2e_id": null,
+      "financial_institution": null,
+      "is_end_consumer": null,
+      "merchant_category_code": null,
+      "qr_code": "00020126580014br.gov.bcb.pix0136a3bc03d9-3a55-46d7-8e6b-75b26e1782f352040000530398654041.005802BR5908WEIDERPR6008Varginha62250521mpqrinter15561416591963047D4E",
+      "qr_code_base64": "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",
+      "ticket_url": "https://www.mercadopago.com.br/payments/155614165919/ticket?caller_id=1592623221&hash=2cfd7514-1a32-4c2b-aedc-2c9f0f36730d",
+      "transaction_id": null
+    },
+    "type": "OPENPLATFORM"
+  },
+  "pos_id": null,
+  "processing_mode": "aggregator",
+  "refunds": [],
+  "release_info": null,
+  "shipping_amount": 0,
+  "sponsor_id": null,
+  "statement_descriptor": null,
+  "status": "pending",
+  "status_detail": "pending_waiting_transfer",
+  "store_id": null,
+  "tags": null,
+  "taxes_amount": 0,
+  "tenant_context": "mp",
+  "transaction_amount": 1,
+  "transaction_amount_refunded": 0,
+  "transaction_details": {
+    "acquirer_reference": null,
+    "bank_transfer_id": null,
+    "external_resource_url": null,
+    "financial_institution": null,
+    "installment_amount": 0,
+    "net_received_amount": 0,
+    "overpaid_amount": 0,
+    "payable_deferral_period": null,
+    "payment_method_reference_id": null,
+    "total_paid_amount": 1,
+    "transaction_id": null
+  }
+}
+[2026-04-25 14:44:08] EXCEÇÃO NO VIEW: Payment() got unexpected keyword arguments: 'mercadopago_id'
+Traceback (most recent call last):
+  File "/root/verticebook/subscriptions/views.py", line 116, in process_payment_view
+    Payment.objects.create(
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/db/models/query.py", line 667, in create
+    obj = self.model(**kwargs)
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/db/models/base.py", line 590, in __init__
+    raise TypeError(
+TypeError: Payment() got unexpected keyword arguments: 'mercadopago_id'
+
+[2026-04-25 14:45:42] ENVIANDO PAYLOAD: {
+  "transaction_amount": 1.0,
+  "description": "Assinatura VerticeBook - Plano teste 1",
+  "payment_method_id": "pix",
+  "payer": {
+    "email": "teste@teste.com",
+    "first_name": "Teste",
+    "last_name": "VBook"
+  },
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "external_reference": "SUB-12-1777128342"
+}
+[2026-04-25 14:45:43] RESPOSTA RECEBIDA: {
+  "accounts_info": null,
+  "acquirer_reconciliation": [],
+  "additional_info": {
+    "tracking_id": "platform:3.12.3,so:so;,type:SDK2.4.0,security:none"
+  },
+  "authorization_code": null,
+  "binary_mode": false,
+  "brand_id": null,
+  "build_version": "3.153.0-rc-3",
+  "call_for_authorize_id": null,
+  "callback_url": null,
+  "captured": true,
+  "card": {},
+  "charges_details": [
+    {
+      "accounts": {
+        "from": "collector",
+        "to": "mp"
+      },
+      "amounts": {
+        "original": 0.01,
+        "refunded": 0
+      },
+      "client_id": 0,
+      "date_created": "2026-04-25T10:45:42.883-04:00",
+      "external_charge_id": "01KQ2HN199TG58MD317R86RQ4D",
+      "id": "155616234889-001",
+      "last_updated": "2026-04-25T10:45:42.883-04:00",
+      "metadata": {
+        "reason": "",
+        "source": "proc-svc-charges",
+        "source_detail": "processing_fee_charge"
+      },
+      "name": "mercadopago_fee",
+      "refund_charges": [],
+      "reserve_id": null,
+      "type": "fee",
+      "update_charges": []
+    }
+  ],
+  "charges_execution_info": {
+    "internal_execution": {
+      "date": "2026-04-25T10:45:42.835-04:00",
+      "execution_id": "01KQ2HN18JGB5MSVJSJ60F8MER"
+    }
+  },
+  "collector_id": 19951474,
+  "corporation_id": null,
+  "counter_currency": null,
+  "coupon_amount": 0,
+  "currency_id": "BRL",
+  "date_approved": null,
+  "date_created": "2026-04-25T10:45:42.881-04:00",
+  "date_last_updated": "2026-04-25T10:45:42.881-04:00",
+  "date_of_expiration": "2026-04-26T10:45:42.663-04:00",
+  "deduction_schema": null,
+  "description": "Assinatura VerticeBook - Plano teste 1",
+  "differential_pricing_id": null,
+  "external_reference": "SUB-12-1777128342",
+  "fee_details": [],
+  "financing_group": null,
+  "id": 155616234889,
+  "installments": 1,
+  "integrator_id": null,
+  "issuer_id": "12501",
+  "live_mode": true,
+  "marketplace_owner": null,
+  "merchant_account_id": null,
+  "merchant_number": null,
+  "metadata": {},
+  "money_release_date": null,
+  "money_release_schema": null,
+  "money_release_status": "released",
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "operation_type": "regular_payment",
+  "order": {},
+  "payer": {
+    "email": null,
+    "entity_type": null,
+    "first_name": null,
+    "id": "1592623221",
+    "identification": {
+      "number": null,
+      "type": null
+    },
+    "last_name": null,
+    "operator_id": null,
+    "phone": {
+      "area_code": null,
+      "extension": null,
+      "number": null
+    },
+    "type": null
+  },
+  "payment_method": {
+    "id": "pix",
+    "issuer_id": "12501",
+    "type": "bank_transfer"
+  },
+  "payment_method_id": "pix",
+  "payment_type_id": "bank_transfer",
+  "platform_id": null,
+  "point_of_interaction": {
+    "application_data": {
+      "name": null,
+      "operating_system": null,
+      "version": null
+    },
+    "business_info": {
+      "branch": "Merchant Services",
+      "sub_unit": "sdk",
+      "unit": "online_payments"
+    },
+    "location": {
+      "source": null,
+      "state_id": null
+    },
+    "transaction_data": {
+      "bank_info": {
+        "collector": {
+          "account_alias": null,
+          "account_holder_name": "Weider Pereira Rodrigues",
+          "account_id": null,
+          "long_name": null,
+          "transfer_account_id": null
+        },
+        "is_same_bank_account_owner": null,
+        "origin_bank_id": null,
+        "origin_wallet_id": null,
+        "payer": {
+          "account_id": null,
+          "branch": null,
+          "external_account_id": null,
+          "id": null,
+          "identification": {},
+          "long_name": null
+        }
+      },
+      "bank_transfer_id": null,
+      "e2e_id": null,
+      "financial_institution": null,
+      "is_end_consumer": null,
+      "merchant_category_code": null,
+      "qr_code": "00020126580014br.gov.bcb.pix0136a3bc03d9-3a55-46d7-8e6b-75b26e1782f352040000530398654041.005802BR5908WEIDERPR6008Varginha62250521mpqrinter1556162348896304ACAE",
+      "qr_code_base64": "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",
+      "ticket_url": "https://www.mercadopago.com.br/payments/155616234889/ticket?caller_id=1592623221&hash=56dad34d-757c-4ea0-9a28-28c191a4b252",
+      "transaction_id": null
+    },
+    "type": "OPENPLATFORM"
+  },
+  "pos_id": null,
+  "processing_mode": "aggregator",
+  "refunds": [],
+  "release_info": null,
+  "shipping_amount": 0,
+  "sponsor_id": null,
+  "statement_descriptor": null,
+  "status": "pending",
+  "status_detail": "pending_waiting_transfer",
+  "store_id": null,
+  "tags": null,
+  "taxes_amount": 0,
+  "tenant_context": "mp",
+  "transaction_amount": 1,
+  "transaction_amount_refunded": 0,
+  "transaction_details": {
+    "acquirer_reference": null,
+    "bank_transfer_id": null,
+    "external_resource_url": null,
+    "financial_institution": null,
+    "installment_amount": 0,
+    "net_received_amount": 0,
+    "overpaid_amount": 0,
+    "payable_deferral_period": null,
+    "payment_method_reference_id": null,
+    "total_paid_amount": 1,
+    "transaction_id": null
+  }
+}
+[2026-04-25 18:18:24] ENVIANDO PAYLOAD: {
+  "transaction_amount": 1.0,
+  "description": "Assinatura VerticeBook - Plano teste 1",
+  "payment_method_id": "pix",
+  "payer": {
+    "email": "teste@teste.com",
+    "first_name": "Teste",
+    "last_name": "VBook"
+  },
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "external_reference": "SUB-12-1777141104"
+}
+[2026-04-25 18:18:25] RESPOSTA RECEBIDA: {
+  "accounts_info": null,
+  "acquirer_reconciliation": [],
+  "additional_info": {
+    "tracking_id": "platform:3.12.3,so:so;,type:SDK2.4.0,security:none"
+  },
+  "authorization_code": null,
+  "binary_mode": false,
+  "brand_id": null,
+  "build_version": "3.153.0-rc-3",
+  "call_for_authorize_id": null,
+  "callback_url": null,
+  "captured": true,
+  "card": {},
+  "charges_details": [
+    {
+      "accounts": {
+        "from": "collector",
+        "to": "mp"
+      },
+      "amounts": {
+        "original": 0.01,
+        "refunded": 0
+      },
+      "client_id": 0,
+      "date_created": "2026-04-25T14:18:25.063-04:00",
+      "external_charge_id": "01KQ2XTGCD8X82X4J872TQMGHE",
+      "id": "155648438607-001",
+      "last_updated": "2026-04-25T14:18:25.063-04:00",
+      "metadata": {
+        "reason": "",
+        "source": "proc-svc-charges",
+        "source_detail": "processing_fee_charge"
+      },
+      "name": "mercadopago_fee",
+      "refund_charges": [],
+      "reserve_id": null,
+      "type": "fee",
+      "update_charges": []
+    }
+  ],
+  "charges_execution_info": {
+    "internal_execution": {
+      "date": "2026-04-25T14:18:25.047-04:00",
+      "execution_id": "01KQ2XTGBHAC673HQ3DD8SJ1HW"
+    }
+  },
+  "collector_id": 19951474,
+  "corporation_id": null,
+  "counter_currency": null,
+  "coupon_amount": 0,
+  "currency_id": "BRL",
+  "date_approved": null,
+  "date_created": "2026-04-25T14:18:25.061-04:00",
+  "date_last_updated": "2026-04-25T14:18:25.061-04:00",
+  "date_of_expiration": "2026-04-26T14:18:24.871-04:00",
+  "deduction_schema": null,
+  "description": "Assinatura VerticeBook - Plano teste 1",
+  "differential_pricing_id": null,
+  "external_reference": "SUB-12-1777141104",
+  "fee_details": [],
+  "financing_group": null,
+  "id": 155648438607,
+  "installments": 1,
+  "integrator_id": null,
+  "issuer_id": "12501",
+  "live_mode": true,
+  "marketplace_owner": null,
+  "merchant_account_id": null,
+  "merchant_number": null,
+  "metadata": {},
+  "money_release_date": null,
+  "money_release_schema": null,
+  "money_release_status": "released",
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "operation_type": "regular_payment",
+  "order": {},
+  "payer": {
+    "email": null,
+    "entity_type": null,
+    "first_name": null,
+    "id": "1592623221",
+    "identification": {
+      "number": null,
+      "type": null
+    },
+    "last_name": null,
+    "operator_id": null,
+    "phone": {
+      "area_code": null,
+      "extension": null,
+      "number": null
+    },
+    "type": null
+  },
+  "payment_method": {
+    "id": "pix",
+    "issuer_id": "12501",
+    "type": "bank_transfer"
+  },
+  "payment_method_id": "pix",
+  "payment_type_id": "bank_transfer",
+  "platform_id": null,
+  "point_of_interaction": {
+    "application_data": {
+      "name": null,
+      "operating_system": null,
+      "version": null
+    },
+    "business_info": {
+      "branch": "Merchant Services",
+      "sub_unit": "sdk",
+      "unit": "online_payments"
+    },
+    "location": {
+      "source": null,
+      "state_id": null
+    },
+    "transaction_data": {
+      "bank_info": {
+        "collector": {
+          "account_alias": null,
+          "account_holder_name": "Weider Pereira Rodrigues",
+          "account_id": null,
+          "long_name": null,
+          "transfer_account_id": null
+        },
+        "is_same_bank_account_owner": null,
+        "origin_bank_id": null,
+        "origin_wallet_id": null,
+        "payer": {
+          "account_id": null,
+          "branch": null,
+          "external_account_id": null,
+          "id": null,
+          "identification": {},
+          "long_name": null
+        }
+      },
+      "bank_transfer_id": null,
+      "e2e_id": null,
+      "financial_institution": null,
+      "is_end_consumer": null,
+      "merchant_category_code": null,
+      "qr_code": "00020126580014br.gov.bcb.pix0136a3bc03d9-3a55-46d7-8e6b-75b26e1782f352040000530398654041.005802BR5908WEIDERPR6008Varginha62250521mpqrinter1556484386076304631F",
+      "qr_code_base64": "iVBORw0KGgoAAAANSUhEUgAABWQAAAVkAQMAAABpQ4TyAAAABlBMVEX///8AAABVwtN+AAAKA0lEQVR42uzdQXLquhIGYFMMGLIElsLSYGkshSUwzMCFX90E2d2SIJw6vFt14ftHKYfIH5lJarUGERERERERERERERERERERERERERERERERERERERER+Rezm9oc//nF6vvHyzDsv3/4/vBmeXAdhvX3L87fvzn88yAmfOJnxGn5xG4ZcRiGbUdwoqWlpaWlpaWlpaWlpaX9PO2pfhDGnocKY/eGOtw+dkmWdQCEAc63z4/9EXe0tLS0tLS0tLS0tLS0tK/TTullx+XBz2z5UE+fmwl5eXv4dqt6xGv9D4na8oovWlpaWlpaWlpaWlpaWlraZezvl30FS9lDL/nZIZ/HPizrD+fbH83asqk+lRHLisPPALS0tLS0tLS0tLS0tLS0/7J2qOvAx06V91e/8Px0045piFWtHV43Q6elpaWlpaWlpaWlpaWlfQttU+Uext53Zv9ltSAfBo/rCWXFIe/Kf4Uq97t187S0tLS0tLS0tLS0tLS0n6nt9V77ftncaq3UpIcHq/LgnB5sy4MhPTjcHmTt/P3/tlMcLS0tLS0tLS0tLS0tLe2fJM7Qv+ff61S1fn+GPnV25Uth/Kbuzvaq0NLS0tLS0tLS0tLS0tL+97X7pcB8u7w6HiM/pE+Eyf68nhByrr9P2FTPZfJjLVmnAWhpaWlpaWlpaWlpaWlpP0hbzqHHRm+H2+w/HxKfd/zz2KFd+rr8Ou/4T+lke65y34R/SCkBGGhpaWlpaWlpaWlpaWlpX6F9doaex8576Kd0I1iYoY/lH3Ksu6Mf668b+qfvHla509LS0tLS0tLS0tLS0tK+sTZfVzakG7ab3mt5fWBXN2ML59Dv3F+Wd+WHehN+oqWlpaWlpaWlpaWlpaV9kTbjcjO2y6KN3665M+yQ2ovn+77CrvwmnQRfd0rTf61yp6WlpaWlpaWlpaWlpaV9S20ZO7Yuz/xmDz03YzvXD6ZUN98bIGyqT526eVpaWlpaWlpaWlpaWlraj9XmKvcpnUOf6gWGkE39+d6NaOH7b/qXeE/pwXN3dtPS0tLS0tLS0tLS0tLSPqXt/GKV99BL77WAW6ci9WuYoZcR12HLPOyhh95rvUJ6WlpaWlpaWlpaWlpaWtoP1Obea3lT/f4x8mL5Kp8/tp+/1trqFf0Vil9DS0tLS0tLS0tLS0tLS/uW2lzlPtekN0P1b9huGr2F+8uGzgJD3vEfS1HBqSadaGlpaWlpaWlpaWlpaWlfoT3VFedh7JAxlL03B7lz77XSLn3s3wL+6M7ueURaWlpaWlpaWlpaWlpa2g/UNveXBe2pu+d+fbSHHgrjt/099GNnF5+WlpaWlpaWlpaWlpaW9qXasOMdN7hL5g3usEmeD3KXfuNxQn73qPcQtHnE53qv0dLS0tLS0tLS0tLS0tJ+gLaXsBwwpiu3V+HB6bZJPta78k1iIf3dbfrHoaWlpaWlpaWlpaWlpaV9Y21zuVjTHb1ZYKhfFu87O6UBdssnNv0Fht6l37S0tLS0tLS0tLS0tLS0L9GGPfRmhh720HN3tp8Z+nn5cNxUDye7p1p77ow4pEk9LS0tLS0tLS0tLS0tLe1na6d67EvC9dYTzqk7+vyyssDQWC5LR/b1dC+0tLS0tLS0tLS0tLS0tJ+m3dX782Xsa65yL43hwoOoPS7rD+e6U9w5fbtQVLCuy97XtLS0tLS0tLS0tLS0tLSv0w79ocoG993ea3N+6b2Wu7nlKvd1eMXhwfFyWlpaWlpaWlpaWlpaWtr31+6WM+Gbx+sJzS57TGc9YdaW1YJVvSDRW0943B2dlpaWlpaWlpaWlpaWlvZPtU1jtLsz9IJbhZPd+w5/uHHCnD9+/7t1419PzNBpaWlpaWlpaWlpaWlpad9PO6SXXdI57N5kf1tP9sPXzQe5r2GBoTyYe6+F5m0hT98IRktLS0tLS0tLS0tLS0v7htqhW4I+lwDs68l+OGWeL/HOndViu/Sy4z+lEoDq//XHNfm0tLS0tLS0tLS0tLS0tL/sofdKysOMe3/bAu/1Gx+WOXyzQ74qf7JLlm19I1gue59SrzZaWlpaWlpaWlpaWlpa2g/S5qL2qV+THpYPSjf1XOV+rb//qnNMfUj8dWeF4tf1BFpaWlpaWlpaWlpaWlrat9TmbDuz+X06NX5J15XNuEOtvdspbniw4//regItLS0tLS0tLS0tLS0t7R9p90vvtXB/1zzBDlvmoQ7+Wk/x4wVg+aT2Ln27bf3r0N5tfLStT0tLS0tLS0tLS0tLS0v7ztow+w8l620ztqK9LJ8YO38SzqGv8ifCNv15weU702hpaWlpaWlpaWlpaWlpX6gtH7z2b+S+dHbZQ6u1Zg4/39kdpvjneop/7v9DQiX6QEtLS0tLS0tLS0tLS0v7edp9OtldPrvqXACWT3ZXd4aF9YS8QrF75mR3UzdPS0tLS0tLS0tLS0tLS/tR2l3nDu7jssAQjpHnsZv1hKoZev/O7t5R99BQ/ecVtLS0tLS0tLS0tLS0tLT/H+2QZuh5/j31L/EumVut7euj3seudt2/xJuWlpaWlpaWlpaWlpaW9jO1+dVhOWCTmqGva/5Yf7uxHrE5mN6rm2/20B+ElpaWlpaWlpaWlpaWlvaNtWXyvunfNra/LQeM4aT6cfmTXPYeDpU36wmxkL4sH+Sz7+MfrH7Q0tLS0tLS0tLS0tLS0j61Kz2kqvX+gyFM2Yvl6+6d3XlT/ZDm/CGbele+6eZGS0tLS0tLS0tLS0tLS/sR2lCTHhNq0qdlOSAsGKzq+8uupWo9dEcfw557+XGbFiSGukx+eqo7Oi0tLS0tLS0tLS0tLS3tU9ry9rlu/Ni5xLveMp/HbpJbrTWF5GETft1ZBHgutLS0tLS0tLS0tLS0tLTvqh066wlNd/Spoz2ng9nhzu5qDz1smZdXVFeK5cPjtLS0tLS0tLS0tLS0tLQfpb072Z/v7G7258v9ZT8H08/pQb70ewwrFGHE0B19vha8082NlpaWlpaWlpaWlpaWlvZvtXfv7J5xpTFabkCe+fMMvddLLXcw33WuFDssrzjT0tLS0tLS0tLS0tLS0n6qNt/fVWb/85Z5mOyXBYZVbpd+t8p922nelm8Bb9q70dLS0tLS0tLS0tLS0tLSpvWEPHZeT1gFXHiQVwuaEoD8fXKruSer3GlpaWlpaWlpaWlpaWlp/1Y75YPcHe1Yl7032qk+yD11tti3nV38Ey0tLS0tLS0tLS0tLS3tR2rvVrmHQ+Lz2/d1kfq+s3wwLRealR3yVc2Pm/ClXfoz6wm0tLS0tLS0tLS0tLS0tMNfdvCODzpjxwGO6fMB97Nlfqgry3tb5vmoNy0tLS0tLS0tLS0tLS3tR2lFRERERERERERERERERERERERERERERERERERERET+K/lfAAAA//9j2T5aHqcYgAAAAABJRU5ErkJggg==",
+      "ticket_url": "https://www.mercadopago.com.br/payments/155648438607/ticket?caller_id=1592623221&hash=41cdb15d-ba09-49ba-a31b-26a7ffd378c1",
+      "transaction_id": null
+    },
+    "type": "OPENPLATFORM"
+  },
+  "pos_id": null,
+  "processing_mode": "aggregator",
+  "refunds": [],
+  "release_info": null,
+  "shipping_amount": 0,
+  "sponsor_id": null,
+  "statement_descriptor": null,
+  "status": "pending",
+  "status_detail": "pending_waiting_transfer",
+  "store_id": null,
+  "tags": null,
+  "taxes_amount": 0,
+  "tenant_context": "mp",
+  "transaction_amount": 1,
+  "transaction_amount_refunded": 0,
+  "transaction_details": {
+    "acquirer_reference": null,
+    "bank_transfer_id": null,
+    "external_resource_url": null,
+    "financial_institution": null,
+    "installment_amount": 0,
+    "net_received_amount": 0,
+    "overpaid_amount": 0,
+    "payable_deferral_period": null,
+    "payment_method_reference_id": null,
+    "total_paid_amount": 1,
+    "transaction_id": null
+  }
+}
+[2026-04-25 20:08:33] ENVIANDO PAYLOAD: {
+  "transaction_amount": 1.0,
+  "description": "Assinatura VerticeBook - Plano teste 1",
+  "payment_method_id": "pix",
+  "payer": {
+    "email": "teste@teste.com",
+    "first_name": "Teste",
+    "last_name": "VBook"
+  },
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "external_reference": "SUB-12-1777147713"
+}
+[2026-04-25 20:08:35] RESPOSTA RECEBIDA: {
+  "accounts_info": null,
+  "acquirer_reconciliation": [],
+  "additional_info": {
+    "tracking_id": "platform:3.12.3,so:so;,type:SDK2.4.0,security:none"
+  },
+  "authorization_code": null,
+  "binary_mode": false,
+  "brand_id": null,
+  "build_version": "3.153.0-rc-3",
+  "call_for_authorize_id": null,
+  "callback_url": null,
+  "captured": true,
+  "card": {},
+  "charges_details": [
+    {
+      "accounts": {
+        "from": "collector",
+        "to": "mp"
+      },
+      "amounts": {
+        "original": 0.01,
+        "refunded": 0
+      },
+      "client_id": 0,
+      "date_created": "2026-04-25T16:08:34.579-04:00",
+      "external_charge_id": "01KQ3446ZSG655STMWSYFBEG10",
+      "id": "155660857739-001",
+      "last_updated": "2026-04-25T16:08:34.579-04:00",
+      "metadata": {
+        "reason": "",
+        "source": "proc-svc-charges",
+        "source_detail": "processing_fee_charge"
+      },
+      "name": "mercadopago_fee",
+      "refund_charges": [],
+      "reserve_id": null,
+      "type": "fee",
+      "update_charges": []
+    }
+  ],
+  "charges_execution_info": {
+    "internal_execution": {
+      "date": "2026-04-25T16:08:34.563-04:00",
+      "execution_id": "01KQ3446YZ6CDCJGSRM2PPEVF9"
+    }
+  },
+  "collector_id": 19951474,
+  "corporation_id": null,
+  "counter_currency": null,
+  "coupon_amount": 0,
+  "currency_id": "BRL",
+  "date_approved": null,
+  "date_created": "2026-04-25T16:08:34.576-04:00",
+  "date_last_updated": "2026-04-25T16:08:34.576-04:00",
+  "date_of_expiration": "2026-04-26T16:08:34.380-04:00",
+  "deduction_schema": null,
+  "description": "Assinatura VerticeBook - Plano teste 1",
+  "differential_pricing_id": null,
+  "external_reference": "SUB-12-1777147713",
+  "fee_details": [],
+  "financing_group": null,
+  "id": 155660857739,
+  "installments": 1,
+  "integrator_id": null,
+  "issuer_id": "12501",
+  "live_mode": true,
+  "marketplace_owner": null,
+  "merchant_account_id": null,
+  "merchant_number": null,
+  "metadata": {},
+  "money_release_date": null,
+  "money_release_schema": null,
+  "money_release_status": "released",
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "operation_type": "regular_payment",
+  "order": {},
+  "payer": {
+    "email": null,
+    "entity_type": null,
+    "first_name": null,
+    "id": "1592623221",
+    "identification": {
+      "number": null,
+      "type": null
+    },
+    "last_name": null,
+    "operator_id": null,
+    "phone": {
+      "area_code": null,
+      "extension": null,
+      "number": null
+    },
+    "type": null
+  },
+  "payment_method": {
+    "id": "pix",
+    "issuer_id": "12501",
+    "type": "bank_transfer"
+  },
+  "payment_method_id": "pix",
+  "payment_type_id": "bank_transfer",
+  "platform_id": null,
+  "point_of_interaction": {
+    "application_data": {
+      "name": null,
+      "operating_system": null,
+      "version": null
+    },
+    "business_info": {
+      "branch": "Merchant Services",
+      "sub_unit": "sdk",
+      "unit": "online_payments"
+    },
+    "location": {
+      "source": null,
+      "state_id": null
+    },
+    "transaction_data": {
+      "bank_info": {
+        "collector": {
+          "account_alias": null,
+          "account_holder_name": "Weider Pereira Rodrigues",
+          "account_id": null,
+          "long_name": null,
+          "transfer_account_id": null
+        },
+        "is_same_bank_account_owner": null,
+        "origin_bank_id": null,
+        "origin_wallet_id": null,
+        "payer": {
+          "account_id": null,
+          "branch": null,
+          "external_account_id": null,
+          "id": null,
+          "identification": {},
+          "long_name": null
+        }
+      },
+      "bank_transfer_id": null,
+      "e2e_id": null,
+      "financial_institution": null,
+      "is_end_consumer": null,
+      "merchant_category_code": null,
+      "qr_code": "00020126580014br.gov.bcb.pix0136a3bc03d9-3a55-46d7-8e6b-75b26e1782f352040000530398654041.005802BR5908WEIDERPR6008Varginha62250521mpqrinter15566085773963041A66",
+      "qr_code_base64": "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",
+      "ticket_url": "https://www.mercadopago.com.br/payments/155660857739/ticket?caller_id=1592623221&hash=ebb23aa9-bfb0-4316-97fa-1d64887096dc",
+      "transaction_id": null
+    },
+    "type": "OPENPLATFORM"
+  },
+  "pos_id": null,
+  "processing_mode": "aggregator",
+  "refunds": [],
+  "release_info": null,
+  "shipping_amount": 0,
+  "sponsor_id": null,
+  "statement_descriptor": null,
+  "status": "pending",
+  "status_detail": "pending_waiting_transfer",
+  "store_id": null,
+  "tags": null,
+  "taxes_amount": 0,
+  "tenant_context": "mp",
+  "transaction_amount": 1,
+  "transaction_amount_refunded": 0,
+  "transaction_details": {
+    "acquirer_reference": null,
+    "bank_transfer_id": null,
+    "external_resource_url": null,
+    "financial_institution": null,
+    "installment_amount": 0,
+    "net_received_amount": 0,
+    "overpaid_amount": 0,
+    "payable_deferral_period": null,
+    "payment_method_reference_id": null,
+    "total_paid_amount": 1,
+    "transaction_id": null
+  }
+}
+[2026-04-25 21:52:34] ENVIANDO PAYLOAD: {
+  "transaction_amount": 69.0,
+  "description": "Assinatura VerticeBook - Plano Mensal",
+  "payment_method_id": "pix",
+  "payer": {
+    "email": "teste@teste.com",
+    "first_name": "Usu\u00e1rio",
+    "last_name": "teste"
+  },
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "external_reference": "SUB-13-1777153954"
+}
+[2026-04-25 21:52:35] RESPOSTA RECEBIDA: {
+  "accounts_info": null,
+  "acquirer_reconciliation": [],
+  "additional_info": {
+    "tracking_id": "platform:3.12.3,so:so;,type:SDK2.4.0,security:none"
+  },
+  "authorization_code": null,
+  "binary_mode": false,
+  "brand_id": null,
+  "build_version": "3.153.0-rc-3",
+  "call_for_authorize_id": null,
+  "callback_url": null,
+  "captured": true,
+  "card": {},
+  "charges_details": [
+    {
+      "accounts": {
+        "from": "collector",
+        "to": "mp"
+      },
+      "amounts": {
+        "original": 0.68,
+        "refunded": 0
+      },
+      "client_id": 0,
+      "date_created": "2026-04-25T17:52:35.354-04:00",
+      "external_charge_id": "01KQ3A2NFWZ7FY0VCCZ0KPFQTD",
+      "id": "156435783760-001",
+      "last_updated": "2026-04-25T17:52:35.354-04:00",
+      "metadata": {
+        "reason": "",
+        "source": "proc-svc-charges",
+        "source_detail": "processing_fee_charge"
+      },
+      "name": "mercadopago_fee",
+      "refund_charges": [],
+      "reserve_id": null,
+      "type": "fee",
+      "update_charges": []
+    }
+  ],
+  "charges_execution_info": {
+    "internal_execution": {
+      "date": "2026-04-25T17:52:35.335-04:00",
+      "execution_id": "01KQ3A2NF16AD8N5FPQMF5EYVW"
+    }
+  },
+  "collector_id": 19951474,
+  "corporation_id": null,
+  "counter_currency": null,
+  "coupon_amount": 0,
+  "currency_id": "BRL",
+  "date_approved": null,
+  "date_created": "2026-04-25T17:52:35.352-04:00",
+  "date_last_updated": "2026-04-25T17:52:35.352-04:00",
+  "date_of_expiration": "2026-04-26T17:52:35.122-04:00",
+  "deduction_schema": null,
+  "description": "Assinatura VerticeBook - Plano Mensal",
+  "differential_pricing_id": null,
+  "external_reference": "SUB-13-1777153954",
+  "fee_details": [],
+  "financing_group": null,
+  "id": 156435783760,
+  "installments": 1,
+  "integrator_id": null,
+  "issuer_id": "12501",
+  "live_mode": true,
+  "marketplace_owner": null,
+  "merchant_account_id": null,
+  "merchant_number": null,
+  "metadata": {},
+  "money_release_date": null,
+  "money_release_schema": null,
+  "money_release_status": "released",
+  "notification_url": "https://verticesistemas.tech/book/assinaturas/webhook/",
+  "operation_type": "regular_payment",
+  "order": {},
+  "payer": {
+    "email": null,
+    "entity_type": null,
+    "first_name": null,
+    "id": "1592623221",
+    "identification": {
+      "number": null,
+      "type": null
+    },
+    "last_name": null,
+    "operator_id": null,
+    "phone": {
+      "area_code": null,
+      "extension": null,
+      "number": null
+    },
+    "type": null
+  },
+  "payment_method": {
+    "id": "pix",
+    "issuer_id": "12501",
+    "type": "bank_transfer"
+  },
+  "payment_method_id": "pix",
+  "payment_type_id": "bank_transfer",
+  "platform_id": null,
+  "point_of_interaction": {
+    "application_data": {
+      "name": null,
+      "operating_system": null,
+      "version": null
+    },
+    "business_info": {
+      "branch": "Merchant Services",
+      "sub_unit": "sdk",
+      "unit": "online_payments"
+    },
+    "location": {
+      "source": null,
+      "state_id": null
+    },
+    "transaction_data": {
+      "bank_info": {
+        "collector": {
+          "account_alias": null,
+          "account_holder_name": "Weider Pereira Rodrigues",
+          "account_id": null,
+          "long_name": null,
+          "transfer_account_id": null
+        },
+        "is_same_bank_account_owner": null,
+        "origin_bank_id": null,
+        "origin_wallet_id": null,
+        "payer": {
+          "account_id": null,
+          "branch": null,
+          "external_account_id": null,
+          "id": null,
+          "identification": {},
+          "long_name": null
+        }
+      },
+      "bank_transfer_id": null,
+      "e2e_id": null,
+      "financial_institution": null,
+      "is_end_consumer": null,
+      "merchant_category_code": null,
+      "qr_code": "00020126580014br.gov.bcb.pix0136a3bc03d9-3a55-46d7-8e6b-75b26e1782f3520400005303986540569.005802BR5908WEIDERPR6008Varginha62250521mpqrinter1564357837606304BD74",
+      "qr_code_base64": "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",
+      "ticket_url": "https://www.mercadopago.com.br/payments/156435783760/ticket?caller_id=1592623221&hash=5cdb9d8e-fd7c-489d-9f04-3d5392c394cc",
+      "transaction_id": null
+    },
+    "type": "OPENPLATFORM"
+  },
+  "pos_id": null,
+  "processing_mode": "aggregator",
+  "refunds": [],
+  "release_info": null,
+  "shipping_amount": 0,
+  "sponsor_id": null,
+  "statement_descriptor": null,
+  "status": "pending",
+  "status_detail": "pending_waiting_transfer",
+  "store_id": null,
+  "tags": null,
+  "taxes_amount": 0,
+  "tenant_context": "mp",
+  "transaction_amount": 69,
+  "transaction_amount_refunded": 0,
+  "transaction_details": {
+    "acquirer_reference": null,
+    "bank_transfer_id": null,
+    "external_resource_url": null,
+    "financial_institution": null,
+    "installment_amount": 0,
+    "net_received_amount": 0,
+    "overpaid_amount": 0,
+    "payable_deferral_period": null,
+    "payment_method_reference_id": null,
+    "total_paid_amount": 69,
+    "transaction_id": null
+  }
+}

@@ -61,6 +61,15 @@
                     </td>
                     <td style="padding: 1.2rem 1.5rem; text-align: right;">
                         <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                            <button class="btn-icon view-plan-btn" data-url="{% url 'administration:user_plan_json' u.pk %}" title="{% trans 'Ver Plano' %}" style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(99, 102, 241, 0.05); color: var(--primary); border: none; cursor: pointer; transition: all 0.2s;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                            </button>
+                            <form method="POST" action="{% url 'administration:user_plan_remove' u.pk %}" style="display: inline;" onsubmit="return confirm('{% trans "Tem certeza que deseja remover o plano deste usuário?" %}')">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-icon" title="{% trans 'Remover Plano' %}" style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(245, 158, 11, 0.05); color: #f59e0b; border: none; cursor: pointer; transition: all 0.2s;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                                </button>
+                            </form>
                             <a href="{% url 'administration:user_edit' u.pk %}" class="btn-icon" title="{% trans 'Editar' %}" style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-muted); transition: all 0.2s;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                             </a>
@@ -96,6 +105,9 @@
 </div>
 {% endif %}
 
+{% endblock %}
+
+{% block extra_head %}
 <style>
     .btn-icon:hover {
         background: rgba(255,255,255,0.1) !important;
@@ -104,5 +116,256 @@
     .btn-icon[title="Excluir"]:hover {
         background: rgba(239, 68, 68, 0.1) !important;
     }
+    
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
+    .modal-card {
+        background: var(--bg-dark);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        width: 95%;
+        max-width: 600px;
+        padding: 2.5rem;
+        position: relative;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+        box-shadow: var(--glass-shadow);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .modal-overlay.active .modal-card {
+        transform: translateY(0);
+    }
+    .modal-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: color 0.2s;
+    }
+    .modal-close:hover {
+        color: var(--text-main);
+    }
+    .plan-detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    .plan-detail-row:last-child {
+        border-bottom: none;
+    }
+    .plan-detail-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+    .plan-detail-value {
+        font-weight: 600;
+        color: var(--text-main);
+    }
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
 </style>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Plan Modal -->
+<div id="plan-modal" class="modal-overlay">
+    <div class="modal-card">
+        <div class="modal-close" id="close-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+        
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <div style="width: 60px; height: 60px; border-radius: 16px; background: rgba(99, 102, 241, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+            </div>
+            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">{% trans "Detalhes do Plano" %}</h2>
+            <p id="modal-user-email" style="color: var(--text-muted); font-size: 0.9rem;"></p>
+        </div>
+
+        <div id="modal-loader" style="text-align: center; padding: 2rem; display: none;">
+            <div style="width: 30px; height: 30px; border: 3px solid var(--glass-border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+        </div>
+
+        <div id="modal-content">
+            <div class="plan-detail-row">
+                <span class="plan-detail-label">{% trans "Plano" %}</span>
+                <span class="plan-detail-value" id="plan-name">-</span>
+            </div>
+            <div class="plan-detail-row">
+                <span class="plan-detail-label">{% trans "Valor" %}</span>
+                <span class="plan-detail-value" id="plan-value">-</span>
+            </div>
+            <div class="plan-detail-row">
+                <span class="plan-detail-label">{% trans "Periodicidade" %}</span>
+                <span class="plan-detail-value" id="plan-period">-</span>
+            </div>
+            <div class="plan-detail-row">
+                <span class="plan-detail-label">{% trans "Início" %}</span>
+                <span class="plan-detail-value" id="plan-start">-</span>
+            </div>
+            <div class="plan-detail-row" style="align-items: center;">
+                <span class="plan-detail-label">{% trans "Expira em" %}</span>
+                <form id="update-date-form" method="POST" style="display: flex; gap: 8px; align-items: center;">
+                    {% csrf_token %}
+                    <input type="date" name="new_date" id="plan-end-input" class="form-control" style="padding: 4px 8px; font-size: 0.85rem; border-radius: 6px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main);">
+                    <button type="submit" class="btn btn-primary" style="padding: 4px 12px; font-size: 0.75rem; border-radius: 6px;">{% trans "Salvar" %}</button>
+                </form>
+            </div>
+            <div class="plan-detail-row">
+                <span class="plan-detail-label">{% trans "Status" %}</span>
+                <span id="plan-status-badge" class="status-badge">-</span>
+            </div>
+
+            <div id="modal-payments" style="margin-top: 2rem; display: none;">
+                <h3 style="font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">
+                    {% trans "Histórico de Pagamentos" %}
+                </h3>
+                <div style="border-radius: 12px; border: 1px solid var(--glass-border); overflow: hidden; background: rgba(255,255,255,0.02);">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem;">
+                        <thead>
+                            <tr style="background: rgba(255,255,255,0.05); text-align: left;">
+                                <th style="padding: 10px;">{% trans "Data" %}</th>
+                                <th style="padding: 10px;">{% trans "Valor" %}</th>
+                                <th style="padding: 10px;">{% trans "Status" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payments-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-error" style="display: none; text-align: center; color: #ef4444; padding: 1rem; background: rgba(239, 68, 68, 0.05); border-radius: 12px; margin-top: 1rem;">
+        </div>
+
+        <button class="btn btn-outline" id="close-modal-btn" style="width: 100%; margin-top: 2rem;">{% trans "Fechar" %}</button>
+    </div>
+</div>
+
+<style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('plan-modal');
+        const closeModal = () => modal.classList.remove('active');
+        
+        document.getElementById('close-modal').onclick = closeModal;
+        document.getElementById('close-modal-btn').onclick = closeModal;
+        
+        modal.onclick = (e) => {
+            if (e.target === modal) closeModal();
+        };
+
+        document.querySelectorAll('.view-plan-btn').forEach(btn => {
+            btn.onclick = async () => {
+                const url = btn.getAttribute('data-url');
+                const userRow = btn.closest('tr');
+                const userEmail = userRow.querySelector('td:nth-child(2)').textContent;
+                
+                document.getElementById('modal-user-email').textContent = userEmail;
+                document.getElementById('modal-content').style.display = 'none';
+                document.getElementById('modal-error').style.display = 'none';
+                document.getElementById('modal-loader').style.display = 'block';
+                
+                modal.classList.add('active');
+                
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    
+                    document.getElementById('modal-loader').style.display = 'none';
+                    
+                    if (data.error) {
+                        document.getElementById('modal-error').textContent = data.error;
+                        document.getElementById('modal-error').style.display = 'block';
+                    } else {
+                        document.getElementById('plan-name').textContent = data.plan_description;
+                        document.getElementById('plan-value').textContent = data.base_value;
+                        document.getElementById('plan-period').textContent = data.periodicity;
+                        document.getElementById('plan-start').textContent = data.start_date;
+                        const endInput = document.getElementById('plan-end-input');
+                        endInput.value = data.end_date_raw;
+                        
+                        const updateForm = document.getElementById('update-date-form');
+                        updateForm.action = data.update_url;
+
+                        const statusBadge = document.getElementById('plan-status-badge');
+                        statusBadge.textContent = data.status_display;
+                        
+                        // Status styling
+                        if (data.status === 'active') {
+                            statusBadge.style.background = 'rgba(0, 184, 148, 0.1)';
+                            statusBadge.style.color = '#00b894';
+                        } else if (data.status === 'expired') {
+                            statusBadge.style.background = 'rgba(239, 68, 68, 0.1)';
+                            statusBadge.style.color = '#ef4444';
+                        } else {
+                            statusBadge.style.background = 'rgba(255, 118, 117, 0.1)';
+                            statusBadge.style.color = '#ff7675';
+                        }
+                        
+                        document.getElementById('modal-content').style.display = 'block';
+
+                        // Payments History
+                        const tbody = document.getElementById('payments-tbody');
+                        tbody.innerHTML = '';
+                        if (data.payments && data.payments.length > 0) {
+                            data.payments.forEach(p => {
+                                const tr = document.createElement('tr');
+                                tr.style.borderTop = '1px solid var(--glass-border)';
+                                
+                                let statusColor = '#f59e0b';
+                                if (p.status === 'approved' || p.status === 'active') statusColor = '#00b894';
+                                if (p.status === 'rejected' || p.status === 'expired') statusColor = '#ef4444';
+
+                                tr.innerHTML = `
+                                    <td style="padding: 10px;">${p.date}</td>
+                                    <td style="padding: 10px; font-weight: 600;">${p.amount}</td>
+                                    <td style="padding: 10px;">
+                                        <span style="color: ${statusColor}; font-weight: 700; font-size: 0.7rem; text-transform: uppercase;">${p.status}</span>
+                                    </td>
+                                `;
+                                tbody.appendChild(tr);
+                            });
+                            document.getElementById('modal-payments').style.display = 'block';
+                        } else {
+                            document.getElementById('modal-payments').style.display = 'none';
+                        }
+                    }
+                } catch (err) {
+                    document.getElementById('modal-loader').style.display = 'none';
+                    document.getElementById('modal-error').textContent = "{% trans 'Erro ao carregar dados.' %}";
+                    document.getElementById('modal-error').style.display = 'block';
+                }
+            };
+        });
+    });
+</script>
 {% endblock %}
