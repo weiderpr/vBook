@@ -6,7 +6,7 @@
   "background_color": "#0f172a",
   "theme_color": "#0072ff",
   "orientation": "portrait",
-  "scope": "/book/mobile/",
+  "scope": "/book/",
   "icons": [
     {
       "src": "/book/static/images/hero.png",

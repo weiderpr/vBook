@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="profile-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; justify-content: start; align-items: stretch;">
+    <div class="profile-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr)); gap: 1.5rem; justify-content: start; align-items: stretch;">
         <!-- Plan Info Card -->
         <div class="glass-card shadow-sm" style="padding: 1.5rem; display: flex; flex-direction: column; height: 100%;">
             <h2 style="font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; text-align: left;">{% trans "Meu Plano" %}</h2>
@@ -169,7 +169,12 @@
                         </div>
                     {% endfor %}
                 </div>
-
+                
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--glass-border); text-align: center;">
+                    <a href="{% url 'logout' %}" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                        {% trans "Sair e entrar com outra conta" %}
+                    </a>
                 </div>
             </div>
         </div>
@@ -355,17 +360,71 @@
         transition: opacity 0.3s;
         backdrop-filter: blur(2px);
     }
+
+    @media (max-width: 600px) {
+        .modal-glass {
+            width: 95%;
+            max-height: 90vh;
+        }
+        
+        .modal-body {
+            padding: 1rem;
+        }
+
+        .plan-item-card {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem;
+            gap: 1rem;
+        }
+
+        .plan-info-section {
+            width: 100%;
+            min-width: unset;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .plan-details-row {
+            width: 100%;
+            border-left: none;
+            border-top: 1px solid var(--glass-border);
+            padding-left: 0;
+            padding-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .detail-item {
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .plan-action {
+            width: 100%;
+        }
+
+        .plan-action .btn {
+            width: 100%;
+            padding: 0.75rem !important;
+            font-size: 0.9rem !important;
+        }
+    }
 </style>
 
 <script>
     function openPlansModal() {
         document.getElementById('plansModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
         calculateExpirations();
     }
 
     function closePlansModal() {
         {% if subscription.is_valid or request.user.is_admin %}
             document.getElementById('plansModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         {% else %}
             console.log("Subscription required.");
         {% endif %}

@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Sum
 from decimal import Decimal
@@ -474,3 +477,43 @@ def mobile_update_theme(request):
             request.user.save(update_fields=['mobile_theme_preference'])
             return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'}, status=400)
+@login_required
+def mobile_password_change(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, _('Sua senha foi alterada com sucesso!'))
+            return redirect('mobile:profile')
+    else:
+        form = PasswordChangeForm(request.user)
+    
+    return render(request, 'mobile/password_change.html', {
+        'form': form,
+        'title': _("Alterar Senha")
+    })
+
+@login_required
+def mobile_plans(request):
+    from administration.models import Plan
+    from subscriptions.models import Subscription
+    
+    available_plans = Plan.objects.filter(is_active=True, requires_payment=True).order_by('base_value')
+    subscription = Subscription.objects.filter(user=request.user).first()
+    
+    # Calculate current balance in days
+    subscription_days_remaining = 0
+    if subscription:
+        if subscription.end_date and subscription.status == 'active':
+            now = timezone.now()
+            if subscription.end_date > now:
+                delta = subscription.end_date - now
+                subscription_days_remaining = delta.days
+
+    return render(request, 'mobile/subscription_plans.html', {
+        'available_plans': available_plans,
+        'subscription': subscription,
+        'subscription_days_remaining': subscription_days_remaining,
+        'title': _("Planos e Assinatura")
+    })

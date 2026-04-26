@@ -20,5 +20,7 @@ urlpatterns = [
     path('reserva/<int:pk>/custo/<int:cost_id>/excluir/', views.mobile_delete_reservation_cost, name='reservation_cost_delete'),
     path('reserva/<int:pk>/pagamento/<int:payment_id>/excluir/', views.mobile_delete_reservation_payment, name='reservation_payment_delete'),
     path('perfil/', views.mobile_profile, name='profile'),
+    path('perfil/senha/', views.mobile_password_change, name='password_change'),
     path('perfil/update-theme/', views.mobile_update_theme, name='update_theme'),
+    path('planos/', views.mobile_plans, name='plans'),
 ]

@@ -116,6 +116,8 @@ def login_view(request):
             subscription = Subscription.objects.filter(user=user).first()
             # Se o plano não for válido (vencido ou pendente), vai para o perfil
             if not subscription or not subscription.is_valid:
+                if is_mobile(request):
+                    return redirect('mobile:plans')
                 return redirect('profile')
                 
             if is_mobile(request):
