@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Sum
@@ -269,8 +270,7 @@ def mobile_property_detail(request, pk):
     
     reservations = Reservation.objects.filter(
         property=prop,
-        start_date__gte=first_day_last_month,
-        is_cancelled=False
+        start_date__gte=first_day_last_month
     ).prefetch_related('costs', 'costs__provider', 'payments').order_by('-start_date')
     
     # Annotate with totals for display
@@ -334,13 +334,71 @@ def mobile_reservation_detail(request, pk):
     total_paid = sum(p.value for p in reservation.payments.all())
     remaining = reservation.total_value - total_paid
     
+    # For modals
+    from properties.models import ServiceProvider
+    providers = ServiceProvider.objects.filter(user=request.user)
+    
     return render(request, 'mobile/reservation_detail.html', {
         'reservation': reservation,
         'property': reservation.property,
         'total_paid': total_paid,
         'remaining': remaining,
-        'title': _("Detalhes da Reserva")
+        'providers': providers,
+        'title': _("Detalhes da Reserva"),
+        'confirm_msg': _("Esta mensagem de boas-vindas já foi enviada. Deseja reenviar?")
     })
+
+@login_required
+def mobile_add_reservation_cost(request, pk):
+    if request.method == 'POST':
+        reservation = get_object_or_404(Reservation, pk=pk, property__user=request.user)
+        description = request.POST.get('description')
+        value = Decimal(request.POST.get('value', '0').replace(',', '.'))
+        provider_id = request.POST.get('provider')
+        is_completed = request.POST.get('is_completed') == 'on'
+        
+        cost = ReservationCost.objects.create(
+            reservation=reservation,
+            description=description,
+            value=value,
+            provider_id=provider_id if provider_id else None,
+            is_completed=is_completed
+        )
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)
+
+@login_required
+def mobile_add_reservation_payment(request, pk):
+    if request.method == 'POST':
+        reservation = get_object_or_404(Reservation, pk=pk, property__user=request.user)
+        description = request.POST.get('description')
+        value = Decimal(request.POST.get('value', '0').replace(',', '.'))
+        payment_date = request.POST.get('payment_date')
+        
+        from reservations.models import ReservationPayment
+        ReservationPayment.objects.create(
+            reservation=reservation,
+            description=description,
+            value=value,
+            payment_date=payment_date
+        )
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)
+@login_required
+def mobile_delete_reservation_cost(request, pk, cost_id):
+    reservation = get_object_or_404(Reservation, pk=pk, property__user=request.user)
+    cost = get_object_or_404(ReservationCost, id=cost_id, reservation=reservation)
+    cost.delete()
+    return JsonResponse({'status': 'success'})
+
+@login_required
+def mobile_delete_reservation_payment(request, pk, payment_id):
+    reservation = get_object_or_404(Reservation, pk=pk, property__user=request.user)
+    from reservations.models import ReservationPayment
+    payment = get_object_or_404(ReservationPayment, id=payment_id, reservation=reservation)
+    payment.delete()
+    return JsonResponse({'status': 'success'})
+
 @login_required
 def mobile_send_whatsapp_reservation(request, property_pk, pk):
     from reservations.models import Reservation
@@ -359,3 +417,60 @@ def mobile_send_whatsapp_reservation(request, property_pk, pk):
         messages.error(request, message)
     
     return redirect('mobile:reservation_detail', pk=pk)
+@login_required
+def mobile_send_authorization_whatsapp(request, property_pk, pk):
+    from reservations.views_checkin import ReservationSendAuthorizationWhatsAppView
+    view = ReservationSendAuthorizationWhatsAppView.as_view()
+    return view(request, property_pk=property_pk, pk=pk)
+
+@login_required
+def mobile_reservation_cancel(request, pk):
+    reservation = get_object_or_404(Reservation, pk=pk, property__user=request.user)
+    
+    if not reservation.is_cancelled:
+        reservation.is_cancelled = True
+        reservation.save(update_fields=['is_cancelled'])
+        from django.contrib import messages
+        messages.success(request, _("Reserva cancelada com sucesso."))
+        
+    return redirect('mobile:reservation_detail', pk=pk)
+
+@login_required
+def mobile_reservation_delete(request, pk):
+    reservation = get_object_or_404(Reservation, pk=pk, property__user=request.user)
+    property_pk = reservation.property.pk
+    
+    reservation.delete()
+    from django.contrib import messages
+    messages.success(request, _("Reserva excluída com sucesso."))
+    
+    return redirect('mobile:property_detail', pk=property_pk)
+
+@login_required
+def mobile_reservation_reactivate(request, pk):
+    reservation = get_object_or_404(Reservation, pk=pk, property__user=request.user)
+    
+    if reservation.is_cancelled:
+        reservation.is_cancelled = False
+        reservation.save(update_fields=['is_cancelled'])
+        from django.contrib import messages
+        messages.success(request, _("Reserva reativada com sucesso."))
+        
+    return redirect('mobile:reservation_detail', pk=pk)
+
+@login_required
+def mobile_profile(request):
+    return render(request, 'mobile/mobile_profile.html', {
+        'user': request.user,
+        'title': _("Meu Perfil")
+    })
+
+@login_required
+def mobile_update_theme(request):
+    if request.method == 'POST':
+        theme = request.POST.get('theme')
+        if theme in ['light', 'dark']:
+            request.user.mobile_theme_preference = theme
+            request.user.save(update_fields=['mobile_theme_preference'])
+            return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)

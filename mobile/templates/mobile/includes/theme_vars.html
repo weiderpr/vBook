@@ -1,0 +1,43 @@
+<style>
+    :root {
+        {% if user.mobile_theme_preference == 'light' %}
+            --primary: #0072ff;
+            --primary-light: #00c6ff;
+            --secondary: #6366f1;
+            --bg-dark: #f1f5f9; /* Soft white/gray bg */
+            --card-bg: #ffffff; /* Pure white cards */
+            --text-main: #0f172a; /* Dark text */
+            --text-dim: #64748b; /* Gray text */
+            --border: rgba(0, 0, 0, 0.05);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --header-bg: rgba(241, 245, 249, 0.8);
+            --sidebar-bg: #ffffff;
+            --nav-hover: #f8fafc;
+            --stat-card-bg: #ffffff;
+            --action-card-bg: #ffffff;
+            --input-bg: #f8fafc;
+        {% else %}
+            --primary: #0072ff;
+            --primary-light: #00c6ff;
+            --secondary: #6366f1;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-main: white;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+            --success: #4ade80;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --header-bg: rgba(15, 23, 42, 0.8);
+            --sidebar-bg: #1e293b;
+            --nav-hover: rgba(255, 255, 255, 0.05);
+            --stat-card-bg: rgba(255, 255, 255, 0.05);
+            --action-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            --input-bg: rgba(255, 255, 255, 0.05);
+        {% endif %}
+        --sidebar-width: 280px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+</style>

@@ -9477,3 +9477,707 @@ AttributeError: module 'mobile.views' has no attribute 'mobile_reservations_toda
 [2026-04-26 11:00:55 -0300] [510642] [INFO] Worker exiting (pid: 510642)
 [2026-04-26 11:00:55 -0300] [510644] [INFO] Worker exiting (pid: 510644)
 [2026-04-26 11:00:55 -0300] [510663] [INFO] Worker exiting (pid: 510663)
+[2026-04-26 11:07:06 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:07:06 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:07:06 -0300] [511904] [INFO] Booting worker with pid: 511904
+[2026-04-26 11:07:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:07:08 -0300] [511922] [INFO] Booting worker with pid: 511922
+[2026-04-26 11:07:08 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:07:10 -0300] [511031] [INFO] Worker exiting (pid: 511031)
+[2026-04-26 11:07:10 -0300] [511041] [INFO] Worker exiting (pid: 511041)
+[2026-04-26 11:07:10 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:07:10 -0300] [511013] [INFO] Worker exiting (pid: 511013)
+[2026-04-26 11:07:10 -0300] [511932] [INFO] Booting worker with pid: 511932
+[2026-04-26 11:12:06 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:12:06 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:12:06 -0300] [512557] [INFO] Booting worker with pid: 512557
+[2026-04-26 11:12:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:12:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:12:06 -0300] [512559] [INFO] Booting worker with pid: 512559
+[2026-04-26 11:12:06 -0300] [512561] [INFO] Booting worker with pid: 512561
+[2026-04-26 11:12:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:12:06 -0300] [511904] [INFO] Worker exiting (pid: 511904)
+[2026-04-26 11:12:06 -0300] [511932] [INFO] Worker exiting (pid: 511932)
+[2026-04-26 11:12:06 -0300] [511922] [INFO] Worker exiting (pid: 511922)
+[2026-04-26 11:13:47 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:13:47 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:13:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:13:47 -0300] [512787] [INFO] Booting worker with pid: 512787
+[2026-04-26 11:13:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:13:47 -0300] [512789] [INFO] Booting worker with pid: 512789
+[2026-04-26 11:13:49 -0300] [512557] [INFO] Worker exiting (pid: 512557)
+[2026-04-26 11:13:49 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:13:49 -0300] [512561] [INFO] Worker exiting (pid: 512561)
+[2026-04-26 11:13:49 -0300] [512559] [INFO] Worker exiting (pid: 512559)
+[2026-04-26 11:13:49 -0300] [512810] [INFO] Booting worker with pid: 512810
+[2026-04-26 11:17:40 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:17:40 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:17:40 -0300] [513418] [INFO] Booting worker with pid: 513418
+[2026-04-26 11:17:40 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:17:40 -0300] [513420] [INFO] Booting worker with pid: 513420
+[2026-04-26 11:17:40 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:17:42 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:17:42 -0300] [512789] [INFO] Worker exiting (pid: 512789)
+[2026-04-26 11:17:42 -0300] [512810] [INFO] Worker exiting (pid: 512810)
+[2026-04-26 11:17:42 -0300] [513443] [INFO] Booting worker with pid: 513443
+[2026-04-26 11:17:42 -0300] [512787] [INFO] Worker exiting (pid: 512787)
+[2026-04-26 11:20:29 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:20:29 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:20:29 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:20:29 -0300] [513774] [INFO] Booting worker with pid: 513774
+[2026-04-26 11:20:31 -0300] [513792] [INFO] Booting worker with pid: 513792
+[2026-04-26 11:20:31 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:20:31 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:20:31 -0300] [513418] [INFO] Worker exiting (pid: 513418)
+[2026-04-26 11:20:31 -0300] [513420] [INFO] Worker exiting (pid: 513420)
+[2026-04-26 11:20:31 -0300] [513797] [INFO] Booting worker with pid: 513797
+[2026-04-26 11:20:31 -0300] [513443] [INFO] Worker exiting (pid: 513443)
+[2026-04-26 11:23:35 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:23:35 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:23:35 -0300] [514159] [INFO] Booting worker with pid: 514159
+[2026-04-26 11:23:35 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:23:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:23:37 -0300] [514178] [INFO] Booting worker with pid: 514178
+[2026-04-26 11:23:39 -0300] [513792] [INFO] Worker exiting (pid: 513792)
+[2026-04-26 11:23:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:23:39 -0300] [513774] [INFO] Worker exiting (pid: 513774)
+[2026-04-26 11:23:39 -0300] [513797] [INFO] Worker exiting (pid: 513797)
+[2026-04-26 11:23:39 -0300] [514187] [INFO] Booting worker with pid: 514187
+[2026-04-26 11:31:10 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:31:10 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:31:10 -0300] [515110] [INFO] Booting worker with pid: 515110
+[2026-04-26 11:31:10 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:31:12 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:31:12 -0300] [515129] [INFO] Booting worker with pid: 515129
+[2026-04-26 11:31:14 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:31:14 -0300] [514187] [INFO] Worker exiting (pid: 514187)
+[2026-04-26 11:31:14 -0300] [514178] [INFO] Worker exiting (pid: 514178)
+[2026-04-26 11:31:14 -0300] [514159] [INFO] Worker exiting (pid: 514159)
+[2026-04-26 11:31:14 -0300] [515135] [INFO] Booting worker with pid: 515135
+[2026-04-26 11:34:19 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:34:19 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:34:19 -0300] [515488] [INFO] Booting worker with pid: 515488
+[2026-04-26 11:34:19 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:34:19 -0300] [515490] [INFO] Booting worker with pid: 515490
+[2026-04-26 11:34:19 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:34:21 -0300] [515511] [INFO] Booting worker with pid: 515511
+[2026-04-26 11:34:21 -0300] [515110] [INFO] Worker exiting (pid: 515110)
+[2026-04-26 11:34:21 -0300] [515129] [INFO] Worker exiting (pid: 515129)
+[2026-04-26 11:34:21 -0300] [515135] [INFO] Worker exiting (pid: 515135)
+[2026-04-26 11:34:21 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:35:24 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:35:24 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:35:24 -0300] [515656] [INFO] Booting worker with pid: 515656
+[2026-04-26 11:35:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:35:24 -0300] [515658] [INFO] Booting worker with pid: 515658
+[2026-04-26 11:35:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:35:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:35:24 -0300] [515488] [INFO] Worker exiting (pid: 515488)
+[2026-04-26 11:35:24 -0300] [515490] [INFO] Worker exiting (pid: 515490)
+[2026-04-26 11:35:24 -0300] [515511] [INFO] Worker exiting (pid: 515511)
+[2026-04-26 11:35:24 -0300] [515660] [INFO] Booting worker with pid: 515660
+[2026-04-26 11:37:46 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:37:46 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:37:46 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:37:46 -0300] [515963] [INFO] Booting worker with pid: 515963
+[2026-04-26 11:37:48 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:37:48 -0300] [515984] [INFO] Booting worker with pid: 515984
+[2026-04-26 11:37:50 -0300] [515658] [INFO] Worker exiting (pid: 515658)
+[2026-04-26 11:37:50 -0300] [515656] [INFO] Worker exiting (pid: 515656)
+[2026-04-26 11:37:50 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:37:50 -0300] [515988] [INFO] Booting worker with pid: 515988
+[2026-04-26 11:37:50 -0300] [515660] [INFO] Worker exiting (pid: 515660)
+[2026-04-26 11:40:03 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:40:03 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:40:03 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:40:03 -0300] [516311] [INFO] Booting worker with pid: 516311
+[2026-04-26 11:40:05 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:40:05 -0300] [516333] [INFO] Booting worker with pid: 516333
+[2026-04-26 11:40:07 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:40:07 -0300] [515963] [INFO] Worker exiting (pid: 515963)
+[2026-04-26 11:40:07 -0300] [515988] [INFO] Worker exiting (pid: 515988)
+[2026-04-26 11:40:07 -0300] [515984] [INFO] Worker exiting (pid: 515984)
+[2026-04-26 11:40:07 -0300] [516339] [INFO] Booting worker with pid: 516339
+[2026-04-26 11:45:24 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:45:24 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:45:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:45:24 -0300] [516924] [INFO] Booting worker with pid: 516924
+[2026-04-26 11:45:26 -0300] [516944] [INFO] Booting worker with pid: 516944
+[2026-04-26 11:45:26 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:45:28 -0300] [516311] [INFO] Worker exiting (pid: 516311)
+[2026-04-26 11:45:28 -0300] [516333] [INFO] Worker exiting (pid: 516333)
+[2026-04-26 11:45:28 -0300] [516339] [INFO] Worker exiting (pid: 516339)
+[2026-04-26 11:45:28 -0300] [516952] [INFO] Booting worker with pid: 516952
+[2026-04-26 11:45:28 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:48:38 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:48:38 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:48:38 -0300] [517335] [INFO] Booting worker with pid: 517335
+[2026-04-26 11:48:38 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:48:40 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:48:40 -0300] [517355] [INFO] Booting worker with pid: 517355
+[2026-04-26 11:48:42 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:48:42 -0300] [516924] [INFO] Worker exiting (pid: 516924)
+[2026-04-26 11:48:42 -0300] [516952] [INFO] Worker exiting (pid: 516952)
+[2026-04-26 11:48:42 -0300] [517360] [INFO] Booting worker with pid: 517360
+[2026-04-26 11:48:42 -0300] [516944] [INFO] Worker exiting (pid: 516944)
+[2026-04-26 11:53:12 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:53:12 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:53:12 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:53:12 -0300] [517871] [INFO] Booting worker with pid: 517871
+[2026-04-26 11:53:14 -0300] [517889] [INFO] Booting worker with pid: 517889
+[2026-04-26 11:53:14 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:53:14 -0300] [517355] [INFO] Worker exiting (pid: 517355)
+[2026-04-26 11:53:14 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:53:14 -0300] [517360] [INFO] Worker exiting (pid: 517360)
+[2026-04-26 11:53:14 -0300] [517335] [INFO] Worker exiting (pid: 517335)
+[2026-04-26 11:53:14 -0300] [517892] [INFO] Booting worker with pid: 517892
+[2026-04-26 11:54:54 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:54:54 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:54:54 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:54:54 -0300] [518094] [INFO] Booting worker with pid: 518094
+[2026-04-26 11:54:56 -0300] [518115] [INFO] Booting worker with pid: 518115
+[2026-04-26 11:54:56 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:54:56 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:54:56 -0300] [517889] [INFO] Worker exiting (pid: 517889)
+[2026-04-26 11:54:56 -0300] [517871] [INFO] Worker exiting (pid: 517871)
+[2026-04-26 11:54:56 -0300] [518117] [INFO] Booting worker with pid: 518117
+[2026-04-26 11:54:56 -0300] [517892] [INFO] Worker exiting (pid: 517892)
+[2026-04-26 11:57:39 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:57:39 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:57:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:57:39 -0300] [518427] [INFO] Booting worker with pid: 518427
+[2026-04-26 11:57:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:57:39 -0300] [518429] [INFO] Booting worker with pid: 518429
+[2026-04-26 11:57:39 -0300] [518431] [INFO] Booting worker with pid: 518431
+[2026-04-26 11:57:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:57:39 -0300] [518094] [INFO] Worker exiting (pid: 518094)
+[2026-04-26 11:57:39 -0300] [518117] [INFO] Worker exiting (pid: 518117)
+[2026-04-26 11:57:39 -0300] [518115] [INFO] Worker exiting (pid: 518115)
+[2026-04-26 11:59:12 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 11:59:12 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 11:59:12 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:59:12 -0300] [518641] [INFO] Booting worker with pid: 518641
+[2026-04-26 11:59:12 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:59:12 -0300] [518644] [INFO] Booting worker with pid: 518644
+[2026-04-26 11:59:14 -0300] [518429] [INFO] Worker exiting (pid: 518429)
+[2026-04-26 11:59:14 -0300] [518431] [INFO] Worker exiting (pid: 518431)
+[2026-04-26 11:59:14 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 11:59:14 -0300] [518427] [INFO] Worker exiting (pid: 518427)
+[2026-04-26 11:59:14 -0300] [518664] [INFO] Booting worker with pid: 518664
+[2026-04-26 12:02:27 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:02:27 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:02:27 -0300] [519027] [INFO] Booting worker with pid: 519027
+[2026-04-26 12:02:27 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:02:27 -0300] [519029] [INFO] Booting worker with pid: 519029
+[2026-04-26 12:02:27 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:02:27 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:02:27 -0300] [518641] [INFO] Worker exiting (pid: 518641)
+[2026-04-26 12:02:27 -0300] [518664] [INFO] Worker exiting (pid: 518664)
+[2026-04-26 12:02:27 -0300] [519031] [INFO] Booting worker with pid: 519031
+[2026-04-26 12:02:27 -0300] [518644] [INFO] Worker exiting (pid: 518644)
+[2026-04-26 12:09:16 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:09:16 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:09:17 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:09:17 -0300] [519828] [INFO] Booting worker with pid: 519828
+[2026-04-26 12:09:17 -0300] [519830] [INFO] Booting worker with pid: 519830
+[2026-04-26 12:09:17 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:09:17 -0300] [519832] [INFO] Booting worker with pid: 519832
+[2026-04-26 12:09:17 -0300] [519027] [INFO] Worker exiting (pid: 519027)
+[2026-04-26 12:09:17 -0300] [519029] [INFO] Worker exiting (pid: 519029)
+[2026-04-26 12:09:17 -0300] [519031] [INFO] Worker exiting (pid: 519031)
+[2026-04-26 12:09:17 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:16:02 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:16:02 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:16:02 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:16:02 -0300] [520614] [INFO] Booting worker with pid: 520614
+[2026-04-26 12:16:04 -0300] [520635] [INFO] Booting worker with pid: 520635
+[2026-04-26 12:16:04 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:16:06 -0300] [519828] [INFO] Worker exiting (pid: 519828)
+[2026-04-26 12:16:06 -0300] [519832] [INFO] Worker exiting (pid: 519832)
+[2026-04-26 12:16:06 -0300] [520639] [INFO] Booting worker with pid: 520639
+[2026-04-26 12:16:06 -0300] [519830] [INFO] Worker exiting (pid: 519830)
+[2026-04-26 12:16:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:18:47 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:18:47 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:18:47 -0300] [520959] [INFO] Booting worker with pid: 520959
+[2026-04-26 12:18:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:18:47 -0300] [520961] [INFO] Booting worker with pid: 520961
+[2026-04-26 12:18:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:18:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:18:47 -0300] [520614] [INFO] Worker exiting (pid: 520614)
+[2026-04-26 12:18:47 -0300] [520635] [INFO] Worker exiting (pid: 520635)
+[2026-04-26 12:18:47 -0300] [520639] [INFO] Worker exiting (pid: 520639)
+[2026-04-26 12:18:47 -0300] [520963] [INFO] Booting worker with pid: 520963
+[2026-04-26 12:21:16 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:21:16 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:21:16 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:21:16 -0300] [521277] [INFO] Booting worker with pid: 521277
+[2026-04-26 12:21:16 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:21:16 -0300] [521279] [INFO] Booting worker with pid: 521279
+[2026-04-26 12:21:16 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:21:16 -0300] [520959] [INFO] Worker exiting (pid: 520959)
+[2026-04-26 12:21:16 -0300] [520961] [INFO] Worker exiting (pid: 520961)
+[2026-04-26 12:21:16 -0300] [520963] [INFO] Worker exiting (pid: 520963)
+[2026-04-26 12:21:16 -0300] [521281] [INFO] Booting worker with pid: 521281
+[2026-04-26 12:24:05 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:24:05 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:24:05 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:24:05 -0300] [521627] [INFO] Booting worker with pid: 521627
+[2026-04-26 12:24:05 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:24:05 -0300] [521629] [INFO] Booting worker with pid: 521629
+[2026-04-26 12:24:07 -0300] [521277] [INFO] Worker exiting (pid: 521277)
+[2026-04-26 12:24:07 -0300] [521279] [INFO] Worker exiting (pid: 521279)
+[2026-04-26 12:24:07 -0300] [521281] [INFO] Worker exiting (pid: 521281)
+[2026-04-26 12:24:07 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:24:07 -0300] [521651] [INFO] Booting worker with pid: 521651
+[2026-04-26 12:27:39 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:27:39 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:27:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:27:39 -0300] [522039] [INFO] Booting worker with pid: 522039
+[2026-04-26 12:27:41 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:27:41 -0300] [522057] [INFO] Booting worker with pid: 522057
+[2026-04-26 12:27:43 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:27:43 -0300] [521629] [INFO] Worker exiting (pid: 521629)
+[2026-04-26 12:27:43 -0300] [521651] [INFO] Worker exiting (pid: 521651)
+[2026-04-26 12:27:43 -0300] [521627] [INFO] Worker exiting (pid: 521627)
+[2026-04-26 12:27:43 -0300] [522067] [INFO] Booting worker with pid: 522067
+[2026-04-26 12:30:19 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:30:19 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:30:19 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:30:19 -0300] [522368] [INFO] Booting worker with pid: 522368
+[2026-04-26 12:30:19 -0300] [522370] [INFO] Booting worker with pid: 522370
+[2026-04-26 12:30:19 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:30:21 -0300] [522039] [INFO] Worker exiting (pid: 522039)
+[2026-04-26 12:30:21 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:30:21 -0300] [522067] [INFO] Worker exiting (pid: 522067)
+[2026-04-26 12:30:21 -0300] [522057] [INFO] Worker exiting (pid: 522057)
+[2026-04-26 12:30:21 -0300] [522391] [INFO] Booting worker with pid: 522391
+[2026-04-26 12:32:35 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:32:35 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:32:35 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:32:35 -0300] [522645] [INFO] Booting worker with pid: 522645
+[2026-04-26 12:32:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:32:37 -0300] [522663] [INFO] Booting worker with pid: 522663
+[2026-04-26 12:32:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:32:39 -0300] [522370] [INFO] Worker exiting (pid: 522370)
+[2026-04-26 12:32:39 -0300] [522368] [INFO] Worker exiting (pid: 522368)
+[2026-04-26 12:32:39 -0300] [522668] [INFO] Booting worker with pid: 522668
+[2026-04-26 12:32:39 -0300] [522391] [INFO] Worker exiting (pid: 522391)
+[2026-04-26 12:34:00 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:34:00 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:34:00 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:34:00 -0300] [522845] [INFO] Booting worker with pid: 522845
+[2026-04-26 12:34:00 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:34:00 -0300] [522847] [INFO] Booting worker with pid: 522847
+[2026-04-26 12:34:02 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:34:02 -0300] [522645] [INFO] Worker exiting (pid: 522645)
+[2026-04-26 12:34:02 -0300] [522663] [INFO] Worker exiting (pid: 522663)
+[2026-04-26 12:34:02 -0300] [522668] [INFO] Worker exiting (pid: 522668)
+[2026-04-26 12:34:02 -0300] [522865] [INFO] Booting worker with pid: 522865
+[2026-04-26 12:35:22 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:35:22 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:35:22 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:35:22 -0300] [523038] [INFO] Booting worker with pid: 523038
+[2026-04-26 12:35:24 -0300] [523059] [INFO] Booting worker with pid: 523059
+[2026-04-26 12:35:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:35:24 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:35:24 -0300] [522845] [INFO] Worker exiting (pid: 522845)
+[2026-04-26 12:35:24 -0300] [522865] [INFO] Worker exiting (pid: 522865)
+[2026-04-26 12:35:24 -0300] [522847] [INFO] Worker exiting (pid: 522847)
+[2026-04-26 12:35:24 -0300] [523061] [INFO] Booting worker with pid: 523061
+[2026-04-26 12:36:41 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:36:41 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:36:41 -0300] [523225] [INFO] Booting worker with pid: 523225
+[2026-04-26 12:36:41 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:36:43 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:36:43 -0300] [523246] [INFO] Booting worker with pid: 523246
+[2026-04-26 12:36:45 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:36:45 -0300] [523038] [INFO] Worker exiting (pid: 523038)
+[2026-04-26 12:36:45 -0300] [523059] [INFO] Worker exiting (pid: 523059)
+[2026-04-26 12:36:45 -0300] [523061] [INFO] Worker exiting (pid: 523061)
+[2026-04-26 12:36:45 -0300] [523252] [INFO] Booting worker with pid: 523252
+[2026-04-26 12:38:35 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:38:35 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:38:35 -0300] [523476] [INFO] Booting worker with pid: 523476
+[2026-04-26 12:38:35 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:38:37 -0300] [523496] [INFO] Booting worker with pid: 523496
+[2026-04-26 12:38:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:38:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:38:37 -0300] [523225] [INFO] Worker exiting (pid: 523225)
+[2026-04-26 12:38:37 -0300] [523246] [INFO] Worker exiting (pid: 523246)
+[2026-04-26 12:38:37 -0300] [523252] [INFO] Worker exiting (pid: 523252)
+[2026-04-26 12:38:37 -0300] [523498] [INFO] Booting worker with pid: 523498
+[2026-04-26 12:40:41 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:40:41 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:40:41 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:40:41 -0300] [523797] [INFO] Booting worker with pid: 523797
+[2026-04-26 12:40:43 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:40:43 -0300] [523812] [INFO] Booting worker with pid: 523812
+[2026-04-26 12:40:43 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:40:43 -0300] [523496] [INFO] Worker exiting (pid: 523496)
+[2026-04-26 12:40:43 -0300] [523498] [INFO] Worker exiting (pid: 523498)
+[2026-04-26 12:40:43 -0300] [523476] [INFO] Worker exiting (pid: 523476)
+[2026-04-26 12:40:43 -0300] [523817] [INFO] Booting worker with pid: 523817
+[2026-04-26 12:42:46 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:42:46 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:42:46 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:42:46 -0300] [524064] [INFO] Booting worker with pid: 524064
+[2026-04-26 12:42:46 -0300] [524066] [INFO] Booting worker with pid: 524066
+[2026-04-26 12:42:46 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:42:46 -0300] [524068] [INFO] Booting worker with pid: 524068
+[2026-04-26 12:42:46 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:42:46 -0300] [523797] [INFO] Worker exiting (pid: 523797)
+[2026-04-26 12:42:46 -0300] [523812] [INFO] Worker exiting (pid: 523812)
+[2026-04-26 12:42:46 -0300] [523817] [INFO] Worker exiting (pid: 523817)
+[2026-04-26 12:46:29 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:46:29 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:46:29 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:46:29 -0300] [524471] [INFO] Booting worker with pid: 524471
+[2026-04-26 12:46:29 -0300] [524473] [INFO] Booting worker with pid: 524473
+[2026-04-26 12:46:29 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:46:31 -0300] [524064] [INFO] Worker exiting (pid: 524064)
+[2026-04-26 12:46:31 -0300] [524066] [INFO] Worker exiting (pid: 524066)
+[2026-04-26 12:46:31 -0300] [524068] [INFO] Worker exiting (pid: 524068)
+[2026-04-26 12:46:31 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:46:31 -0300] [524491] [INFO] Booting worker with pid: 524491
+[2026-04-26 12:49:06 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:49:06 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:49:06 -0300] [524798] [INFO] Booting worker with pid: 524798
+[2026-04-26 12:49:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:49:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:49:06 -0300] [524800] [INFO] Booting worker with pid: 524800
+[2026-04-26 12:49:08 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:49:08 -0300] [524471] [INFO] Worker exiting (pid: 524471)
+[2026-04-26 12:49:08 -0300] [524473] [INFO] Worker exiting (pid: 524473)
+[2026-04-26 12:49:08 -0300] [524820] [INFO] Booting worker with pid: 524820
+[2026-04-26 12:49:08 -0300] [524491] [INFO] Worker exiting (pid: 524491)
+[2026-04-26 12:50:58 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:50:58 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:50:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:50:58 -0300] [525044] [INFO] Booting worker with pid: 525044
+[2026-04-26 12:50:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:50:58 -0300] [525046] [INFO] Booting worker with pid: 525046
+[2026-04-26 12:50:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:50:58 -0300] [524798] [INFO] Worker exiting (pid: 524798)
+[2026-04-26 12:50:58 -0300] [524800] [INFO] Worker exiting (pid: 524800)
+[2026-04-26 12:50:58 -0300] [524820] [INFO] Worker exiting (pid: 524820)
+[2026-04-26 12:50:58 -0300] [525048] [INFO] Booting worker with pid: 525048
+[2026-04-26 12:53:37 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:53:37 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:53:37 -0300] [525344] [INFO] Booting worker with pid: 525344
+[2026-04-26 12:53:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:53:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:53:37 -0300] [525346] [INFO] Booting worker with pid: 525346
+[2026-04-26 12:53:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:53:37 -0300] [525348] [INFO] Booting worker with pid: 525348
+[2026-04-26 12:53:37 -0300] [525046] [INFO] Worker exiting (pid: 525046)
+[2026-04-26 12:53:37 -0300] [525048] [INFO] Worker exiting (pid: 525048)
+[2026-04-26 12:53:37 -0300] [525044] [INFO] Worker exiting (pid: 525044)
+[2026-04-26 12:55:31 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:55:31 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:55:31 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:55:31 -0300] [525587] [INFO] Booting worker with pid: 525587
+[2026-04-26 12:55:31 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:55:31 -0300] [525590] [INFO] Booting worker with pid: 525590
+[2026-04-26 12:55:33 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:55:33 -0300] [525348] [INFO] Worker exiting (pid: 525348)
+[2026-04-26 12:55:33 -0300] [525344] [INFO] Worker exiting (pid: 525344)
+[2026-04-26 12:55:33 -0300] [525610] [INFO] Booting worker with pid: 525610
+[2026-04-26 12:55:33 -0300] [525346] [INFO] Worker exiting (pid: 525346)
+[2026-04-26 12:57:33 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:57:33 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:57:33 -0300] [525942] [INFO] Booting worker with pid: 525942
+[2026-04-26 12:57:33 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:57:33 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:57:33 -0300] [525944] [INFO] Booting worker with pid: 525944
+[2026-04-26 12:57:33 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:57:33 -0300] [525590] [INFO] Worker exiting (pid: 525590)
+[2026-04-26 12:57:33 -0300] [525610] [INFO] Worker exiting (pid: 525610)
+[2026-04-26 12:57:33 -0300] [525946] [INFO] Booting worker with pid: 525946
+[2026-04-26 12:57:33 -0300] [525587] [INFO] Worker exiting (pid: 525587)
+[2026-04-26 12:59:39 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 12:59:39 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 12:59:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:59:39 -0300] [526289] [INFO] Booting worker with pid: 526289
+[2026-04-26 12:59:39 -0300] [526291] [INFO] Booting worker with pid: 526291
+[2026-04-26 12:59:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:59:39 -0300] [525944] [INFO] Worker exiting (pid: 525944)
+[2026-04-26 12:59:39 -0300] [525942] [INFO] Worker exiting (pid: 525942)
+[2026-04-26 12:59:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 12:59:39 -0300] [526293] [INFO] Booting worker with pid: 526293
+[2026-04-26 12:59:39 -0300] [525946] [INFO] Worker exiting (pid: 525946)
+[2026-04-26 13:04:05 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:04:05 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:04:05 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:04:05 -0300] [526863] [INFO] Booting worker with pid: 526863
+[2026-04-26 13:04:05 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:04:05 -0300] [526865] [INFO] Booting worker with pid: 526865
+[2026-04-26 13:04:07 -0300] [526293] [INFO] Worker exiting (pid: 526293)
+[2026-04-26 13:04:07 -0300] [526289] [INFO] Worker exiting (pid: 526289)
+[2026-04-26 13:04:07 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:04:07 -0300] [526291] [INFO] Worker exiting (pid: 526291)
+[2026-04-26 13:04:07 -0300] [526888] [INFO] Booting worker with pid: 526888
+[2026-04-26 13:06:55 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:06:55 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:06:56 -0300] [527205] [INFO] Booting worker with pid: 527205
+[2026-04-26 13:06:56 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:06:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:06:58 -0300] [527228] [INFO] Booting worker with pid: 527228
+[2026-04-26 13:06:58 -0300] [526863] [INFO] Worker exiting (pid: 526863)
+[2026-04-26 13:06:58 -0300] [526888] [INFO] Worker exiting (pid: 526888)
+[2026-04-26 13:06:58 -0300] [526865] [INFO] Worker exiting (pid: 526865)
+[2026-04-26 13:06:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:06:58 -0300] [527230] [INFO] Booting worker with pid: 527230
+[2026-04-26 13:10:25 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:10:25 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:10:26 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:10:26 -0300] [527660] [INFO] Booting worker with pid: 527660
+[2026-04-26 13:10:26 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:10:26 -0300] [527662] [INFO] Booting worker with pid: 527662
+[2026-04-26 13:10:26 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:10:26 -0300] [527205] [INFO] Worker exiting (pid: 527205)
+[2026-04-26 13:10:26 -0300] [527228] [INFO] Worker exiting (pid: 527228)
+[2026-04-26 13:10:26 -0300] [527230] [INFO] Worker exiting (pid: 527230)
+[2026-04-26 13:10:26 -0300] [527664] [INFO] Booting worker with pid: 527664
+[2026-04-26 13:12:56 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:12:56 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:12:56 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:12:56 -0300] [527981] [INFO] Booting worker with pid: 527981
+[2026-04-26 13:12:56 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:12:56 -0300] [527983] [INFO] Booting worker with pid: 527983
+[2026-04-26 13:12:56 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:12:56 -0300] [527664] [INFO] Worker exiting (pid: 527664)
+[2026-04-26 13:12:56 -0300] [527660] [INFO] Worker exiting (pid: 527660)
+[2026-04-26 13:12:56 -0300] [527662] [INFO] Worker exiting (pid: 527662)
+[2026-04-26 13:12:56 -0300] [527985] [INFO] Booting worker with pid: 527985
+[2026-04-26 13:15:16 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:15:16 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:15:16 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:15:16 -0300] [528262] [INFO] Booting worker with pid: 528262
+[2026-04-26 13:15:16 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:15:16 -0300] [528264] [INFO] Booting worker with pid: 528264
+[2026-04-26 13:15:16 -0300] [528267] [INFO] Booting worker with pid: 528267
+[2026-04-26 13:15:16 -0300] [527981] [INFO] Worker exiting (pid: 527981)
+[2026-04-26 13:15:16 -0300] [527983] [INFO] Worker exiting (pid: 527983)
+[2026-04-26 13:15:16 -0300] [527985] [INFO] Worker exiting (pid: 527985)
+[2026-04-26 13:15:16 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:18:26 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:18:26 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:18:26 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:18:26 -0300] [528636] [INFO] Booting worker with pid: 528636
+[2026-04-26 13:18:28 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:18:28 -0300] [528653] [INFO] Booting worker with pid: 528653
+[2026-04-26 13:18:28 -0300] [528264] [INFO] Worker exiting (pid: 528264)
+[2026-04-26 13:18:28 -0300] [528267] [INFO] Worker exiting (pid: 528267)
+[2026-04-26 13:18:28 -0300] [528262] [INFO] Worker exiting (pid: 528262)
+[2026-04-26 13:18:28 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:18:28 -0300] [528655] [INFO] Booting worker with pid: 528655
+[2026-04-26 13:20:39 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:20:39 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:20:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:20:39 -0300] [528924] [INFO] Booting worker with pid: 528924
+[2026-04-26 13:20:41 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:20:41 -0300] [528945] [INFO] Booting worker with pid: 528945
+[2026-04-26 13:20:41 -0300] [528655] [INFO] Worker exiting (pid: 528655)
+[2026-04-26 13:20:41 -0300] [528636] [INFO] Worker exiting (pid: 528636)
+[2026-04-26 13:20:41 -0300] [528653] [INFO] Worker exiting (pid: 528653)
+[2026-04-26 13:20:41 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:20:41 -0300] [528949] [INFO] Booting worker with pid: 528949
+[2026-04-26 13:23:47 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:23:47 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:23:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:23:47 -0300] [529331] [INFO] Booting worker with pid: 529331
+[2026-04-26 13:23:49 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:23:49 -0300] [529351] [INFO] Booting worker with pid: 529351
+[2026-04-26 13:23:49 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:23:49 -0300] [528945] [INFO] Worker exiting (pid: 528945)
+[2026-04-26 13:23:49 -0300] [528949] [INFO] Worker exiting (pid: 528949)
+[2026-04-26 13:23:49 -0300] [528924] [INFO] Worker exiting (pid: 528924)
+[2026-04-26 13:23:49 -0300] [529354] [INFO] Booting worker with pid: 529354
+[2026-04-26 13:26:39 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:26:39 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:26:39 -0300] [529679] [INFO] Booting worker with pid: 529679
+[2026-04-26 13:26:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:26:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:26:39 -0300] [529681] [INFO] Booting worker with pid: 529681
+[2026-04-26 13:26:41 -0300] [529703] [INFO] Booting worker with pid: 529703
+[2026-04-26 13:26:41 -0300] [529354] [INFO] Worker exiting (pid: 529354)
+[2026-04-26 13:26:41 -0300] [529351] [INFO] Worker exiting (pid: 529351)
+[2026-04-26 13:26:41 -0300] [529331] [INFO] Worker exiting (pid: 529331)
+[2026-04-26 13:26:41 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:29:47 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:29:47 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:29:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:29:47 -0300] [530057] [INFO] Booting worker with pid: 530057
+[2026-04-26 13:29:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:29:47 -0300] [530059] [INFO] Booting worker with pid: 530059
+[2026-04-26 13:29:47 -0300] [529679] [INFO] Worker exiting (pid: 529679)
+[2026-04-26 13:29:47 -0300] [529681] [INFO] Worker exiting (pid: 529681)
+[2026-04-26 13:29:47 -0300] [529703] [INFO] Worker exiting (pid: 529703)
+[2026-04-26 13:29:47 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:29:47 -0300] [530061] [INFO] Booting worker with pid: 530061
+[2026-04-26 13:33:48 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:33:48 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:33:48 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:33:48 -0300] [530551] [INFO] Booting worker with pid: 530551
+[2026-04-26 13:33:50 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:33:50 -0300] [530571] [INFO] Booting worker with pid: 530571
+[2026-04-26 13:33:52 -0300] [530059] [INFO] Worker exiting (pid: 530059)
+[2026-04-26 13:33:52 -0300] [530061] [INFO] Worker exiting (pid: 530061)
+[2026-04-26 13:33:52 -0300] [530057] [INFO] Worker exiting (pid: 530057)
+[2026-04-26 13:33:52 -0300] [530582] [INFO] Booting worker with pid: 530582
+[2026-04-26 13:33:52 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:36:07 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:36:07 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:36:07 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:36:07 -0300] [530837] [INFO] Booting worker with pid: 530837
+[2026-04-26 13:36:09 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:36:09 -0300] [530855] [INFO] Booting worker with pid: 530855
+[2026-04-26 13:36:09 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:36:09 -0300] [530571] [INFO] Worker exiting (pid: 530571)
+[2026-04-26 13:36:09 -0300] [530857] [INFO] Booting worker with pid: 530857
+[2026-04-26 13:36:09 -0300] [530582] [INFO] Worker exiting (pid: 530582)
+[2026-04-26 13:36:09 -0300] [530551] [INFO] Worker exiting (pid: 530551)
+[2026-04-26 13:38:29 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:38:29 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:38:29 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:38:29 -0300] [531133] [INFO] Booting worker with pid: 531133
+[2026-04-26 13:38:29 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:38:29 -0300] [531135] [INFO] Booting worker with pid: 531135
+[2026-04-26 13:38:29 -0300] [530837] [INFO] Worker exiting (pid: 530837)
+[2026-04-26 13:38:29 -0300] [530855] [INFO] Worker exiting (pid: 530855)
+[2026-04-26 13:38:29 -0300] [530857] [INFO] Worker exiting (pid: 530857)
+[2026-04-26 13:38:29 -0300] [531137] [INFO] Booting worker with pid: 531137
+[2026-04-26 13:38:29 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:47:58 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:47:58 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:47:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:47:58 -0300] [532339] [INFO] Booting worker with pid: 532339
+[2026-04-26 13:47:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:47:58 -0300] [532341] [INFO] Booting worker with pid: 532341
+[2026-04-26 13:47:58 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:47:58 -0300] [531133] [INFO] Worker exiting (pid: 531133)
+[2026-04-26 13:47:58 -0300] [531135] [INFO] Worker exiting (pid: 531135)
+[2026-04-26 13:47:58 -0300] [531137] [INFO] Worker exiting (pid: 531137)
+[2026-04-26 13:47:58 -0300] [532343] [INFO] Booting worker with pid: 532343
+[2026-04-26 13:50:33 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:50:33 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:50:33 -0300] [532700] [INFO] Booting worker with pid: 532700
+[2026-04-26 13:50:33 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:50:35 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:50:35 -0300] [532719] [INFO] Booting worker with pid: 532719
+[2026-04-26 13:50:35 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:50:35 -0300] [532343] [INFO] Worker exiting (pid: 532343)
+[2026-04-26 13:50:35 -0300] [532339] [INFO] Worker exiting (pid: 532339)
+[2026-04-26 13:50:35 -0300] [532341] [INFO] Worker exiting (pid: 532341)
+[2026-04-26 13:50:35 -0300] [532721] [INFO] Booting worker with pid: 532721
+[2026-04-26 13:51:53 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:51:53 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:51:53 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:51:53 -0300] [532900] [INFO] Booting worker with pid: 532900
+[2026-04-26 13:51:53 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:51:53 -0300] [532902] [INFO] Booting worker with pid: 532902
+[2026-04-26 13:51:53 -0300] [532700] [INFO] Worker exiting (pid: 532700)
+[2026-04-26 13:51:53 -0300] [532719] [INFO] Worker exiting (pid: 532719)
+[2026-04-26 13:51:53 -0300] [532721] [INFO] Worker exiting (pid: 532721)
+[2026-04-26 13:51:53 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:51:53 -0300] [532904] [INFO] Booting worker with pid: 532904
+[2026-04-26 13:52:20 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:52:20 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:52:20 -0300] [532995] [INFO] Booting worker with pid: 532995
+[2026-04-26 13:52:20 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:52:20 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:52:20 -0300] [532997] [INFO] Booting worker with pid: 532997
+[2026-04-26 13:52:22 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:52:22 -0300] [532902] [INFO] Worker exiting (pid: 532902)
+[2026-04-26 13:52:22 -0300] [532900] [INFO] Worker exiting (pid: 532900)
+[2026-04-26 13:52:22 -0300] [532904] [INFO] Worker exiting (pid: 532904)
+[2026-04-26 13:52:22 -0300] [533008] [INFO] Booting worker with pid: 533008
+[2026-04-26 13:53:03 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:53:03 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:53:03 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:53:03 -0300] [533119] [INFO] Booting worker with pid: 533119
+[2026-04-26 13:53:05 -0300] [533142] [INFO] Booting worker with pid: 533142
+[2026-04-26 13:53:05 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:53:07 -0300] [532995] [INFO] Worker exiting (pid: 532995)
+[2026-04-26 13:53:07 -0300] [532997] [INFO] Worker exiting (pid: 532997)
+[2026-04-26 13:53:07 -0300] [533008] [INFO] Worker exiting (pid: 533008)
+[2026-04-26 13:53:07 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:53:07 -0300] [533147] [INFO] Booting worker with pid: 533147
+[2026-04-26 13:54:11 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:54:11 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:54:11 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:54:11 -0300] [533286] [INFO] Booting worker with pid: 533286
+[2026-04-26 13:54:11 -0300] [533288] [INFO] Booting worker with pid: 533288
+[2026-04-26 13:54:12 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:54:13 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:54:13 -0300] [533147] [INFO] Worker exiting (pid: 533147)
+[2026-04-26 13:54:13 -0300] [533119] [INFO] Worker exiting (pid: 533119)
+[2026-04-26 13:54:13 -0300] [533142] [INFO] Worker exiting (pid: 533142)
+[2026-04-26 13:54:13 -0300] [533307] [INFO] Booting worker with pid: 533307
+[2026-04-26 13:54:37 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:54:37 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:54:37 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:54:37 -0300] [533376] [INFO] Booting worker with pid: 533376
+[2026-04-26 13:54:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:54:39 -0300] [533393] [INFO] Booting worker with pid: 533393
+[2026-04-26 13:54:39 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:54:39 -0300] [533286] [INFO] Worker exiting (pid: 533286)
+[2026-04-26 13:54:39 -0300] [533307] [INFO] Worker exiting (pid: 533307)
+[2026-04-26 13:54:39 -0300] [533288] [INFO] Worker exiting (pid: 533288)
+[2026-04-26 13:54:39 -0300] [533395] [INFO] Booting worker with pid: 533395
+[2026-04-26 13:55:00 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:55:00 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:55:00 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:55:00 -0300] [533460] [INFO] Booting worker with pid: 533460
+[2026-04-26 13:55:00 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:55:00 -0300] [533462] [INFO] Booting worker with pid: 533462
+[2026-04-26 13:55:02 -0300] [533395] [INFO] Worker exiting (pid: 533395)
+[2026-04-26 13:55:02 -0300] [533393] [INFO] Worker exiting (pid: 533393)
+[2026-04-26 13:55:02 -0300] [533376] [INFO] Worker exiting (pid: 533376)
+[2026-04-26 13:55:02 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:55:02 -0300] [533479] [INFO] Booting worker with pid: 533479
+[2026-04-26 13:57:00 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:57:00 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:57:00 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:57:00 -0300] [533718] [INFO] Booting worker with pid: 533718
+[2026-04-26 13:57:00 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:57:00 -0300] [533720] [INFO] Booting worker with pid: 533720
+[2026-04-26 13:57:01 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:57:01 -0300] [533460] [INFO] Worker exiting (pid: 533460)
+[2026-04-26 13:57:01 -0300] [533462] [INFO] Worker exiting (pid: 533462)
+[2026-04-26 13:57:01 -0300] [533479] [INFO] Worker exiting (pid: 533479)
+[2026-04-26 13:57:01 -0300] [533722] [INFO] Booting worker with pid: 533722
+[2026-04-26 13:58:42 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 13:58:42 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 13:58:42 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:58:42 -0300] [533979] [INFO] Booting worker with pid: 533979
+[2026-04-26 13:58:42 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:58:42 -0300] [533981] [INFO] Booting worker with pid: 533981
+[2026-04-26 13:58:42 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 13:58:42 -0300] [533720] [INFO] Worker exiting (pid: 533720)
+[2026-04-26 13:58:42 -0300] [533718] [INFO] Worker exiting (pid: 533718)
+[2026-04-26 13:58:42 -0300] [533722] [INFO] Worker exiting (pid: 533722)
+[2026-04-26 13:58:42 -0300] [533983] [INFO] Booting worker with pid: 533983
+[2026-04-26 14:01:06 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 14:01:06 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 14:01:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 14:01:06 -0300] [534286] [INFO] Booting worker with pid: 534286
+[2026-04-26 14:01:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 14:01:06 -0300] [534288] [INFO] Booting worker with pid: 534288
+[2026-04-26 14:01:08 -0300] [533983] [INFO] Worker exiting (pid: 533983)
+[2026-04-26 14:01:08 -0300] [533981] [INFO] Worker exiting (pid: 533981)
+[2026-04-26 14:01:08 -0300] [533979] [INFO] Worker exiting (pid: 533979)
+[2026-04-26 14:01:08 -0300] [534309] [INFO] Booting worker with pid: 534309
+[2026-04-26 14:01:08 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 15:23:14 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 15:23:14 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 15:23:14 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 15:23:14 -0300] [541762] [INFO] Booting worker with pid: 541762
+[2026-04-26 15:23:16 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 15:23:16 -0300] [541784] [INFO] Booting worker with pid: 541784
+[2026-04-26 15:23:16 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 15:23:16 -0300] [534286] [INFO] Worker exiting (pid: 534286)
+[2026-04-26 15:23:16 -0300] [534309] [INFO] Worker exiting (pid: 534309)
+[2026-04-26 15:23:16 -0300] [541789] [INFO] Booting worker with pid: 541789
+[2026-04-26 15:23:16 -0300] [534288] [INFO] Worker exiting (pid: 534288)

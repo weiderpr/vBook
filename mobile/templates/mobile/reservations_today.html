@@ -10,31 +10,53 @@
     <title>{{ title }} - VerticeBook</title>
     <link rel="manifest" href="/book/static/manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    {% include 'mobile/includes/theme_vars.html' %}
+
     <style>
-        :root {
-            --primary: #0072ff;
-            --primary-light: #00c6ff;
-            --bg-dark: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --transition: all 0.3s ease;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg-dark); color: var(--text-main); padding: 1.5rem; padding-top: 4.5rem; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 1.5rem; 
+            padding-top: 4.5rem;
+            padding-bottom: 2rem;
+        }
 
         .header {
-            position: fixed; top: 0; left: 0; width: 100%; padding: 1rem 1.5rem;
-            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px);
-            z-index: 100; display: flex; align-items: center; gap: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
         }
 
         .back-btn {
-            background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white; width: 36px; height: 36px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 1rem;
             text-decoration: none;
         }
 
@@ -53,7 +75,7 @@
 
         .res-header { display: flex; justify-content: space-between; align-items: flex-start; }
         .res-name { font-size: 1.1rem; font-weight: 700; }
-        .res-property { font-size: 0.85rem; color: var(--primary-light); font-weight: 600; }
+        .res-property { font-size: 0.85rem; color: var(--text-main); font-weight: 600; }
         .res-date { font-size: 0.8rem; color: var(--text-dim); }
 
         .empty-state { text-align: center; margin-top: 5rem; color: var(--text-dim); }

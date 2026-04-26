@@ -10,19 +10,10 @@
     <title>VerticeBook Mobile</title>
     <link rel="manifest" href="/book/static/manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #0072ff;
-            --primary-light: #00c6ff;
-            --secondary: #6366f1;
-            --bg-dark: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --sidebar-width: 280px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    
+    {% include 'mobile/includes/theme_vars.html' %}
 
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -64,13 +55,14 @@
             left: calc(-1 * var(--sidebar-width));
             width: var(--sidebar-width);
             height: 100%;
-            background: #1e293b;
+            background: var(--sidebar-bg);
             z-index: 1001;
             transition: var(--transition);
             display: flex;
             flex-direction: column;
             padding: 2rem 1.5rem;
-            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.3);
+            border-right: 1px solid var(--border);
         }
 
         .sidebar.active {
@@ -101,6 +93,7 @@
             font-size: 1.2rem;
             font-weight: 700;
             letter-spacing: -0.5px;
+            color: var(--text-main);
         }
 
         .nav-list {
@@ -123,12 +116,12 @@
         }
 
         .nav-item:hover, .nav-item.active {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
+            background: var(--nav-hover);
+            color: var(--text-main);
         }
 
         .nav-item.active {
-            color: var(--primary-light);
+            color: var(--primary);
         }
 
         .nav-item svg {
@@ -148,19 +141,19 @@
             left: 0;
             width: 100%;
             padding: 1rem 1.5rem;
-            background: rgba(15, 23, 42, 0.8);
+            background: var(--header-bg);
             backdrop-filter: blur(12px);
             z-index: 100;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border);
         }
 
         .menu-toggle {
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
+            border: 1px solid var(--border);
+            color: var(--text-main);
             width: 40px;
             height: 40px;
             border-radius: 10px;
@@ -175,7 +168,7 @@
             margin-left: 1rem;
             font-weight: 600;
             font-size: 0.95rem;
-            color: white;
+            color: var(--text-main);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -185,6 +178,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            text-decoration: none;
         }
 
         .user-avatar {
@@ -198,7 +192,7 @@
             font-weight: 600;
             font-size: 0.9rem;
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--border);
         }
 
         /* Dashboard Cards */
@@ -210,10 +204,7 @@
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-main);
         }
 
         .welcome-subtitle {
@@ -653,13 +644,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
         </button>
         <div class="top-user-name">{{ user.full_name }}</div>
-        <div class="user-profile">
+        <a href="{% url 'mobile:profile' %}" class="user-profile">
             {% if user.profile_picture %}
                 <img src="{{ user.profile_picture.url }}" alt="{{ user.full_name }}" class="user-avatar" style="object-fit: cover;">
             {% else %}
                 <div class="user-avatar">{{ user.full_name|first|upper }}</div>
             {% endif %}
-        </div>
+        </a>
     </div>
 
     <main class="main-wrapper">

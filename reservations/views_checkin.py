@@ -381,19 +381,48 @@ class ReservationSendAuthorizationWhatsAppView(LoginRequiredMixin, View):
 
         pdf_bytes = None
         
-        # Tenta pegar o PDF enviado pelo frontend (Blob/Base64)
-        if 'pdf_base64' in request.POST:
+        # 1. Tenta pegar a IMAGEM capturada (Fidelidade Absoluta) ou o PDF
+        if 'img_base64' in request.POST:
+            try:
+                import base64
+                from fpdf import FPDF
+                img_data = request.POST.get('img_base64')
+                if ',' in img_data:
+                    img_data = img_data.split(',')[1]
+                img_bytes = base64.b64decode(img_data)
+                
+                # Monta o PDF no servidor usando a imagem exata da tela
+                pdf = FPDF()
+                pdf.set_margins(0, 0, 0)
+                pdf.set_auto_page_break(False)
+                pdf.add_page()
+                
+                # Salva imagem temporária para o FPDF ler
+                img_buffer = io.BytesIO(img_bytes)
+                # 210mm é a largura do A4. O FPDF manterá a proporção.
+                pdf.image(img_buffer, x=0, y=0, w=210)
+                
+                pdf_output = io.BytesIO()
+                # Usamos latin1 para o output do FPDF
+                pdf_bytes = pdf.output(dest='S').encode('latin1')
+                logger.info(f"Gerado PDF de fidelidade absoluta (Zero Margins) para reserva {pk}")
+            except Exception as e:
+                logger.error(f"Erro ao processar imagem para PDF: {e}")
+
+        if not pdf_bytes and 'pdf_file' in request.FILES:
+            pdf_bytes = request.FILES['pdf_file'].read()
+            logger.info(f"Recebido PDF via upload direto para reserva {pk}")
+        elif not pdf_bytes and 'pdf_base64' in request.POST:
             try:
                 import base64
                 pdf_data = request.POST.get('pdf_base64')
                 if ',' in pdf_data:
                     pdf_data = pdf_data.split(',')[1]
                 pdf_bytes = base64.b64decode(pdf_data)
-                logger.info(f"Recebido PDF via base64 para reserva {pk}")
             except Exception as e:
                 logger.error(f"Erro ao decodificar PDF base64: {e}")
         
-        # Se não recebeu, gera no servidor (fallback ou legibilidade)
+        # Se nada funcionou, gera o PDF padrão (fallback)
         if not pdf_bytes:
             try:
                 pdf_bytes = generate_reservation_authorization_pdf(reservation)
@@ -433,7 +462,7 @@ class GuestAuthorizationHTMLView(View):
     """
     Retorna o HTML da autorizacao para o hospede (acesso via token).
     """
-    def get(self, request, token):
+    def get(self, request, token, property_pk=None):
         reservation = get_object_or_404(Reservation, checkin_token=token)
         if not reservation.checkin_completed:
             return HttpResponseForbidden("Check-in nao concluido")

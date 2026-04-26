@@ -146,4 +146,58 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 </style>
+
+<script>
+    // Official Bridge for Mobile App Preview and Generation
+    window.addEventListener('message', async (event) => {
+        const target = document.getElementById('vbookAuthHtmlContent');
+        if (!target) return;
+
+        if (event.data === 'request_preview' || event.data === 'request_pdf') {
+            try {
+                // Ensure content is loaded
+                if (target.innerHTML.trim().length < 50) {
+                    const response = await fetch("{% url 'guest_authorization_html' token=reservation.checkin_token %}");
+                    const html = await response.text();
+                    target.innerHTML = html;
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+                
+                // Force visibility for capture
+                const overlay = document.getElementById('processingOverlay');
+                const originalDisplay = overlay.style.display;
+                overlay.style.display = 'flex';
+                overlay.style.opacity = '0';
+                
+                const canvas = await html2canvas(target, {
+                    scale: 2.5,
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    width: 794,
+                    windowWidth: 1200
+                });
+                
+                overlay.style.display = originalDisplay;
+                overlay.style.opacity = '1';
+
+                const imgData = canvas.toDataURL('image/png');
+
+                if (event.data === 'request_preview') {
+                    window.parent.postMessage({ type: 'preview_ready', img: imgData }, "*");
+                } else if (event.data === 'request_pdf') {
+                    // Generate EXACT SAME PDF as the guest download
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'FAST');
+                    window.parent.postMessage({ 
+                        type: 'pdf_ready', 
+                        pdfBlob: pdf.output('blob') 
+                    }, "*");
+                }
+            } catch (err) {
+                console.error("Bridge Error:", err);
+            }
+        }
+    });
+</script>
 {% endblock %}

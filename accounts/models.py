@@ -22,6 +22,12 @@ class CustomUser(AbstractUser):
         default='pt-br',
         verbose_name="Preferência de Idioma"
     )
+    mobile_theme_preference = models.CharField(
+        max_length=10, 
+        choices=[('light', 'Light'), ('dark', 'Dark')], 
+        default='dark',
+        verbose_name="Preferência de Tema Mobile"
+    )
 
     # Evolution API / WhatsApp Fields
     whatsapp_instance_name = models.CharField(max_length=100, blank=True, null=True, unique=True, verbose_name="Nome da Instância WhatsApp")
