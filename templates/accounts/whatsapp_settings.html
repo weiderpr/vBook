@@ -11,7 +11,46 @@
     </div>
 </div>
 
-    <!-- Main Content Area -->
+    {% if status == 'not_created' %}
+    <!-- State: Not Created (Show Big Button) -->
+    <div class="card glass-card border-0 shadow-lg" style="max-width: 800px; margin: 0 auto; overflow: hidden; border-radius: 24px;">
+        <div class="card-body p-5 text-center">
+            <div class="whatsapp-setup-icon mb-4">
+                <div class="icon-circle" style="width: 100px; height: 100px; background: rgba(37, 211, 102, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                </div>
+            </div>
+            <h2 class="h3 font-weight-bold mb-5 text-center">{% trans "Conecte seu WhatsApp" %}</h2>
+            
+            <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <p class="text-muted mb-4" style="line-height: 1.6; font-size: 1.1rem;">
+                    {% trans "Para automatizar suas mensagens e facilitar o atendimento, você precisa primeiro criar uma conexão segura com nossa API." %}
+                </p>
+                
+                <div class="mb-5">
+                    <button type="button" class="btn btn-success btn-lg px-5 py-3 shadow-lg" style="border-radius: 16px; font-weight: 600; background: #25D366; border: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.8rem;" onclick="openConfirmModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        {% trans "Começar Conexão" %}
+                    </button>
+                </div>
+                
+                <div class="pt-4 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
+                    <div class="d-flex flex-column gap-3 opacity: 0.8;">
+                        <div class="d-flex align-items: center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+                            <span style="font-size: 1.1rem;">{% trans "Criptografia Segura" %}</span>
+                        </div>
+                        <div class="d-flex align-items: center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                            <span style="font-size: 1.1rem;">{% trans "Envio Instantâneo" %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- State: Instance Exists (Show QR or Status) -->
     <div class="profile-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; justify-content: start; align-items: stretch;">
         
         <!-- Card 1: Status Visual (Ícone Pulsante ou QR) -->
@@ -86,6 +125,32 @@
             </div>
         </div>
     </div>
+    {% endif %}
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmModal" class="confirm-modal-overlay" style="display: none;">
+    <div class="confirm-modal-card glass-card">
+        <div class="confirm-modal-header">
+            <h3 class="h5 mb-0">{% trans "Confirmar Conexão" %}</h3>
+            <button type="button" class="btn-close-modal" onclick="closeConfirmModal()">&times;</button>
+        </div>
+        <div class="confirm-modal-body p-4 text-center">
+            <div class="mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <p class="mb-4">{% trans "Deseja criar sua instância de conexão agora? Isso permitirá que você conecte seu WhatsApp para automatizar seus atendimentos." %}</p>
+            <form action="{% url 'create_whatsapp_instance' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary w-100 py-3 mb-2" style="border-radius: 12px; font-weight: 600;">
+                    {% trans "Sim, Criar Conexão" %}
+                </button>
+                <button type="button" class="btn btn-link text-muted" onclick="closeConfirmModal()">
+                    {% trans "Cancelar" %}
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -135,9 +200,59 @@
         60% { transform: scale(1.1); }
         100% { transform: scale(1); }
     }
+
+    /* Confirm Modal Styles */
+    .confirm-modal-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3000;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .confirm-modal-card {
+        width: 90%;
+        max-width: 450px;
+        border-radius: 24px;
+        overflow: hidden;
+        animation: slideUp 0.3s ease;
+    }
+
+    .confirm-modal-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn-close-modal {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 </style>
 
 <script>
+    function openConfirmModal() {
+        document.getElementById('confirmModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeConfirmModal() {
+        document.getElementById('confirmModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
     // Auto-refresh when status is not open to check for QR connection
     {% if status != 'open' %}
     setInterval(() => {

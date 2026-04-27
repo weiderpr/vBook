@@ -168,26 +168,19 @@ def whatsapp_settings_view(request):
     user = request.user
     service = EvolutionService(user=user)
     
-    status = service.get_connection_status()
-    
-    # Se não tiver instância ainda ou se ela foi deletada do servidor (not_found), tenta criar/vincular
-    if not user.whatsapp_instance_name or status == 'not_found':
-        instance_name = f"vbook_{user.id}"
-        result = service.create_instance(instance_name)
-        if result:
-            # Na v2, a apikey da instância é retornada no campo 'hash' como uma string
-            hash_data = result.get('hash')
-            if isinstance(hash_data, str):
-                apikey = hash_data
-            else:
-                instance_data = result.get('instance', {})
-                apikey = instance_data.get('apikey') if isinstance(instance_data, dict) else None
-                
-            user.whatsapp_instance_name = instance_name
-            user.whatsapp_instance_key = apikey
+    # Se não tiver instância ainda, não tentamos buscar conexão
+    if not user.whatsapp_instance_name:
+        status = 'not_created'
+    else:
+        status = service.get_connection_status()
+        
+        # Se a instância não for encontrada no servidor (foi deletada manualmante lá)
+        if status == 'not_found':
+            # Resetamos localmente para permitir recriação
+            user.whatsapp_instance_name = None
+            user.whatsapp_instance_key = None
             user.save(update_fields=['whatsapp_instance_name', 'whatsapp_instance_key'])
-            service = EvolutionService(user=user) # Re-init com os dados
-            status = service.get_connection_status() # Atualiza o status após criar
+            status = 'not_created'
     
     # Atualiza cache de conexão no banco
     is_connected = (status == 'open')
@@ -217,3 +210,33 @@ def whatsapp_settings_view(request):
         'instance_name': user.whatsapp_instance_name,
         'instance_key': user.whatsapp_instance_key
     })
+
+@login_required
+def create_whatsapp_instance_view(request):
+    """
+    View para criar manualmente a instância na Evolution API.
+    """
+    if request.method == 'POST':
+        user = request.user
+        from reservations.services.evolution_api import EvolutionService
+        
+        instance_name = f"vbook_{user.id}"
+        service = EvolutionService(instance_name=instance_name)
+        
+        result = service.create_instance(instance_name)
+        if result:
+            hash_data = result.get('hash')
+            if isinstance(hash_data, str):
+                apikey = hash_data
+            else:
+                instance_data = result.get('instance', {})
+                apikey = instance_data.get('apikey') if isinstance(instance_data, dict) else None
+            
+            user.whatsapp_instance_name = instance_name
+            user.whatsapp_instance_key = apikey
+            user.save(update_fields=['whatsapp_instance_name', 'whatsapp_instance_key'])
+            messages.success(request, _("Instância criada com sucesso! Agora você pode conectar seu WhatsApp."))
+        else:
+            messages.error(request, _("Erro ao criar instância na API. Tente novamente mais tarde."))
+            
+    return redirect('whatsapp_settings')

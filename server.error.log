@@ -10346,3 +10346,342 @@ AttributeError: module 'mobile.views' has no attribute 'mobile_reservations_toda
 [2026-04-26 20:23:22 -0300] [482832] [WARNING] Worker (pid:561252) was sent SIGHUP!
 [2026-04-26 20:23:22 -0300] [561625] [INFO] Booting worker with pid: 561625
 [2026-04-26 20:23:22 -0300] [482832] [WARNING] Worker (pid:561254) was sent SIGHUP!
+[2026-04-26 20:32:06 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 20:32:06 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 20:32:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:32:06 -0300] [562642] [INFO] Booting worker with pid: 562642
+[2026-04-26 20:32:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:32:06 -0300] [562644] [INFO] Booting worker with pid: 562644
+[2026-04-26 20:32:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:32:06 -0300] [482832] [WARNING] Worker (pid:561605) was sent SIGHUP!
+[2026-04-26 20:32:06 -0300] [482832] [WARNING] Worker (pid:561623) was sent SIGHUP!
+[2026-04-26 20:32:06 -0300] [562646] [INFO] Booting worker with pid: 562646
+[2026-04-26 20:32:06 -0300] [482832] [WARNING] Worker (pid:561625) was sent SIGHUP!
+[2026-04-26 20:36:02 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 20:36:02 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 20:36:02 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:36:02 -0300] [563104] [INFO] Booting worker with pid: 563104
+[2026-04-26 20:36:02 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:36:02 -0300] [563106] [INFO] Booting worker with pid: 563106
+[2026-04-26 20:36:02 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:36:02 -0300] [482832] [WARNING] Worker (pid:562642) was sent SIGHUP!
+[2026-04-26 20:36:02 -0300] [482832] [WARNING] Worker (pid:562644) was sent SIGHUP!
+[2026-04-26 20:36:02 -0300] [482832] [WARNING] Worker (pid:562646) was sent SIGHUP!
+[2026-04-26 20:36:02 -0300] [563108] [INFO] Booting worker with pid: 563108
+[2026-04-26 20:38:06 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-26 20:38:06 -0300] [482832] [INFO] Hang up: Master
+[2026-04-26 20:38:06 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:38:06 -0300] [563386] [INFO] Booting worker with pid: 563386
+[2026-04-26 20:38:08 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:38:08 -0300] [563407] [INFO] Booting worker with pid: 563407
+[2026-04-26 20:38:08 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-26 20:38:08 -0300] [482832] [WARNING] Worker (pid:563104) was sent SIGHUP!
+[2026-04-26 20:38:08 -0300] [563409] [INFO] Booting worker with pid: 563409
+[2026-04-26 20:38:08 -0300] [482832] [WARNING] Worker (pid:563106) was sent SIGHUP!
+[2026-04-26 20:38:08 -0300] [482832] [WARNING] Worker (pid:563108) was sent SIGHUP!
+[2026-04-27 09:05:50 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-27 09:05:50 -0300] [482832] [INFO] Hang up: Master
+[2026-04-27 09:05:50 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 09:05:50 -0300] [578478] [INFO] Booting worker with pid: 578478
+[2026-04-27 09:05:52 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 09:05:52 -0300] [578498] [INFO] Booting worker with pid: 578498
+[2026-04-27 09:05:52 -0300] [482832] [WARNING] Worker (pid:563386) was sent SIGHUP!
+[2026-04-27 09:05:52 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 09:05:52 -0300] [482832] [WARNING] Worker (pid:563407) was sent SIGHUP!
+[2026-04-27 09:05:52 -0300] [578500] [INFO] Booting worker with pid: 578500
+[2026-04-27 09:05:52 -0300] [482832] [WARNING] Worker (pid:563409) was sent SIGHUP!
+[2026-04-27 10:17:42 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-27 10:17:42 -0300] [482832] [INFO] Hang up: Master
+[2026-04-27 10:17:42 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:17:42 -0300] [585048] [INFO] Booting worker with pid: 585048
+[2026-04-27 10:17:44 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:17:44 -0300] [585071] [INFO] Booting worker with pid: 585071
+[2026-04-27 10:17:46 -0300] [578478] [INFO] Worker exiting (pid: 578478)
+[2026-04-27 10:17:46 -0300] [578500] [INFO] Worker exiting (pid: 578500)
+[2026-04-27 10:17:46 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:17:46 -0300] [585075] [INFO] Booting worker with pid: 585075
+[2026-04-27 10:17:46 -0300] [578498] [INFO] Worker exiting (pid: 578498)
+[2026-04-27 10:26:41 -0300] [482832] [INFO] Handling signal: hup
+[2026-04-27 10:26:41 -0300] [482832] [INFO] Hang up: Master
+[2026-04-27 10:26:41 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:26:41 -0300] [586566] [INFO] Booting worker with pid: 586566
+[2026-04-27 10:26:43 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:26:43 -0300] [586581] [INFO] Booting worker with pid: 586581
+[2026-04-27 10:26:45 -0300] [482832] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:26:45 -0300] [585075] [INFO] Worker exiting (pid: 585075)
+[2026-04-27 10:26:45 -0300] [585048] [INFO] Worker exiting (pid: 585048)
+[2026-04-27 10:26:45 -0300] [585071] [INFO] Worker exiting (pid: 585071)
+[2026-04-27 10:26:45 -0300] [586593] [INFO] Booting worker with pid: 586593
+[2026-04-27 10:28:01 -0300] [586911] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 10:28:01 -0300] [586911] [INFO] Listening at: http://127.0.0.1:8000 (586911)
+[2026-04-27 10:28:01 -0300] [586911] [INFO] Using worker: sync
+[2026-04-27 10:28:01 -0300] [586913] [INFO] Booting worker with pid: 586913
+[2026-04-27 10:28:01 -0300] [586914] [INFO] Booting worker with pid: 586914
+[2026-04-27 10:28:01 -0300] [586915] [INFO] Booting worker with pid: 586915
+[2026-04-27 10:28:02 -0300] [586911] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:30:20 -0300] [587466] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 10:30:20 -0300] [587466] [INFO] Listening at: http://127.0.0.1:8000 (587466)
+[2026-04-27 10:30:20 -0300] [587466] [INFO] Using worker: sync
+[2026-04-27 10:30:20 -0300] [587468] [INFO] Booting worker with pid: 587468
+[2026-04-27 10:30:21 -0300] [587469] [INFO] Booting worker with pid: 587469
+[2026-04-27 10:30:21 -0300] [587470] [INFO] Booting worker with pid: 587470
+[2026-04-27 10:30:21 -0300] [587466] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:31:51 -0300] [587778] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 10:31:51 -0300] [587778] [INFO] Listening at: http://127.0.0.1:8000 (587778)
+[2026-04-27 10:31:51 -0300] [587778] [INFO] Using worker: sync
+[2026-04-27 10:31:51 -0300] [587780] [INFO] Booting worker with pid: 587780
+[2026-04-27 10:31:51 -0300] [587781] [INFO] Booting worker with pid: 587781
+[2026-04-27 10:31:51 -0300] [587782] [INFO] Booting worker with pid: 587782
+[2026-04-27 10:31:52 -0300] [587778] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:32:48 -0300] [587978] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 10:32:48 -0300] [587978] [INFO] Listening at: http://127.0.0.1:8000 (587978)
+[2026-04-27 10:32:48 -0300] [587978] [INFO] Using worker: sync
+[2026-04-27 10:32:48 -0300] [587980] [INFO] Booting worker with pid: 587980
+[2026-04-27 10:32:48 -0300] [587981] [INFO] Booting worker with pid: 587981
+[2026-04-27 10:32:48 -0300] [587982] [INFO] Booting worker with pid: 587982
+[2026-04-27 10:32:49 -0300] [587978] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 10:34:02 -0300] [588241] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 10:34:02 -0300] [588241] [INFO] Listening at: http://127.0.0.1:8000 (588241)
+[2026-04-27 10:34:02 -0300] [588241] [INFO] Using worker: sync
+[2026-04-27 10:34:02 -0300] [588243] [INFO] Booting worker with pid: 588243
+[2026-04-27 10:34:02 -0300] [588244] [INFO] Booting worker with pid: 588244
+[2026-04-27 10:34:02 -0300] [588245] [INFO] Booting worker with pid: 588245
+[2026-04-27 10:34:03 -0300] [588241] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 12:47:24 -0300] [602115] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 12:47:24 -0300] [602115] [INFO] Listening at: http://127.0.0.1:8000 (602115)
+[2026-04-27 12:47:24 -0300] [602115] [INFO] Using worker: sync
+[2026-04-27 12:47:24 -0300] [602116] [INFO] Booting worker with pid: 602116
+[2026-04-27 12:47:25 -0300] [602118] [INFO] Booting worker with pid: 602118
+[2026-04-27 12:47:25 -0300] [602122] [INFO] Booting worker with pid: 602122
+[2026-04-27 12:47:25 -0300] [602115] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 12:48:49 -0300] [602386] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 12:48:49 -0300] [602386] [INFO] Listening at: http://127.0.0.1:8000 (602386)
+[2026-04-27 12:48:49 -0300] [602386] [INFO] Using worker: sync
+[2026-04-27 12:48:49 -0300] [602387] [INFO] Booting worker with pid: 602387
+[2026-04-27 12:48:49 -0300] [602388] [INFO] Booting worker with pid: 602388
+[2026-04-27 12:48:49 -0300] [602389] [INFO] Booting worker with pid: 602389
+[2026-04-27 12:48:50 -0300] [602386] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:16:35 -0300] [614453] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:16:35 -0300] [614453] [INFO] Listening at: http://127.0.0.1:8000 (614453)
+[2026-04-27 14:16:35 -0300] [614453] [INFO] Using worker: sync
+[2026-04-27 14:16:35 -0300] [614454] [INFO] Booting worker with pid: 614454
+[2026-04-27 14:16:35 -0300] [614455] [INFO] Booting worker with pid: 614455
+[2026-04-27 14:16:35 -0300] [614456] [INFO] Booting worker with pid: 614456
+[2026-04-27 14:16:35 -0300] [614453] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:18:43 -0300] [614885] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:18:43 -0300] [614885] [INFO] Listening at: http://127.0.0.1:8000 (614885)
+[2026-04-27 14:18:43 -0300] [614885] [INFO] Using worker: sync
+[2026-04-27 14:18:43 -0300] [614887] [INFO] Booting worker with pid: 614887
+[2026-04-27 14:18:43 -0300] [614888] [INFO] Booting worker with pid: 614888
+[2026-04-27 14:18:43 -0300] [614889] [INFO] Booting worker with pid: 614889
+[2026-04-27 14:18:43 -0300] [614885] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:35:45 -0300] [617289] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:35:45 -0300] [617289] [INFO] Listening at: http://127.0.0.1:8000 (617289)
+[2026-04-27 14:35:45 -0300] [617289] [INFO] Using worker: sync
+[2026-04-27 14:35:45 -0300] [617291] [INFO] Booting worker with pid: 617291
+[2026-04-27 14:35:45 -0300] [617292] [INFO] Booting worker with pid: 617292
+[2026-04-27 14:35:46 -0300] [617293] [INFO] Booting worker with pid: 617293
+[2026-04-27 14:35:46 -0300] [617289] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:38:53 -0300] [617710] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:38:53 -0300] [617710] [INFO] Listening at: http://127.0.0.1:8000 (617710)
+[2026-04-27 14:38:53 -0300] [617710] [INFO] Using worker: sync
+[2026-04-27 14:38:53 -0300] [617712] [INFO] Booting worker with pid: 617712
+[2026-04-27 14:38:53 -0300] [617713] [INFO] Booting worker with pid: 617713
+[2026-04-27 14:38:53 -0300] [617714] [INFO] Booting worker with pid: 617714
+[2026-04-27 14:38:53 -0300] [617710] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:43:19 -0300] [618352] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:43:19 -0300] [618352] [INFO] Listening at: http://127.0.0.1:8000 (618352)
+[2026-04-27 14:43:19 -0300] [618352] [INFO] Using worker: sync
+[2026-04-27 14:43:19 -0300] [618353] [INFO] Booting worker with pid: 618353
+[2026-04-27 14:43:19 -0300] [618354] [INFO] Booting worker with pid: 618354
+[2026-04-27 14:43:19 -0300] [618355] [INFO] Booting worker with pid: 618355
+[2026-04-27 14:43:19 -0300] [618352] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:46:49 -0300] [618844] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:46:49 -0300] [618844] [INFO] Listening at: http://127.0.0.1:8000 (618844)
+[2026-04-27 14:46:49 -0300] [618844] [INFO] Using worker: sync
+[2026-04-27 14:46:49 -0300] [618846] [INFO] Booting worker with pid: 618846
+[2026-04-27 14:46:49 -0300] [618847] [INFO] Booting worker with pid: 618847
+[2026-04-27 14:46:49 -0300] [618848] [INFO] Booting worker with pid: 618848
+[2026-04-27 14:46:49 -0300] [618844] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:48:50 -0300] [619141] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:48:50 -0300] [619141] [INFO] Listening at: http://127.0.0.1:8000 (619141)
+[2026-04-27 14:48:50 -0300] [619141] [INFO] Using worker: sync
+[2026-04-27 14:48:50 -0300] [619143] [INFO] Booting worker with pid: 619143
+[2026-04-27 14:48:50 -0300] [619144] [INFO] Booting worker with pid: 619144
+[2026-04-27 14:48:50 -0300] [619145] [INFO] Booting worker with pid: 619145
+[2026-04-27 14:48:51 -0300] [619141] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:51:08 -0300] [619495] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:51:08 -0300] [619495] [INFO] Listening at: http://127.0.0.1:8000 (619495)
+[2026-04-27 14:51:08 -0300] [619495] [INFO] Using worker: sync
+[2026-04-27 14:51:08 -0300] [619496] [INFO] Booting worker with pid: 619496
+[2026-04-27 14:51:09 -0300] [619497] [INFO] Booting worker with pid: 619497
+[2026-04-27 14:51:09 -0300] [619498] [INFO] Booting worker with pid: 619498
+[2026-04-27 14:51:09 -0300] [619495] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:52:28 -0300] [619713] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:52:28 -0300] [619713] [INFO] Listening at: http://127.0.0.1:8000 (619713)
+[2026-04-27 14:52:28 -0300] [619713] [INFO] Using worker: sync
+[2026-04-27 14:52:28 -0300] [619714] [INFO] Booting worker with pid: 619714
+[2026-04-27 14:52:28 -0300] [619715] [INFO] Booting worker with pid: 619715
+[2026-04-27 14:52:28 -0300] [619716] [INFO] Booting worker with pid: 619716
+[2026-04-27 14:52:28 -0300] [619713] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:54:08 -0300] [619972] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:54:08 -0300] [619972] [INFO] Listening at: http://127.0.0.1:8000 (619972)
+[2026-04-27 14:54:08 -0300] [619972] [INFO] Using worker: sync
+[2026-04-27 14:54:08 -0300] [619974] [INFO] Booting worker with pid: 619974
+[2026-04-27 14:54:08 -0300] [619975] [INFO] Booting worker with pid: 619975
+[2026-04-27 14:54:08 -0300] [619976] [INFO] Booting worker with pid: 619976
+[2026-04-27 14:54:08 -0300] [619972] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:56:05 -0300] [620261] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:56:05 -0300] [620261] [INFO] Listening at: http://127.0.0.1:8000 (620261)
+[2026-04-27 14:56:05 -0300] [620261] [INFO] Using worker: sync
+[2026-04-27 14:56:05 -0300] [620263] [INFO] Booting worker with pid: 620263
+[2026-04-27 14:56:05 -0300] [620264] [INFO] Booting worker with pid: 620264
+[2026-04-27 14:56:05 -0300] [620265] [INFO] Booting worker with pid: 620265
+[2026-04-27 14:56:05 -0300] [620261] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 14:57:52 -0300] [620519] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 14:57:52 -0300] [620519] [INFO] Listening at: http://127.0.0.1:8000 (620519)
+[2026-04-27 14:57:52 -0300] [620519] [INFO] Using worker: sync
+[2026-04-27 14:57:52 -0300] [620521] [INFO] Booting worker with pid: 620521
+[2026-04-27 14:57:52 -0300] [620522] [INFO] Booting worker with pid: 620522
+[2026-04-27 14:57:52 -0300] [620523] [INFO] Booting worker with pid: 620523
+[2026-04-27 14:57:52 -0300] [620519] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:00:57 -0300] [620971] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:00:57 -0300] [620971] [INFO] Listening at: http://127.0.0.1:8000 (620971)
+[2026-04-27 15:00:57 -0300] [620971] [INFO] Using worker: sync
+[2026-04-27 15:00:57 -0300] [620973] [INFO] Booting worker with pid: 620973
+[2026-04-27 15:00:57 -0300] [620974] [INFO] Booting worker with pid: 620974
+[2026-04-27 15:00:57 -0300] [620975] [INFO] Booting worker with pid: 620975
+[2026-04-27 15:00:58 -0300] [620971] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:01:46 -0300] [621115] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:01:46 -0300] [621115] [INFO] Listening at: http://127.0.0.1:8000 (621115)
+[2026-04-27 15:01:46 -0300] [621115] [INFO] Using worker: sync
+[2026-04-27 15:01:46 -0300] [621117] [INFO] Booting worker with pid: 621117
+[2026-04-27 15:01:46 -0300] [621118] [INFO] Booting worker with pid: 621118
+[2026-04-27 15:01:46 -0300] [621119] [INFO] Booting worker with pid: 621119
+[2026-04-27 15:01:46 -0300] [621115] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:03:55 -0300] [621426] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:03:55 -0300] [621426] [INFO] Listening at: http://127.0.0.1:8000 (621426)
+[2026-04-27 15:03:55 -0300] [621426] [INFO] Using worker: sync
+[2026-04-27 15:03:55 -0300] [621428] [INFO] Booting worker with pid: 621428
+[2026-04-27 15:03:55 -0300] [621429] [INFO] Booting worker with pid: 621429
+[2026-04-27 15:03:55 -0300] [621430] [INFO] Booting worker with pid: 621430
+[2026-04-27 15:03:55 -0300] [621426] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:05:21 -0300] [621662] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:05:21 -0300] [621662] [INFO] Listening at: http://127.0.0.1:8000 (621662)
+[2026-04-27 15:05:21 -0300] [621662] [INFO] Using worker: sync
+[2026-04-27 15:05:21 -0300] [621664] [INFO] Booting worker with pid: 621664
+[2026-04-27 15:05:21 -0300] [621665] [INFO] Booting worker with pid: 621665
+[2026-04-27 15:05:22 -0300] [621666] [INFO] Booting worker with pid: 621666
+[2026-04-27 15:05:22 -0300] [621662] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:13:49 -0300] [622848] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:13:49 -0300] [622848] [INFO] Listening at: http://127.0.0.1:8000 (622848)
+[2026-04-27 15:13:49 -0300] [622848] [INFO] Using worker: sync
+[2026-04-27 15:13:49 -0300] [622850] [INFO] Booting worker with pid: 622850
+[2026-04-27 15:13:49 -0300] [622851] [INFO] Booting worker with pid: 622851
+[2026-04-27 15:13:49 -0300] [622852] [INFO] Booting worker with pid: 622852
+[2026-04-27 15:13:49 -0300] [622848] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:18:18 -0300] [623462] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:18:18 -0300] [623462] [INFO] Listening at: http://127.0.0.1:8000 (623462)
+[2026-04-27 15:18:18 -0300] [623462] [INFO] Using worker: sync
+[2026-04-27 15:18:18 -0300] [623464] [INFO] Booting worker with pid: 623464
+[2026-04-27 15:18:18 -0300] [623465] [INFO] Booting worker with pid: 623465
+[2026-04-27 15:18:18 -0300] [623466] [INFO] Booting worker with pid: 623466
+[2026-04-27 15:18:18 -0300] [623462] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:21:33 -0300] [623974] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:21:33 -0300] [623974] [INFO] Listening at: http://127.0.0.1:8000 (623974)
+[2026-04-27 15:21:33 -0300] [623974] [INFO] Using worker: sync
+[2026-04-27 15:21:33 -0300] [623975] [INFO] Booting worker with pid: 623975
+[2026-04-27 15:21:33 -0300] [623976] [INFO] Booting worker with pid: 623976
+[2026-04-27 15:21:34 -0300] [623977] [INFO] Booting worker with pid: 623977
+[2026-04-27 15:21:34 -0300] [623974] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:28:36 -0300] [624985] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:28:36 -0300] [624985] [INFO] Listening at: http://127.0.0.1:8000 (624985)
+[2026-04-27 15:28:36 -0300] [624985] [INFO] Using worker: sync
+[2026-04-27 15:28:36 -0300] [624987] [INFO] Booting worker with pid: 624987
+[2026-04-27 15:28:36 -0300] [624988] [INFO] Booting worker with pid: 624988
+[2026-04-27 15:28:36 -0300] [624989] [INFO] Booting worker with pid: 624989
+[2026-04-27 15:28:36 -0300] [624985] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:32:43 -0300] [625543] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:32:43 -0300] [625543] [INFO] Listening at: http://127.0.0.1:8000 (625543)
+[2026-04-27 15:32:43 -0300] [625543] [INFO] Using worker: sync
+[2026-04-27 15:32:43 -0300] [625545] [INFO] Booting worker with pid: 625545
+[2026-04-27 15:32:43 -0300] [625546] [INFO] Booting worker with pid: 625546
+[2026-04-27 15:32:43 -0300] [625547] [INFO] Booting worker with pid: 625547
+[2026-04-27 15:32:43 -0300] [625543] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:34:57 -0300] [625852] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:34:57 -0300] [625852] [INFO] Listening at: http://127.0.0.1:8000 (625852)
+[2026-04-27 15:34:57 -0300] [625852] [INFO] Using worker: sync
+[2026-04-27 15:34:57 -0300] [625854] [INFO] Booting worker with pid: 625854
+[2026-04-27 15:34:57 -0300] [625855] [INFO] Booting worker with pid: 625855
+[2026-04-27 15:34:57 -0300] [625856] [INFO] Booting worker with pid: 625856
+[2026-04-27 15:34:57 -0300] [625852] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:36:19 -0300] [626089] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:36:19 -0300] [626089] [INFO] Listening at: http://127.0.0.1:8000 (626089)
+[2026-04-27 15:36:19 -0300] [626089] [INFO] Using worker: sync
+[2026-04-27 15:36:19 -0300] [626091] [INFO] Booting worker with pid: 626091
+[2026-04-27 15:36:19 -0300] [626093] [INFO] Booting worker with pid: 626093
+[2026-04-27 15:36:19 -0300] [626094] [INFO] Booting worker with pid: 626094
+[2026-04-27 15:36:19 -0300] [626089] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:37:39 -0300] [626298] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:37:39 -0300] [626298] [INFO] Listening at: http://127.0.0.1:8000 (626298)
+[2026-04-27 15:37:39 -0300] [626298] [INFO] Using worker: sync
+[2026-04-27 15:37:39 -0300] [626300] [INFO] Booting worker with pid: 626300
+[2026-04-27 15:37:39 -0300] [626301] [INFO] Booting worker with pid: 626301
+[2026-04-27 15:37:39 -0300] [626302] [INFO] Booting worker with pid: 626302
+[2026-04-27 15:37:39 -0300] [626298] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:38:50 -0300] [626492] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:38:50 -0300] [626492] [INFO] Listening at: http://127.0.0.1:8000 (626492)
+[2026-04-27 15:38:50 -0300] [626492] [INFO] Using worker: sync
+[2026-04-27 15:38:50 -0300] [626494] [INFO] Booting worker with pid: 626494
+[2026-04-27 15:38:50 -0300] [626495] [INFO] Booting worker with pid: 626495
+[2026-04-27 15:38:50 -0300] [626498] [INFO] Booting worker with pid: 626498
+[2026-04-27 15:38:51 -0300] [626492] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:40:50 -0300] [626833] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:40:50 -0300] [626833] [INFO] Listening at: http://127.0.0.1:8000 (626833)
+[2026-04-27 15:40:50 -0300] [626833] [INFO] Using worker: sync
+[2026-04-27 15:40:50 -0300] [626835] [INFO] Booting worker with pid: 626835
+[2026-04-27 15:40:50 -0300] [626836] [INFO] Booting worker with pid: 626836
+[2026-04-27 15:40:51 -0300] [626838] [INFO] Booting worker with pid: 626838
+[2026-04-27 15:40:51 -0300] [626833] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:43:29 -0300] [627217] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:43:29 -0300] [627217] [INFO] Listening at: http://127.0.0.1:8000 (627217)
+[2026-04-27 15:43:29 -0300] [627217] [INFO] Using worker: sync
+[2026-04-27 15:43:29 -0300] [627219] [INFO] Booting worker with pid: 627219
+[2026-04-27 15:43:30 -0300] [627221] [INFO] Booting worker with pid: 627221
+[2026-04-27 15:43:30 -0300] [627222] [INFO] Booting worker with pid: 627222
+[2026-04-27 15:43:30 -0300] [627217] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:46:56 -0300] [627702] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:46:56 -0300] [627702] [INFO] Listening at: http://127.0.0.1:8000 (627702)
+[2026-04-27 15:46:56 -0300] [627702] [INFO] Using worker: sync
+[2026-04-27 15:46:56 -0300] [627704] [INFO] Booting worker with pid: 627704
+[2026-04-27 15:46:56 -0300] [627705] [INFO] Booting worker with pid: 627705
+[2026-04-27 15:46:56 -0300] [627706] [INFO] Booting worker with pid: 627706
+[2026-04-27 15:46:56 -0300] [627702] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:49:07 -0300] [628022] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:49:07 -0300] [628022] [INFO] Listening at: http://127.0.0.1:8000 (628022)
+[2026-04-27 15:49:07 -0300] [628022] [INFO] Using worker: sync
+[2026-04-27 15:49:07 -0300] [628023] [INFO] Booting worker with pid: 628023
+[2026-04-27 15:49:07 -0300] [628024] [INFO] Booting worker with pid: 628024
+[2026-04-27 15:49:07 -0300] [628025] [INFO] Booting worker with pid: 628025
+[2026-04-27 15:49:07 -0300] [628022] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:51:11 -0300] [628324] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:51:11 -0300] [628324] [INFO] Listening at: http://127.0.0.1:8000 (628324)
+[2026-04-27 15:51:11 -0300] [628324] [INFO] Using worker: sync
+[2026-04-27 15:51:11 -0300] [628326] [INFO] Booting worker with pid: 628326
+[2026-04-27 15:51:11 -0300] [628327] [INFO] Booting worker with pid: 628327
+[2026-04-27 15:51:11 -0300] [628328] [INFO] Booting worker with pid: 628328
+[2026-04-27 15:51:11 -0300] [628324] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 15:57:08 -0300] [629076] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 15:57:08 -0300] [629076] [INFO] Listening at: http://127.0.0.1:8000 (629076)
+[2026-04-27 15:57:08 -0300] [629076] [INFO] Using worker: sync
+[2026-04-27 15:57:08 -0300] [629078] [INFO] Booting worker with pid: 629078
+[2026-04-27 15:57:08 -0300] [629079] [INFO] Booting worker with pid: 629079
+[2026-04-27 15:57:08 -0300] [629080] [INFO] Booting worker with pid: 629080
+[2026-04-27 15:57:08 -0300] [629076] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-27 16:00:30 -0300] [629530] [INFO] Starting gunicorn 25.3.0
+[2026-04-27 16:00:30 -0300] [629530] [INFO] Listening at: http://127.0.0.1:8000 (629530)
+[2026-04-27 16:00:30 -0300] [629530] [INFO] Using worker: sync
+[2026-04-27 16:00:30 -0300] [629531] [INFO] Booting worker with pid: 629531
+[2026-04-27 16:00:30 -0300] [629532] [INFO] Booting worker with pid: 629532
+[2026-04-27 16:00:30 -0300] [629533] [INFO] Booting worker with pid: 629533
+[2026-04-27 16:00:30 -0300] [629530] [INFO] Control socket listening at /run/user/0/gunicorn.ctl

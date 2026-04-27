@@ -293,7 +293,7 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
             })
             
         context['yearly_structure'] = sorted(yearly_structure, key=lambda x: x['year'], reverse=True)
-
+        
         # 6. Grand totals for yearly structure
         total_gross = Decimal(0)
         total_costs = Decimal(0)
@@ -413,8 +413,8 @@ class PropertyCostListAPIView(LoginRequiredMixin, View):
                 'frequency': cost.frequency,
                 'payment_date': cost.payment_date.strftime('%Y-%m-%d') if cost.payment_date else None,
                 'payment_date_display': cost.payment_date.strftime('%d/%m/%Y') if cost.payment_date else '',
-                'month': cost.month or 0,
-                'year': cost.year or 0,
+                'month': cost.month,
+                'year': cost.year,
                 'period_display': cost.get_period_display(),
                 'recipient_display': cost.get_recipient_display(),
                 'provider_id': cost.provider_id,

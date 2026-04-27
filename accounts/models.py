@@ -49,30 +49,3 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
-@receiver(post_save, sender=CustomUser)
-def create_evolution_instance(sender, instance, created, **kwargs):
-    """
-    Cria uma instância na Evolution API automaticamente quando um novo usuário é criado.
-    """
-    if created and not instance.whatsapp_instance_name:
-        from reservations.services.evolution_api import EvolutionService
-        
-        instance_name = f"vbook_{instance.id}"
-        service = EvolutionService(instance_name=instance_name)
-        
-        result = service.create_instance()
-        if result:
-            # Na v2, a apikey da instância é retornada no campo 'hash' como uma string
-            # Ou dentro do objeto 'instance' se for uma versão diferente
-            hash_data = result.get('hash')
-            if isinstance(hash_data, str):
-                apikey = hash_data
-            else:
-                instance_data = result.get('instance', {})
-                apikey = instance_data.get('apikey') if isinstance(instance_data, dict) else None
-            
-            # Atualiza o usuário sem disparar o signal novamente
-            CustomUser.objects.filter(pk=instance.pk).update(
-                whatsapp_instance_name=instance_name,
-                whatsapp_instance_key=apikey
-            )

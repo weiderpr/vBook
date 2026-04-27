@@ -13,7 +13,6 @@ import logging
 import uuid
 import sys
 
-import sys
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
@@ -35,13 +34,17 @@ def checkout_view(request, plan_id):
     
     context = {
         'plan': plan,
-        'active_gateway': settings.active_gateway
+        'pix_gateway': settings.pix_gateway,
+        'card_gateway': settings.card_gateway,
     }
     
-    if settings.active_gateway == 'mercadopago':
-        context['public_key'] = settings.mercadopago_public_key or os.getenv('MERCADOPAGO_PUBLIC_KEY')
-    elif settings.active_gateway == 'stripe':
-        context['public_key'] = settings.stripe_public_key or os.getenv('STRIPE_PUBLIC_KEY')
+    # Adicionar chaves públicas necessárias
+    gateways_needed = {settings.pix_gateway, settings.card_gateway}
+    
+    if 'mercadopago' in gateways_needed:
+        context['mp_public_key'] = settings.mercadopago_public_key or os.getenv('MERCADOPAGO_PUBLIC_KEY')
+    if 'stripe' in gateways_needed:
+        context['stripe_public_key'] = settings.stripe_public_key or os.getenv('STRIPE_PUBLIC_KEY')
         
     return render(request, 'subscriptions/checkout.html', context)
 
@@ -277,43 +280,60 @@ def stripe_webhook_view(request):
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
     
+    log_stripe(f"WEBHOOK STRIPE RECEBIDO: {len(payload) if payload else 0} bytes")
+    
     stripe_service = StripeService()
-    event = stripe_service.process_webhook(payload, sig_header)
+    try:
+        event = stripe_service.process_webhook(payload, sig_header)
+    except Exception as e:
+        log_stripe(f"ERRO AO PROCESSAR WEBHOOK: {str(e)}")
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     
     if event:
-        event_type = event.get('type')
-        data_object = event.get('data', {}).get('object', {})
+        event_type = event['type']
+        data_object = event['data']['object']
+        log_stripe(f"EVENTO STRIPE: {event_type}")
         
         if event_type == 'payment_intent.succeeded':
-            intent_id = data_object.get('id')
-            user_id = data_object.get('metadata', {}).get('user_id')
-            plan_id = data_object.get('metadata', {}).get('plan_id')
+            intent_id = data_object['id']
+            user_id = data_object['metadata']['user_id'] if 'user_id' in data_object['metadata'] else None
+            plan_id = data_object['metadata']['plan_id'] if 'plan_id' in data_object['metadata'] else None
+            
+            log_stripe(f"PAGAMENTO STRIPE APROVADO: {intent_id} (User: {user_id}, Plan: {plan_id})")
             
             if user_id and plan_id:
                 from accounts.models import CustomUser
-                user = CustomUser.objects.get(id=user_id)
-                plan = Plan.objects.get(id=plan_id)
-                
-                subscription, created = Subscription.objects.get_or_create(
-                    user=user,
-                    defaults={'plan': plan, 'status': 'active'}
-                )
-                if not created:
-                    subscription.plan = plan
-                    subscription.status = 'active'
-                    subscription.save()
-                
-                Payment.objects.get_or_create(
-                    mp_payment_id=intent_id, # Usando o mesmo campo para simplificar ou poderíamos renomear para gateway_id
-                    defaults={
-                        'subscription': subscription,
-                        'amount': data_object.get('amount') / 100,
-                        'status': 'approved',
-                        'payment_method': 'stripe_card',
-                        'raw_data': data_object
-                    }
-                )
+                try:
+                    user = CustomUser.objects.get(id=user_id)
+                    plan = Plan.objects.get(id=plan_id)
+                    
+                    subscription, created = Subscription.objects.get_or_create(
+                        user=user,
+                        defaults={'plan': plan, 'status': 'active'}
+                    )
+                    if not created:
+                        subscription.plan = plan
+                        subscription.status = 'active'
+                        subscription.save()
+                    
+                    log_stripe(f"ASSINATURA ATUALIZADA PARA {user.email}")
+                    
+                    Payment.objects.get_or_create(
+                        mp_payment_id=intent_id,
+                        defaults={
+                            'subscription': subscription,
+                            'amount': data_object['amount'] / 100,
+                            'status': 'approved',
+                            'payment_method': 'stripe_card',
+                            'raw_data': data_object.to_dict()
+                        }
+                    )
+                    log_stripe(f"PAGAMENTO REGISTRADO NO BANCO")
+                except Exception as e:
+                    import traceback
+                    log_stripe(f"ERRO AO ATUALIZAR DADOS POS-PAGAMENTO: {str(e)}\n{traceback.format_exc()}")
         
         return JsonResponse({'status': 'success'})
     
+    log_stripe("EVENTO STRIPE NAO PROCESSADO (retornou None)")
     return JsonResponse({'status': 'error'}, status=400)

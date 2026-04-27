@@ -58,8 +58,8 @@ class Subscription(models.Model):
         if self.status == 'active' and not self.start_date:
             self.start_date = timezone.now()
         
-        # Se tiver data de início e plano, mas não tiver data de expiração, calculamos
-        if self.start_date and self.plan and not self.end_date:
+        # Recalcular data de expiração sempre que houver um plano e data de início
+        if self.start_date and self.plan:
             from datetime import timedelta
             self.end_date = self.start_date + timedelta(days=self.plan.duration_days)
             

@@ -53,8 +53,15 @@ class SystemSetting(models.Model):
         ('stripe', 'Stripe'),
     ]
     
-    active_gateway = models.CharField(
-        _("Gateway de Pagamento Ativo"),
+    pix_gateway = models.CharField(
+        _("Gateway para PIX"),
+        max_length=20,
+        choices=GATEWAY_CHOICES,
+        default='mercadopago'
+    )
+    
+    card_gateway = models.CharField(
+        _("Gateway para Cartão"),
         max_length=20,
         choices=GATEWAY_CHOICES,
         default='mercadopago'
@@ -77,7 +84,7 @@ class SystemSetting(models.Model):
         verbose_name_plural = _("Configurações do Sistema")
 
     def __str__(self):
-        return f"Configurações ({self.get_active_gateway_display()})"
+        return f"Configurações (PIX: {self.pix_gateway}, Cartão: {self.card_gateway})"
     
     @classmethod
     def get_settings(cls):

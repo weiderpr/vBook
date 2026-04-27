@@ -15,6 +15,7 @@ urlpatterns = [
     path('assinaturas/', include('subscriptions.urls')),
     path('administrador/', include('administration.urls', namespace='administration')),
     path('mobile/', include('mobile.urls')),
+    path('manutencoes/', include('maintenance.urls')),
 ]
 
 if settings.DEBUG:

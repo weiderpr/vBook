@@ -1,0 +1,25 @@
+{% load i18n %}
+
+{% if maintenances %}
+    {% for m in maintenances %}
+    <div class="maintenance-item" 
+         onclick="loadDetail({{ m.id }}, this)" 
+         draggable="true" 
+         ondragstart="handleDragStart(event, {{ m.id }})"
+         ondragend="handleDragEnd(event)">
+        <div class="item-title">{{ m.title }}</div>
+        <div class="item-preview">{{ m.description|default:""|truncatewords:20 }}</div>
+        <div class="item-meta">
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                {{ m.start_date|date:"d/m/Y" }}
+            </span>
+            <span class="badge badge-{{ m.status }}">{{ m.get_status_display }}</span>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="empty-state">
+        <p>{% trans "Nenhuma manutenção encontrada nesta categoria." %}</p>
+    </div>
+{% endif %}

@@ -81,6 +81,9 @@ class PropertyCostForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'placeholder': '0,00', 'class': 'money-mask'})
     )
 
+    month = forms.CharField(required=False, widget=forms.HiddenInput(), label=_("Mês (Ajuste)"))
+    year = forms.CharField(required=False, widget=forms.HiddenInput(), label=_("Ano (Ajuste)"))
+
     class Meta:
         model = PropertyCost
         fields = ['name', 'amount', 'amount_type', 'frequency', 'payment_date', 'month', 'year', 'recipient', 'provider', 'description']
@@ -90,8 +93,6 @@ class PropertyCostForm(forms.ModelForm):
             'provider': forms.HiddenInput(),
             'payment_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
             'amount_type': forms.HiddenInput(),
-            'month': forms.HiddenInput(),
-            'year': forms.HiddenInput(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -139,19 +140,36 @@ class PropertyCostForm(forms.ModelForm):
         frequency = cleaned_data.get('frequency')
         payment_date = cleaned_data.get('payment_date')
         
+        # Handle string inputs for month and year
+        def to_int_or_none(val):
+            if val in [None, '', '0', 'None']:
+                return None
+            try:
+                return int(str(val).replace('.', '').replace(',', ''))
+            except (ValueError, TypeError):
+                return None
+
+        m = to_int_or_none(cleaned_data.get('month'))
+        y = to_int_or_none(cleaned_data.get('year'))
+
         if frequency != 'per_booking':
             if not payment_date:
                 self.add_error('payment_date', _("A data do pagamento é obrigatória."))
             else:
-                # Sync month and year for backward compatibility and aggregation
+                # Sync month and year from payment_date
                 cleaned_data['month'] = payment_date.month
                 cleaned_data['year'] = payment_date.year
         else:
-            # For per-booking costs, we don't need payment_date
+            # For per-booking costs, we don't need payment_date, month or year
             cleaned_data['month'] = None
             cleaned_data['year'] = None
             cleaned_data['payment_date'] = None
         
+        # Final safety check
+        if frequency != 'per_booking' and not cleaned_data.get('month'):
+            cleaned_data['month'] = m
+            cleaned_data['year'] = y
+            
         return cleaned_data
 
 class PropertyInstructionsForm(forms.ModelForm):

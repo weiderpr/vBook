@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'subscriptions',
     'django.contrib.humanize',
     'mobile',
+    'maintenance',
 ]
 
 MIDDLEWARE = [
@@ -128,9 +129,9 @@ SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = False 
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_USE_SESSIONS = False
-# CSRF_COOKIE_PATH = '/book/' 
-# SESSION_COOKIE_PATH = '/book/' 
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_PATH = '/' 
+SESSION_COOKIE_PATH = '/' 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Session Security Settings

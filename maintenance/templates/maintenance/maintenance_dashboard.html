@@ -1,0 +1,1559 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static maintenance_tags %}
+
+{% block title %}{% trans "Gestão de Manutenções" %} - {{ property.name }}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .maintenance-manager {
+        display: flex;
+        height: calc(100vh - 100px);
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-top: 30px;
+    }
+
+    /* Hide global footer and scroll for this page */
+    body {
+        overflow: hidden;
+    }
+
+    .footer {
+        display: none !important;
+    }
+
+    .dashboard-main {
+        padding-bottom: 0 !important;
+    }
+
+    /* Column 1: Status Sidebar */
+    .maintenance-sidebar {
+        width: 240px;
+        min-width: 200px;
+        border-right: 1px solid var(--glass-border);
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.01);
+    }
+
+    .sidebar-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .btn-new-maintenance {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s;
+    }
+
+    .btn-new-maintenance:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+    }
+
+    .status-list {
+        list-style: none;
+        padding: 1rem 0;
+        margin: 0;
+    }
+
+    .status-item {
+        padding: 0.8rem 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.2s;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    .status-item:hover {
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-main);
+    }
+
+    .status-item.active {
+        background: rgba(var(--primary-rgb), 0.1);
+        color: var(--primary);
+        border-left: 3px solid var(--primary);
+    }
+
+    .status-item.drag-over {
+        background: rgba(var(--primary-rgb), 0.2);
+        transform: scale(1.02);
+        border-left: 3px dashed var(--primary);
+    }
+
+    .status-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .status-count {
+        font-size: 0.75rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 2px 8px;
+        border-radius: 10px;
+    }
+
+    /* Column 2: List */
+    .maintenance-list {
+        width: 350px;
+        min-width: 300px;
+        border-right: 1px solid var(--glass-border);
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.01);
+    }
+
+    .list-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .list-header h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .search-box {
+        padding: 0.8rem 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .search-input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        color: var(--text-main);
+        font-size: 0.85rem;
+    }
+
+    .items-container {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .maintenance-item {
+        padding: 1.2rem 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .maintenance-item:hover {
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .maintenance-item.active {
+        background: rgba(var(--primary-rgb), 0.1);
+        border-left: 3px solid var(--primary);
+    }
+
+    .item-title {
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin-bottom: 0.3rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .item-preview {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Modal Premium */
+    .modal-premium {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-content-premium {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        width: 90%;
+        max-width: 600px;
+        padding: 2.5rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        color: var(--text-main);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .modal-header h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 800;
+    }
+
+    .btn-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        padding: 0.8rem 1.2rem;
+        border-radius: 12px;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        transition: all 0.3s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+        border-color: var(--primary);
+        outline: none;
+        background: rgba(var(--primary-rgb), 0.05);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2.5rem;
+    }
+
+    .modal-footer .btn-primary, .modal-footer .btn-secondary {
+        padding: 0.8rem 1.5rem;
+        font-weight: 700;
+        border-radius: 12px;
+        font-size: 0.9rem;
+    }
+
+    /* Column 3: Detail */
+    .maintenance-detail {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-header {
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid var(--glass-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .detail-title h2 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.5rem;
+        font-weight: 800;
+    }
+
+    .detail-actions {
+        display: flex;
+        gap: 12px;
+        position: relative;
+    }
+
+    .btn-status-trigger {
+        background: rgba(var(--primary-rgb), 0.1);
+        color: var(--primary);
+        border: 1px solid rgba(var(--primary-rgb), 0.2);
+        padding: 0.6rem 1.2rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-status-trigger:hover {
+        background: var(--primary);
+        color: white;
+    }
+
+    .status-dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 8px;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        min-width: 180px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        overflow: hidden;
+        animation: fadeInDown 0.2s ease-out;
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .status-dropdown-item {
+        padding: 0.8rem 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-main);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        border: none;
+        width: 100%;
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .status-dropdown-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--primary);
+    }
+
+    .status-dropdown-item .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    .btn-action-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 10px;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-action-icon:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-main);
+        border-color: var(--text-muted);
+    }
+
+    .detail-body {
+        padding: 2rem;
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .detail-meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .meta-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 700;
+    }
+
+    .meta-value {
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .description-content {
+        line-height: 1.6;
+        color: var(--text-main);
+        white-space: pre-wrap;
+        text-align: left;
+    }
+
+    /* Budgets Section */
+    .budgets-section {
+        border-top: 1px solid var(--glass-border);
+        padding-top: 2rem;
+    }
+
+    .section-header-compact {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-add-budget {
+        background: rgba(var(--primary-rgb), 0.1);
+        color: var(--primary);
+        border: 1px solid rgba(var(--primary-rgb), 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-add-budget:hover {
+        background: var(--primary);
+        color: white;
+    }
+
+    .budget-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--glass-border);
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.8rem;
+        transition: all 0.3s;
+    }
+
+    .budget-card:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: var(--primary);
+        transform: translateX(3px);
+    }
+
+    .budget-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.3rem;
+    }
+
+    .budget-provider {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--text-main);
+    }
+
+    .budget-value {
+        font-weight: 800;
+        color: var(--primary);
+        font-size: 0.95rem;
+    }
+
+    .budget-details {
+        display: flex;
+        gap: 12px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-bottom: 0.5rem;
+    }
+
+    .budget-details span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .budget-obs {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.6rem;
+        border-radius: 6px;
+        line-height: 1.3;
+    }
+
+    .budget-actions-inline {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .btn-budget-mini-action {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 6px;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-budget-mini-action:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-main);
+    }
+
+    .btn-budget-mini-action.edit:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .btn-budget-mini-action.delete:hover {
+        color: #ef4444;
+        border-color: #ef4444;
+    }
+
+    .empty-budgets {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-muted);
+        font-style: italic;
+        font-size: 0.9rem;
+    }
+
+    .photo-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: var(--primary);
+        color: white;
+        font-size: 0.65rem;
+        padding: 2px 5px;
+        border-radius: 10px;
+        font-weight: 800;
+        min-width: 18px;
+        text-align: center;
+    }
+
+    /* Photo Gallery Modal */
+    /* Premium Photo Gallery */
+    .photo-gallery-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-body);
+        opacity: 0.98;
+        z-index: 2500;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        align-items: center;
+        justify-content: center;
+        animation: fadeInGallery 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInGallery {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .gallery-outer-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 40px;
+    }
+
+    .gallery-carousel {
+        position: relative;
+        width: 100%;
+        max-width: 1100px;
+        height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .gallery-slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        animation: slideIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    @keyframes slideIn {
+        from { transform: scale(0.95); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .gallery-slide.active {
+        display: flex;
+    }
+
+    .gallery-image-wrapper {
+        position: relative;
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        border: 1px solid var(--glass-border);
+        background: var(--bg-card);
+    }
+
+    .gallery-image-wrapper img {
+        display: block;
+        max-width: 100%;
+        max-height: 80vh;
+        object-fit: contain;
+    }
+
+    .gallery-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 60px;
+        height: 60px;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        z-index: 2600;
+        backdrop-filter: blur(10px);
+    }
+
+    .gallery-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-50%) scale(1.1);
+        border-color: var(--primary);
+    }
+
+    .gallery-nav-btn.prev { left: -80px; }
+    .gallery-nav-btn.next { right: -80px; }
+
+    .gallery-counter {
+        margin-top: 30px;
+        background: var(--bg-card);
+        padding: 8px 20px;
+        border-radius: 20px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        backdrop-filter: blur(5px);
+        border: 1px solid var(--glass-border);
+    }
+
+    .gallery-close-premium {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+        padding: 12px 24px;
+        border-radius: 40px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        backdrop-filter: blur(10px);
+        z-index: 2700;
+    }
+
+    .btn-delete-photo-premium {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        color: #ef4444;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        backdrop-filter: blur(5px);
+        z-index: 10;
+    }
+
+    .btn-delete-photo-premium:hover {
+        background: #ef4444;
+        color: white;
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+    }
+
+    .gallery-close-premium:hover {
+        background: #ef4444;
+        border-color: #ef4444;
+        transform: translateY(-2px);
+    }
+
+    /* Toast Custom */
+    .toast-custom {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: #1e293b;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 12px;
+        z-index: 9999;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .toast-custom.show {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .toast-custom.success {
+        border-left: 4px solid var(--primary);
+    }
+
+    .toast-custom.error {
+        border-left: 4px solid #ef4444;
+    }
+
+    .toast-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .toast-icon {
+        background: rgba(255,255,255,0.1);
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 0.8rem;
+    }
+
+    .btn-action-icon {
+        position: relative; /* Ensure badge is relative to this button */
+    }
+
+    .photo-stack {
+        position: relative;
+        height: 50px;
+        width: 100px;
+        margin-top: 5px;
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s;
+    }
+
+    .stacked-photo {
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        border-radius: 6px;
+        border: 2px solid var(--bg-card);
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform-origin: bottom center;
+    }
+
+    .stacked-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .photo-stack:hover .stacked-photo {
+        transform: rotate(0) !important;
+        margin-right: calc(var(--i) * 50px);
+        z-index: 20;
+        scale: 1.1;
+    }
+    .resizer {
+        width: 4px;
+        cursor: col-resize;
+        background: transparent;
+        transition: background 0.2s;
+    }
+
+    .resizer:hover, .resizer.resizing {
+        background: var(--primary);
+    }
+
+    /* Empty states */
+    .empty-state {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .empty-state svg {
+        opacity: 0.2;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Status Badges */
+    .badge {
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .badge-open { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+    .badge-in_progress { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .badge-finished { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .badge-cancelled { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='maintenance' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="maintenance-container">
+
+    <div class="maintenance-manager" id="maintenanceManager">
+        <!-- Column 1: Sidebar -->
+        <div class="maintenance-sidebar" id="sidebarCol">
+            <div class="sidebar-header">
+                <button class="btn-new-maintenance" onclick="openCreateModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    {% trans "Nova Manutenção" %}
+                </button>
+            </div>
+            <ul class="status-list">
+                {% for status_code, status_name in status_choices %}
+                <li class="status-item {% if status_code == initial_status %}active{% endif %}" 
+                    data-status="{{ status_code }}" 
+                    onclick="loadList('{{ status_code }}', this)"
+                    ondragover="handleDragOver(event)"
+                    ondragleave="handleDragLeave(event)"
+                    ondrop="handleDrop(event, '{{ status_code }}')">
+                    <div class="status-label">
+                        <span class="badge badge-{{ status_code }}" style="width: 8px; height: 8px; padding: 0; border-radius: 50%;"></span>
+                        {{ status_name }}
+                    </div>
+                    <span class="status-count" id="count-{{ status_code }}">{{ status_counts|get_item:status_code }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="resizer" id="resizer1"></div>
+
+        <!-- Column 2: List -->
+        <div class="maintenance-list" id="listCol">
+            <div class="list-header">
+                <h3 id="currentStatusTitle">{% trans "Abertas" %}</h3>
+            </div>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="{% trans 'Pesquisar manutenção...' %}" id="maintenanceSearch">
+            </div>
+            <div class="items-container" id="itemsContainer">
+                {% include 'maintenance/includes/maintenance_list_items.html' %}
+            </div>
+        </div>
+
+        <div class="resizer" id="resizer2"></div>
+
+        <!-- Column 3: Detail -->
+        <div class="maintenance-detail" id="detailCol">
+            <div id="detailContainer" class="empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+                <p>{% trans "Selecione uma manutenção para visualizar os detalhes" %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Maintenance Modal -->
+<div id="createModal" class="modal-premium" style="display: none;">
+    <div class="modal-content-premium">
+        <div class="modal-header">
+            <h3>{% trans "Nova Manutenção" %}</h3>
+            <button onclick="closeCreateModal()" class="btn-close">&times;</button>
+        </div>
+        <form id="createMaintenanceForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>{% trans "Título" %}</label>
+                <input type="text" name="title" required placeholder="{% trans 'Ex: Pintura da fachada' %}">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>{% trans "Data Início" %}</label>
+                    <input type="date" name="start_date" required>
+                </div>
+                <div class="form-group">
+                    <label>{% trans "Data Fim" %}</label>
+                    <input type="date" name="end_date" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>{% trans "Descrição" %}</label>
+                <textarea name="description" rows="4" placeholder="{% trans 'Descreva os detalhes da manutenção...' %}"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeCreateModal()">{% trans "Cancelar" %}</button>
+                <button type="submit" class="btn-primary">{% trans "Criar Manutenção" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <!-- Photo Gallery Modal Premium -->
+    <div id="photoGalleryModal" class="photo-gallery-modal" onclick="if(event.target === this) closePhotoGallery()">
+        <div class="gallery-outer-container">
+            <button class="gallery-close-premium" onclick="closePhotoGallery()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                {% trans "Sair" %}
+            </button>
+
+            <div class="gallery-carousel">
+                <button class="gallery-nav-btn prev" onclick="navigateGallery(-1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                
+                <div id="gallerySlides" class="gallery-slides-container" style="width: 100%; height: 100%; position: relative;">
+                    <!-- Slides populated via JS -->
+                </div>
+
+                <button class="gallery-nav-btn next" onclick="navigateGallery(1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+            </div>
+
+            <div id="galleryCounter" class="gallery-counter">
+                0 / 0
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Resizing logic
+    function initResizer(resizerId, leftColId, rightColId) {
+        const resizer = document.getElementById(resizerId);
+        const leftCol = document.getElementById(leftColId);
+        const rightCol = document.getElementById(rightColId);
+
+        let x = 0;
+        let leftWidth = 0;
+
+        const mouseDownHandler = function (e) {
+            x = e.clientX;
+            leftWidth = leftCol.getBoundingClientRect().width;
+            resizer.classList.add('resizing');
+
+            document.addEventListener('mousemove', mouseMoveHandler);
+            document.addEventListener('mouseup', mouseUpHandler);
+        };
+
+        const mouseMoveHandler = function (e) {
+            const dx = e.clientX - x;
+            const newLeftWidth = leftWidth + dx;
+            leftCol.style.width = `${newLeftWidth}px`;
+            leftCol.style.flex = 'none';
+        };
+
+        const mouseUpHandler = function () {
+            resizer.classList.remove('resizing');
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+        };
+
+        resizer.addEventListener('mousedown', mouseDownHandler);
+    }
+
+    initResizer('resizer1', 'sidebarCol', 'listCol');
+    initResizer('resizer2', 'listCol', 'detailCol');
+
+    // AJAX Loading logic
+    function loadList(status, element) {
+        // UI updates
+        document.querySelectorAll('.status-item').forEach(i => i.classList.remove('active'));
+        element.classList.add('active');
+        document.getElementById('currentStatusTitle').innerText = element.querySelector('.status-label').innerText.trim();
+
+        fetch(`{% url 'maintenance:list_ajax' property.pk %}?status=${status}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('itemsContainer').innerHTML = data.html;
+                document.getElementById(`count-${status}`).innerText = data.count;
+                // Clear detail view
+                document.getElementById('detailContainer').innerHTML = `
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+                        <p>{% trans "Selecione uma manutenção para visualizar os detalhes" %}</p>
+                    </div>
+                `;
+            });
+    }
+
+    function loadDetail(id, element) {
+        document.querySelectorAll('.maintenance-item').forEach(i => i.classList.remove('active'));
+        element.classList.add('active');
+
+        // Add timestamp to avoid cache issues
+        const detailUrl = "{% url 'maintenance:detail_ajax' 0 %}".replace('0', id) + "?t=" + new Date().getTime();
+        fetch(detailUrl)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('detailCol').innerHTML = data.html;
+            });
+    }
+
+    // Modal logic
+    function openCreateModal() {
+        document.getElementById('createModal').style.display = 'flex';
+    }
+
+    function closeCreateModal() {
+        document.getElementById('createModal').style.display = 'none';
+    }
+
+    document.getElementById('createMaintenanceForm').onsubmit = function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        const createUrl = "{% url 'maintenance:create' property.pk %}";
+        fetch(createUrl, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrf_token')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                closeCreateModal();
+                // Update counts
+                if (data.counts) {
+                    for (const [status, count] of Object.entries(data.counts)) {
+                        const countEl = document.getElementById(`count-${status}`);
+                        if (countEl) countEl.innerText = count;
+                    }
+                }
+                // Reload current status list
+                const activeStatus = document.querySelector('.status-item.active').dataset.status;
+                loadList(activeStatus, document.querySelector('.status-item.active'));
+            }
+        });
+    };
+
+    function updateStatus(id, newStatus) {
+        const formData = new FormData();
+        formData.append('status', newStatus);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        const updateUrl = "{% url 'maintenance:update_status' 0 %}".replace('0', id);
+        fetch(updateUrl, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Update counts
+                if (data.counts) {
+                    for (const [status, count] of Object.entries(data.counts)) {
+                        const countEl = document.getElementById(`count-${status}`);
+                        if (countEl) countEl.innerText = count;
+                    }
+                }
+                const activeStatus = document.querySelector('.status-item.active').dataset.status;
+                loadList(activeStatus, document.querySelector('.status-item.active'));
+                
+                // Refresh detail if open
+                const detailEl = document.getElementById('detailCol');
+                if (detailEl.querySelector(`[onclick*="updateStatus(${id}"]`)) {
+                    loadDetail(id, document.querySelector('.maintenance-item.active'));
+                }
+            }
+        });
+    }
+
+    // Budget Logic
+    function toggleBudgetForm() {
+        const container = document.getElementById('budgetFormContainer');
+        container.style.display = container.style.display === 'none' ? 'block' : 'none';
+        
+        if (container.style.display === 'block') {
+            applyMasks();
+        }
+    }
+
+    function applyMasks() {
+        const phoneInput = document.getElementById('id_budget_phone');
+        const valueInput = document.getElementById('id_budget_value');
+
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+                e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+            });
+        }
+
+        if (valueInput) {
+            valueInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = (value / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                e.target.value = value;
+            });
+        }
+    }
+
+    function submitBudget(event, maintenanceId) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        
+        // Unmask value
+        const rawValue = formData.get('value').toString().replace(/\./g, '').replace(',', '.');
+        formData.set('value', rawValue);
+
+        const url = "{% url 'maintenance:add_budget' 0 %}".replace('0', maintenanceId);
+        
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('budgetListContainer').innerHTML = data.html;
+                toggleBudgetForm();
+                form.reset();
+                document.getElementById('id_budget_id_hidden').value = '';
+                showToast(data.message, 'success');
+            } else {
+                showToast('Erro ao salvar orçamento', 'error');
+            }
+        });
+    }
+
+    function editBudget(budgetId) {
+        const url = "{% url 'maintenance:budget_detail' 0 %}".replace('0', budgetId);
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('budgetFormContainer');
+                container.style.display = 'block';
+                
+                const form = document.getElementById('addBudgetForm');
+                form.querySelector('[name="provider_name"]').value = data.provider_name;
+                form.querySelector('[name="phone"]').value = data.phone;
+                form.querySelector('[name="value"]').value = data.value.replace('.', ',');
+                form.querySelector('[name="start_date"]').value = data.start_date;
+                form.querySelector('[name="end_date"]').value = data.end_date;
+                form.querySelector('[name="observations"]').value = data.observations;
+                document.getElementById('id_budget_id_hidden').value = data.id;
+                
+                applyMasks();
+                container.scrollIntoView({ behavior: 'smooth' });
+            });
+    }
+
+    function deleteBudget(budgetId) {
+        if (!confirm('Deseja realmente excluir este orçamento?')) return;
+
+        const url = "{% url 'maintenance:delete_budget' 0 %}".replace('0', budgetId);
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById('budgetListContainer').innerHTML = data.html;
+                showToast(data.message, 'success');
+            }
+        });
+    }
+
+    function showToast(message, type) {
+        if (window.showToast) {
+            window.showToast(message, type);
+            return;
+        }
+
+        // Custom toast fallback
+        const toast = document.createElement('div');
+        toast.className = `toast-custom ${type}`;
+        toast.innerHTML = `
+            <div class="toast-content">
+                <span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>
+                <span class="toast-message">${message}</span>
+            </div>
+        `;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }, 100);
+    }
+
+    // Photo Gallery Logic
+    function handlePhotoUpload(event, maintenanceId) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Check size and compress if > 2MB
+        if (file.size > 2 * 1024 * 1024) {
+            compressImage(file, (compressedBlob) => {
+                uploadFile(compressedBlob, maintenanceId);
+            });
+        } else {
+            uploadFile(file, maintenanceId);
+        }
+    }
+
+    function compressImage(file, callback) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (event) {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                // Max dimensions to reduce size
+                const MAX_WIDTH = 1920;
+                const MAX_HEIGHT = 1080;
+
+                if (width > height) {
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                } else {
+                    if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    callback(blob);
+                }, 'image/jpeg', 0.8);
+            };
+        };
+    }
+
+    function uploadFile(blob, maintenanceId) {
+        const formData = new FormData();
+        formData.append('image', blob, 'photo.jpg');
+        
+        const url = "{% url 'maintenance:upload_photo' 0 %}".replace('0', maintenanceId);
+        
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, 'success');
+                refreshPhotoUI(data.photos_html, data.photo_count, maintenanceId);
+                // Background sync
+                loadDetail(maintenanceId, document.querySelector('.maintenance-item.active'));
+            } else {
+                showToast(data.message, 'error');
+            }
+        });
+    }
+
+    function refreshPhotoUI(photosHtml, photoCount, maintenanceId) {
+        // Update hidden data
+        const dataContainer = document.getElementById('detailPhotosData');
+        if (dataContainer) dataContainer.innerHTML = photosHtml;
+        
+        // Update badge
+        const badge = document.getElementById('photoBadgeCount');
+        if (badge) badge.innerText = photoCount;
+        
+        // Update visibility of Gallery button
+        const btnVer = document.getElementById('btnVerFotos');
+        if (btnVer) {
+            btnVer.style.display = photoCount > 0 ? 'flex' : 'none';
+        }
+
+        // If gallery is open, refresh its slides
+        const modal = document.getElementById('photoGalleryModal');
+        if (modal && modal.style.display === 'flex') {
+            if (photoCount === 0) {
+                closePhotoGallery();
+            } else {
+                openPhotoGallery(maintenanceId);
+            }
+        }
+    }
+
+    let currentSlideIndex = 0;
+    let totalSlides = 0;
+
+    function openPhotoGallery(maintenanceId) {
+        const modal = document.getElementById('photoGalleryModal');
+        const slidesContainer = document.getElementById('gallerySlides');
+        slidesContainer.innerHTML = '';
+
+        const images = document.querySelectorAll('#detailPhotosData img');
+        if (images.length > 0) {
+            totalSlides = images.length;
+            currentSlideIndex = 0;
+
+            images.forEach((img, index) => {
+                const photoId = img.getAttribute('data-id');
+                const slide = document.createElement('div');
+                slide.className = `gallery-slide ${index === 0 ? 'active' : ''}`;
+                slide.innerHTML = `
+                    <div class="gallery-image-wrapper">
+                        <button class="btn-delete-photo-premium" onclick="deletePhoto(event, ${photoId}, ${maintenanceId})" title="{% trans 'Excluir Foto' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                        </button>
+                        <img src="${img.src}" alt="Photo">
+                    </div>
+                `;
+                slidesContainer.appendChild(slide);
+            });
+
+            updateGalleryUI();
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Block background scroll
+        } else {
+            loadDetail(maintenanceId, document.querySelector('.maintenance-item.active'), () => {
+                openPhotoGallery(maintenanceId);
+            });
+        }
+    }
+
+    function navigateGallery(direction) {
+        const slides = document.querySelectorAll('.gallery-slide');
+        if (slides.length === 0) return;
+
+        slides[currentSlideIndex].classList.remove('active');
+        
+        currentSlideIndex += direction;
+        if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
+        if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
+
+        slides[currentSlideIndex].classList.add('active');
+        updateGalleryUI();
+    }
+
+    function updateGalleryUI() {
+        document.getElementById('galleryCounter').innerText = `${currentSlideIndex + 1} / ${totalSlides}`;
+        
+        // Hide nav buttons if only 1 photo
+        const navBtns = document.querySelectorAll('.gallery-nav-btn');
+        navBtns.forEach(btn => btn.style.display = totalSlides <= 1 ? 'none' : 'flex');
+    }
+
+    function closePhotoGallery() {
+        document.getElementById('photoGalleryModal').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function deletePhoto(event, photoId, maintenanceId) {
+        console.log("Deleting photo:", photoId, "for maintenance:", maintenanceId);
+        event.stopPropagation();
+        if (!photoId) {
+            showToast("ID da foto não encontrado", "error");
+            return;
+        }
+        if (!confirm('{% trans "Deseja realmente excluir esta foto?" %}')) return;
+
+        const url = "{% url 'maintenance:delete_photo' 0 %}".replace('0', photoId);
+        console.log("URL:", url);
+        
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, 'success');
+                refreshPhotoUI(data.photos_html, data.photo_count, maintenanceId);
+                // Background sync
+                loadDetail(maintenanceId, document.querySelector('.maintenance-item.active'));
+            } else {
+                showToast(data.message, 'error');
+            }
+        });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        const modal = document.getElementById('photoGalleryModal');
+        if (modal && modal.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') navigateGallery(-1);
+            if (e.key === 'ArrowRight') navigateGallery(1);
+            if (e.key === 'Escape') closePhotoGallery();
+        }
+    });
+
+    // Drag and Drop Logic
+    function handleDragStart(e, id) {
+        e.dataTransfer.setData('text/plain', id);
+        e.target.style.opacity = '0.5';
+    }
+
+    function handleDragEnd(e) {
+        e.target.style.opacity = '1';
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.currentTarget.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+        e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleDrop(e, newStatus) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('drag-over');
+        const id = e.dataTransfer.getData('text/plain');
+        if (id) {
+            updateStatus(id, newStatus);
+        }
+    }
+
+    // Close dropdowns on outside click
+    document.addEventListener('click', function(e) {
+        const menus = document.querySelectorAll('.status-dropdown-menu');
+        menus.forEach(menu => {
+            if (!menu.contains(e.target) && !e.target.closest('.btn-status-trigger')) {
+                menu.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

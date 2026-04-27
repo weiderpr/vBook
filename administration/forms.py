@@ -38,12 +38,13 @@ class SystemSettingForm(forms.ModelForm):
     class Meta:
         model = SystemSetting
         fields = [
-            'active_gateway',
+            'pix_gateway', 'card_gateway',
             'mercadopago_public_key', 'mercadopago_access_token', 'mercadopago_webhook_secret',
             'stripe_public_key', 'stripe_secret_key', 'stripe_webhook_secret'
         ]
         widgets = {
-            'active_gateway': forms.Select(attrs={'class': 'form-control'}),
+            'pix_gateway': forms.Select(attrs={'class': 'form-control'}),
+            'card_gateway': forms.Select(attrs={'class': 'form-control'}),
             'mercadopago_public_key': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'APP_USR-...'}),
             'mercadopago_access_token': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'APP_USR-...', 'render_value': True}),
             'mercadopago_webhook_secret': forms.PasswordInput(attrs={'class': 'form-control', 'render_value': True}),

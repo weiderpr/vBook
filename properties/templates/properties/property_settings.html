@@ -328,8 +328,8 @@
                                                     recipient: '{{ cost.recipient }}',
                                                     frequency: '{{ cost.frequency }}',
                                                     payment_date: '{{ cost.payment_date|date:"Y-m-d" }}',
-                                                    month: '{{ cost.month|default:0|unlocalize }}',
-                                                    year: '{{ cost.year|default:0|unlocalize }}',
+                                                    month: '{{ cost.month|unlocalize|default:"" }}',
+                                                    year: '{{ cost.year|unlocalize|default:"" }}',
                                                     provider_id: '{{ cost.provider_id|default:"" }}',
                                                     provider_name: '{{ cost.provider.name|escapejs|default:"" }}',
                                                     provider_photo: '{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}'
@@ -419,8 +419,8 @@
                                                     recipient: "{{ cost.recipient }}",
                                                     frequency: "{{ cost.frequency }}",
                                                     payment_date: "{{ cost.payment_date|date:"Y-m-d" }}",
-                                                    month: "{{ cost.month|default:0|unlocalize }}",
-                                                    year: "{{ cost.year|default:0|unlocalize }}",
+                                                    month: "{{ cost.month|unlocalize|default:"" }}",
+                                                    year: "{{ cost.year|unlocalize|default:"" }}",
                                                     provider_id: "{{ cost.provider_id|default:"" }}",
                                                     provider_name: "{{ cost.provider.name|escapejs|default:"" }}",
                                                     provider_photo: "{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}"
@@ -861,8 +861,8 @@
         frequencySelect.value = data.frequency;
         
         if (data.payment_date) form.querySelector('[name="payment_date"]').value = data.payment_date;
-        if (data.month) form.querySelector('[name="month"]').value = data.month;
-        if (data.year) form.querySelector('[name="year"]').value = data.year;
+        form.querySelector('[name="month"]').value = data.month || '';
+        form.querySelector('[name="year"]').value = data.year || '';
         
         // Populate provider if exists
         if (data.provider_id) {
