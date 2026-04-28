@@ -1,0 +1,47 @@
+{% load i18n %}
+<div class="execution-modal-body">
+    <p class="text-muted mb-4">{% trans "Selecione um prestador para iniciar a execução da manutenção:" %} <strong>{{ maintenance.title }}</strong></p>
+
+    <!-- Phase 1: Budget Selection -->
+    {% if budgets %}
+    <div class="mb-4">
+        <label class="form-label-premium">{% trans "Orçamentos Vinculados" %}</label>
+        <div class="execution-budgets-grid">
+            {% for budget in budgets %}
+            <div class="execution-budget-card" onclick="selectBudgetForExecution(this, {{ budget.id }}, '{{ budget.provider_name }}', '{{ budget.phone }}')">
+                <div class="card-info">
+                    <span class="provider-name">{{ budget.provider_name }}</span>
+                    <span class="budget-value">R$ {{ budget.value }}</span>
+                </div>
+                <div class="card-check">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Phase 2: Provider Selection/Entry -->
+    <form id="startExecutionForm">
+        {% csrf_token %}
+        <input type="hidden" name="budget_id" id="exec_budget_id">
+        <input type="hidden" name="provider_id" id="exec_provider_id">
+        
+        <div class="form-row">
+            <div class="form-group col-md-6 position-relative">
+                <label class="form-label-premium">{% trans "Nome do Prestador" %}</label>
+                <div class="search-provider-wrapper">
+                    <input type="text" name="name" id="exec_name" class="form-control-premium" required autocomplete="off" oninput="searchProvidersForExecution(this.value, {{ maintenance.id }})" placeholder="{% trans 'Digite para buscar ou cadastrar novo...' %}">
+                    <div id="executionSearchResults" class="search-results-dropdown" style="display: none;">
+                        <!-- Results via JS -->
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="form-label-premium">{% trans "Telefone" %}</label>
+                <input type="text" name="phone" id="exec_phone" class="form-control-premium phone-mask">
+            </div>
+        </div>
+    </form>
+</div>

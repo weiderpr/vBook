@@ -1,0 +1,180 @@
+{% load i18n static l10n %}
+
+<style>
+    .wizard-partial-container { padding: 0; }
+    .wizard-steps { display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative; padding: 0 3rem; }
+    .wizard-steps::before { content: ''; position: absolute; top: 18px; left: 5rem; right: 5rem; height: 2px; background: var(--glass-border); z-index: 1; }
+    .step { position: relative; z-index: 2; text-align: center; flex: 1; }
+    .step-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--bg-card); border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.4rem; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; transition: all 0.3s; }
+    .step.active .step-icon { background: var(--primary); border-color: var(--primary); color: #ffffff; }
+    .step.completed .step-icon { background: #22c55e; border-color: #22c55e; color: #ffffff; }
+    .step-label { font-size: 0.6rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+
+    .maintenance-compact-header { background: var(--bg-card); border-radius: 16px; padding: 1rem 1.2rem; border: 1px solid var(--glass-border); margin-bottom: 1.5rem; }
+    .header-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .header-title-area h2 { margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+    .header-status-area { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+    .period-mini { font-size: 0.6rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+    .header-description { margin-top: 0.6rem; font-size: 0.85rem; line-height: 1.4; color: var(--text-main); opacity: 0.8; }
+
+    .budget-form-container { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.5rem; }
+    .budget-form-row { display: grid; grid-template-columns: 1.5fr 1fr 1.2fr 0.8fr auto; gap: 10px; align-items: flex-end; }
+    .input-group { display: flex; flex-direction: column; gap: 4px; position: relative; }
+    .input-group label { font-size: 0.6rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .input-group input { width: 100%; padding: 0.6rem 0.8rem; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--text-main); font-size: 0.8rem; outline: none; transition: border-color 0.2s; }
+    .input-group input:focus { border-color: var(--primary); }
+
+    .autocomplete-results { position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 8px; z-index: 100; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.2); max-height: 200px; overflow-y: auto; }
+    .autocomplete-item { padding: 0.6rem 1rem; font-size: 0.8rem; cursor: pointer; transition: background 0.2s; }
+    .autocomplete-item:hover { background: var(--glass-border); color: var(--primary); }
+
+    .budget-list-card { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.2rem; }
+    .professional-mini-table { width: 100%; border-collapse: separate; border-spacing: 0 4px; }
+    .professional-mini-table th { text-align: left; padding: 0.4rem 0.8rem; font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
+    .professional-mini-table td { padding: 0.7rem 0.8rem; background: rgba(128,128,128,0.03); font-size: 0.8rem; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
+    .professional-mini-table td:first-child { border-left: 1px solid var(--glass-border); border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+    .professional-mini-table td:last-child { border-right: 1px solid var(--glass-border); border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+
+    .execution-selector { margin-bottom: 1.2rem; }
+    .execution-option { 
+        padding: 0.8rem 1rem; 
+        border-radius: 12px; 
+        border: 2px solid var(--glass-border); 
+        background: var(--bg-card); 
+        cursor: pointer; 
+        transition: all 0.2s;
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .execution-option:hover { border-color: var(--primary); }
+    .execution-option.selected { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
+
+    .btn-include { background: var(--primary); color: white; border: none; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+    .wizard-footer { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--glass-border); display: flex; justify-content: flex-end; align-items: center; gap: 1rem; }
+</style>
+
+<div class="wizard-partial-container">
+    <div class="wizard-steps">
+        <div class="step {% if maintenance.status == 'open' %}active{% elif maintenance.status != 'open' %}completed{% endif %}">
+            <div class="step-icon">{% if maintenance.status != 'open' %}<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>{% else %}1{% endif %}</div>
+            <div class="step-label">{% trans "Orçamentos" %}</div>
+        </div>
+        <div class="step {% if maintenance.status == 'in_progress' %}active{% elif maintenance.status == 'finished' %}completed{% endif %}">
+            <div class="step-icon">{% if maintenance.status == 'finished' %}<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>{% else %}2{% endif %}</div>
+            <div class="step-label">{% trans "Execução" %}</div>
+        </div>
+        <div class="step {% if maintenance.status == 'finished' %}active completed{% endif %}">
+            <div class="step-icon">3</div>
+            <div class="step-label">{% trans "Conclusão" %}</div>
+        </div>
+    </div>
+
+    <div class="maintenance-compact-header">
+        <div class="header-top-row">
+            <div class="header-title-area">
+                <h2>
+                    <div style="width: 24px; height: 24px; background: rgba(99, 102, 241, 0.1); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
+                    {{ maintenance.title }}
+                </h2>
+            </div>
+            <div class="header-status-area">
+                <span class="status-badge status-{{ maintenance.status }}">{{ maintenance.get_status_display }}</span>
+                <span class="period-mini">{{ maintenance.start_date|date:"SHORT_DATE_FORMAT" }} - {{ maintenance.end_date|date:"SHORT_DATE_FORMAT" }}</span>
+            </div>
+        </div>
+        {% if maintenance.description %}<div class="header-description">{{ maintenance.description }}</div>{% endif %}
+    </div>
+
+    {% if maintenance.status == 'open' %}
+        <div class="budget-form-container">
+            <form id="budgetAddForm" onsubmit="submitBudget(event, '{{ maintenance.pk }}')">
+                <div class="budget-form-row">
+                    <div class="input-group"><label>{% trans "Prestador" %}</label><input type="text" id="provider_name" name="provider_name" required autocomplete="off" oninput="handleProviderInput(this)"><div id="providerAutocomplete" class="autocomplete-results"></div></div>
+                    <div class="input-group"><label>{% trans "Telefone" %}</label><input type="text" name="phone" id="provider_phone" required placeholder="(00) 00000-0000" oninput="maskPhone(this)"></div>
+                    <div class="input-group"><label>{% trans "Período Previsto" %}</label><div style="display: flex; gap: 5px;"><input type="date" name="start_date" required><input type="date" name="end_date" required></div></div>
+                    <div class="input-group"><label>{% trans "Valor (R$)" %}</label><input type="text" name="value" required placeholder="0,00" oninput="maskCurrency(this)"></div>
+                    <button type="submit" class="btn-include">{% trans "Incluir" %}</button>
+                </div>
+            </form>
+        </div>
+        <div class="budget-list-card" id="budgetListContainer">{% include 'maintenance/includes/budget_list.html' with budgets=maintenance.budgets.all maintenance=maintenance %}</div>
+    {% elif maintenance.status == 'in_progress' %}
+        <div class="execution-section" style="animation: fadeInWizard 0.5s ease-out;">
+            <h4 style="margin: 0 0 1.2rem; font-size: 0.95rem; font-weight: 700;">{% trans "Dados de Execução" %}</h4>
+            
+            <div class="budget-form-container" style="background: rgba(255,255,255,0.05); padding: 1.5rem;">
+                <form id="executionForm">
+                    {% if budgets %}
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 8px;">{% trans "Selecione um Orçamento ou Informe Manualmente" %}</label>
+                        <div class="execution-selector">
+                            {% for b in budgets %}
+                            <div class="execution-option" onclick="fillExecutionFromBudget('{{ b.provider_name }}', '{{ b.phone }}', '{{ b.start_date|date:"Y-m-d" }}', '{{ b.end_date|date:"Y-m-d" }}', '{{ b.value|localize }}')">
+                                <div>
+                                    <span style="font-weight: 700; color: var(--text-main);">{{ b.provider_name }}</span>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 10px;">{{ b.phone }}</span>
+                                </div>
+                                <div style="font-weight: 800; color: var(--primary);">R$ {{ b.value|floatformat:2|localize }}</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="budget-form-row" style="grid-template-columns: 1.5fr 1fr 1.5fr 1fr;">
+                        <div class="input-group">
+                            <label>{% trans "Prestador Execução" %}</label>
+                            <input type="text" id="exec_provider_name" name="provider_name" value="{{ maintenance.provider_name|default:'' }}" required autocomplete="off" oninput="handleProviderInput(this)">
+                            <div id="execProviderAutocomplete" class="autocomplete-results"></div>
+                        </div>
+                        <div class="input-group">
+                            <label>{% trans "Telefone" %}</label>
+                            <input type="text" id="exec_provider_phone" name="provider_phone" value="{{ maintenance.provider_phone|default:'' }}" required oninput="maskPhone(this)">
+                        </div>
+                        <div class="input-group">
+                            <label>{% trans "Período Realização" %}</label>
+                            <div style="display: flex; gap: 5px;">
+                                <input type="date" id="exec_start_date" name="execution_start_date" value="{{ maintenance.execution_start_date|date:'Y-m-d' }}" required>
+                                <input type="date" id="exec_end_date" name="execution_end_date" value="{{ maintenance.execution_end_date|date:'Y-m-d' }}" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>{% trans "Valor Pago (R$)" %}</label>
+                            <input type="text" id="exec_value" name="execution_value" value="{{ maintenance.execution_value|localize|default:'' }}" required oninput="maskCurrency(this)">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 1rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                {% trans "Os dados acima serão salvos permanentemente ao finalizar o serviço." %}
+            </p>
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 2rem;">
+            <div style="width: 54px; height: 54px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; color: #22c55e;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--text-main);">{% trans "Manutenção Concluída" %}</h3>
+            <div style="margin-top: 1.5rem; background: var(--bg-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border); text-align: left;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;"><span style="color: var(--text-muted); font-size: 0.8rem;">{% trans "Prestador" %}</span><span style="font-weight: 700;">{{ maintenance.provider_name }}</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;"><span style="color: var(--text-muted); font-size: 0.8rem;">{% trans "Telefone" %}</span><span>{{ maintenance.provider_phone }}</span></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;"><span style="color: var(--text-muted); font-size: 0.8rem;">{% trans "Valor Final" %}</span><span style="font-weight: 800; color: #22c55e;">R$ {{ maintenance.execution_value|floatformat:2|localize }}</span></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted); font-size: 0.8rem;">{% trans "Período" %}</span><span style="font-size: 0.85rem;">{{ maintenance.execution_start_date|date:"SHORT_DATE_FORMAT" }} - {{ maintenance.execution_end_date|date:"SHORT_DATE_FORMAT" }}</span></div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="wizard-footer">
+        <button type="button" class="btn btn-outline" onclick="closeWizardModal()" style="border: none;">{% trans "Fechar" %}</button>
+        {% if maintenance.status != 'finished' %}
+            <button type="button" onclick="advanceWizard('{{ maintenance.pk }}')" class="btn btn-primary" id="advanceBtn" style="min-width: 180px; font-weight: 700;">
+                {% if maintenance.status == 'open' %}{% trans "Aprovar e Iniciar" %}{% elif maintenance.status == 'in_progress' %}{% trans "Finalizar Serviço" %}{% endif %}
+            </button>
+        {% endif %}
+    </div>
+</div>

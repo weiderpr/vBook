@@ -1,37 +1,42 @@
-{% load i18n %}
+{% load i18n static l10n %}
 
-<div class="budgets-wrapper">
-    {% if budgets %}
-        <div class="budgets-list">
-            {% for budget in budgets %}
-            <div class="budget-card">
-                <div class="budget-main">
-                    <div class="budget-provider">{{ budget.provider_name }}</div>
-                    <div class="budget-actions-inline">
-                        <button class="btn-budget-mini-action edit" onclick="editBudget({{ budget.id }})" title="{% trans 'Editar' %}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-                        </button>
-                        <button class="btn-budget-mini-action delete" onclick="deleteBudget({{ budget.id }})" title="{% trans 'Excluir' %}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                        </button>
-                        <div class="budget-value" style="margin-left: 10px;">R$ {{ budget.value }}</div>
-                    </div>
-                </div>
-                <div class="budget-details">
-                    <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> {{ budget.phone }}</span>
-                    <span><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg> {{ budget.start_date|date:"d/m" }} - {{ budget.end_date|date:"d/m" }}</span>
-                </div>
-                {% if budget.observations %}
-                <div class="budget-obs">
-                    {{ budget.observations }}
-                </div>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="empty-budgets">
-            <p>{% trans "Nenhum orçamento cadastrado para esta manutenção." %}</p>
-        </div>
-    {% endif %}
+<div class="section-header" style="margin-bottom: 1rem;">
+    <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: var(--text-main);">{% trans "Orçamentos Registrados" %}</h4>
 </div>
+
+{% if budgets %}
+<table class="professional-mini-table">
+    <thead>
+        <tr>
+            <th>{% trans "Prestador" %}</th>
+            <th>{% trans "Telefone" %}</th>
+            <th>{% trans "Prazo" %}</th>
+            <th>{% trans "Valor" %}</th>
+            {% if maintenance.status == 'open' %}
+                <th style="text-align: right;">{% trans "Ação" %}</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for b in budgets %}
+        <tr>
+            <td style="font-weight: 700;">{{ b.provider_name }}</td>
+            <td style="font-size: 0.75rem; color: var(--text-muted);">{{ b.phone }}</td>
+            <td>{{ b.start_date|date:"SHORT_DATE_FORMAT" }} - {{ b.end_date|date:"SHORT_DATE_FORMAT" }}</td>
+            <td style="color: var(--primary); font-weight: 800;">R$ {{ b.value|floatformat:2|localize }}</td>
+            {% if maintenance.status == 'open' %}
+                <td style="text-align: right;">
+                    <button onclick="deleteBudget('{{ b.pk }}', '{{ maintenance.pk }}')" class="btn-icon delete" style="width: 24px; height: 24px; border: none; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 4px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                    </button>
+                </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div style="text-align: center; padding: 2rem 1rem; background: rgba(0,0,0,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
+    <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0;">{% trans "Aguardando inclusão de orçamentos." %}</p>
+</div>
+{% endif %}

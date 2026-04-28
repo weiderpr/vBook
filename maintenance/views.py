@@ -1,13 +1,159 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, View
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.http import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
-from properties.models import Property
+from django.urls import reverse_lazy, reverse
+from django.contrib import messages
+from properties.models import Property, ServiceProvider
 from .models import Maintenance, Budget, MaintenancePhoto
-from .forms import BudgetForm
+from .forms import BudgetForm, MaintenanceForm
 from django.db.models import Count
+import decimal
+
+class PropertyMaintenanceMixin:
+    """Provides the property object to the context and ensures ownership."""
+    property_object = None
+
+    def get_property(self):
+        if not self.property_object:
+            self.property_object = get_object_or_404(
+                Property, 
+                pk=self.kwargs.get('property_pk'), 
+                user=self.request.user
+            )
+        return self.property_object
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = self.get_property()
+        context['active_item'] = 'maintenance'
+        return context
+
+class MaintenanceListView(LoginRequiredMixin, PropertyMaintenanceMixin, ListView):
+    model = Maintenance
+    template_name = 'maintenance/maintenance_list.html'
+    context_object_name = 'maintenances'
+
+    def get_queryset(self):
+        return Maintenance.objects.filter(property=self.get_property())
+
+class MaintenanceCreateView(LoginRequiredMixin, PropertyMaintenanceMixin, CreateView):
+    model = Maintenance
+    form_class = MaintenanceForm
+    template_name = 'maintenance/maintenance_form.html'
+
+    def form_valid(self, form):
+        form.instance.property = self.get_property()
+        messages.success(self.request, _("Manutenção cadastrada com sucesso!"))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('maintenance:list', kwargs={'property_pk': self.kwargs.get('property_pk')})
+
+class MaintenanceUpdateView(LoginRequiredMixin, PropertyMaintenanceMixin, UpdateView):
+    model = Maintenance
+    form_class = MaintenanceForm
+    template_name = 'maintenance/maintenance_form.html'
+
+    def get_queryset(self):
+        return Maintenance.objects.filter(property__user=self.request.user)
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Manutenção atualizada com sucesso!"))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('maintenance:list', kwargs={'property_pk': self.kwargs.get('property_pk')})
+
+class MaintenanceDeleteView(LoginRequiredMixin, PropertyMaintenanceMixin, DeleteView):
+    model = Maintenance
+    template_name = 'maintenance/maintenance_confirm_delete.html'
+
+    def get_queryset(self):
+        return Maintenance.objects.filter(property__user=self.request.user)
+
+    def get_success_url(self):
+        messages.success(self.request, _("Manutenção removida com sucesso!"))
+        return reverse('maintenance:list', kwargs={'property_pk': self.kwargs.get('property_pk')})
+
+class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, DetailView):
+    model = Maintenance
+    context_object_name = 'maintenance'
+
+    def get_template_names(self):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return ['maintenance/includes/maintenance_wizard_partial.html']
+        return ['maintenance/maintenance_wizard.html']
+
+    def get_queryset(self):
+        return Maintenance.objects.filter(property__user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['budgets'] = self.object.budgets.all()
+        context['budget_form'] = BudgetForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        maintenance = self.get_object()
+        action = request.POST.get('action')
+
+        if action == 'advance':
+            if maintenance.status == 'open':
+                maintenance.status = 'in_progress'
+                maintenance.save()
+            elif maintenance.status == 'in_progress':
+                provider_name = request.POST.get('provider_name')
+                provider_phone = request.POST.get('provider_phone')
+                execution_start_date = request.POST.get('execution_start_date')
+                execution_end_date = request.POST.get('execution_end_date')
+                execution_value = request.POST.get('execution_value')
+
+                if all([provider_name, provider_phone, execution_start_date, execution_end_date, execution_value]):
+                    maintenance.provider_name = provider_name
+                    maintenance.provider_phone = provider_phone
+                    maintenance.execution_start_date = execution_start_date
+                    maintenance.execution_end_date = execution_end_date
+                    
+                    val = execution_value.replace('.', '').replace(',', '.')
+                    maintenance.execution_value = decimal.Decimal(val)
+                    
+                    maintenance.status = 'finished'
+                    maintenance.save()
+
+                    # Register/Update ServiceProvider for the current user
+                    # If a provider with same name/phone exists for this user, use it. Otherwise create.
+                    ServiceProvider.objects.get_or_create(
+                        user=request.user,
+                        name=provider_name,
+                        defaults={'phone': provider_phone}
+                    )
+                else:
+                    return JsonResponse({
+                        'status': 'error', 
+                        'message': _("Por favor, preencha todos os campos de execução para finalizar.")
+                    }, status=400)
+        
+        elif action == 'save_execution':
+            maintenance.provider_name = request.POST.get('provider_name')
+            maintenance.provider_phone = request.POST.get('provider_phone')
+            maintenance.execution_start_date = request.POST.get('execution_start_date')
+            maintenance.execution_end_date = request.POST.get('execution_end_date')
+            
+            value = request.POST.get('execution_value')
+            if value:
+                value = value.replace('.', '').replace(',', '.')
+                maintenance.execution_value = decimal.Decimal(value)
+            
+            maintenance.save()
+            return JsonResponse({'status': 'success', 'message': _("Dados de execução salvos!")})
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success', 'new_status': maintenance.status})
+            
+        return redirect('maintenance:wizard', property_pk=maintenance.property.pk, pk=maintenance.pk)
 
 class MaintenanceDashboardView(LoginRequiredMixin, DetailView):
     model = Property
@@ -36,7 +182,7 @@ class MaintenanceDashboardView(LoginRequiredMixin, DetailView):
         
         return context
 
-class MaintenanceListView(LoginRequiredMixin, View):
+class MaintenanceListViewOld(LoginRequiredMixin, View):
     """AJAX view to return the list of maintenances for a specific status."""
     def get(self, request, property_pk):
         property_obj = get_object_or_404(Property, pk=property_pk, user=request.user)
@@ -62,7 +208,7 @@ class MaintenanceDetailView(LoginRequiredMixin, View):
         
         return JsonResponse({'html': html, 'title': maintenance.title})
 
-class MaintenanceCreateView(LoginRequiredMixin, View):
+class MaintenanceCreateViewOld(LoginRequiredMixin, View):
     def post(self, request, property_pk):
         property_obj = get_object_or_404(Property, pk=property_pk, user=request.user)
         
@@ -224,3 +370,16 @@ class MaintenancePhotoDeleteView(LoginRequiredMixin, View):
             'photos_html': photos_html,
             'photo_count': maintenance.photos.count()
         })
+
+class ProviderAutocompleteView(LoginRequiredMixin, View):
+    def get(self, request):
+        query = request.GET.get('q', '')
+        if query:
+            # Search in ServiceProvider registration (global)
+            providers = ServiceProvider.objects.filter(
+                name__icontains=query
+            ).values('name', 'phone').distinct()[:10]
+            
+            # Convert to list of dicts for JS to handle name/phone
+            return JsonResponse(list(providers), safe=False)
+        return JsonResponse([], safe=False)

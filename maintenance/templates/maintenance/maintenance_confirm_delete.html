@@ -1,0 +1,35 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Excluir Manutenção" %} - VerticeBook{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='maintenance' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-form-container" style="padding-top: 5rem; text-align: center;">
+    <div class="glass-card" style="padding: 3rem; max-width: 500px; margin: 0 auto;">
+        <div style="width: 64px; height: 64px; background: rgba(239, 68, 68, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: #ef4444;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+        </div>
+        
+        <h2 style="margin-bottom: 1rem; color: var(--text-main);">{% trans "Excluir Manutenção?" %}</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2.5rem;">
+            {% trans "Tem certeza que deseja excluir a manutenção" %} <strong>"{{ object.title }}"</strong>? {% trans "Esta ação não pode ser desfeita." %}
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="{% url 'maintenance:list' property.pk %}" class="btn btn-outline" style="flex: 1;">
+                    {% trans "Cancelar" %}
+                </a>
+                <button type="submit" class="btn btn-primary" style="flex: 1; background: #ef4444; border-color: #ef4444;">
+                    {% trans "Confirmar Exclusão" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

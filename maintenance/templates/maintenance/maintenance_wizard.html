@@ -1,0 +1,264 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static l10n %}
+
+{% block title %}{% trans "Wizard de Manutenção" %} - {{ maintenance.title }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .wizard-container {
+        padding-top: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .wizard-header {
+        margin-bottom: 2rem;
+    }
+
+    .maintenance-info-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .info-item label {
+        display: block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 0.3rem;
+        font-weight: 700;
+    }
+
+    .info-item span {
+        font-size: 1rem;
+        color: var(--text-main);
+        font-weight: 600;
+    }
+
+    .wizard-steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    .wizard-steps::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--glass-border);
+        z-index: 1;
+    }
+
+    .step {
+        position: relative;
+        z-index: 2;
+        background: var(--bg-dashboard);
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .step-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--bg-card);
+        border: 2px solid var(--glass-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.5rem;
+        color: var(--text-muted);
+        transition: all 0.3s;
+    }
+
+    .step.active .step-icon {
+        border-color: var(--primary);
+        color: var(--primary);
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .step.completed .step-icon {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+    }
+
+    .step-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+    }
+
+    .step.active .step-label {
+        color: var(--text-main);
+    }
+
+    .budget-section {
+        margin-top: 2rem;
+    }
+
+    .budget-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+
+    .budget-table th, .budget-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .wizard-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--glass-border);
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='maintenance' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="wizard-container">
+    <div class="wizard-header">
+        <a href="{% url 'maintenance:list' property.pk %}" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; margin-bottom: 1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            {% trans "Voltar para Lista" %}
+        </a>
+        <h1 style="margin: 0;">{% trans "Acompanhamento de Manutenção" %}</h1>
+    </div>
+
+    <div class="wizard-steps">
+        <div class="step {% if maintenance.status == 'open' %}active{% elif maintenance.status != 'open' %}completed{% endif %}">
+            <div class="step-icon">1</div>
+            <div class="step-label">{% trans "Orçamentos" %}</div>
+        </div>
+        <div class="step {% if maintenance.status == 'in_progress' %}active{% elif maintenance.status == 'finished' %}completed{% endif %}">
+            <div class="step-icon">2</div>
+            <div class="step-label">{% trans "Execução" %}</div>
+        </div>
+        <div class="step {% if maintenance.status == 'finished' %}active completed{% endif %}">
+            <div class="step-icon">3</div>
+            <div class="step-label">{% trans "Conclusão" %}</div>
+        </div>
+    </div>
+
+    <div class="maintenance-info-card">
+        <div class="info-grid">
+            <div class="info-item">
+                <label>{% trans "Título" %}</label>
+                <span>{{ maintenance.title }}</span>
+            </div>
+            <div class="info-item">
+                <label>{% trans "Propriedade" %}</label>
+                <span>{{ maintenance.property.name }}</span>
+            </div>
+            <div class="info-item">
+                <label>{% trans "Período" %}</label>
+                <span>{{ maintenance.start_date|date:"SHORT_DATE_FORMAT" }} - {{ maintenance.end_date|date:"SHORT_DATE_FORMAT" }}</span>
+            </div>
+            <div class="info-item">
+                <label>{% trans "Status Atual" %}</label>
+                <span class="status-badge status-{{ maintenance.status }}">{{ maintenance.get_status_display }}</span>
+            </div>
+        </div>
+        {% if maintenance.description %}
+        <div style="margin-top: 1.5rem;">
+            <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 700;">{% trans "Descrição" %}</label>
+            <p style="color: var(--text-main); margin: 0;">{{ maintenance.description }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if maintenance.status == 'open' %}
+    <div class="glass-card" style="padding: 2rem;">
+        <h3>{% trans "Gestão de Orçamentos" %}</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Nesta etapa, você deve coletar e registrar os orçamentos para a manutenção." %}</p>
+        
+        <div class="budget-section">
+            {% if budgets %}
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Prestador" %}</th>
+                        <th>{% trans "Valor" %}</th>
+                        <th>{% trans "Prazo" %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in budgets %}
+                    <tr>
+                        <td>{{ b.provider_name }}</td>
+                        <td>R$ {{ b.value|floatformat:2|localize }}</td>
+                        <td>{{ b.start_date|date:"SHORT_DATE_FORMAT" }} - {{ b.end_date|date:"SHORT_DATE_FORMAT" }}</td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--glass-border);">
+                <p style="color: var(--text-muted); margin: 0;">{% trans "Nenhum orçamento registrado ainda." %}</p>
+            </div>
+            {% endif %}
+            
+            <div style="margin-top: 2rem; text-align: right;">
+                <button class="btn btn-outline" style="font-size: 0.8rem;">+ {% trans "Adicionar Orçamento" %}</button>
+            </div>
+        </div>
+    </div>
+    {% elif maintenance.status == 'in_progress' %}
+    <div class="glass-card" style="padding: 2rem; text-align: center;">
+        <div style="width: 64px; height: 64px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--primary);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3>{% trans "Manutenção em Execução" %}</h3>
+        <p style="color: var(--text-muted);">{% trans "O serviço está sendo realizado. Quando concluído, avance para finalizar o processo." %}</p>
+    </div>
+    {% else %}
+    <div class="glass-card" style="padding: 2rem; text-align: center;">
+        <div style="width: 64px; height: 64px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: #22c55e;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>{% trans "Manutenção Finalizada" %}</h3>
+        <p style="color: var(--text-muted);">{% trans "Este processo de manutenção foi concluído." %}</p>
+    </div>
+    {% endif %}
+
+    <div class="wizard-actions">
+        <a href="{% url 'maintenance:list' property.pk %}" class="btn btn-outline">{% trans "Sair" %}</a>
+        
+        <form method="post">
+            {% csrf_token %}
+            {% if maintenance.status != 'finished' %}
+                <button type="submit" name="action" value="advance" class="btn btn-primary">
+                    {% if maintenance.status == 'open' %}
+                        {% trans "Aprovar e Iniciar Execução" %}
+                    {% elif maintenance.status == 'in_progress' %}
+                        {% trans "Finalizar Manutenção" %}
+                    {% endif %}
+                </button>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

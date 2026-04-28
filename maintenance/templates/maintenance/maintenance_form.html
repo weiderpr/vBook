@@ -1,0 +1,130 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static l10n %}
+
+{% block title %}
+    {% if object %}
+        {% trans "Editar Manutenção" %}
+    {% else %}
+        {% trans "Nova Manutenção" %}
+    {% endif %}
+    - {{ property.name }} - VerticeBook
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    @media (max-width: 768px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+    }
+    input:not([type="checkbox"]), textarea, select {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        border: 1px solid var(--glass-border);
+        background: var(--bg-card);
+        color: var(--text-main);
+        font-size: 0.95rem;
+        transition: all 0.3s;
+        font-family: inherit;
+    }
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .field-error {
+        color: #ef4444;
+        font-size: 0.85rem;
+        margin-top: 5px;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-muted);
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='maintenance' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-form-container" style="padding-top: 2.5rem;">
+    <div class="dashboard-header" style="margin-bottom: 2rem;">
+        <div>
+            <h1>
+                {% if object %}
+                    {% trans "Editar Manutenção" %}
+                {% else %}
+                    {% trans "Nova Manutenção" %}
+                {% endif %}
+            </h1>
+            <p style="color: var(--text-muted);">{{ property.name }}</p>
+        </div>
+    </div>
+
+    <form method="post" class="glass-card" style="padding: 2.5rem; max-width: 800px; margin: 0 auto;">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+        <div class="field-error" style="margin-bottom: 2rem;">
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+            {{ form.title }}
+            {% if form.title.errors %}<div class="field-error">{{ form.title.errors.0 }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+            {{ form.description }}
+            {% if form.description.errors %}<div class="field-error">{{ form.description.errors.0 }}</div>{% endif %}
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}</label>
+                {{ form.start_date }}
+                {% if form.start_date.errors %}<div class="field-error">{{ form.start_date.errors.0 }}</div>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
+                {{ form.end_date }}
+                {% if form.end_date.errors %}<div class="field-error">{{ form.end_date.errors.0 }}</div>{% endif %}
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 3rem; justify-content: flex-end;">
+            <a href="{% url 'maintenance:list' property.pk %}" class="btn btn-outline" style="min-width: 150px; text-align: center;">
+                {% trans "Cancelar" %}
+            </a>
+            <button type="submit" class="btn btn-primary" style="min-width: 200px;">
+                {% if object %}
+                    {% trans "Atualizar Manutenção" %}
+                {% else %}
+                    {% trans "Salvar Manutenção" %}
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

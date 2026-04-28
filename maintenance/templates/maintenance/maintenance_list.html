@@ -1,0 +1,552 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static l10n %}
+
+{% block title %}{% trans "Manutenções" %} - {{ property.name }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .maintenance-container {
+        padding-top: 2rem;
+        width: 100%;
+    }
+
+    .table-wrapper {
+        width: 100% !important;
+        max-width: none !important;
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--glass-shadow);
+    }
+    
+    .professional-table {
+        width: 100% !important;
+        border-collapse: collapse;
+        text-align: left;
+    }
+    
+    .professional-table thead {
+        background: rgba(255, 255, 255, 0.03);
+    }
+    
+    .professional-table th {
+        padding: 1.2rem 1.5rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .professional-table td {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+        border-bottom: 1px solid var(--glass-border);
+        vertical-align: middle;
+        transition: all 0.2s;
+    }
+    
+    .professional-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .professional-table tbody tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+    }
+    
+    .maintenance-cell {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .maintenance-cell .title {
+        font-weight: 600;
+        color: var(--text-main);
+    }
+    
+    .maintenance-cell .description {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .status-open {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+    
+    .status-in_progress {
+        background: rgba(99, 102, 241, 0.15);
+        color: #818cf8;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    
+    .status-finished {
+        background: rgba(34, 197, 94, 0.15);
+        color: #4ade80;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+    
+    .status-cancelled {
+        background: rgba(239, 68, 68, 0.15);
+        color: #f87171;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .period-text {
+        color: var(--text-main);
+        font-size: 0.85rem;
+    }
+
+    .actions-group {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+    
+    .btn-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: var(--text-muted);
+        transition: all 0.2s;
+    }
+    
+    .btn-icon:hover {
+        background: var(--glass-border);
+        color: var(--text-main);
+    }
+    
+    .btn-icon.wizard:hover {
+        background: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+        border-color: rgba(99, 102, 241, 0.2);
+    }
+
+    .btn-icon.delete:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .property-mini-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    /* Modal Styles */
+    .vbook-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(16px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .vbook-modal-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .vbook-modal-content {
+        background: var(--bg-dark);
+        width: 98%;
+        max-width: 950px;
+        max-height: 95vh;
+        border-radius: 28px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 25px 70px -12px rgba(0, 0, 0, 0.9);
+        overflow: hidden;
+        position: relative;
+        transform: translateY(20px) scale(0.95);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .vbook-modal-overlay.active .vbook-modal-content {
+        transform: translateY(0) scale(1);
+    }
+
+    .modal-body-scroll {
+        overflow-y: auto;
+        padding: 2rem;
+        flex: 1;
+    }
+
+    .modal-close {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        transition: all 0.2s;
+        z-index: 2010;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-close:hover {
+        background: #ef4444;
+        color: white;
+        border-color: #ef4444;
+        transform: rotate(90deg);
+    }
+
+    @keyframes fadeInWizard {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wizard-animate {
+        animation: fadeInWizard 0.5s ease-out forwards;
+    }
+
+    .spinner {
+        border: 3px solid rgba(255,255,255,0.1);
+        border-radius: 50%;
+        border-top: 3px solid var(--primary);
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with active_item='maintenance' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="maintenance-container">
+    <div class="property-mini-header">
+        <div>
+            <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{% trans "Manutenções" %}</h1>
+        </div>
+        <a href="{% url 'maintenance:create' property.pk %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            {% trans "Nova Manutenção" %}
+        </a>
+    </div>
+
+    <div class="table-wrapper">
+        {% if maintenances %}
+        <table class="professional-table">
+            <thead>
+                <tr>
+                    <th>{% trans "Manutenção" %}</th>
+                    <th>{% trans "Período" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th style="text-align: right;">{% trans "Ações" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in maintenances %}
+                <tr>
+                    <td>
+                        <div class="maintenance-cell">
+                            <span class="title">{{ m.title }}</span>
+                            {% if m.description %}
+                                <span class="description">{{ m.description }}</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="period-text">
+                            {{ m.start_date|date:"SHORT_DATE_FORMAT" }} <span style="opacity: 0.4;">➔</span> {{ m.end_date|date:"SHORT_DATE_FORMAT" }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge status-{{ m.status }}">
+                            {{ m.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="actions-group">
+                            <button onclick="openWizardModal('{{ m.pk }}')" class="btn-icon wizard" title="{% trans 'Acompanhar status da manutenção' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            </button>
+                            <a href="{% url 'maintenance:update' property.pk m.pk %}" class="btn-icon" title="{% trans 'Editar' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                            </a>
+                            <a href="{% url 'maintenance:delete' property.pk m.pk %}" class="btn-icon delete" title="{% trans 'Excluir' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div style="text-align: center; padding: 5rem 2rem;">
+            <div style="width: 64px; height: 64px; background: rgba(255, 255, 255, 0.03); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--text-muted);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">{% trans "Nenhuma manutenção encontrada para este imóvel." %}</p>
+            <a href="{% url 'maintenance:create' property.pk %}" class="btn btn-primary">{% trans "Cadastrar Primeira Manutenção" %}</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div id="wizardModal" class="vbook-modal-overlay">
+    <div class="vbook-modal-content">
+        <button class="modal-close" onclick="closeWizardModal()" style="position: absolute; top: 1.5rem; right: 1.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <div class="modal-body-scroll" id="wizardModalBody">
+            <!-- Content loaded via AJAX -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    const modal = document.getElementById('wizardModal');
+    const modalBody = document.getElementById('wizardModalBody');
+
+    async function openWizardModal(maintenancePk) {
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 5rem 0;">
+                <div class="spinner" style="width: 44px; height: 44px; margin: 0 auto;"></div>
+                <p style="color: var(--text-muted); margin-top: 1.2rem; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">{% trans "Carregando..." %}</p>
+            </div>
+        `;
+        modal.classList.add('active');
+
+        try {
+            const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            if (!response.ok) throw new Error("Erro ao carregar wizard");
+            const html = await response.text();
+            modalBody.innerHTML = `<div class="wizard-animate">${html}</div>`;
+        } catch (error) {
+            modalBody.innerHTML = `<div style="color: #ef4444; padding: 4rem; text-align: center; font-weight: 800;">${error.message.toUpperCase()}</div>`;
+        }
+    }
+
+    function closeWizardModal() {
+        modal.classList.remove('active');
+    }
+
+    async function advanceWizard(maintenancePk) {
+        const btn = event.currentTarget;
+        const originalHtml = btn.innerHTML;
+        
+        // If in execution stage, validate and gather form data
+        const execForm = document.getElementById('executionForm');
+        let formData = new FormData();
+        formData.append('action', 'advance');
+
+        if (execForm) {
+            if (!execForm.checkValidity()) {
+                execForm.reportValidity();
+                return;
+            }
+            const formInputs = new FormData(execForm);
+            for (let [key, value] of formInputs.entries()) {
+                formData.append(key, value);
+            }
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner" style="width: 18px; height: 18px; border-width: 3px; border-left-color: white;"></div>`;
+
+        try {
+            const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || "Erro ao avançar status");
+            }
+            
+            const nextHtmlResponse = await fetch(url, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const nextHtml = await nextHtmlResponse.text();
+            modalBody.innerHTML = `<div class="wizard-animate">${nextHtml}</div>`;
+            
+            if (typeof showToast === 'function') {
+                showToast("{% trans 'Status atualizado!' %}", "success");
+            }
+        } catch (error) {
+            alert(error.message);
+            btn.disabled = false;
+            btn.innerHTML = originalHtml;
+        }
+    }
+
+    // Budget & Execution Functions
+    function maskPhone(input) {
+        let value = input.value.replace(/\D/g, "");
+        if (value.length > 11) value = value.slice(0, 11);
+        if (value.length > 10) value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+        else if (value.length > 5) value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+        else if (value.length > 2) value = value.replace(/^(\d{2})(\d{0,5}).*/, "($1) $2");
+        else if (value.length > 0) value = value.replace(/^(\d{0,2}).*/, "($1");
+        input.value = value;
+    }
+
+    function maskCurrency(input) {
+        let value = input.value.replace(/\D/g, "");
+        value = (value / 100).toFixed(2) + "";
+        value = value.replace(".", ",");
+        value = value.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+        value = value.replace(/(\d)(\d{3}),/g, "$1.$2,");
+        input.value = value;
+    }
+
+    let autocompleteTimeout;
+    function handleProviderInput(input) {
+        const query = input.value;
+        const resultsDiv = input.id === 'exec_provider_name' ? document.getElementById('execProviderAutocomplete') : document.getElementById('providerAutocomplete');
+        
+        clearTimeout(autocompleteTimeout);
+        if (query.length < 2) {
+            resultsDiv.style.display = 'none';
+            return;
+        }
+
+        autocompleteTimeout = setTimeout(async () => {
+            try {
+                const response = await fetch(`{% url 'maintenance:provider_autocomplete' %}?q=${query}`);
+                const data = await response.json();
+                if (data.length > 0) {
+                    resultsDiv.innerHTML = data.map(provider => `
+                        <div class="autocomplete-item" onclick="selectProvider('${provider.name}', '${provider.phone || ""}', '${input.id}')">
+                            <div style="font-weight: 700;">${provider.name}</div>
+                            <div style="font-size: 0.75rem; opacity: 0.6;">${provider.phone || ""}</div>
+                        </div>
+                    `).join('');
+                    resultsDiv.style.display = 'block';
+                } else resultsDiv.style.display = 'none';
+            } catch (e) {}
+        }, 300);
+    }
+
+    function selectProvider(name, phone, inputId) {
+        document.getElementById(inputId).value = name;
+        if (phone) {
+            const phoneInput = inputId === 'exec_provider_name' ? document.getElementById('exec_provider_phone') : document.getElementById('provider_phone');
+            phoneInput.value = phone;
+            maskPhone(phoneInput);
+        }
+        document.querySelectorAll('.autocomplete-results').forEach(el => el.style.display = 'none');
+    }
+
+    function fillExecutionFromBudget(name, phone, start, end, value) {
+        document.getElementById('exec_provider_name').value = name;
+        document.getElementById('exec_provider_phone').value = phone;
+        document.getElementById('exec_start_date').value = start;
+        document.getElementById('exec_end_date').value = end;
+        document.getElementById('exec_value').value = value;
+        
+        maskPhone(document.getElementById('exec_provider_phone'));
+        maskCurrency(document.getElementById('exec_value'));
+
+        document.querySelectorAll('.execution-option').forEach(opt => opt.classList.remove('selected'));
+        event.currentTarget.classList.add('selected');
+    }
+
+    async function submitBudget(event, maintenancePk) {
+        event.preventDefault();
+        const form = event.target;
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner" style="width: 14px; height: 14px;"></div>`;
+
+        try {
+            const formData = new FormData(form);
+            let val = formData.get('value');
+            if (val) formData.set('value', val.replace(/\./g, "").replace(",", "."));
+
+            const url = "{% url 'maintenance:add_budget' 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}', 'X-Requested-With': 'XMLHttpRequest' },
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                document.getElementById('budgetListContainer').innerHTML = data.html;
+                form.reset();
+                if (typeof showToast === 'function') showToast(data.message, "success");
+            } else alert(JSON.stringify(data.errors));
+        } catch (e) { alert(e.message); }
+        finally { btn.disabled = false; btn.innerText = "{% trans 'Incluir' %}"; }
+    }
+
+    async function deleteBudget(budgetPk, maintenancePk) {
+        if (!confirm("{% trans 'Deseja realmente excluir este orçamento?' %}")) return;
+        try {
+            const url = "{% url 'maintenance:delete_budget' 0 %}".replace('0', budgetPk);
+            const response = await fetch(url, { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}', 'X-Requested-With': 'XMLHttpRequest' } });
+            const data = await response.json();
+            if (data.status === 'success') {
+                document.getElementById('budgetListContainer').innerHTML = data.html;
+                if (typeof showToast === 'function') showToast(data.message, "success");
+            }
+        } catch (e) {}
+    }
+
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.input-group')) document.querySelectorAll('.autocomplete-results').forEach(el => el.style.display = 'none');
+    });
+
+    window.onclick = function(event) { if (event.target == modal) closeWizardModal(); }
+</script>
+{% endblock %}
