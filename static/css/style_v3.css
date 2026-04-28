@@ -828,14 +828,9 @@ nav a:hover {
 /* Property List - Optimized Grid */
 .properties-grid {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
-    gap: 1rem !important;
-}
-
-@media (min-width: 992px) {
-    .properties-grid {
-        grid-template-columns: repeat(4, 1fr) !important;
-    }
+    grid-template-columns: repeat(auto-fill, 320px) !important;
+    justify-content: center !important;
+    gap: 2rem !important;
 }
 
 .property-card {

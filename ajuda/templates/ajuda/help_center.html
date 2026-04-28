@@ -1,0 +1,279 @@
+{% extends "dashboard_layout.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Central de Ajuda" %} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+    }
+
+    .help-container {
+        padding: 3rem 1.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .help-hero {
+        text-align: center;
+        margin-bottom: 5rem;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .help-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.02em;
+    }
+
+    .help-hero p {
+        font-size: 1.25rem;
+        color: #94a3b8;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .help-section {
+        margin-bottom: 6rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        animation: slideUp 0.8s ease-out;
+    }
+
+    .help-section:nth-child(even) {
+        direction: rtl;
+    }
+
+    .help-section:nth-child(even) .help-text {
+        direction: ltr;
+    }
+
+    .help-text h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .help-text p {
+        color: #94a3b8;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .visual-suggestion {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        min-height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .visual-suggestion::before {
+        content: '{% trans "Sugestão de Mídia" %}';
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #00c6ff;
+        font-weight: 700;
+        background: rgba(0, 198, 255, 0.1);
+        padding: 4px 12px;
+        border-radius: 20px;
+    }
+
+    .visual-placeholder {
+        text-align: center;
+        color: #475569;
+    }
+
+    .visual-placeholder svg {
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .benefit-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(34, 197, 94, 0.1);
+        color: #4ade80;
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-top: 1rem;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        .help-section {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            text-align: center;
+        }
+        .help-section:nth-child(even) {
+            direction: ltr;
+        }
+        .help-hero h1 { font-size: 2.5rem; }
+    }
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="help-container">
+    <!-- Hero Section -->
+    <div class="help-hero">
+        <h1>{% trans "Transforme sua gestão de aluguéis de temporada" %}</h1>
+        <p>
+            {% trans "Bem-vindo à Central de Ajuda do VerticeBook. Aqui você aprenderá a dominar as ferramentas que estão revolucionando o mercado de hospitalidade." %}
+        </p>
+    </div>
+
+    <!-- Introdução -->
+    <div class="help-section">
+        <div class="help-text">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00c6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                {% trans "Introdução ao Sistema" %}
+            </h2>
+            <p>
+                {% trans "O VerticeBook foi desenhado para ser o seu centro de comando. Do onboarding à gestão diária, cada detalhe foi pensado para reduzir sua carga operacional e aumentar sua lucratividade." %}
+            </p>
+            <div class="benefit-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {% trans "Economize até 10 horas semanais em processos manuais" %}
+            </div>
+        </div>
+        <div class="visual-suggestion">
+            <div class="visual-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 11h18"/><path d="m14 14 3 3 3-3"/></svg>
+                <p>{% trans "Vídeo: Tour rápido pelo Dashboard principal e visão geral das unidades." %}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gestão de Propriedades -->
+    <div class="help-section">
+        <div class="help-text">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00c6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                {% trans "Gestão de Propriedades" %}
+            </h2>
+            <p>
+                {% trans "Cadastre seus imóveis com fotos, regras específicas e instruções de acesso personalizadas. O VerticeBook organiza tudo para que você ou sua equipe nunca se percam nos detalhes de cada unidade." %}
+            </p>
+            <div class="benefit-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {% trans "Gestão centralizada de múltiplas unidades" %}
+            </div>
+        </div>
+        <div class="visual-suggestion">
+            <div class="visual-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                <p>{% trans "Screenshot: Lista de propriedades com mini-headers profissionais e fotos." %}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controle de Reservas -->
+    <div class="help-section">
+        <div class="help-text">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00c6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                {% trans "Controle de Reservas" %}
+            </h2>
+            <p>
+                {% trans "Visualize sua ocupação através de um calendário global intuitivo. Saiba quem entra e quem sai em tempo real, gerencie valores e tenha o histórico completo de cada hóspede ao seu alcance." %}
+            </p>
+            <div class="benefit-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {% trans "Evite overbooking e maximize sua taxa de ocupação" %}
+            </div>
+        </div>
+        <div class="visual-suggestion">
+            <div class="visual-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m16 20 2-2 4 4"/></svg>
+                <p>{% trans "Vídeo: Navegação pelo Calendário Global, mostrando as barras de ocupação por cores." %}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Automação de Check-in -->
+    <div class="help-section">
+        <div class="help-text">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00c6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                {% trans "Automação via WhatsApp" %}
+            </h2>
+            <p>
+                {% trans "Dê adeus à coleta manual de documentos. Envie um link profissional para o hóspede via WhatsApp; ele preenche os dados, anexa acompanhantes e você recebe tudo pronto, incluindo a autorização para o condomínio." %}
+            </p>
+            <div class="benefit-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {% trans "Check-in 100% automático e digital" %}
+            </div>
+        </div>
+        <div class="visual-suggestion">
+            <div class="visual-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                <p>{% trans "Imagem: Smartphone mostrando a mensagem recebida no WhatsApp com o link de check-in." %}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Relatórios Financeiros -->
+    <div class="help-section">
+        <div class="help-text">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00c6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                {% trans "Relatórios Financeiros" %}
+            </h2>
+            <p>
+                {% trans "Tenha o controle financeiro na palma da mão. O VerticeBook calcula automaticamente sua receita líquida, descontando taxas de plataformas e custos operacionais, gerando um histórico detalhado por período." %}
+            </p>
+            <div class="benefit-tag">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {% trans "Visão clara do lucro real de cada propriedade" %}
+            </div>
+        </div>
+        <div class="visual-suggestion">
+            <div class="visual-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6"/><path d="M6 20V10"/><path d="M18 20V4"/></svg>
+                <p>{% trans "Screenshot: Tabela de Histórico Financeiro com valores brutos, custos e valor líquido." %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

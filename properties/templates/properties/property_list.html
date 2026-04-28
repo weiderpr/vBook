@@ -1,9 +1,309 @@
 {% extends 'dashboard_layout.html' %}
-{% load i18n static %}
+{% load i18n static l10n %}
 
 {% block title %}{% trans "Propriedades" %} - VerticeBook{% endblock %}
 
 {% block extra_head %}
+<style>
+    :root {
+        --primary: #0072ff;
+        --primary-light: #00c6ff;
+    }
+
+    .properties-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        gap: 2rem !important;
+        margin-top: 2rem !important;
+    }
+
+    .property-card {
+        width: 320px !important;
+        max-width: 100% !important;
+        flex: 0 0 320px !important;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .card-link-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .property-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .prop-image {
+        width: 100%;
+        height: 150px;
+        position: relative;
+        background: #1e293b;
+    }
+
+    .prop-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .prop-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Indicadores sobre a imagem */
+    .prop-occupancy {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        width: 54px;
+        height: 54px;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(12px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 2;
+    }
+
+    .occupancy-ring {
+        width: 46px;
+        height: 46px;
+        transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.1);
+        stroke-width: 3.5;
+    }
+
+    .ring-fill {
+        fill: none;
+        stroke: #00c6ff; /* Fallback hardcoded color */
+        stroke: var(--primary-light);
+        stroke-width: 3.5;
+        stroke-linecap: round;
+        transition: stroke-dasharray 1s ease-out;
+    }
+
+    .ring-text {
+        fill: white;
+        font-size: 8px;
+        font-weight: 800;
+        text-anchor: middle;
+        transform: rotate(90deg);
+        transform-origin: center;
+    }
+
+    .prop-res-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(12px);
+        padding: 0.4rem 0.9rem;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 2;
+    }
+
+    .prop-vacancy-loss {
+        position: absolute;
+        top: 1rem;
+        left: 5rem;
+        background: rgba(239, 68, 68, 0.6);
+        backdrop-filter: blur(12px);
+        padding: 0.4rem 0.9rem;
+        border-radius: 14px;
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        z-index: 2;
+    }
+
+    .v-loss-label {
+        font-size: 0.55rem;
+        color: #fca5a5;
+        text-transform: uppercase;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 2px;
+    }
+
+    .v-loss-val {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: white;
+        line-height: 1;
+    }
+
+    .prop-growth {
+        position: absolute;
+        top: 4.8rem;
+        left: 1rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        z-index: 2;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .growth-up { 
+        background: rgba(16, 185, 129, 0.3); 
+        color: #34d399;
+        border-color: rgba(16, 185, 129, 0.4);
+    }
+    .growth-down { 
+        background: rgba(239, 68, 68, 0.3); 
+        color: #fca5a5;
+        border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    .prop-status-badge {
+        position: absolute;
+        top: 3.5rem;
+        right: 1rem;
+        padding: 0.35rem 0.8rem;
+        border-radius: 100px;
+        font-size: 0.65rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 2;
+    }
+
+    .status-occupied {
+        background: rgba(59, 130, 246, 0.4);
+        color: #93c5fd;
+        border-color: rgba(59, 130, 246, 0.5);
+    }
+
+    .status-free {
+        background: rgba(16, 185, 129, 0.4);
+        color: #6ee7b7;
+        border-color: rgba(16, 185, 129, 0.5);
+    }
+
+    /* Ações sobrepostas */
+    .prop-actions-overlay {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        display: flex;
+        gap: 0.5rem;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        z-index: 5; /* Higher than card-link-mask */
+    }
+
+    .property-card:hover .prop-actions-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .action-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+        background: var(--primary);
+        transform: scale(1.1);
+    }
+
+    .action-btn.btn-del:hover {
+        background: #ef4444;
+    }
+
+    /* Conteúdo inferior */
+    .prop-info {
+        padding: 1.5rem;
+    }
+
+    .prop-name {
+        font-size: 1.15rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: var(--text-main, white);
+        line-height: 1.3;
+    }
+
+    .prop-stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1rem;
+        border-radius: 18px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .p-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .p-label {
+        font-size: 0.65rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+        font-weight: 600;
+    }
+
+    .p-val {
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+</style>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -11,7 +311,7 @@
     <div class="dashboard-header" style="margin-bottom: 2rem;">
         <div>
             <h1>{% trans "Minhas Propriedades" %}</h1>
-            <p style="font-size: 0.9rem;">{% trans "Selecione uma unidade para gerenciar reservas e finanças." %}</p>
+            <p style="font-size: 0.9rem;">{% trans "Gestão completa e indicadores inteligentes da sua carteira." %}</p>
         </div>
         <a href="{% url 'properties:create' %}" class="btn btn-primary" style="padding: 0.8rem 1.5rem; flex: none;">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
@@ -19,41 +319,94 @@
         </a>
     </div>
 
-
-
-    {% if properties %}
+    {% if properties_data %}
     <div class="properties-grid">
-        {% for property in properties %}
+        {% for prop_data in properties_data %}
         <div class="property-card">
-            <div class="property-image">
-                {% if property.image %}
-                    <img src="{{ property.image.url }}" alt="{{ property.name }}">
-                {% else %}
-                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0.5;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <!-- Link principal que cobre o card -->
+            <a href="{% url 'properties:dashboard' prop_data.obj.pk %}" class="card-link-mask" title="{% trans 'Acessar Painel' %}"></a>
+
+            <!-- Capa e Indicadores Overlay -->
+            <div class="prop-image">
+                <!-- Ocupação -->
+                <div class="prop-occupancy">
+                    {% localize off %}
+                    <svg class="occupancy-ring" viewBox="0 0 36 36">
+                        <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="ring-fill" stroke-dasharray="{{ prop_data.stats.occupancy }}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="ring-text">{{ prop_data.stats.occupancy|floatformat:0 }}%</text>
+                    </svg>
+                    {% endlocalize %}
+                </div>
+
+                <!-- Crescimento YTD -->
+                {% if prop_data.stats.has_last_year %}
+                    <div class="prop-growth {% if prop_data.stats.ytd_growth >= 0 %}growth-up{% else %}growth-down{% endif %}">
+                        {% if prop_data.stats.ytd_growth >= 0 %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+                        {% endif %}
+                        {{ prop_data.stats.ytd_growth|floatformat:1 }}%
                     </div>
                 {% endif %}
-            </div>
-            
-            <div class="property-content">
-                <h3 class="property-title" title="{{ property.name }}">{{ property.name }}</h3>
-                <div class="property-info">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                    {{ property.address_city }}, {{ property.address_state }}
+
+                <!-- Perda Ociosidade -->
+                <div class="prop-vacancy-loss">
+                    <span class="v-loss-label">{% trans "Perda Ociosidade" %}</span>
+                    <span class="v-loss-val">R$ {{ prop_data.stats.vacancy_loss|floatformat:2 }}</span>
                 </div>
-                <p class="property-description">
-                    {{ property.description }}
-                </p>
+
+                <!-- Reservas -->
+                <div class="prop-res-badge">{{ prop_data.stats.res_count }} {% trans "Reservas" %}</div>
+
+                <!-- Status Atual -->
+                <div class="prop-status-badge {% if prop_data.stats.is_currently_occupied %}status-occupied{% else %}status-free{% endif %}">
+                    {% if prop_data.stats.is_currently_occupied %}
+                        {% trans "Ocupado" %}
+                    {% else %}
+                        {% trans "Livre" %}
+                    {% endif %}
+                </div>
+
+                <!-- Imagem -->
+                {% if prop_data.obj.image %}
+                    <img src="{{ prop_data.obj.image.url }}" alt="{{ prop_data.obj.name }}">
+                {% else %}
+                    <div class="prop-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                {% endif %}
+
+                <!-- Ações Overlay -->
+                <div class="prop-actions-overlay">
+                    <a href="{% url 'properties:dashboard' prop_data.obj.pk %}" class="action-btn" title="{% trans 'Acessar Painel' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    </a>
+                    <a href="{% url 'properties:delete' prop_data.obj.pk %}" class="action-btn btn-del" title="{% trans 'Excluir' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                    </a>
+                </div>
             </div>
 
-            <div class="property-actions">
-                <a href="{% url 'properties:dashboard' property.pk %}" class="btn-panel">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-                    {% trans "Acessar Painel" %}
-                </a>
-                <a href="{% url 'properties:delete' property.pk %}" class="btn-delete-discrete" title="{% trans 'Excluir Unidade' %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-                </a>
+            <!-- Informações Inferiores -->
+            <div class="prop-info">
+                <h3 class="prop-name">{{ prop_data.obj.name }}</h3>
+                
+                <div class="prop-stats-row">
+                    <div class="p-stat">
+                        <span class="p-label">{% trans "Bruto" %}</span>
+                        <span class="p-val">R$ {{ prop_data.stats.gross|floatformat:2 }}</span>
+                    </div>
+                    <div class="p-stat">
+                        <span class="p-label">{% trans "Custo" %}</span>
+                        <span class="p-val" style="color: #ef4444;">R$ {{ prop_data.stats.costs|floatformat:2 }}</span>
+                    </div>
+                    <div class="p-stat">
+                        <span class="p-label">{% trans "Líquido" %}</span>
+                        <span class="p-val" style="color: #10b981;">R$ {{ prop_data.stats.net|floatformat:2 }}</span>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}

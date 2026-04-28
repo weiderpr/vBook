@@ -57,6 +57,39 @@
         font-weight: 600;
         color: var(--text-muted);
     }
+    .services-chips-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.015);
+        padding: 0.8rem;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+    }
+    .service-chip input { display: none; }
+    .chip-content {
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 100px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+    }
+    .service-chip input:checked + .chip-content {
+        background: rgba(99, 102, 241, 0.12);
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+    .check-icon { display: none; }
+    .service-chip input:checked + .chip-content .check-icon {
+        display: block;
+    }
 </style>
 {% endblock %}
 
@@ -111,6 +144,26 @@
                 {{ form.end_date }}
                 {% if form.end_date.errors %}<div class="field-error">{{ form.end_date.errors.0 }}</div>{% endif %}
             </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 1.5rem;">
+            <label class="form-label">{% trans "Categorias de Serviço" %}</label>
+            <div class="services-chips-container">
+                {% for choice in form.services.field.choices %}
+                    <label class="service-chip">
+                        <input type="checkbox" name="services" value="{{ choice.0 }}" 
+                               {% if choice.0 in form.services.value %}checked{% endif %}>
+                        <div class="chip-content">
+                            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            {{ choice.1 }}
+                        </div>
+                    </label>
+                {% endfor %}
+            </div>
+            {% if form.services.errors %}<div class="field-error">{{ form.services.errors.0 }}</div>{% endif %}
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px;">
+                {% trans "Selecione as categorias que melhor descrevem esta manutenção." %}
+            </p>
         </div>
 
         <div style="display: flex; gap: 1rem; margin-top: 3rem; justify-content: flex-end;">

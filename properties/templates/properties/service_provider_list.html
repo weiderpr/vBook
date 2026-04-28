@@ -1,5 +1,5 @@
 {% extends 'dashboard_layout.html' %}
-{% load i18n static %}
+{% load i18n static maintenance_tags %}
 
 {% block title %}{% trans "Prestadores de Serviço" %} - VerticeBook{% endblock %}
 
@@ -69,6 +69,25 @@
     
     .status-active { background: rgba(16, 185, 129, 0.1); color: #10b981; }
     .status-inactive { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+    .rating-badge {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        color: #fbbf24;
+        padding: 3px 8px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 1px;
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        z-index: 10;
+        white-space: nowrap;
+    }
     
     .provider-icon {
         width: 36px;
@@ -247,15 +266,23 @@
                         {% if provider.is_active %}{% trans "Ativo" %}{% else %}{% trans "Inativo" %}{% endif %}
                     </span>
                     
-                    <div class="provider-icon" style="overflow: hidden; padding: 0; background: rgba(255,255,255,0.05);">
-                        {% if provider.photo %}
-                            <img src="{{ provider.photo.url }}" alt="{{ provider.name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                        {% else %}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        {% endif %}
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;">
+                        <div class="provider-icon" style="overflow: hidden; padding: 0; background: rgba(255,255,255,0.05); margin-bottom: 0;">
+                            {% if provider.photo %}
+                                <img src="{{ provider.photo.url }}" alt="{{ provider.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            {% endif %}
+                        </div>
+                        <div style="flex: 1; overflow: hidden;">
+                            <div class="provider-name" style="margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ provider.name }}</div>
+                            {% if provider.average_rating > 0 %}
+                                <div style="color: #fbbf24; font-size: 0.75rem; display: flex; gap: 1px;" title="{{ provider.average_rating }} / 5">
+                                    {% for i in provider.average_rating|star_range %}★{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
-                    
-                    <div class="provider-name">{{ provider.name }}</div>
                     
                     <div class="provider-service-tags">
                         {% for s in provider.services.all %}

@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.db.models import Sum, Q
 
 from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider
+from .utils import get_property_stats
 from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
 from reservations.models import Reservation, ReservationCost
 
@@ -116,6 +117,18 @@ class PropertyListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Property.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        properties_with_stats = []
+        for prop in context['properties']:
+            stats = get_property_stats(prop)
+            properties_with_stats.append({
+                'obj': prop,
+                'stats': stats
+            })
+        context['properties_data'] = properties_with_stats
+        return context
 
 class PropertyCreateView(LoginRequiredMixin, CreateView):
     model = Property

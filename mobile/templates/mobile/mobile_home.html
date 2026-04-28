@@ -453,6 +453,34 @@
             font-weight: 600;
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+
+        .prop-status-badge {
+            position: absolute;
+            top: 2.6rem;
+            right: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+
+        .status-occupied {
+            background: rgba(59, 130, 246, 0.4);
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .status-free {
+            background: rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+            border-color: rgba(16, 185, 129, 0.5);
         }
 
         .prop-info {
@@ -749,6 +777,14 @@
                             </div>
                         {% endif %}
                         <div class="prop-res-badge">{{ prop_data.res_count }} {% trans "Reservas" %}</div>
+                
+                <div class="prop-status-badge {% if prop_data.is_currently_occupied %}status-occupied{% else %}status-free{% endif %}">
+                    {% if prop_data.is_currently_occupied %}
+                        {% trans "Ocupado" %}
+                    {% else %}
+                        {% trans "Livre" %}
+                    {% endif %}
+                </div>
                     </div>
                     <div class="prop-info">
                         <h3 class="prop-name">{{ prop_data.obj.name }}</h3>

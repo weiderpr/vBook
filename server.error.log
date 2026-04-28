@@ -11596,3 +11596,604 @@ AttributeError: module 'maintenance.views' has no attribute 'ProviderAutocomplet
 [2026-04-28 11:09:49 -0300] [688114] [INFO] Worker exiting (pid: 688114)
 [2026-04-28 11:09:49 -0300] [658969] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
 [2026-04-28 11:09:49 -0300] [689331] [INFO] Booting worker with pid: 689331
+[2026-04-28 11:14:30 -0300] [658969] [INFO] Handling signal: hup
+[2026-04-28 11:14:30 -0300] [658969] [INFO] Hang up: Master
+[2026-04-28 11:14:30 -0300] [658969] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 11:14:30 -0300] [690004] [INFO] Booting worker with pid: 690004
+[2026-04-28 11:14:32 -0300] [690022] [INFO] Booting worker with pid: 690022
+[2026-04-28 11:14:32 -0300] [658969] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 11:14:32 -0300] [689308] [INFO] Worker exiting (pid: 689308)
+[2026-04-28 11:14:32 -0300] [689310] [INFO] Worker exiting (pid: 689310)
+[2026-04-28 11:14:32 -0300] [689331] [INFO] Worker exiting (pid: 689331)
+[2026-04-28 11:14:32 -0300] [690024] [INFO] Booting worker with pid: 690024
+[2026-04-28 11:14:32 -0300] [658969] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 12:57:30 -0300] [658969] [WARNING] Worker (pid:690004) was sent SIGHUP!
+[2026-04-28 12:57:30 -0300] [658969] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 12:57:30 -0300] [694891] [INFO] Booting worker with pid: 694891
+[2026-04-28 12:59:42 -0300] [658969] [INFO] Handling signal: term
+[2026-04-28 12:59:42 -0300] [694891] [INFO] Worker exiting (pid: 694891)
+[2026-04-28 12:59:42 -0300] [690024] [INFO] Worker exiting (pid: 690024)
+[2026-04-28 12:59:42 -0300] [690022] [INFO] Worker exiting (pid: 690022)
+[2026-04-28 12:59:45 -0300] [695161] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 12:59:45 -0300] [695161] [INFO] Listening at: http://127.0.0.1:8000 (695161)
+[2026-04-28 12:59:45 -0300] [695161] [INFO] Using worker: sync
+[2026-04-28 12:59:45 -0300] [695163] [INFO] Booting worker with pid: 695163
+[2026-04-28 12:59:45 -0300] [695164] [INFO] Booting worker with pid: 695164
+[2026-04-28 12:59:45 -0300] [658969] [INFO] Shutting down: Master
+[2026-04-28 12:59:45 -0300] [695165] [INFO] Booting worker with pid: 695165
+[2026-04-28 12:59:45 -0300] [695161] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:03:42 -0300] [695164] [INFO] Worker exiting (pid: 695164)
+[2026-04-28 13:03:42 -0300] [695161] [INFO] Handling signal: term
+[2026-04-28 13:03:42 -0300] [695165] [INFO] Worker exiting (pid: 695165)
+[2026-04-28 13:03:42 -0300] [695163] [INFO] Worker exiting (pid: 695163)
+[2026-04-28 13:03:42 -0300] [695161] [INFO] Worker (pid:695164) was sent SIGTERM!
+[2026-04-28 13:03:43 -0300] [695585] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:03:43 -0300] [695585] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:03:43 -0300] [695585] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:03:43 -0300] [695161] [INFO] Shutting down: Master
+[2026-04-28 13:03:44 -0300] [695585] [INFO] Listening at: http://127.0.0.1:8000 (695585)
+[2026-04-28 13:03:44 -0300] [695585] [INFO] Using worker: sync
+[2026-04-28 13:03:44 -0300] [695601] [INFO] Booting worker with pid: 695601
+[2026-04-28 13:03:44 -0300] [695602] [INFO] Booting worker with pid: 695602
+[2026-04-28 13:03:44 -0300] [695603] [INFO] Booting worker with pid: 695603
+[2026-04-28 13:03:44 -0300] [695585] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:05:06 -0300] [695602] [INFO] Worker exiting (pid: 695602)
+[2026-04-28 13:05:06 -0300] [695585] [INFO] Handling signal: term
+[2026-04-28 13:05:06 -0300] [695603] [INFO] Worker exiting (pid: 695603)
+[2026-04-28 13:05:06 -0300] [695601] [INFO] Worker exiting (pid: 695601)
+[2026-04-28 13:05:06 -0300] [695585] [INFO] Worker (pid:695601) was sent SIGTERM!
+[2026-04-28 13:05:06 -0300] [695585] [INFO] Worker (pid:695602) was sent SIGTERM!
+[2026-04-28 13:05:06 -0300] [695585] [INFO] Worker (pid:695603) was sent SIGTERM!
+[2026-04-28 13:05:06 -0300] [695585] [INFO] Shutting down: Master
+[2026-04-28 13:05:06 -0300] [695747] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:05:06 -0300] [695747] [INFO] Listening at: http://127.0.0.1:8000 (695747)
+[2026-04-28 13:05:06 -0300] [695747] [INFO] Using worker: sync
+[2026-04-28 13:05:06 -0300] [695749] [INFO] Booting worker with pid: 695749
+[2026-04-28 13:05:06 -0300] [695750] [INFO] Booting worker with pid: 695750
+[2026-04-28 13:05:06 -0300] [695751] [INFO] Booting worker with pid: 695751
+[2026-04-28 13:05:06 -0300] [695747] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:07:57 -0300] [695747] [INFO] Handling signal: term
+[2026-04-28 13:07:57 -0300] [695750] [INFO] Worker exiting (pid: 695750)
+[2026-04-28 13:07:57 -0300] [695749] [INFO] Worker exiting (pid: 695749)
+[2026-04-28 13:07:57 -0300] [695751] [INFO] Worker exiting (pid: 695751)
+[2026-04-28 13:07:57 -0300] [695747] [INFO] Worker (pid:695750) was sent SIGTERM!
+[2026-04-28 13:07:57 -0300] [696028] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:07:57 -0300] [696028] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:07:57 -0300] [696028] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:07:58 -0300] [695747] [INFO] Shutting down: Master
+[2026-04-28 13:07:58 -0300] [696028] [INFO] Listening at: http://127.0.0.1:8000 (696028)
+[2026-04-28 13:07:58 -0300] [696028] [INFO] Using worker: sync
+[2026-04-28 13:07:58 -0300] [696039] [INFO] Booting worker with pid: 696039
+[2026-04-28 13:07:58 -0300] [696040] [INFO] Booting worker with pid: 696040
+[2026-04-28 13:07:58 -0300] [696041] [INFO] Booting worker with pid: 696041
+[2026-04-28 13:07:58 -0300] [696028] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:08:33 -0300] [696040] [INFO] Worker exiting (pid: 696040)
+[2026-04-28 13:08:33 -0300] [696028] [INFO] Handling signal: term
+[2026-04-28 13:08:33 -0300] [696041] [INFO] Worker exiting (pid: 696041)
+[2026-04-28 13:08:33 -0300] [696039] [INFO] Worker exiting (pid: 696039)
+[2026-04-28 13:08:33 -0300] [696028] [INFO] Worker (pid:696039) was sent SIGTERM!
+[2026-04-28 13:08:33 -0300] [696028] [INFO] Worker (pid:696040) was sent SIGTERM!
+[2026-04-28 13:08:33 -0300] [696121] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:08:33 -0300] [696121] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:08:33 -0300] [696121] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:08:33 -0300] [696028] [INFO] Shutting down: Master
+[2026-04-28 13:08:34 -0300] [696121] [INFO] Listening at: http://127.0.0.1:8000 (696121)
+[2026-04-28 13:08:34 -0300] [696121] [INFO] Using worker: sync
+[2026-04-28 13:08:34 -0300] [696134] [INFO] Booting worker with pid: 696134
+[2026-04-28 13:08:34 -0300] [696135] [INFO] Booting worker with pid: 696135
+[2026-04-28 13:08:34 -0300] [696136] [INFO] Booting worker with pid: 696136
+[2026-04-28 13:08:35 -0300] [696121] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:10:38 -0300] [696134] [INFO] Worker exiting (pid: 696134)
+[2026-04-28 13:10:38 -0300] [696121] [INFO] Handling signal: term
+[2026-04-28 13:10:38 -0300] [696135] [INFO] Worker exiting (pid: 696135)
+[2026-04-28 13:10:38 -0300] [696136] [INFO] Worker exiting (pid: 696136)
+[2026-04-28 13:10:38 -0300] [696121] [INFO] Worker (pid:696134) was sent SIGTERM!
+[2026-04-28 13:10:38 -0300] [696121] [INFO] Worker (pid:696135) was sent SIGTERM!
+[2026-04-28 13:10:38 -0300] [696121] [INFO] Worker (pid:696136) was sent SIGTERM!
+[2026-04-28 13:10:38 -0300] [696368] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:10:38 -0300] [696368] [INFO] Listening at: http://127.0.0.1:8000 (696368)
+[2026-04-28 13:10:38 -0300] [696368] [INFO] Using worker: sync
+[2026-04-28 13:10:38 -0300] [696370] [INFO] Booting worker with pid: 696370
+[2026-04-28 13:10:38 -0300] [696121] [INFO] Shutting down: Master
+[2026-04-28 13:10:38 -0300] [696371] [INFO] Booting worker with pid: 696371
+[2026-04-28 13:10:38 -0300] [696372] [INFO] Booting worker with pid: 696372
+[2026-04-28 13:10:38 -0300] [696368] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:13:35 -0300] [696368] [INFO] Handling signal: term
+[2026-04-28 13:13:35 -0300] [696370] [INFO] Worker exiting (pid: 696370)
+[2026-04-28 13:13:35 -0300] [696372] [INFO] Worker exiting (pid: 696372)
+[2026-04-28 13:13:35 -0300] [696371] [INFO] Worker exiting (pid: 696371)
+[2026-04-28 13:13:35 -0300] [696368] [INFO] Worker (pid:696370) was sent SIGTERM!
+[2026-04-28 13:13:35 -0300] [696368] [INFO] Worker (pid:696371) was sent SIGTERM!
+[2026-04-28 13:13:35 -0300] [696368] [INFO] Worker (pid:696372) was sent SIGTERM!
+[2026-04-28 13:13:35 -0300] [696368] [INFO] Shutting down: Master
+[2026-04-28 13:13:36 -0300] [696661] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:13:36 -0300] [696661] [INFO] Listening at: http://127.0.0.1:8000 (696661)
+[2026-04-28 13:13:36 -0300] [696661] [INFO] Using worker: sync
+[2026-04-28 13:13:36 -0300] [696663] [INFO] Booting worker with pid: 696663
+[2026-04-28 13:13:36 -0300] [696664] [INFO] Booting worker with pid: 696664
+[2026-04-28 13:13:36 -0300] [696668] [INFO] Booting worker with pid: 696668
+[2026-04-28 13:13:36 -0300] [696661] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:16:03 -0300] [696661] [INFO] Handling signal: term
+[2026-04-28 13:16:03 -0300] [696663] [INFO] Worker exiting (pid: 696663)
+[2026-04-28 13:16:03 -0300] [696664] [INFO] Worker exiting (pid: 696664)
+[2026-04-28 13:16:03 -0300] [696668] [INFO] Worker exiting (pid: 696668)
+[2026-04-28 13:16:03 -0300] [696661] [INFO] Worker (pid:696664) was sent SIGTERM!
+[2026-04-28 13:16:04 -0300] [696903] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:16:04 -0300] [696903] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:16:04 -0300] [696903] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:16:05 -0300] [696661] [INFO] Shutting down: Master
+[2026-04-28 13:16:05 -0300] [696903] [INFO] Listening at: http://127.0.0.1:8000 (696903)
+[2026-04-28 13:16:05 -0300] [696903] [INFO] Using worker: sync
+[2026-04-28 13:16:05 -0300] [696914] [INFO] Booting worker with pid: 696914
+[2026-04-28 13:16:05 -0300] [696916] [INFO] Booting worker with pid: 696916
+[2026-04-28 13:16:05 -0300] [696918] [INFO] Booting worker with pid: 696918
+[2026-04-28 13:16:05 -0300] [696903] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:21:38 -0300] [696918] [INFO] Worker exiting (pid: 696918)
+[2026-04-28 13:21:38 -0300] [696903] [INFO] Handling signal: term
+[2026-04-28 13:21:38 -0300] [696916] [INFO] Worker exiting (pid: 696916)
+[2026-04-28 13:21:38 -0300] [696914] [INFO] Worker exiting (pid: 696914)
+[2026-04-28 13:21:38 -0300] [696903] [INFO] Worker (pid:696918) was sent SIGTERM!
+[2026-04-28 13:21:39 -0300] [697387] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:21:39 -0300] [697387] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:21:39 -0300] [697387] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:21:39 -0300] [696903] [INFO] Shutting down: Master
+[2026-04-28 13:21:40 -0300] [697387] [INFO] Listening at: http://127.0.0.1:8000 (697387)
+[2026-04-28 13:21:40 -0300] [697387] [INFO] Using worker: sync
+[2026-04-28 13:21:40 -0300] [697398] [INFO] Booting worker with pid: 697398
+[2026-04-28 13:21:40 -0300] [697399] [INFO] Booting worker with pid: 697399
+[2026-04-28 13:21:40 -0300] [697400] [INFO] Booting worker with pid: 697400
+[2026-04-28 13:21:40 -0300] [697387] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:26:07 -0300] [697400] [INFO] Worker exiting (pid: 697400)
+[2026-04-28 13:26:07 -0300] [697387] [INFO] Handling signal: term
+[2026-04-28 13:26:07 -0300] [697399] [INFO] Worker exiting (pid: 697399)
+[2026-04-28 13:26:07 -0300] [697398] [INFO] Worker exiting (pid: 697398)
+[2026-04-28 13:26:07 -0300] [697387] [INFO] Worker (pid:697399) was sent SIGTERM!
+[2026-04-28 13:26:07 -0300] [697387] [INFO] Worker (pid:697400) was sent SIGTERM!
+[2026-04-28 13:26:07 -0300] [697803] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:26:07 -0300] [697803] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:26:07 -0300] [697803] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:26:07 -0300] [697387] [INFO] Shutting down: Master
+[2026-04-28 13:26:08 -0300] [697803] [INFO] Listening at: http://127.0.0.1:8000 (697803)
+[2026-04-28 13:26:08 -0300] [697803] [INFO] Using worker: sync
+[2026-04-28 13:26:08 -0300] [697818] [INFO] Booting worker with pid: 697818
+[2026-04-28 13:26:08 -0300] [697819] [INFO] Booting worker with pid: 697819
+[2026-04-28 13:26:08 -0300] [697820] [INFO] Booting worker with pid: 697820
+[2026-04-28 13:26:08 -0300] [697803] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:28:56 -0300] [697803] [INFO] Handling signal: term
+[2026-04-28 13:28:56 -0300] [697820] [INFO] Worker exiting (pid: 697820)
+[2026-04-28 13:28:56 -0300] [697818] [INFO] Worker exiting (pid: 697818)
+[2026-04-28 13:28:56 -0300] [697819] [INFO] Worker exiting (pid: 697819)
+[2026-04-28 13:28:56 -0300] [697803] [INFO] Worker (pid:697818) was sent SIGTERM!
+[2026-04-28 13:28:56 -0300] [697803] [INFO] Worker (pid:697820) was sent SIGTERM!
+[2026-04-28 13:28:57 -0300] [698092] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:28:57 -0300] [698092] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:28:57 -0300] [698092] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:28:57 -0300] [697803] [INFO] Shutting down: Master
+[2026-04-28 13:28:58 -0300] [698092] [INFO] Listening at: http://127.0.0.1:8000 (698092)
+[2026-04-28 13:28:58 -0300] [698092] [INFO] Using worker: sync
+[2026-04-28 13:28:58 -0300] [698107] [INFO] Booting worker with pid: 698107
+[2026-04-28 13:28:58 -0300] [698108] [INFO] Booting worker with pid: 698108
+[2026-04-28 13:28:58 -0300] [698109] [INFO] Booting worker with pid: 698109
+[2026-04-28 13:28:58 -0300] [698092] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:31:03 -0300] [698107] [INFO] Worker exiting (pid: 698107)
+[2026-04-28 13:31:03 -0300] [698092] [INFO] Handling signal: term
+[2026-04-28 13:31:03 -0300] [698108] [INFO] Worker exiting (pid: 698108)
+[2026-04-28 13:31:03 -0300] [698109] [INFO] Worker exiting (pid: 698109)
+[2026-04-28 13:31:04 -0300] [698092] [INFO] Worker (pid:698107) was sent SIGTERM!
+[2026-04-28 13:31:04 -0300] [698092] [INFO] Worker (pid:698109) was sent SIGTERM!
+[2026-04-28 13:31:04 -0300] [698312] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:31:04 -0300] [698312] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:31:04 -0300] [698312] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:31:04 -0300] [698092] [INFO] Shutting down: Master
+[2026-04-28 13:31:05 -0300] [698312] [INFO] Listening at: http://127.0.0.1:8000 (698312)
+[2026-04-28 13:31:05 -0300] [698312] [INFO] Using worker: sync
+[2026-04-28 13:31:05 -0300] [698322] [INFO] Booting worker with pid: 698322
+[2026-04-28 13:31:05 -0300] [698323] [INFO] Booting worker with pid: 698323
+[2026-04-28 13:31:05 -0300] [698324] [INFO] Booting worker with pid: 698324
+[2026-04-28 13:31:05 -0300] [698312] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:32:48 -0300] [698312] [INFO] Handling signal: term
+[2026-04-28 13:32:48 -0300] [698322] [INFO] Worker exiting (pid: 698322)
+[2026-04-28 13:32:48 -0300] [698324] [INFO] Worker exiting (pid: 698324)
+[2026-04-28 13:32:48 -0300] [698323] [INFO] Worker exiting (pid: 698323)
+[2026-04-28 13:32:48 -0300] [698312] [INFO] Worker (pid:698322) was sent SIGTERM!
+[2026-04-28 13:32:48 -0300] [698501] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:32:48 -0300] [698501] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:32:48 -0300] [698501] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:32:49 -0300] [698312] [INFO] Shutting down: Master
+[2026-04-28 13:32:49 -0300] [698501] [INFO] Listening at: http://127.0.0.1:8000 (698501)
+[2026-04-28 13:32:49 -0300] [698501] [INFO] Using worker: sync
+[2026-04-28 13:32:49 -0300] [698515] [INFO] Booting worker with pid: 698515
+[2026-04-28 13:32:49 -0300] [698516] [INFO] Booting worker with pid: 698516
+[2026-04-28 13:32:49 -0300] [698517] [INFO] Booting worker with pid: 698517
+[2026-04-28 13:32:49 -0300] [698501] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:35:35 -0300] [698501] [INFO] Handling signal: term
+[2026-04-28 13:35:35 -0300] [698515] [INFO] Worker exiting (pid: 698515)
+[2026-04-28 13:35:35 -0300] [698517] [INFO] Worker exiting (pid: 698517)
+[2026-04-28 13:35:35 -0300] [698516] [INFO] Worker exiting (pid: 698516)
+[2026-04-28 13:35:35 -0300] [698770] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:35:35 -0300] [698770] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:35:35 -0300] [698770] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:35:36 -0300] [698501] [INFO] Shutting down: Master
+[2026-04-28 13:35:36 -0300] [698770] [INFO] Listening at: http://127.0.0.1:8000 (698770)
+[2026-04-28 13:35:36 -0300] [698770] [INFO] Using worker: sync
+[2026-04-28 13:35:36 -0300] [698784] [INFO] Booting worker with pid: 698784
+[2026-04-28 13:35:36 -0300] [698785] [INFO] Booting worker with pid: 698785
+[2026-04-28 13:35:36 -0300] [698786] [INFO] Booting worker with pid: 698786
+[2026-04-28 13:35:37 -0300] [698770] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:37:23 -0300] [698770] [INFO] Handling signal: term
+[2026-04-28 13:37:23 -0300] [698784] [INFO] Worker exiting (pid: 698784)
+[2026-04-28 13:37:23 -0300] [698786] [INFO] Worker exiting (pid: 698786)
+[2026-04-28 13:37:23 -0300] [698785] [INFO] Worker exiting (pid: 698785)
+[2026-04-28 13:37:23 -0300] [698770] [INFO] Worker (pid:698784) was sent SIGTERM!
+[2026-04-28 13:37:24 -0300] [698959] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:37:24 -0300] [698959] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:37:24 -0300] [698959] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:37:24 -0300] [698770] [INFO] Shutting down: Master
+[2026-04-28 13:37:25 -0300] [698959] [INFO] Listening at: http://127.0.0.1:8000 (698959)
+[2026-04-28 13:37:25 -0300] [698959] [INFO] Using worker: sync
+[2026-04-28 13:37:25 -0300] [698970] [INFO] Booting worker with pid: 698970
+[2026-04-28 13:37:25 -0300] [698971] [INFO] Booting worker with pid: 698971
+[2026-04-28 13:37:25 -0300] [698972] [INFO] Booting worker with pid: 698972
+[2026-04-28 13:37:25 -0300] [698959] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:44:27 -0300] [698971] [INFO] Worker exiting (pid: 698971)
+[2026-04-28 13:44:27 -0300] [698959] [INFO] Handling signal: term
+[2026-04-28 13:44:27 -0300] [698970] [INFO] Worker exiting (pid: 698970)
+[2026-04-28 13:44:27 -0300] [698972] [INFO] Worker exiting (pid: 698972)
+[2026-04-28 13:44:27 -0300] [698959] [INFO] Worker (pid:698971) was sent SIGTERM!
+[2026-04-28 13:44:27 -0300] [699578] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:44:27 -0300] [699578] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:44:27 -0300] [699578] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:44:28 -0300] [698959] [INFO] Shutting down: Master
+[2026-04-28 13:44:28 -0300] [699578] [INFO] Listening at: http://127.0.0.1:8000 (699578)
+[2026-04-28 13:44:28 -0300] [699578] [INFO] Using worker: sync
+[2026-04-28 13:44:28 -0300] [699590] [INFO] Booting worker with pid: 699590
+[2026-04-28 13:44:28 -0300] [699591] [INFO] Booting worker with pid: 699591
+[2026-04-28 13:44:28 -0300] [699592] [INFO] Booting worker with pid: 699592
+[2026-04-28 13:44:29 -0300] [699578] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 13:51:19 -0300] [699578] [INFO] Handling signal: term
+[2026-04-28 13:51:19 -0300] [699591] [INFO] Worker exiting (pid: 699591)
+[2026-04-28 13:51:19 -0300] [699590] [INFO] Worker exiting (pid: 699590)
+[2026-04-28 13:51:19 -0300] [699592] [INFO] Worker exiting (pid: 699592)
+[2026-04-28 13:51:19 -0300] [700147] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 13:51:19 -0300] [700147] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-28 13:51:19 -0300] [700147] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-28 13:51:20 -0300] [699578] [INFO] Shutting down: Master
+[2026-04-28 13:51:20 -0300] [700147] [INFO] Listening at: http://127.0.0.1:8000 (700147)
+[2026-04-28 13:51:20 -0300] [700147] [INFO] Using worker: sync
+[2026-04-28 13:51:20 -0300] [700158] [INFO] Booting worker with pid: 700158
+[2026-04-28 13:51:21 -0300] [700159] [INFO] Booting worker with pid: 700159
+[2026-04-28 13:51:21 -0300] [700160] [INFO] Booting worker with pid: 700160
+[2026-04-28 13:51:21 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:41:57 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 14:41:57 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 14:41:58 -0300] [706261] [INFO] Booting worker with pid: 706261
+[2026-04-28 14:41:58 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:41:58 -0300] [706263] [INFO] Booting worker with pid: 706263
+[2026-04-28 14:41:58 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:41:58 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:41:58 -0300] [700160] [INFO] Worker exiting (pid: 700160)
+[2026-04-28 14:41:58 -0300] [700158] [INFO] Worker exiting (pid: 700158)
+[2026-04-28 14:41:58 -0300] [706265] [INFO] Booting worker with pid: 706265
+[2026-04-28 14:41:58 -0300] [700159] [INFO] Worker exiting (pid: 700159)
+[2026-04-28 14:49:00 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 14:49:00 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 14:49:00 -0300] [707444] [INFO] Booting worker with pid: 707444
+[2026-04-28 14:49:00 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:49:02 -0300] [707463] [INFO] Booting worker with pid: 707463
+[2026-04-28 14:49:02 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:49:04 -0300] [706261] [INFO] Worker exiting (pid: 706261)
+[2026-04-28 14:49:04 -0300] [706265] [INFO] Worker exiting (pid: 706265)
+[2026-04-28 14:49:04 -0300] [707471] [INFO] Booting worker with pid: 707471
+[2026-04-28 14:49:04 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:49:04 -0300] [706263] [INFO] Worker exiting (pid: 706263)
+[2026-04-28 14:56:03 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 14:56:03 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 14:56:03 -0300] [708394] [INFO] Booting worker with pid: 708394
+[2026-04-28 14:56:03 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:56:03 -0300] [708396] [INFO] Booting worker with pid: 708396
+[2026-04-28 14:56:03 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:56:05 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 14:56:05 -0300] [707463] [INFO] Worker exiting (pid: 707463)
+[2026-04-28 14:56:05 -0300] [708416] [INFO] Booting worker with pid: 708416
+[2026-04-28 14:56:05 -0300] [707471] [INFO] Worker exiting (pid: 707471)
+[2026-04-28 14:56:05 -0300] [707444] [INFO] Worker exiting (pid: 707444)
+[2026-04-28 15:04:55 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:04:55 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:04:55 -0300] [709500] [INFO] Booting worker with pid: 709500
+[2026-04-28 15:04:55 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:04:55 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:04:55 -0300] [709502] [INFO] Booting worker with pid: 709502
+[2026-04-28 15:04:57 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:04:57 -0300] [708416] [INFO] Worker exiting (pid: 708416)
+[2026-04-28 15:04:57 -0300] [708396] [INFO] Worker exiting (pid: 708396)
+[2026-04-28 15:04:57 -0300] [709522] [INFO] Booting worker with pid: 709522
+[2026-04-28 15:04:57 -0300] [708394] [INFO] Worker exiting (pid: 708394)
+[2026-04-28 15:08:17 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:08:17 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:08:17 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:08:17 -0300] [709982] [INFO] Booting worker with pid: 709982
+[2026-04-28 15:08:19 -0300] [710000] [INFO] Booting worker with pid: 710000
+[2026-04-28 15:08:19 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:08:21 -0300] [709522] [INFO] Worker exiting (pid: 709522)
+[2026-04-28 15:08:21 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:08:21 -0300] [709502] [INFO] Worker exiting (pid: 709502)
+[2026-04-28 15:08:21 -0300] [709500] [INFO] Worker exiting (pid: 709500)
+[2026-04-28 15:08:21 -0300] [710005] [INFO] Booting worker with pid: 710005
+[2026-04-28 15:10:26 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:10:26 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:10:26 -0300] [710349] [INFO] Booting worker with pid: 710349
+[2026-04-28 15:10:26 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:10:28 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:10:28 -0300] [710369] [INFO] Booting worker with pid: 710369
+[2026-04-28 15:10:28 -0300] [710372] [INFO] Booting worker with pid: 710372
+[2026-04-28 15:10:28 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:10:28 -0300] [709982] [INFO] Worker exiting (pid: 709982)
+[2026-04-28 15:10:28 -0300] [710000] [INFO] Worker exiting (pid: 710000)
+[2026-04-28 15:10:28 -0300] [710005] [INFO] Worker exiting (pid: 710005)
+[2026-04-28 15:12:30 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:12:30 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:12:30 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:12:30 -0300] [710645] [INFO] Booting worker with pid: 710645
+[2026-04-28 15:12:30 -0300] [710647] [INFO] Booting worker with pid: 710647
+[2026-04-28 15:12:30 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:12:30 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:12:30 -0300] [710349] [INFO] Worker exiting (pid: 710349)
+[2026-04-28 15:12:30 -0300] [710369] [INFO] Worker exiting (pid: 710369)
+[2026-04-28 15:12:30 -0300] [710649] [INFO] Booting worker with pid: 710649
+[2026-04-28 15:12:30 -0300] [710372] [INFO] Worker exiting (pid: 710372)
+[2026-04-28 15:15:19 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:15:19 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:15:19 -0300] [711060] [INFO] Booting worker with pid: 711060
+[2026-04-28 15:15:19 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:15:19 -0300] [711062] [INFO] Booting worker with pid: 711062
+[2026-04-28 15:15:19 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:15:19 -0300] [710645] [INFO] Worker exiting (pid: 710645)
+[2026-04-28 15:15:19 -0300] [710649] [INFO] Worker exiting (pid: 710649)
+[2026-04-28 15:15:19 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:15:19 -0300] [711064] [INFO] Booting worker with pid: 711064
+[2026-04-28 15:15:19 -0300] [710647] [INFO] Worker exiting (pid: 710647)
+[2026-04-28 15:17:16 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:17:16 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:17:16 -0300] [711335] [INFO] Booting worker with pid: 711335
+[2026-04-28 15:17:16 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:17:16 -0300] [711337] [INFO] Booting worker with pid: 711337
+[2026-04-28 15:17:16 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:17:16 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:17:16 -0300] [711062] [INFO] Worker exiting (pid: 711062)
+[2026-04-28 15:17:16 -0300] [711064] [INFO] Worker exiting (pid: 711064)
+[2026-04-28 15:17:16 -0300] [711060] [INFO] Worker exiting (pid: 711060)
+[2026-04-28 15:17:16 -0300] [711339] [INFO] Booting worker with pid: 711339
+[2026-04-28 15:20:06 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:20:06 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:20:06 -0300] [711755] [INFO] Booting worker with pid: 711755
+[2026-04-28 15:20:06 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:20:06 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:20:06 -0300] [711757] [INFO] Booting worker with pid: 711757
+[2026-04-28 15:20:08 -0300] [711339] [INFO] Worker exiting (pid: 711339)
+[2026-04-28 15:20:08 -0300] [711337] [INFO] Worker exiting (pid: 711337)
+[2026-04-28 15:20:08 -0300] [711335] [INFO] Worker exiting (pid: 711335)
+[2026-04-28 15:20:08 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:20:08 -0300] [711777] [INFO] Booting worker with pid: 711777
+[2026-04-28 15:22:14 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:22:14 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:22:14 -0300] [712032] [INFO] Booting worker with pid: 712032
+[2026-04-28 15:22:14 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:22:14 -0300] [712034] [INFO] Booting worker with pid: 712034
+[2026-04-28 15:22:14 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:22:14 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:22:14 -0300] [711757] [INFO] Worker exiting (pid: 711757)
+[2026-04-28 15:22:14 -0300] [711777] [INFO] Worker exiting (pid: 711777)
+[2026-04-28 15:22:14 -0300] [711755] [INFO] Worker exiting (pid: 711755)
+[2026-04-28 15:22:14 -0300] [712036] [INFO] Booting worker with pid: 712036
+[2026-04-28 15:25:10 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:25:10 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:25:10 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:25:10 -0300] [712380] [INFO] Booting worker with pid: 712380
+[2026-04-28 15:25:10 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:25:10 -0300] [712382] [INFO] Booting worker with pid: 712382
+[2026-04-28 15:25:12 -0300] [712400] [INFO] Booting worker with pid: 712400
+[2026-04-28 15:25:12 -0300] [712032] [INFO] Worker exiting (pid: 712032)
+[2026-04-28 15:25:12 -0300] [712034] [INFO] Worker exiting (pid: 712034)
+[2026-04-28 15:25:12 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:25:12 -0300] [712036] [INFO] Worker exiting (pid: 712036)
+[2026-04-28 15:30:19 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:30:19 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:30:19 -0300] [712959] [INFO] Booting worker with pid: 712959
+[2026-04-28 15:30:19 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:30:21 -0300] [712974] [INFO] Booting worker with pid: 712974
+[2026-04-28 15:30:21 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:30:23 -0300] [712380] [INFO] Worker exiting (pid: 712380)
+[2026-04-28 15:30:23 -0300] [712382] [INFO] Worker exiting (pid: 712382)
+[2026-04-28 15:30:23 -0300] [712400] [INFO] Worker exiting (pid: 712400)
+[2026-04-28 15:30:23 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:30:23 -0300] [712984] [INFO] Booting worker with pid: 712984
+[2026-04-28 15:37:42 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:37:42 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:37:42 -0300] [713824] [INFO] Booting worker with pid: 713824
+[2026-04-28 15:37:42 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:37:42 -0300] [713826] [INFO] Booting worker with pid: 713826
+[2026-04-28 15:37:42 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:37:42 -0300] [713828] [INFO] Booting worker with pid: 713828
+[2026-04-28 15:37:42 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:37:42 -0300] [712959] [INFO] Worker exiting (pid: 712959)
+[2026-04-28 15:37:42 -0300] [712974] [INFO] Worker exiting (pid: 712974)
+[2026-04-28 15:37:42 -0300] [712984] [INFO] Worker exiting (pid: 712984)
+[2026-04-28 15:39:35 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:39:35 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:39:35 -0300] [714131] [INFO] Booting worker with pid: 714131
+[2026-04-28 15:39:35 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:39:35 -0300] [714133] [INFO] Booting worker with pid: 714133
+[2026-04-28 15:39:35 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:39:35 -0300] [714135] [INFO] Booting worker with pid: 714135
+[2026-04-28 15:39:35 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:39:35 -0300] [713828] [INFO] Worker exiting (pid: 713828)
+[2026-04-28 15:39:35 -0300] [713826] [INFO] Worker exiting (pid: 713826)
+[2026-04-28 15:39:35 -0300] [713824] [INFO] Worker exiting (pid: 713824)
+[2026-04-28 15:45:50 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:45:50 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:45:50 -0300] [715361] [INFO] Booting worker with pid: 715361
+[2026-04-28 15:45:50 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:45:50 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:45:50 -0300] [715363] [INFO] Booting worker with pid: 715363
+[2026-04-28 15:45:50 -0300] [714135] [INFO] Worker exiting (pid: 714135)
+[2026-04-28 15:45:50 -0300] [714131] [INFO] Worker exiting (pid: 714131)
+[2026-04-28 15:45:50 -0300] [714133] [INFO] Worker exiting (pid: 714133)
+[2026-04-28 15:45:50 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:45:50 -0300] [715365] [INFO] Booting worker with pid: 715365
+[2026-04-28 15:48:07 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:48:07 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:48:07 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:48:07 -0300] [715632] [INFO] Booting worker with pid: 715632
+[2026-04-28 15:48:07 -0300] [715634] [INFO] Booting worker with pid: 715634
+[2026-04-28 15:48:07 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:48:07 -0300] [715636] [INFO] Booting worker with pid: 715636
+[2026-04-28 15:48:07 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:48:07 -0300] [715361] [INFO] Worker exiting (pid: 715361)
+[2026-04-28 15:48:07 -0300] [715363] [INFO] Worker exiting (pid: 715363)
+[2026-04-28 15:48:07 -0300] [715365] [INFO] Worker exiting (pid: 715365)
+[2026-04-28 15:51:46 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:51:46 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:51:46 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:51:46 -0300] [716064] [INFO] Booting worker with pid: 716064
+[2026-04-28 15:51:46 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:51:46 -0300] [716066] [INFO] Booting worker with pid: 716066
+[2026-04-28 15:51:46 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:51:46 -0300] [715632] [INFO] Worker exiting (pid: 715632)
+[2026-04-28 15:51:46 -0300] [715636] [INFO] Worker exiting (pid: 715636)
+[2026-04-28 15:51:46 -0300] [715634] [INFO] Worker exiting (pid: 715634)
+[2026-04-28 15:51:46 -0300] [716068] [INFO] Booting worker with pid: 716068
+[2026-04-28 15:55:03 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:55:03 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:55:03 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:55:03 -0300] [716495] [INFO] Booting worker with pid: 716495
+[2026-04-28 15:55:03 -0300] [716497] [INFO] Booting worker with pid: 716497
+[2026-04-28 15:55:03 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:55:03 -0300] [716499] [INFO] Booting worker with pid: 716499
+[2026-04-28 15:55:03 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:55:03 -0300] [716064] [INFO] Worker exiting (pid: 716064)
+[2026-04-28 15:55:03 -0300] [716068] [INFO] Worker exiting (pid: 716068)
+[2026-04-28 15:55:03 -0300] [716066] [INFO] Worker exiting (pid: 716066)
+[2026-04-28 15:56:23 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:56:23 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:56:23 -0300] [716687] [INFO] Booting worker with pid: 716687
+[2026-04-28 15:56:23 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:56:25 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:56:25 -0300] [716703] [INFO] Booting worker with pid: 716703
+[2026-04-28 15:56:25 -0300] [716706] [INFO] Booting worker with pid: 716706
+[2026-04-28 15:56:25 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:56:25 -0300] [716495] [INFO] Worker exiting (pid: 716495)
+[2026-04-28 15:56:25 -0300] [716499] [INFO] Worker exiting (pid: 716499)
+[2026-04-28 15:56:25 -0300] [716497] [INFO] Worker exiting (pid: 716497)
+[2026-04-28 15:58:03 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 15:58:03 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 15:58:03 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:58:03 -0300] [716929] [INFO] Booting worker with pid: 716929
+[2026-04-28 15:58:03 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:58:03 -0300] [716931] [INFO] Booting worker with pid: 716931
+[2026-04-28 15:58:03 -0300] [716933] [INFO] Booting worker with pid: 716933
+[2026-04-28 15:58:03 -0300] [716687] [INFO] Worker exiting (pid: 716687)
+[2026-04-28 15:58:03 -0300] [716706] [INFO] Worker exiting (pid: 716706)
+[2026-04-28 15:58:03 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 15:58:03 -0300] [716703] [INFO] Worker exiting (pid: 716703)
+[2026-04-28 16:01:05 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 16:01:05 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 16:01:05 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:01:05 -0300] [717279] [INFO] Booting worker with pid: 717279
+[2026-04-28 16:01:05 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:01:05 -0300] [717281] [INFO] Booting worker with pid: 717281
+[2026-04-28 16:01:07 -0300] [717301] [INFO] Booting worker with pid: 717301
+[2026-04-28 16:01:07 -0300] [716929] [INFO] Worker exiting (pid: 716929)
+[2026-04-28 16:01:07 -0300] [716931] [INFO] Worker exiting (pid: 716931)
+[2026-04-28 16:01:07 -0300] [716933] [INFO] Worker exiting (pid: 716933)
+[2026-04-28 16:01:07 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:03:45 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 16:03:45 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 16:03:45 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:03:45 -0300] [717604] [INFO] Booting worker with pid: 717604
+[2026-04-28 16:03:45 -0300] [717606] [INFO] Booting worker with pid: 717606
+[2026-04-28 16:03:45 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:03:45 -0300] [717608] [INFO] Booting worker with pid: 717608
+[2026-04-28 16:03:45 -0300] [717281] [INFO] Worker exiting (pid: 717281)
+[2026-04-28 16:03:45 -0300] [717301] [INFO] Worker exiting (pid: 717301)
+[2026-04-28 16:03:45 -0300] [717279] [INFO] Worker exiting (pid: 717279)
+[2026-04-28 16:03:45 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:05:06 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 16:05:06 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 16:05:06 -0300] [717787] [INFO] Booting worker with pid: 717787
+[2026-04-28 16:05:06 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:05:06 -0300] [717789] [INFO] Booting worker with pid: 717789
+[2026-04-28 16:05:06 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:05:08 -0300] [717807] [INFO] Booting worker with pid: 717807
+[2026-04-28 16:05:08 -0300] [717606] [INFO] Worker exiting (pid: 717606)
+[2026-04-28 16:05:08 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:05:08 -0300] [717608] [INFO] Worker exiting (pid: 717608)
+[2026-04-28 16:05:08 -0300] [717604] [INFO] Worker exiting (pid: 717604)
+[2026-04-28 16:09:53 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 16:09:53 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 16:09:53 -0300] [718376] [INFO] Booting worker with pid: 718376
+[2026-04-28 16:09:53 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:09:53 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:09:53 -0300] [718378] [INFO] Booting worker with pid: 718378
+[2026-04-28 16:09:55 -0300] [717787] [INFO] Worker exiting (pid: 717787)
+[2026-04-28 16:09:55 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:09:55 -0300] [717789] [INFO] Worker exiting (pid: 717789)
+[2026-04-28 16:09:55 -0300] [718398] [INFO] Booting worker with pid: 718398
+[2026-04-28 16:09:55 -0300] [717807] [INFO] Worker exiting (pid: 717807)
+[2026-04-28 16:16:52 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 16:16:52 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 16:16:52 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:16:52 -0300] [719182] [INFO] Booting worker with pid: 719182
+[2026-04-28 16:16:54 -0300] [719203] [INFO] Booting worker with pid: 719203
+[2026-04-28 16:16:54 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:16:54 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 16:16:54 -0300] [718398] [INFO] Worker exiting (pid: 718398)
+[2026-04-28 16:16:54 -0300] [718378] [INFO] Worker exiting (pid: 718378)
+[2026-04-28 16:16:54 -0300] [718376] [INFO] Worker exiting (pid: 718376)
+[2026-04-28 16:16:54 -0300] [719207] [INFO] Booting worker with pid: 719207
+[2026-04-28 17:12:56 -0300] [700147] [INFO] Handling signal: hup
+[2026-04-28 17:12:56 -0300] [700147] [INFO] Hang up: Master
+[2026-04-28 17:12:56 -0300] [724616] [INFO] Booting worker with pid: 724616
+[2026-04-28 17:12:56 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 17:12:58 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 17:12:58 -0300] [724634] [INFO] Booting worker with pid: 724634
+[2026-04-28 17:13:00 -0300] [719182] [INFO] Worker exiting (pid: 719182)
+[2026-04-28 17:13:00 -0300] [719203] [INFO] Worker exiting (pid: 719203)
+[2026-04-28 17:13:00 -0300] [700147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 17:13:00 -0300] [719207] [INFO] Worker exiting (pid: 719207)
+[2026-04-28 17:13:00 -0300] [724639] [INFO] Booting worker with pid: 724639
+[2026-04-28 17:29:06 -0300] [700147] [INFO] Handling signal: term
+[2026-04-28 17:29:06 -0300] [724616] [INFO] Worker exiting (pid: 724616)
+[2026-04-28 17:29:06 -0300] [724639] [INFO] Worker exiting (pid: 724639)
+[2026-04-28 17:29:06 -0300] [724634] [INFO] Worker exiting (pid: 724634)
+[2026-04-28 17:29:07 -0300] [700147] [INFO] Shutting down: Master
+[2026-04-28 17:29:08 -0300] [726356] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 17:29:08 -0300] [726356] [INFO] Listening at: http://127.0.0.1:8000 (726356)
+[2026-04-28 17:29:08 -0300] [726356] [INFO] Using worker: sync
+[2026-04-28 17:29:08 -0300] [726359] [INFO] Booting worker with pid: 726359
+[2026-04-28 17:29:08 -0300] [726360] [INFO] Booting worker with pid: 726360
+[2026-04-28 17:29:08 -0300] [726361] [INFO] Booting worker with pid: 726361
+[2026-04-28 17:29:08 -0300] [726356] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 17:38:17 -0300] [726356] [INFO] Handling signal: term
+[2026-04-28 17:38:17 -0300] [726359] [INFO] Worker exiting (pid: 726359)
+[2026-04-28 17:38:17 -0300] [726361] [INFO] Worker exiting (pid: 726361)
+[2026-04-28 17:38:17 -0300] [726360] [INFO] Worker exiting (pid: 726360)
+[2026-04-28 17:38:18 -0300] [726356] [INFO] Shutting down: Master
+[2026-04-28 17:38:19 -0300] [727441] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 17:38:19 -0300] [727441] [INFO] Listening at: http://127.0.0.1:8000 (727441)
+[2026-04-28 17:38:19 -0300] [727441] [INFO] Using worker: sync
+[2026-04-28 17:38:19 -0300] [727443] [INFO] Booting worker with pid: 727443
+[2026-04-28 17:38:19 -0300] [727444] [INFO] Booting worker with pid: 727444
+[2026-04-28 17:38:19 -0300] [727449] [INFO] Booting worker with pid: 727449
+[2026-04-28 17:38:20 -0300] [727441] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 17:45:12 -0300] [727441] [INFO] Handling signal: term
+[2026-04-28 17:45:12 -0300] [727444] [INFO] Worker exiting (pid: 727444)
+[2026-04-28 17:45:12 -0300] [727443] [INFO] Worker exiting (pid: 727443)
+[2026-04-28 17:45:12 -0300] [727449] [INFO] Worker exiting (pid: 727449)
+[2026-04-28 17:45:14 -0300] [727441] [INFO] Shutting down: Master
+[2026-04-28 17:45:14 -0300] [728199] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 17:45:14 -0300] [728199] [INFO] Listening at: http://127.0.0.1:8000 (728199)
+[2026-04-28 17:45:14 -0300] [728199] [INFO] Using worker: sync
+[2026-04-28 17:45:14 -0300] [728205] [INFO] Booting worker with pid: 728205
+[2026-04-28 17:45:14 -0300] [728206] [INFO] Booting worker with pid: 728206
+[2026-04-28 17:45:15 -0300] [728207] [INFO] Booting worker with pid: 728207
+[2026-04-28 17:45:15 -0300] [728199] [INFO] Control socket listening at /run/user/0/gunicorn.ctl

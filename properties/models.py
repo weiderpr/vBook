@@ -237,3 +237,12 @@ class ServiceProvider(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def average_rating(self):
+        avg = self.evaluations.aggregate(models.Avg('rating'))['rating__avg']
+        return round(float(avg), 1) if avg else 0
+
+    @property
+    def evaluation_count(self):
+        return self.evaluations.count()

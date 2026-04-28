@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'mobile',
     'maintenance',
+    'ajuda',
 ]
 
 MIDDLEWARE = [

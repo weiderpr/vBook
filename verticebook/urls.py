@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing_view, name='landing'),
     path('dashboard/', dashboard_view, name='dashboard'),
+    path('Ajuda/', include('ajuda.urls', namespace='ajuda')),
     path('accounts/', include('accounts.urls')),
     path('propriedades/', include('properties.urls')),
     path('propriedades/<int:property_pk>/reservas/', include('reservations.urls')),

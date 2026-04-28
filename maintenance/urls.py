@@ -10,6 +10,7 @@ urlpatterns = [
     path('<int:property_pk>/<int:pk>/wizard/', views.MaintenanceWizardView.as_view(), name='wizard'),
     path('<int:property_pk>/<int:pk>/editar/', views.MaintenanceUpdateView.as_view(), name='update'),
     path('<int:property_pk>/<int:pk>/excluir/', views.MaintenanceDeleteView.as_view(), name='delete'),
+    path('<int:property_pk>/<int:pk>/arquivar/', views.MaintenanceArchiveView.as_view(), name='archive'),
 
     # Legacy AJAX / Dashboard Views (Kept for compatibility)
     path('<int:pk>/dashboard/', views.MaintenanceDashboardView.as_view(), name='dashboard'),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('upload-photo/<int:maintenance_pk>/', views.MaintenancePhotoUploadView.as_view(), name='upload_photo'),
     path('delete-photo/<int:pk>/', views.MaintenancePhotoDeleteView.as_view(), name='delete_photo'),
     path('provider-autocomplete/', views.ProviderAutocompleteView.as_view(), name='provider_autocomplete'),
+    path('submit-evaluation/<int:maintenance_pk>/', views.SubmitEvaluationView.as_view(), name='submit_evaluation'),
 ]

@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.db.models import Sum
 from decimal import Decimal
 from properties.models import Property, PropertyCost
+from properties.utils import get_property_stats
 from reservations.models import Reservation, ReservationCost
 from django.utils.translation import gettext_lazy as _
 from reservations.forms import ReservationForm
@@ -76,145 +77,19 @@ def mobile_home(request):
     month_end = date(year, month, days_in_month)
     
     for prop in user_properties:
-        prop_res = Reservation.objects.filter(
-            property=prop,
-            end_date__month=month,
-            end_date__year=year,
-            is_cancelled=False
-        )
+        stats = get_property_stats(prop, month, year)
         
-        # Occupancy Calculation
-        prop_res_overlap = Reservation.objects.filter(
-            property=prop,
-            is_cancelled=False,
-            start_date__lte=month_end,
-            end_date__gte=month_start
-        )
-        
-        reserved_days = 0
-        for res in prop_res_overlap:
-            actual_start = max(res.start_date, month_start)
-            actual_end = min(res.end_date, month_end)
-            overlap_days = (actual_end - actual_start).days
-            reserved_days += max(0, overlap_days)
-            
-        occupancy_rate = (reserved_days / days_in_month) * 100
-        
-        prop_gross = prop_res.aggregate(total=Sum('total_value'))['total'] or 0
-        
-        prop_res_costs = ReservationCost.objects.filter(
-            reservation__property=prop,
-            reservation__end_date__month=month,
-            reservation__end_date__year=year,
-            reservation__is_cancelled=False
-        ).aggregate(total=Sum('value'))['total'] or 0
-        
-        prop_fixed_costs = PropertyCost.objects.filter(
-            Q(property=prop) &
-            (
-                Q(payment_date__month=month, payment_date__year=year) |
-                Q(month=month, year=year)
-            )
-        ).exclude(frequency='per_booking').aggregate(total=Sum('amount'))['total'] or 0
-        
-        total_prop_costs = prop_res_costs + prop_fixed_costs
-        prop_net = prop_gross - total_prop_costs
-        
-        # Vacancy Loss Calculation
-        if occupancy_rate > 0:
-            # Potential gross if 100% occupied, extrapolated from current gross per occupied day
-            potential_gross = float(prop_gross) / (occupancy_rate / 100)
-            vacancy_loss = potential_gross - float(prop_gross)
-        else:
-            vacancy_loss = 0
-            
-        # YTD Performance Comparison
-        from datetime import date, timedelta
-        ytd_start_this_year = date(year, 1, 1)
-        ytd_end_this_year = today # Today (e.g., April 25th, 2026)
-        
-        ytd_start_last_year = date(year - 1, 1, 1)
-        ytd_end_last_year = date(year - 1, today.month, today.day)
-        
-        # Financial YTD (Robust logic matching PropertySettingsView)
-        from properties.models import FinancialHistory
-        
-        def get_period_net_robust(start, end, p):
-            total_net = Decimal(0)
-            curr_date = start
-            
-            # Pre-fetch data for the period to avoid N+1 queries
-            reservations = Reservation.objects.filter(
-                property=p, end_date__range=[start, end], is_cancelled=False
-            )
-            res_data = {} # (m, y) -> {'gross': D, 'costs': D}
-            for res in reservations:
-                key = (res.end_date.month, res.end_date.year)
-                if key not in res_data: res_data[key] = {'gross': Decimal(0), 'costs': Decimal(0)}
-                res_data[key]['gross'] += res.total_value
-            
-            res_costs = ReservationCost.objects.filter(
-                reservation__in=reservations
-            )
-            for rc in res_costs:
-                key = (rc.reservation.end_date.month, rc.reservation.end_date.year)
-                res_data[key]['costs'] += rc.value
-                
-            prop_costs = PropertyCost.objects.filter(
-                Q(property=p) &
-                (
-                    Q(payment_date__range=[start, end]) |
-                    (Q(year__range=[start.year, end.year]) & Q(month__isnull=False))
-                )
-            ).exclude(frequency='per_booking')
-            prop_costs_data = {} # (m, y) -> D
-            for pc in prop_costs:
-                m, y = (pc.payment_date.month, pc.payment_date.year) if pc.payment_date else (pc.month, pc.year)
-                if m and y:
-                    prop_costs_data[(m, y)] = prop_costs_data.get((m, y), Decimal(0)) + pc.amount
-                    
-            histories = FinancialHistory.objects.filter(property=p, year__range=[start.year, end.year])
-            history_data = {(h.month, h.year): {'gross': h.gross_value, 'costs': h.costs} for h in histories}
-            
-            # Iterate month by month
-            m, y = start.month, start.year
-            end_m, end_y = end.month, end.year
-            
-            while y < end_y or (y == end_y and m <= end_m):
-                key = (m, y)
-                if key in res_data:
-                    m_gross = res_data[key]['gross']
-                    m_costs = res_data[key]['costs'] + prop_costs_data.get(key, Decimal(0))
-                    total_net += (m_gross - m_costs)
-                elif key in history_data:
-                    total_net += (history_data[key]['gross'] - history_data[key]['costs'])
-                elif key in prop_costs_data:
-                    total_net -= prop_costs_data[key]
-                
-                m += 1
-                if m > 12: m = 1; y += 1
-                
-            return total_net
-
-        net_this_year = get_period_net_robust(ytd_start_this_year, ytd_end_this_year, prop)
-        net_last_year = get_period_net_robust(ytd_start_last_year, ytd_end_last_year, prop)
-        
-        growth = 0
-        if net_last_year != 0:
-            growth = ((net_this_year - net_last_year) / abs(net_last_year)) * 100
-        elif net_this_year != 0:
-            growth = 100
-            
         properties_data.append({
             'obj': prop,
-            'res_count': prop_res.count(),
-            'occupancy': min(100, round(occupancy_rate, 1)),
-            'vacancy_loss': max(0, vacancy_loss),
-            'gross': prop_gross,
-            'costs': total_prop_costs,
-            'net': prop_net,
-            'ytd_growth': round(growth, 1),
-            'has_last_year': net_last_year != 0
+            'res_count': stats['res_count'],
+            'occupancy': stats['occupancy'],
+            'vacancy_loss': stats['vacancy_loss'],
+            'gross': stats['gross'],
+            'costs': stats['costs'],
+            'net': stats['net'],
+            'ytd_growth': stats['ytd_growth'],
+            'has_last_year': stats['has_last_year'],
+            'is_currently_occupied': stats['is_currently_occupied']
         })
     
     context = {

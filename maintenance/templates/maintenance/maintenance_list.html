@@ -92,6 +92,12 @@
         color: #fbbf24;
         border: 1px solid rgba(245, 158, 11, 0.2);
     }
+
+    .status-budgeting {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
     
     .status-in_progress {
         background: rgba(99, 102, 241, 0.15);
@@ -111,15 +117,127 @@
         border: 1px solid rgba(239, 68, 68, 0.2);
     }
 
+    .value-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+    }
+
+    .value-finalized {
+        background: rgba(34, 197, 94, 0.1);
+        color: #4ade80;
+        border-color: rgba(34, 197, 94, 0.2);
+    }
+
     .period-text {
         color: var(--text-main);
         font-size: 0.85rem;
     }
 
+    .service-tag-mini {
+        display: inline-block;
+        font-size: 0.6rem;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-muted);
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-right: 4px;
+        margin-top: 6px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .service-tags-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+    }
+
     .actions-group {
         display: flex;
-        gap: 8px;
+        gap: 6px;
         justify-content: flex-end;
+    }
+
+    /* Premium Switch for Archive Toggle */
+    .archive-toggle-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-card);
+        padding: 6px 14px;
+        border-radius: 100px;
+        border: 1px solid var(--glass-border);
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .archive-toggle-container:hover { border-color: var(--primary); }
+    .archive-toggle-label {
+        font-size: 0.65rem;
+        font-weight: 800;
+        color: var(--text-main);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        opacity: 0.7;
+    }
+    .premium-switch {
+        position: relative;
+        display: inline-block;
+        width: 38px;
+        height: 20px;
+    }
+    .premium-switch input { opacity: 0; width: 0; height: 0; }
+    .switch-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: var(--glass-border);
+        transition: .4s;
+        border-radius: 20px;
+    }
+    .switch-slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    input:checked + .switch-slider { background-color: #10b981; }
+    input:checked + .switch-slider:before { transform: translateX(18px); }
+
+    /* Archived Row Styling */
+    .row-archived {
+        opacity: 0.5;
+        background: rgba(0, 0, 0, 0.05) !important;
+    }
+    .row-archived:hover {
+        opacity: 0.8;
+    }
+    .row-archived .status-badge {
+        filter: grayscale(1);
+        opacity: 0.8;
+    }
+    .archived-label {
+        font-size: 0.55rem;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-muted);
+        padding: 1px 4px;
+        border-radius: 3px;
+        margin-left: 8px;
+        text-transform: uppercase;
     }
     
     .btn-icon {
@@ -185,7 +303,7 @@
         background: var(--bg-dark);
         width: 98%;
         max-width: 950px;
-        max-height: 95vh;
+        height: 90vh;
         border-radius: 28px;
         border: 1px solid var(--glass-border);
         box-shadow: 0 25px 70px -12px rgba(0, 0, 0, 0.9);
@@ -203,8 +321,23 @@
 
     .modal-body-scroll {
         overflow-y: auto;
-        padding: 2rem;
+        padding: 2rem 2rem 6rem; /* Extra padding for fixed footer */
         flex: 1;
+    }
+
+    .modal-fixed-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border-top: 1px solid var(--glass-border);
+        padding: 1.2rem 2rem;
+        z-index: 2020;
+        backdrop-filter: blur(20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .modal-close {
@@ -263,10 +396,20 @@
         <div>
             <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{% trans "Manutenções" %}</h1>
         </div>
-        <a href="{% url 'maintenance:create' property.pk %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            {% trans "Nova Manutenção" %}
-        </a>
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <label class="archive-toggle-container">
+                <span class="archive-toggle-label">{% trans "Exibir Arquivados" %}</span>
+                <div class="premium-switch">
+                    <input type="checkbox" id="toggleArchived" {% if show_archived %}checked{% endif %} onchange="toggleArchivedView(this)">
+                    <span class="switch-slider"></span>
+                </div>
+            </label>
+
+            <a href="{% url 'maintenance:create' property.pk %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                {% trans "Nova Manutenção" %}
+            </a>
+        </div>
     </div>
 
     <div class="table-wrapper">
@@ -282,13 +425,23 @@
             </thead>
             <tbody>
                 {% for m in maintenances %}
-                <tr>
+                <tr class="{% if m.is_archived %}row-archived{% endif %}">
                     <td>
                         <div class="maintenance-cell">
-                            <span class="title">{{ m.title }}</span>
+                            <span class="title">
+                                {{ m.title }}
+                                {% if m.is_archived %}
+                                    <span class="archived-label">{% trans "Arquivado" %}</span>
+                                {% endif %}
+                            </span>
                             {% if m.description %}
-                                <span class="description">{{ m.description }}</span>
+                                <span class="description" style="margin-bottom: 4px;">{{ m.description }}</span>
                             {% endif %}
+                            <div class="service-tags-list">
+                                {% for s in m.services.all %}
+                                    <span class="service-tag-mini">{{ s.name }}</span>
+                                {% endfor %}
+                            </div>
                         </div>
                     </td>
                     <td>
@@ -297,15 +450,32 @@
                         </div>
                     </td>
                     <td>
-                        <span class="status-badge status-{{ m.status }}">
-                            {{ m.get_status_display }}
-                        </span>
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+                            <span class="status-badge status-{{ m.status }}">
+                                {{ m.get_status_display }}
+                            </span>
+                            {% if m.status == 'finished' and m.execution_value %}
+                                <div style="font-size: 0.75rem; font-weight: 800; color: #4ade80; padding: 0 8px; letter-spacing: 0.02em;">
+                                    R$ {{ m.execution_value|floatformat:2|localize }}
+                                </div>
+                            {% endif %}
+                        </div>
                     </td>
                     <td>
                         <div class="actions-group">
                             <button onclick="openWizardModal('{{ m.pk }}')" class="btn-icon wizard" title="{% trans 'Acompanhar status da manutenção' %}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                             </button>
+                            <form action="{% url 'maintenance:archive' property.pk m.pk %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-icon" title="{% if m.is_archived %}{% trans 'Desarquivar' %}{% else %}{% trans 'Arquivar' %}{% endif %}">
+                                    {% if m.is_archived %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="m21 14-9 4-9-4V8l9 4 9-4v6Z"/><path d="m3 19 9 2 9-2"/></svg>
+                                    {% else %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7"/><path d="M2 13l10 4 10-4"/><path d="m2 17 10 4 10-4"/></svg>
+                                    {% endif %}
+                                </button>
+                            </form>
                             <a href="{% url 'maintenance:update' property.pk m.pk %}" class="btn-icon" title="{% trans 'Editar' %}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                             </a>
@@ -338,6 +508,9 @@
         <div class="modal-body-scroll" id="wizardModalBody">
             <!-- Content loaded via AJAX -->
         </div>
+        <div class="modal-fixed-footer" id="wizardModalFooter">
+            <!-- Footer loaded via AJAX -->
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -346,24 +519,58 @@
 <script>
     const modal = document.getElementById('wizardModal');
     const modalBody = document.getElementById('wizardModalBody');
+    const modalFooter = document.getElementById('wizardModalFooter');
+    let hasChanged = false;
 
-    async function openWizardModal(maintenancePk) {
+    function toggleArchivedView(checkbox) {
+        const url = new URL(window.location.href);
+        if (checkbox.checked) {
+            url.searchParams.set('show_archived', 'true');
+        } else {
+            url.searchParams.delete('show_archived');
+        }
+        window.location.href = url.toString();
+    }
+
+    function updateModalContent(html) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        const footer = tempDiv.querySelector('#partialFooter');
+        
+        if (footer) {
+            modalFooter.innerHTML = footer.innerHTML;
+            footer.remove();
+        } else {
+            modalFooter.innerHTML = '';
+        }
+        
+        modalBody.innerHTML = `<div class="wizard-animate">${tempDiv.innerHTML}</div>`;
+    }
+
+    async function openWizardModal(maintenancePk, step = null) {
         modalBody.innerHTML = `
             <div style="text-align: center; padding: 5rem 0;">
                 <div class="spinner" style="width: 44px; height: 44px; margin: 0 auto;"></div>
                 <p style="color: var(--text-muted); margin-top: 1.2rem; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">{% trans "Carregando..." %}</p>
             </div>
         `;
+        modalFooter.innerHTML = '';
+        if (!modal.classList.contains('active')) {
+            hasChanged = false;
+        }
+
         modal.classList.add('active');
 
         try {
-            const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            let url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            if (step) url += `?step=${step}`;
+            
             const response = await fetch(url, {
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
             if (!response.ok) throw new Error("Erro ao carregar wizard");
             const html = await response.text();
-            modalBody.innerHTML = `<div class="wizard-animate">${html}</div>`;
+            updateModalContent(html);
         } catch (error) {
             modalBody.innerHTML = `<div style="color: #ef4444; padding: 4rem; text-align: center; font-weight: 800;">${error.message.toUpperCase()}</div>`;
         }
@@ -371,32 +578,41 @@
 
     function closeWizardModal() {
         modal.classList.remove('active');
+        if (hasChanged) {
+            window.location.reload();
+        }
     }
 
     async function advanceWizard(maintenancePk) {
-        const btn = event.currentTarget;
+        const btn = document.getElementById('advanceBtn');
         const originalHtml = btn.innerHTML;
+        const currentStep = document.getElementById('currentWizardStep').value;
         
-        // If in execution stage, validate and gather form data
-        const execForm = document.getElementById('executionForm');
-        let formData = new FormData();
-        formData.append('action', 'advance');
-
-        if (execForm) {
-            if (!execForm.checkValidity()) {
+        // If in execution stage, validate
+        if (currentStep == "3") {
+            const execForm = document.getElementById('executionForm');
+            if (execForm && !execForm.checkValidity()) {
                 execForm.reportValidity();
                 return;
-            }
-            const formInputs = new FormData(execForm);
-            for (let [key, value] of formInputs.entries()) {
-                formData.append(key, value);
             }
         }
 
         btn.disabled = true;
-        btn.innerHTML = `<div class="spinner" style="width: 18px; height: 18px; border-width: 3px; border-left-color: white;"></div>`;
+        btn.innerHTML = `<div class="spinner" style="width: 18px; height: 18px; border-width: 3px;"></div>`;
 
         try {
+            const formData = new FormData();
+            formData.append('action', 'advance');
+            formData.append('step', currentStep);
+            
+            if (currentStep == "3") {
+                const execForm = document.getElementById('executionForm');
+                const execData = new FormData(execForm);
+                for (let [key, value] of execData.entries()) {
+                    formData.append(key, value);
+                }
+            }
+
             const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
             const response = await fetch(url, {
                 method: 'POST',
@@ -410,18 +626,48 @@
             const data = await response.json();
             
             if (!response.ok) {
-                throw new Error(data.message || "Erro ao avançar status");
+                throw new Error(data.message || "Erro ao avançar");
             }
             
-            const nextHtmlResponse = await fetch(url, {
-                headers: { 'X-Requested-With': 'XMLHttpRequest' }
-            });
-            const nextHtml = await nextHtmlResponse.text();
-            modalBody.innerHTML = `<div class="wizard-animate">${nextHtml}</div>`;
+            hasChanged = true;
+            openWizardModal(maintenancePk, data.new_step);
             
-            if (typeof showToast === 'function') {
+            if (typeof showToast === 'function' && data.new_status) {
                 showToast("{% trans 'Status atualizado!' %}", "success");
             }
+        } catch (error) {
+            alert(error.message);
+            btn.disabled = false;
+            btn.innerHTML = originalHtml;
+        }
+    }
+
+    async function regressWizard(maintenancePk) {
+        const btn = event.currentTarget;
+        const originalHtml = btn.innerHTML;
+        const currentStep = document.getElementById('currentWizardStep').value;
+        
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner" style="width: 18px; height: 18px; border-width: 3px;"></div>`;
+
+        try {
+            const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: new URLSearchParams({ 'action': 'regress', 'step': currentStep })
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || "Erro ao voltar");
+            }
+            
+            hasChanged = true;
+            openWizardModal(maintenancePk, data.new_step);
         } catch (error) {
             alert(error.message);
             btn.disabled = false;
@@ -487,18 +733,18 @@
         document.querySelectorAll('.autocomplete-results').forEach(el => el.style.display = 'none');
     }
 
-    function fillExecutionFromBudget(name, phone, start, end, value) {
-        document.getElementById('exec_provider_name').value = name;
-        document.getElementById('exec_provider_phone').value = phone;
-        document.getElementById('exec_start_date').value = start;
-        document.getElementById('exec_end_date').value = end;
-        document.getElementById('exec_value').value = value;
+    function fillExecutionFromBudget(el) {
+        document.getElementById('exec_provider_name').value = el.dataset.provider;
+        document.getElementById('exec_provider_phone').value = el.dataset.phone;
+        document.getElementById('exec_start_date').value = el.dataset.start;
+        document.getElementById('exec_end_date').value = el.dataset.end;
+        document.getElementById('exec_value').value = el.dataset.value;
         
         maskPhone(document.getElementById('exec_provider_phone'));
         maskCurrency(document.getElementById('exec_value'));
 
         document.querySelectorAll('.execution-option').forEach(opt => opt.classList.remove('selected'));
-        event.currentTarget.classList.add('selected');
+        el.classList.add('selected');
     }
 
     async function submitBudget(event, maintenancePk) {
@@ -508,10 +754,13 @@
         btn.disabled = true;
         btn.innerHTML = `<div class="spinner" style="width: 14px; height: 14px;"></div>`;
 
+        let data = null;
         try {
             const formData = new FormData(form);
             let val = formData.get('value');
-            if (val) formData.set('value', val.replace(/\./g, "").replace(",", "."));
+            if (val && typeof val === 'string') {
+                formData.set('value', val.replace(/\./g, "").replace(",", "."));
+            }
 
             const url = "{% url 'maintenance:add_budget' 0 %}".replace('0', maintenancePk);
             const response = await fetch(url, {
@@ -520,14 +769,68 @@
                 body: formData
             });
 
-            const data = await response.json();
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(JSON.stringify(errData.errors || errData.message));
+            }
+
+            data = await response.json();
             if (data.status === 'success') {
-                document.getElementById('budgetListContainer').innerHTML = data.html;
-                form.reset();
+                hasChanged = true;
+                const container = document.getElementById('budgetListContainer');
+                if (container) container.innerHTML = data.html;
                 if (typeof showToast === 'function') showToast(data.message, "success");
-            } else alert(JSON.stringify(data.errors));
-        } catch (e) { alert(e.message); }
-        finally { btn.disabled = false; btn.innerText = "{% trans 'Incluir' %}"; }
+                cancelBudgetEdit(); 
+            }
+        } catch (e) { 
+            console.error(e);
+            alert("{% trans 'Erro ao salvar orçamento:' %} " + e.message); 
+        } finally { 
+            btn.disabled = false; 
+            const editIdEl = document.getElementById('editing_budget_id');
+            const isEditing = editIdEl && editIdEl.value !== "";
+            btn.innerText = isEditing ? "{% trans 'Salvar Alteração' %}" : "{% trans 'Incluir' %}"; 
+        }
+    }
+
+    async function editBudget(budgetId) {
+        try {
+            const url = "{% url 'maintenance:budget_detail' 0 %}".replace('0', budgetId);
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("{% trans 'Erro ao carregar orçamento' %}");
+            const data = await response.json();
+            
+            const form = document.getElementById('budgetAddForm');
+            if (form) {
+                form.querySelector('#editing_budget_id').value = data.id;
+                form.querySelector('[name="provider_name"]').value = data.provider_name;
+                form.querySelector('[name="phone"]').value = data.phone;
+                form.querySelector('[name="start_date"]').value = data.start_date;
+                form.querySelector('[name="end_date"]').value = data.end_date;
+                
+                // Format currency
+                let valueStr = data.value.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+                form.querySelector('[name="value"]').value = valueStr;
+                
+                document.getElementById('btnSubmitBudget').textContent = "{% trans 'Salvar Alteração' %}";
+                document.getElementById('btnCancelBudgetEdit').style.display = 'block';
+                
+                const generalTabBtn = document.querySelector('.wizard-tab-btn[onclick*="tab-geral"]');
+                if (generalTabBtn) generalTabBtn.click();
+            }
+        } catch (error) {
+            if (typeof showToast === 'function') showToast(error.message, "error");
+        }
+    }
+
+    function cancelBudgetEdit() {
+        const form = document.getElementById('budgetAddForm');
+        if (form) {
+            form.reset();
+            form.querySelector('#editing_budget_id').value = "";
+            document.getElementById('btnSubmitBudget').textContent = "{% trans 'Incluir' %}";
+            document.getElementById('btnCancelBudgetEdit').style.display = 'none';
+        }
     }
 
     async function deleteBudget(budgetPk, maintenancePk) {
@@ -537,6 +840,7 @@
             const response = await fetch(url, { method: 'POST', headers: { 'X-CSRFToken': '{{ csrf_token }}', 'X-Requested-With': 'XMLHttpRequest' } });
             const data = await response.json();
             if (data.status === 'success') {
+                hasChanged = true;
                 document.getElementById('budgetListContainer').innerHTML = data.html;
                 if (typeof showToast === 'function') showToast(data.message, "success");
             }
@@ -546,6 +850,153 @@
     document.addEventListener('click', e => {
         if (!e.target.closest('.input-group')) document.querySelectorAll('.autocomplete-results').forEach(el => el.style.display = 'none');
     });
+
+    // Photo Gallery Functions
+    function openLightbox(url) {
+        document.getElementById('lightboxImg').src = url;
+        document.getElementById('photoLightbox').style.display = 'flex';
+    }
+    
+    async function uploadPhoto(input, maintenancePk) {
+        if (!input.files || !input.files[0]) return;
+        
+        const formData = new FormData();
+        formData.append('image', input.files[0]);
+        
+        const btn = document.querySelector('.upload-placeholder');
+        const originalContent = btn ? btn.innerHTML : '';
+        if (btn) btn.innerHTML = `<div class="spinner" style="width: 20px; height: 20px;"></div>`;
+        
+        try {
+            const url = "{% url 'maintenance:upload_photo' 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}', 'X-Requested-With': 'XMLHttpRequest' },
+                body: formData
+            });
+            const data = await response.json();
+            if (data.status === 'success') {
+                hasChanged = true;
+                openWizardModal(maintenancePk); // Refresh the modal
+                if (typeof showToast === 'function') showToast(data.message, "success");
+            } else alert(data.message);
+        } catch (e) { alert(e.message); }
+        finally { if (btn) btn.innerHTML = originalContent; }
+    }
+
+    async function deletePhoto(photoPk, maintenancePk) {
+        if (!confirm("{% trans 'Excluir esta foto?' %}")) return;
+        try {
+            const url = "{% url 'maintenance:delete_photo' 0 %}".replace('0', photoPk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}', 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const data = await response.json();
+            if (data.status === 'success') {
+                hasChanged = true;
+                openWizardModal(maintenancePk); // Refresh
+                if (typeof showToast === 'function') showToast(data.message, "success");
+            }
+        } catch (e) {}
+    }
+
+    async function submitEvaluation(maintenancePk) {
+        const ratingInput = document.querySelector('input[name="rating"]:checked');
+        if (!ratingInput) {
+            alert("{% trans 'Por favor, selecione uma nota (estrelas).' %}");
+            return;
+        }
+        
+        const comment = document.getElementById('evaluationComment').value;
+        const btn = document.getElementById('btnSubmitEval');
+        const originalText = btn.innerText;
+        
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner" style="width: 16px; height: 16px;"></div>`;
+        
+        try {
+            const formData = new FormData();
+            formData.append('rating', ratingInput.value);
+            formData.append('comment', comment);
+            
+            const cleanPk = maintenancePk.toString().trim();
+            const baseUrl = "{% url 'maintenance:submit_evaluation' 999999 %}";
+            const url = baseUrl.replace('999999', cleanPk);
+            
+            console.log("Submitting to URL:", url);
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `Server error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            if (data.status === 'success') {
+                if (typeof showToast === 'function') showToast(data.message, "success");
+                btn.innerText = "{% trans 'Avaliação Salva!' %}";
+                btn.style.background = "#22c55e";
+                setTimeout(() => { 
+                    btn.innerText = "{% trans 'Atualizar Avaliação' %}"; 
+                    btn.disabled = false;
+                    btn.style.background = ""; 
+                }, 2000);
+            } else {
+                alert(data.message);
+                btn.disabled = false;
+                btn.innerText = originalText;
+            }
+        } catch (e) {
+            console.error("Evaluation Error:", e);
+            alert("{% trans 'Erro ao enviar avaliação: ' %}" + e.message);
+            btn.disabled = false;
+            btn.innerText = originalText;
+        }
+    }
+
+    function selectProviderForBudget(name, phone) {
+        // Fill the form in Step 2
+        const nameInput = document.getElementById('provider_name');
+        const phoneInput = document.getElementById('provider_phone');
+        
+        if (nameInput) nameInput.value = name;
+        if (phoneInput) {
+            phoneInput.value = phone;
+        }
+        
+        // Switch to "Geral" tab
+        const generalTabBtn = document.querySelector('.wizard-tab-btn[onclick*="tab-geral"]');
+        if (generalTabBtn) {
+            generalTabBtn.click();
+        }
+        
+        showToast("{% trans 'Prestador selecionado!' %}", "success");
+    }
+
+    function switchWizardTab(event, tabId) {
+        // Remove active class from buttons
+        const btns = event.target.parentElement.querySelectorAll('.wizard-tab-btn');
+        btns.forEach(b => b.classList.remove('active'));
+        
+        // Add active class to clicked button
+        event.target.classList.add('active');
+        
+        // Hide all tab contents
+        const contents = event.target.parentElement.parentElement.querySelectorAll('.wizard-tab-content');
+        contents.forEach(c => c.classList.remove('active'));
+        
+        // Show target tab content
+        document.getElementById(tabId).classList.add('active');
+    }
 
     window.onclick = function(event) { if (event.target == modal) closeWizardModal(); }
 </script>

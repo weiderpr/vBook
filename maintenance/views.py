@@ -7,9 +7,9 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from properties.models import Property, ServiceProvider
-from .models import Maintenance, Budget, MaintenancePhoto
+from .models import Maintenance, Budget, MaintenancePhoto, ProviderEvaluation
 from .forms import BudgetForm, MaintenanceForm
-from django.db.models import Count
+from django.db.models import Count, Avg
 import decimal
 
 class PropertyMaintenanceMixin:
@@ -37,7 +37,16 @@ class MaintenanceListView(LoginRequiredMixin, PropertyMaintenanceMixin, ListView
     context_object_name = 'maintenances'
 
     def get_queryset(self):
-        return Maintenance.objects.filter(property=self.get_property())
+        qs = Maintenance.objects.filter(property=self.get_property())
+        show_archived = self.request.GET.get('show_archived') == 'true'
+        if not show_archived:
+            qs = qs.filter(is_archived=False)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_archived'] = self.request.GET.get('show_archived') == 'true'
+        return context
 
 class MaintenanceCreateView(LoginRequiredMixin, PropertyMaintenanceMixin, CreateView):
     model = Maintenance
@@ -78,6 +87,15 @@ class MaintenanceDeleteView(LoginRequiredMixin, PropertyMaintenanceMixin, Delete
         messages.success(self.request, _("Manutenção removida com sucesso!"))
         return reverse('maintenance:list', kwargs={'property_pk': self.kwargs.get('property_pk')})
 
+class MaintenanceArchiveView(LoginRequiredMixin, PropertyMaintenanceMixin, View):
+    def post(self, request, property_pk, pk):
+        maintenance = get_object_or_404(Maintenance, pk=pk, property__user=request.user)
+        maintenance.is_archived = not maintenance.is_archived
+        maintenance.save()
+        status_msg = _("arquivada") if maintenance.is_archived else _("desarquivada")
+        messages.success(request, f"Manutenção {status_msg} com sucesso!")
+        return redirect('maintenance:list', property_pk=property_pk)
+
 class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, DetailView):
     model = Maintenance
     context_object_name = 'maintenance'
@@ -92,8 +110,49 @@ class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, Detail
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['budgets'] = self.object.budgets.all()
+        maintenance = self.get_object()
+        
+        # Determine wizard step (1 to 4)
+        # 1: Photos (status open)
+        # 2: Budgets (status open)
+        # 3: Execution (status in_progress)
+        # 4: Conclusion (status finished)
+        
+        step = self.request.GET.get('step') or self.request.POST.get('step')
+        if not step:
+            if maintenance.status == 'open':
+                step = 1
+            elif maintenance.status == 'budgeting':
+                step = 2
+            elif maintenance.status == 'in_progress':
+                step = 3
+            elif maintenance.status == 'finished':
+                step = 4
+            else:
+                step = 1
+        
+        context['wizard_step'] = int(step)
+        context['budgets'] = maintenance.budgets.all()
         context['budget_form'] = BudgetForm()
+        context['photos'] = maintenance.photos.all()
+        context['evaluation'] = getattr(maintenance, 'evaluation', None)
+        
+        # Step 2: Possible Providers
+        if int(step) == 2:
+            maintenance_services = maintenance.services.all()
+            if maintenance_services.exists():
+                # Base queryset for providers matching categories
+                base_providers = ServiceProvider.objects.filter(
+                    services__in=maintenance_services,
+                    is_active=True
+                ).annotate(avg_rating=Avg('evaluations__rating')).distinct().order_by('-avg_rating')
+                
+                context['my_providers'] = base_providers.filter(user=self.request.user)
+                context['other_providers'] = base_providers.exclude(user=self.request.user)
+            else:
+                context['my_providers'] = []
+                context['other_providers'] = []
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -101,10 +160,22 @@ class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, Detail
         action = request.POST.get('action')
 
         if action == 'advance':
-            if maintenance.status == 'open':
+            current_step = int(request.POST.get('step', 1))
+            
+            if current_step == 1:
+                # Moving from Photos to Budgets
+                maintenance.status = 'budgeting'
+                maintenance.save()
+                return JsonResponse({'status': 'success', 'new_status': 'budgeting', 'new_step': 2})
+                
+            elif current_step == 2:
+                # Moving from Budgets to Execution
                 maintenance.status = 'in_progress'
                 maintenance.save()
-            elif maintenance.status == 'in_progress':
+                return JsonResponse({'status': 'success', 'new_status': 'in_progress', 'new_step': 3})
+                
+            elif current_step == 3:
+                # Finalizing
                 provider_name = request.POST.get('provider_name')
                 provider_phone = request.POST.get('provider_phone')
                 execution_start_date = request.POST.get('execution_start_date')
@@ -120,21 +191,42 @@ class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, Detail
                     val = execution_value.replace('.', '').replace(',', '.')
                     maintenance.execution_value = decimal.Decimal(val)
                     
-                    maintenance.status = 'finished'
-                    maintenance.save()
-
-                    # Register/Update ServiceProvider for the current user
-                    # If a provider with same name/phone exists for this user, use it. Otherwise create.
-                    ServiceProvider.objects.get_or_create(
+                    provider, created = ServiceProvider.objects.get_or_create(
                         user=request.user,
                         name=provider_name,
                         defaults={'phone': provider_phone}
                     )
+                    maintenance.provider = provider
+                    
+                    maintenance.status = 'finished'
+                    maintenance.save()
+                    return JsonResponse({'status': 'success', 'new_status': 'finished', 'new_step': 4})
                 else:
                     return JsonResponse({
                         'status': 'error', 
                         'message': _("Por favor, preencha todos os campos de execução para finalizar.")
                     }, status=400)
+        
+        elif action == 'regress':
+            current_step = int(request.POST.get('step', 1))
+            
+            if current_step == 2:
+                # Back to Photos
+                maintenance.status = 'open'
+                maintenance.save()
+                return JsonResponse({'status': 'success', 'new_status': 'open', 'new_step': 1})
+            elif current_step == 3:
+                # Back to Budgets
+                maintenance.status = 'budgeting'
+                maintenance.save()
+                return JsonResponse({'status': 'success', 'new_status': 'budgeting', 'new_step': 2})
+            elif current_step == 4:
+                # Back to Execution
+                maintenance.status = 'in_progress'
+                maintenance.save()
+                return JsonResponse({'status': 'success', 'new_status': 'in_progress', 'new_step': 3})
+            
+            return JsonResponse({'status': 'success', 'new_step': current_step})
         
         elif action == 'save_execution':
             maintenance.provider_name = request.POST.get('provider_name')
@@ -329,11 +421,12 @@ class MaintenancePhotoUploadView(LoginRequiredMixin, View):
     def post(self, request, maintenance_pk):
         maintenance = get_object_or_404(Maintenance, pk=maintenance_pk, property__user=request.user)
         
-        # If already has 3 photos, remove the oldest one
+        # Limit 3 photos
         if maintenance.photos.count() >= 3:
-            oldest_photo = maintenance.photos.order_by('created_at').first()
-            if oldest_photo:
-                oldest_photo.delete()
+            return JsonResponse({
+                'status': 'error', 
+                'message': _("Limite de 3 fotos atingido.")
+            }, status=400)
         
         image = request.FILES.get('image')
         if image:
@@ -383,3 +476,45 @@ class ProviderAutocompleteView(LoginRequiredMixin, View):
             # Convert to list of dicts for JS to handle name/phone
             return JsonResponse(list(providers), safe=False)
         return JsonResponse([], safe=False)
+
+class SubmitEvaluationView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        try:
+            maintenance = get_object_or_404(Maintenance, pk=kwargs['maintenance_pk'])
+            rating = request.POST.get('rating')
+            comment = request.POST.get('comment')
+
+            # If provider is not linked yet, try to link it now
+            if not maintenance.provider and maintenance.provider_name:
+                provider, created = ServiceProvider.objects.get_or_create(
+                    user=request.user,
+                    name=maintenance.provider_name,
+                    defaults={'phone': maintenance.provider_phone}
+                )
+                maintenance.provider = provider
+                maintenance.save()
+
+            if not maintenance.provider:
+                return JsonResponse({'status': 'error', 'message': _('Prestador não encontrado para esta manutenção.')}, status=400)
+
+            if not rating:
+                return JsonResponse({'status': 'error', 'message': _('Nota não fornecida.')}, status=400)
+
+            evaluation, created = ProviderEvaluation.objects.update_or_create(
+                maintenance=maintenance,
+                defaults={
+                    'provider': maintenance.provider,
+                    'rating': int(rating),
+                    'comment': comment,
+                    'user': request.user
+                }
+            )
+
+            return JsonResponse({
+                'status': 'success', 
+                'message': _('Avaliação enviada com sucesso!') if created else _('Avaliação atualizada!')
+            })
+        except Exception as e:
+            import traceback
+            print(traceback.format_exc())
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
