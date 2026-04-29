@@ -211,6 +211,113 @@
         background: rgba(255, 255, 255, 0.05) !important;
         box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
     }
+
+    /* Maintenance Wizard Modal Styles */
+    .vbook-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(16px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 3000;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .vbook-modal-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .vbook-modal-content {
+        background: var(--bg-dark);
+        width: 98%;
+        max-width: 950px;
+        height: 90vh;
+        border-radius: 28px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 25px 70px -12px rgba(0, 0, 0, 0.9);
+        overflow: hidden;
+        position: relative;
+        transform: translateY(20px) scale(0.95);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .vbook-modal-overlay.active .vbook-modal-content {
+        transform: translateY(0) scale(1);
+    }
+
+    .modal-body-scroll {
+        overflow-y: auto;
+        padding: 2rem 2rem 6rem;
+        flex: 1;
+    }
+
+    .modal-fixed-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border-top: 1px solid var(--glass-border);
+        padding: 1.2rem 2rem;
+        z-index: 2020;
+        backdrop-filter: blur(20px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-close-wizard {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        transition: all 0.2s;
+        z-index: 2010;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-close-wizard:hover {
+        background: #ef4444;
+        color: white;
+        border-color: #ef4444;
+        transform: rotate(90deg);
+    }
+
+    @keyframes fadeInWizard {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wizard-animate {
+        animation: fadeInWizard 0.5s ease-out forwards;
+    }
+
+    .spinner-wizard {
+        border: 3px solid rgba(255,255,255,0.1);
+        border-radius: 50%;
+        border-top: 3px solid var(--primary);
+        width: 24px;
+        height: 24px;
+        animation: spin-wizard 1s linear infinite;
+    }
+
+    @keyframes spin-wizard {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0/build/vanilla-masker.min.js"></script>
 {% endblock %}
@@ -389,14 +496,16 @@
                                 <tr data-cost-id="{{ cost.pk }}">
                                     <td>
                                         <div class="cost-name">{{ cost.name }}</div>
-                                        <div style="display: flex; gap: 8px; margin-top: 6px;">
-                                            {% if cost.payment_date %}
+                                        <div style="display: flex; gap: 8px; align-items: center; margin-top: 6px;">
+                                            {% if cost.date %}
                                                 <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
-                                                    {{ cost.payment_date|date:"d/m/Y" }}
+                                                    {{ cost.date|date:"d/m/Y" }}
                                                 </span>
-                                            {% elif cost.get_period_display %}
-                                                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(99, 102, 241, 0.2);">
-                                                    {{ cost.get_period_display }}
+                                            {% endif %}
+                                            
+                                            {% if cost.type == 'maintenance' %}
+                                                <span style="font-size: 0.65rem; color: #f59e0b; font-weight: 800; background: rgba(245, 158, 11, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.2); text-transform: uppercase;">
+                                                    {% trans "Manutenção" %}
                                                 </span>
                                             {% endif %}
                                         </div>
@@ -409,30 +518,36 @@
                                     </td>
                                     <td style="padding-right: 1.5rem;">
                                         <div class="action-btns">
-                                            <button type="button" class="btn-action-small btn-edit-small" title="{% trans 'Editar Custo' %}"
-                                                onclick='openEditModal({
-                                                    id: "{{ cost.pk }}",
-                                                    name: "{{ cost.name|escapejs }}",
-                                                    description: "{{ cost.description|escapejs }}",
-                                                    amount: "{{ cost.amount|unlocalize }}",
-                                                    amount_type: "{{ cost.amount_type }}",
-                                                    recipient: "{{ cost.recipient }}",
-                                                    frequency: "{{ cost.frequency }}",
-                                                    payment_date: "{{ cost.payment_date|date:"Y-m-d" }}",
-                                                    month: "{{ cost.month|unlocalize|default:"" }}",
-                                                    year: "{{ cost.year|unlocalize|default:"" }}",
-                                                    provider_id: "{{ cost.provider_id|default:"" }}",
-                                                    provider_name: "{{ cost.provider.name|escapejs|default:"" }}",
-                                                    provider_photo: "{% if cost.provider and cost.provider.photo %}{{ cost.provider.photo.url }}{% endif %}"
-                                                })'>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                                            </button>
-                                            <form action="{% url 'properties:cost_delete' cost.pk %}" method="post" style="display: inline;">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn-action-small btn-delete-small delete-confirm-btn" title="{% trans 'Excluir Custo' %}" data-confirm="{% trans 'Tem certeza que deseja excluir este custo?' %}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                            {% if cost.type == 'cost' %}
+                                                <button type="button" class="btn-action-small btn-edit-small" title="{% trans 'Editar Custo' %}"
+                                                    onclick='openEditModal({
+                                                        id: "{{ cost.pk }}",
+                                                        name: "{{ cost.name|escapejs }}",
+                                                        description: "{{ cost.description|escapejs }}",
+                                                        amount: "{{ cost.amount|unlocalize }}",
+                                                        amount_type: "{{ cost.amount_type }}",
+                                                        recipient: "{{ cost.recipient }}",
+                                                        frequency: "{{ cost.frequency }}",
+                                                        payment_date: "{{ cost.date|date:"Y-m-d" }}",
+                                                        month: "{{ cost.month|unlocalize|default:"" }}",
+                                                        year: "{{ cost.year|unlocalize|default:"" }}",
+                                                        provider_id: "{{ cost.provider_id|default:"" }}",
+                                                        provider_name: "{{ cost.provider_name|escapejs|default:"" }}",
+                                                        provider_photo: "{{ cost.provider_photo }}"
+                                                    })'>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                                 </button>
-                                            </form>
+                                                <form action="{% url 'properties:cost_delete' cost.pk %}" method="post" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn-action-small btn-delete-small delete-confirm-btn" title="{% trans 'Excluir Custo' %}" data-confirm="{% trans 'Tem certeza que deseja excluir este custo?' %}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                                                    </button>
+                                                </form>
+                                            {% else %}
+                                                <button type="button" onclick="openWizardModal('{{ cost.m_id }}')" class="btn-action-small btn-edit-small" title="{% trans 'Ver Manutenção' %}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                                </button>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 </tr>
@@ -621,6 +736,21 @@
                     {% endif %}
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Maintenance Wizard Modal -->
+<div id="wizardModal" class="vbook-modal-overlay">
+    <div class="vbook-modal-content">
+        <button class="modal-close-wizard" onclick="closeWizardModal()" style="position: absolute; top: 1.5rem; right: 1.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <div class="modal-body-scroll" id="wizardModalBody">
+            <!-- Content loaded via AJAX -->
+        </div>
+        <div class="modal-fixed-footer" id="wizardModalFooter">
+            <!-- Footer loaded via AJAX -->
         </div>
     </div>
 </div>
@@ -1177,7 +1307,150 @@
         evt = evt || window.event;
         if (evt.keyCode == 27) {
             toggleModal(false);
+            closeWizardModal();
         }
     };
+
+    // Maintenance Wizard Functions
+    const wizModal = document.getElementById('wizardModal');
+    const wizModalBody = document.getElementById('wizardModalBody');
+    const wizModalFooter = document.getElementById('wizardModalFooter');
+    let hasWizChanged = false;
+
+    function updateWizardModalContent(html) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        const footer = tempDiv.querySelector('#partialFooter');
+        
+        if (footer) {
+            wizModalFooter.innerHTML = footer.innerHTML;
+            footer.remove();
+        } else {
+            wizModalFooter.innerHTML = '';
+        }
+        
+        wizModalBody.innerHTML = `<div class="wizard-animate">${tempDiv.innerHTML}</div>`;
+    }
+
+    async function openWizardModal(maintenancePk, step = null) {
+        wizModalBody.innerHTML = `
+            <div style="text-align: center; padding: 5rem 0;">
+                <div class="spinner-wizard" style="width: 44px; height: 44px; margin: 0 auto;"></div>
+                <p style="color: var(--text-muted); margin-top: 1.2rem; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">{% trans "Carregando..." %}</p>
+            </div>
+        `;
+        wizModalFooter.innerHTML = '';
+        if (!wizModal.classList.contains('active')) {
+            hasWizChanged = false;
+        }
+
+        wizModal.classList.add('active');
+
+        try {
+            let url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            url += `?read_only=true`;
+            if (step) url += `&step=${step}`;
+            
+            const response = await fetch(url, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            if (!response.ok) throw new Error("{% trans 'Erro ao carregar wizard' %}");
+            const html = await response.text();
+            updateWizardModalContent(html);
+        } catch (error) {
+            wizModalBody.innerHTML = `<div style="color: #ef4444; padding: 4rem; text-align: center; font-weight: 800;">${error.message.toUpperCase()}</div>`;
+        }
+    }
+
+    function closeWizardModal() {
+        if (wizModal) {
+            wizModal.classList.remove('active');
+            if (hasWizChanged) {
+                window.location.reload();
+            }
+        }
+    }
+
+    async function advanceWizard(maintenancePk) {
+        const btn = document.getElementById('advanceBtn');
+        const originalHtml = btn.innerHTML;
+        const currentStep = document.getElementById('currentWizardStep').value;
+        
+        if (currentStep == "3") {
+            const execForm = document.getElementById('executionForm');
+            if (execForm && !execForm.checkValidity()) {
+                execForm.reportValidity();
+                return;
+            }
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner-wizard" style="width: 18px; height: 18px; border-width: 3px;"></div>`;
+
+        try {
+            const formData = new FormData();
+            formData.append('action', 'advance');
+            formData.append('step', currentStep);
+            
+            if (currentStep == "3") {
+                const execForm = document.getElementById('executionForm');
+                const execData = new FormData(execForm);
+                for (let [key, value] of execData.entries()) {
+                    formData.append(key, value);
+                }
+            }
+
+            const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || "{% trans 'Erro ao avançar' %}");
+            
+            hasWizChanged = true;
+            openWizardModal(maintenancePk, data.new_step);
+        } catch (error) {
+            alert(error.message);
+            btn.disabled = false;
+            btn.innerHTML = originalHtml;
+        }
+    }
+
+    async function regressWizard(maintenancePk) {
+        const btn = event.currentTarget;
+        const originalHtml = btn.innerHTML;
+        const currentStep = document.getElementById('currentWizardStep').value;
+        
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner-wizard" style="width: 18px; height: 18px; border-width: 3px;"></div>`;
+
+        try {
+            const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: new URLSearchParams({ 'action': 'regress', 'step': currentStep })
+            });
+
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || "{% trans 'Erro ao voltar' %}");
+            
+            hasWizChanged = true;
+            openWizardModal(maintenancePk, data.new_step);
+        } catch (error) {
+            alert(error.message);
+            btn.disabled = false;
+            btn.innerHTML = originalHtml;
+        }
+    }
 </script>
 {% endblock %}

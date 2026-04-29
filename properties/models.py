@@ -246,3 +246,65 @@ class ServiceProvider(models.Model):
     @property
     def evaluation_count(self):
         return self.evaluations.count()
+
+    @property
+    def financial_balance(self):
+        """
+        Calculates balance: Credits (Payments) - Debits (Reservation Costs + Maintenance Execution).
+        Negative balance means the user owes the provider.
+        """
+        from reservations.models import ReservationCost
+        from maintenance.models import Maintenance
+        from django.db.models import Sum
+        
+        # Debits: Completed Reservation Services
+        res_debits = ReservationCost.objects.filter(
+            provider=self, 
+            is_completed=True
+        ).aggregate(total=Sum('value'))['total'] or 0
+        
+        # Debits: Finished Maintenances
+        maint_debits = Maintenance.objects.filter(
+            provider=self, 
+            status='finished'
+        ).aggregate(total=Sum('execution_value'))['total'] or 0
+        
+        # Debits: Monthly/Fixed Property Costs (Excluding per_booking to avoid double counting)
+        prop_debits = self.property_costs.exclude(
+            frequency='per_booking'
+        ).aggregate(total=Sum('amount'))['total'] or 0
+        
+        # Credits: Payments made to provider
+        credits = self.payments.aggregate(total=Sum('value'))['total'] or 0
+        
+        return credits - (res_debits + maint_debits + prop_debits)
+
+class ProviderPayment(models.Model):
+    provider = models.ForeignKey(
+        ServiceProvider, 
+        on_delete=models.CASCADE, 
+        related_name='payments', 
+        verbose_name=_("Prestador")
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        verbose_name=_("Usuário")
+    )
+    date = models.DateField(verbose_name=_("Data"))
+    value = models.DecimalField(
+        max_digits=12, 
+        decimal_places=2, 
+        verbose_name=_("Valor")
+    )
+    observations = models.TextField(blank=True, null=True, verbose_name=_("Observações"))
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("Pagamento ao Prestador")
+        verbose_name_plural = _("Pagamentos aos Prestadores")
+        ordering = ['-date', '-created_at']
+
+    def __str__(self):
+        return f"Pagamento: R$ {self.value} para {self.provider.name} em {self.date}"

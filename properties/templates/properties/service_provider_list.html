@@ -5,349 +5,374 @@
 
 {% block extra_head %}
 <style>
-    .filter-bar {
+    /* 
+       ESTA É A VERSÃO V3 - FOCO EM ISOLAMENTO E PREVENÇÃO DE CACHE
+    */
+    
+    /* 1. TABELA PRINCIPAL (ESTILO PREMIUM) */
+    .v3-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
+    .v3-filters {
         background: rgba(255, 255, 255, 0.02);
         padding: 0.8rem 1.2rem;
         border-radius: 12px;
         border: 1px solid var(--glass-border);
         margin-bottom: 1.2rem;
-        display: flex;
-        gap: 0.8rem;
-        align-items: flex-end;
-        flex-wrap: wrap;
+        display: flex; gap: 0.8rem; align-items: flex-end; flex-wrap: wrap;
     }
-    
-    .filter-group {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
-    
-    .filter-label {
-        font-size: 0.65rem;
-        font-weight: 700;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    
-    .filter-input {
+    .v3-input {
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid var(--glass-border);
         border-radius: 8px;
-        padding: 6px 10px;
+        padding: 6px 12px;
         color: var(--text-main);
         font-size: 0.85rem;
+        height: 38px;
         outline: none;
-        height: 36px;
     }
-
-    .providers-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 1rem;
-    }
-    
-    .provider-card {
-        padding: 1rem;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .provider-status {
-        position: absolute;
-        top: 0.8rem;
-        right: 0.8rem;
-        padding: 3px 8px;
-        border-radius: 20px;
-        font-size: 0.6rem;
-        font-weight: 800;
-        text-transform: uppercase;
-    }
-    
-    .status-active { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-    .status-inactive { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-
-    .rating-badge {
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(4px);
-        color: #fbbf24;
-        padding: 3px 8px;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        gap: 1px;
-        border: 1px solid rgba(251, 191, 36, 0.3);
-        z-index: 10;
-        white-space: nowrap;
-    }
-    
-    .provider-icon {
-        width: 36px;
-        height: 36px;
-        background: rgba(99, 102, 241, 0.1);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary);
-        margin-bottom: 1rem;
-        flex-shrink: 0;
-    }
-    
-    .provider-name {
-        font-size: 1rem;
-        font-weight: 800;
-        margin-bottom: 0.3rem;
-        color: var(--text-main);
-        line-height: 1.3;
-    }
-    
-    .provider-service-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-        margin-bottom: 0.8rem;
-        min-height: 22px;
-    }
-    
-    .service-tag {
-        font-size: 0.65rem;
-        background: rgba(99, 102, 241, 0.08);
-        color: var(--primary);
-        padding: 2px 8px;
-        border-radius: 6px;
-        font-weight: 700;
-    }
-    
-    .provider-info-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        margin-bottom: 0.5rem;
-    }
-    
-    .provider-actions {
-        display: flex;
-        gap: 8px;
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--glass-border);
-    }
-    
-    .btn-action-small {
-        padding: 8px;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--glass-border);
-        color: var(--text-muted);
-        transition: all 0.2s;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    
-    .btn-action-small:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: var(--primary);
-        border-color: var(--primary);
-    }
-    
-    .access-link-box {
-        background: rgba(0, 0, 0, 0.15);
-        padding: 10px;
-        border-radius: 10px;
-        font-size: 0.75rem;
-        margin-top: 1rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 1px dashed var(--glass-border);
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .access-link-text {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        color: var(--text-muted);
-        margin-right: 10px;
-        flex: 1;
-        font-family: monospace;
-    }
-
-    /* Modal Styles */
-    .vbook-modal {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.8);
-        backdrop-filter: blur(8px);
-        z-index: 10000;
-        align-items: center; justify-content: center;
-    }
-    .vbook-modal.active { display: flex; }
-    .vbook-modal-content {
+    .v3-card {
         background: var(--bg-card);
         border: 1px solid var(--glass-border);
-        border-radius: 24px;
-        padding: 2rem;
-        width: 90%;
-        max-width: 450px;
+        border-radius: 20px;
+        box-shadow: var(--glass-shadow);
+        overflow: hidden;
     }
+    .v3-table { width: 100%; border-collapse: collapse; }
+    .v3-table th {
+        padding: 1rem 1.5rem;
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        background: rgba(255, 255, 255, 0.03);
+    }
+    .v3-table td { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); vertical-align: middle; }
+    .v3-btn-action {
+        width: 34px; height: 34px; border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
+        color: var(--text-muted); display: flex; align-items: center; justify-content: center;
+        cursor: pointer; transition: all 0.2s;
+    }
+    .v3-btn-action:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* 2. MODAL FINANCEIRO (ESTILO ULTRA-COMPACTO E TRAVADO) */
+    .v3-modal-overlay {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+        z-index: 10000; align-items: center; justify-content: center;
+    }
+    .v3-modal-overlay.active { display: flex; }
+    
+    .v3-modal-container {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 1.2rem !important;
+        width: 95%;
+        max-width: 600px;
+        height: 85vh !important; /* ALTURA FIXA E TRAVADA */
+        display: flex;
+        flex-direction: column;
+        overflow: hidden !important; /* IMPEDE ROLAGEM NO MODAL INTEIRO */
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .v3-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.6rem; }
+    .v3-modal-balance { background: rgba(255,255,255,0.03); padding: 0.6rem 1rem; border-radius: 12px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--glass-border); }
+    
+    .v3-modal-form { background: rgba(99, 102, 241, 0.05); padding: 0.8rem; border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.15); margin-bottom: 1rem; }
+    .v3-modal-input {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 6px !important;
+        padding: 2px 8px !important;
+        color: var(--text-main) !important;
+        font-size: 0.75rem !important;
+        height: 28px !important; /* ALTURA COMPACTA */
+        width: 100%;
+        outline: none;
+    }
+
+    .v3-history-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0; /* ESSENCIAL PARA O FLEX NÃO ESTICAR */
+        overflow: hidden;
+    }
+    
+    .v3-history-scrollable {
+        flex: 1;
+        overflow-y: auto !important; /* ÚNICA ÁREA QUE PODE TER ROLAGEM */
+        background: rgba(0,0,0,0.15);
+        border-radius: 10px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .v3-text-neg { color: #ef4444 !important; }
+    .v3-text-pos { color: #10b981 !important; }
+
 </style>
 {% endblock %}
 
 {% block dashboard_content %}
 <div class="property-panel-content">
-    <div class="property-mini-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+    <!-- Header -->
+    <div class="v3-header">
         <div>
-            <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">
-                {% trans "Prestadores" %}
-            </h1>
-            <p style="color: var(--text-muted); margin: 4px 0 0; font-size: 0.95rem;">
-                {% trans "Gestão global de contatos e acessos." %}
-            </p>
+            <h1 style="margin: 0; font-size: 1.8rem; font-weight: 800; color: var(--text-main);">{% trans "Prestadores" %}</h1>
+            <p style="color: var(--text-muted); margin: 4px 0 0; font-size: 0.95rem;">{% trans "Gestão global de contatos e acessos financeiros." %}</p>
         </div>
-        <div style="display: flex; gap: 1rem;">
-            <a href="{% url 'properties:provider_create' %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 1.2rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                {% trans "Novo" %}
-            </a>
-        </div>
+        <a href="{% url 'properties:provider_create' %}" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 1.2rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            {% trans "Novo Prestador" %}
+        </a>
     </div>
 
     <!-- Filtros -->
-    <form method="get" class="filter-bar">
-        <div class="filter-group" style="flex: 2; min-width: 200px;">
-            <label class="filter-label">{% trans "Nome" %}</label>
-            <input type="text" name="name" value="{{ current_filters.name }}" placeholder="{% trans 'Pesquisar...' %}" class="filter-input">
+    <form method="get" class="v3-filters">
+        <div style="display: flex; flex-direction: column; gap: 4px; flex: 2;">
+            <label style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">{% trans "Nome" %}</label>
+            <input type="text" name="name" value="{{ current_filters.name }}" placeholder="{% trans 'Pesquisar...' %}" class="v3-input">
         </div>
-        <div class="filter-group" style="flex: 1; min-width: 150px;">
-            <label class="filter-label">{% trans "Categoria" %}</label>
-            <select name="service" class="filter-input">
+        <div style="display: flex; flex-direction: column; gap: 4px; flex: 1;">
+            <label style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">{% trans "Categoria" %}</label>
+            <select name="service" class="v3-input">
                 <option value="">{% trans "Todas" %}</option>
                 {% for service in services %}
-                    <option value="{{ service.id }}" {% if current_filters.service == service.id|stringformat:"s" %}selected{% endif %}>
-                        {{ service.name }}
-                    </option>
+                    <option value="{{ service.id }}" {% if current_filters.service == service.id|stringformat:"s" %}selected{% endif %}>{{ service.name }}</option>
                 {% endfor %}
             </select>
         </div>
-        <div style="display: flex; gap: 10px;">
-            <button type="submit" class="btn btn-primary" style="height: 36px; padding: 0 1.2rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            </button>
-            {% if current_filters.name or current_filters.service %}
-                <a href="{% url 'properties:provider_list' %}" class="btn btn-outline" style="height: 36px; padding: 0 0.8rem; display: flex; align-items: center; justify-content: center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                </a>
-            {% endif %}
-        </div>
+        <button type="submit" class="btn btn-primary" style="height: 38px; padding: 0 1.2rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
     </form>
 
+    <!-- Grid -->
     {% if providers %}
-        <div class="providers-grid">
-            {% for provider in providers %}
-                <div class="glass-card provider-card">
-                    <span class="provider-status {% if provider.is_active %}status-active{% else %}status-inactive{% endif %}">
-                        {% if provider.is_active %}{% trans "Ativo" %}{% else %}{% trans "Inativo" %}{% endif %}
-                    </span>
-                    
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;">
-                        <div class="provider-icon" style="overflow: hidden; padding: 0; background: rgba(255,255,255,0.05); margin-bottom: 0;">
-                            {% if provider.photo %}
-                                <img src="{{ provider.photo.url }}" alt="{{ provider.name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                            {% else %}
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                            {% endif %}
-                        </div>
-                        <div style="flex: 1; overflow: hidden;">
-                            <div class="provider-name" style="margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ provider.name }}</div>
-                            {% if provider.average_rating > 0 %}
-                                <div style="color: #fbbf24; font-size: 0.75rem; display: flex; gap: 1px;" title="{{ provider.average_rating }} / 5">
-                                    {% for i in provider.average_rating|star_range %}★{% endfor %}
+        <div class="v3-card">
+            <div style="overflow-x: auto;">
+                <table class="v3-table">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Prestador" %}</th>
+                            <th>{% trans "Contato" %}</th>
+                            <th>{% trans "Categorias" %}</th>
+                            <th style="text-align: right;">{% trans "Saldo" %}</th>
+                            <th style="text-align: right;">{% trans "Ações" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for provider in providers %}
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 42px; height: 42px; border-radius: 10px; overflow: hidden; background: rgba(255,255,255,0.05); position: relative; border: 1px solid var(--glass-border);">
+                                        {% if provider.photo %}<img src="{{ provider.photo.url }}" style="width: 100%; height: 100%; object-fit: cover;">{% endif %}
+                                        <div style="position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid #1a1a1a; background: {% if provider.is_active %}#10b981{% else %}#ef4444{% endif %};"></div>
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">{{ provider.name }}</div>
+                                        <div style="font-size: 0.7rem; color: #fbbf24; display: flex; gap: 1px; margin-top: 2px;">
+                                            {% if provider.average_rating > 0 %}
+                                                {% for i in provider.average_rating|star_range %}★{% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    
-                    <div class="provider-service-tags">
-                        {% for s in provider.services.all %}
-                            <span class="service-tag">{{ s.name }}</span>
-                        {% empty %}
-                            <span class="service-tag" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">{% trans "Nenhum" %}</span>
+                            </td>
+                            <td>
+                                <div style="font-size: 0.9rem; font-weight: 600;">{{ provider.phone }}</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">{% if provider.cpf %}{{ provider.cpf }}{% else %}---{% endif %}</div>
+                            </td>
+                            <td>
+                                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                    {% for s in provider.services.all|slice:":2" %}
+                                        <span style="font-size: 0.65rem; background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 2px 8px; border-radius: 4px; font-weight: 700;">{{ s.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td style="text-align: right;">
+                                {% with balance=provider.financial_balance %}
+                                    <div id="v3-balance-{{ provider.pk }}" style="font-weight: 900; font-size: 1.1rem; color: {% if balance < 0 %}#ef4444{% else %}#10b981{% endif %};">R$ {{ balance|floatformat:2 }}</div>
+                                    <div id="v3-status-{{ provider.pk }}" style="font-size: 0.6rem; font-weight: 800; color: {% if balance < 0 %}#ef4444{% else %}#10b981{% endif %}; opacity: 0.7;">{% if balance < 0 %}{% trans "PENDENTE" %}{% else %}{% trans "OK" %}{% endif %}</div>
+                                {% endwith %}
+                            </td>
+                            <td style="text-align: right;">
+                                <div style="display: flex; gap: 6px; justify-content: flex-end;">
+                                    <button onclick="openV3Modal({{ provider.pk }})" class="v3-btn-action" style="color: var(--primary);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path x1="2" y1="12" x2="22" y2="12"/></svg></button>
+                                    <a href="{% url 'properties:provider_update' provider.pk %}" class="v3-btn-action"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></a>
+                                </div>
+                            </td>
+                        </tr>
                         {% endfor %}
-                    </div>
-                    
-                    <div class="provider-info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        {{ provider.phone }}
-                    </div>
-                    
-                    {% if provider.cpf %}
-                    <div class="provider-info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="14" x="3" y="5" rx="2"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                        {{ provider.cpf }}
-                    </div>
-                    {% endif %}
-
-                    <div class="access-link-box">
-                        <span class="access-link-text" id="link-{{ provider.pk }}">
-                            https://{{ request.get_host }}{% url 'properties:provider_public' provider.access_token %}
-                        </span>
-                        <button onclick="copyToClipboard('link-{{ provider.pk }}')" class="btn-action-small" title="{% trans 'Copiar Link' %}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                        </button>
-                    </div>
-
-                    <div class="provider-actions">
-                        <a href="{% url 'properties:provider_update' provider.pk %}" class="btn-action-small" title="{% trans 'Editar' %}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-                        </a>
-                        <form action="{% url 'properties:provider_delete' provider.pk %}" method="post" onsubmit="return confirm('{% trans 'Tem certeza que deseja remover este prestador?' %}')" style="display: inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-action-small" style="color: #ef4444;" title="{% trans 'Excluir' %}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="glass-card" style="padding: 4rem; text-align: center; margin-top: 2rem;">
-            <div style="background: rgba(255,255,255,0.03); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--text-muted);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </tbody>
+                </table>
             </div>
-            <h3 style="color: var(--text-main); margin-bottom: 0.5rem;">{% trans "Nenhum prestador encontrado" %}</h3>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">{% trans "Tente ajustar seus filtros ou cadastre um novo." %}</p>
-            {% if current_filters.name or current_filters.service %}
-                <a href="{% url 'properties:provider_list' %}" class="btn btn-outline">
-                    {% trans "Limpar Filtros" %}
-                </a>
-            {% endif %}
         </div>
     {% endif %}
 </div>
 
+<!-- MODAL V3 (ISOLAMENTO TOTAL) -->
+<div id="v3-modal" class="v3-modal-overlay">
+    <div class="v3-modal-container">
+        <div class="v3-modal-header">
+            <div>
+                <h2 id="v3-modal-name" style="margin: 0; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">{% trans "Financeiro" %}</h2>
+                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">{% trans "Controle de débitos e créditos" %}</div>
+            </div>
+            <button onclick="closeV3Modal()" style="background: transparent; border: none; cursor: pointer; color: var(--text-muted);"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        </div>
+        
+        <div class="v3-modal-balance">
+             <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">{% trans "SALDO ATUAL" %}</span>
+             <span id="v3-modal-balance" style="font-size: 1.2rem; font-weight: 900;">R$ 0,00</span>
+        </div>
+
+        <div class="v3-modal-form">
+            <h3 style="font-size: 0.6rem; margin-bottom: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">{% trans "Registrar Pagamento" %}</h3>
+            <form id="v3-payment-form" style="display: grid; grid-template-columns: 1fr 1fr 1.2fr auto; gap: 8px; align-items: flex-end;">
+                {% csrf_token %}<input type="hidden" id="v3-provider-id" name="provider_id">
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                    <label style="font-size: 0.55rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">{% trans "Data" %}</label>
+                    <input type="date" name="date" class="v3-modal-input" required value="{{ today|date:'Y-m-d' }}">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                    <label style="font-size: 0.55rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">{% trans "Valor" %}</label>
+                    <input type="text" name="value" id="v3-payment-value" class="v3-modal-input" placeholder="0,00" required>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                    <label style="font-size: 0.55rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">{% trans "Observação" %}</label>
+                    <input type="text" name="observations" class="v3-modal-input" placeholder="...">
+                </div>
+                <button type="submit" class="btn btn-primary" style="height: 28px; padding: 0 1rem; font-size: 0.75rem; font-weight: 800;">{% trans "PAGAR" %}</button>
+            </form>
+        </div>
+
+        <h3 style="font-size: 0.65rem; margin-bottom: 0.6rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">{% trans "Histórico" %}</h3>
+        
+        <div class="v3-history-wrapper">
+            <div class="v3-history-scrollable">
+                <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse;">
+                    <thead style="position: sticky; top: 0; background: #1a1a1a; z-index: 10;">
+                        <tr style="text-align: left; border-bottom: 1px solid var(--glass-border);">
+                            <th style="padding: 10px; color: var(--text-muted);">{% trans "Data" %}</th>
+                            <th style="padding: 10px; color: var(--text-muted);">{% trans "Descrição" %}</th>
+                            <th style="padding: 10px; text-align: right; color: var(--text-muted);">{% trans "Valor" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="v3-movements-list"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    function copyToClipboard(elementId) {
-        const text = document.getElementById(elementId).innerText;
-        navigator.clipboard.writeText(text.trim()).then(() => {
-            showToast("{% trans 'Link copiado com sucesso!' %}", "success");
+    let currentProviderId = null;
+    let v3CurrentPage = 1;
+    let v3IsLoading = false;
+    let v3HasMore = true;
+
+    function openV3Modal(id) {
+        currentProviderId = id;
+        v3CurrentPage = 1;
+        v3HasMore = true;
+        v3IsLoading = false;
+        
+        document.getElementById('v3-provider-id').value = id;
+        document.getElementById('v3-modal').classList.add('active');
+        document.getElementById('v3-movements-list').innerHTML = `<tr><td colspan="3" style="padding: 2rem; text-align: center;">...</td></tr>`;
+        
+        loadMoreMovements(true);
+    }
+
+    function loadMoreMovements(isNew = false) {
+        if (v3IsLoading || (!v3HasMore && !isNew)) return;
+        
+        v3IsLoading = true;
+        const list = document.getElementById('v3-movements-list');
+        
+        fetch(`/book/propriedades/prestadores/${currentProviderId}/financeiro/?page=${v3CurrentPage}`)
+            .then(r => r.json())
+            .then(data => {
+                if (isNew) {
+                    document.getElementById('v3-modal-name').innerText = data.provider_name;
+                    const bal = document.getElementById('v3-modal-balance');
+                    const formattedBalance = `R$ ${data.balance.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+                    bal.innerText = formattedBalance;
+                    bal.className = data.balance < 0 ? 'v3-text-neg' : 'v3-text-pos';
+                    list.innerHTML = '';
+                    
+                    // Sincronizar com a tabela principal (Grid)
+                    const gridBal = document.getElementById(`v3-balance-${currentProviderId}`);
+                    const gridStatus = document.getElementById(`v3-status-${currentProviderId}`);
+                    if (gridBal) {
+                        gridBal.innerText = formattedBalance;
+                        gridBal.style.color = data.balance < 0 ? '#ef4444' : '#10b981';
+                    }
+                    if (gridStatus) {
+                        gridStatus.innerText = data.balance < 0 ? "{% trans 'PENDENTE' %}" : "{% trans 'OK' %}";
+                        gridStatus.style.color = data.balance < 0 ? '#ef4444' : '#10b981';
+                    }
+                }
+                
+                if (data.movements.length === 0 && isNew) {
+                    list.innerHTML = `<tr><td colspan="3" style="padding: 2rem; text-align: center;">{% trans "Sem registros." %}</td></tr>`;
+                } else {
+                    const html = data.movements.map(m => `
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                            <td style="padding: 10px;">${m.date.split('-').reverse().join('/')}</td>
+                            <td style="padding: 10px;"><div style="font-weight: 700;">${m.description}</div><div style="font-size: 0.6rem; opacity: 0.5;">${m.category}</div></td>
+                            <td style="padding: 10px; text-align: right; font-weight: 800;" class="${m.type==='debit'?'v3-text-neg':'v3-text-pos'}">${m.type==='debit'?'-':'+'} R$ ${m.value.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                        </tr>
+                    `).join('');
+                    list.insertAdjacentHTML('beforeend', html);
+                }
+                
+                v3HasMore = data.has_more;
+                v3CurrentPage++;
+                v3IsLoading = false;
+            })
+            .catch(() => { v3IsLoading = false; });
+    }
+
+    // Scroll Listener para o Infinite Scroll
+    const scrollContainer = document.querySelector('.v3-history-scrollable');
+    if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', () => {
+            if (scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight - 50) {
+                loadMoreMovements();
+            }
+        });
+    }
+
+    function closeV3Modal() { 
+        document.getElementById('v3-modal').classList.remove('active'); 
+        document.getElementById('v3-payment-form').reset(); 
+    }
+    
+    document.getElementById('v3-payment-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const fd = new FormData(this);
+        fetch(`/book/propriedades/prestadores/${currentProviderId}/pagar/`, { 
+            method: 'POST', body: fd, headers: { 'X-CSRFToken': fd.get('csrfmiddlewaretoken') } 
+        }).then(r => r.json()).then(data => {
+            if (data.status === 'success') { 
+                showToast(data.message, "success"); 
+                openV3Modal(currentProviderId); 
+            }
+        });
+    });
+
+    const v3Val = document.getElementById('v3-payment-value');
+    if (v3Val) {
+        v3Val.addEventListener('input', function(e) {
+            let v = e.target.value.replace(/\D/g, '');
+            v = (v / 100).toFixed(2).replace('.', ',');
+            v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            e.target.value = v;
         });
     }
 </script>

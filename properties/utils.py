@@ -19,8 +19,8 @@ def get_property_stats(prop, month=None, year=None):
     month_end = date(year, month, days_in_month)
     
     # Imports inside to avoid circular dependencies if called from models
-    from reservations.models import Reservation, ReservationCost
     from .models import PropertyCost, FinancialHistory
+    from maintenance.models import Maintenance
 
     # Reservations for the month (accounting reference: end_date)
     prop_res = Reservation.objects.filter(
@@ -65,7 +65,17 @@ def get_property_stats(prop, month=None, year=None):
         )
     ).exclude(frequency='per_booking').aggregate(total=Sum('amount'))['total'] or 0
     
-    total_prop_costs = prop_res_costs + prop_fixed_costs
+    # 2.5 Debits: Finished Maintenances in this month
+    # Using a Q object to check both execution_end_date and updated_at
+    prop_maint_costs = Maintenance.objects.filter(
+        property=prop,
+        status='finished'
+    ).filter(
+        Q(execution_end_date__month=month, execution_end_date__year=year) |
+        Q(execution_end_date__isnull=True, updated_at__month=month, updated_at__year=year)
+    ).aggregate(total=Sum('execution_value'))['total'] or 0
+    
+    total_prop_costs = prop_res_costs + prop_fixed_costs + prop_maint_costs
     prop_net = prop_gross - total_prop_costs
     
     # Vacancy Loss Calculation
@@ -162,4 +172,144 @@ def get_property_stats(prop, month=None, year=None):
         'has_last_year': net_last_year != 0,
         'res_count': prop_res.count(),
         'is_currently_occupied': is_currently_occupied
+    }
+
+def get_yearly_stats(user):
+    """
+    Aggregates financial data (gross and costs) for ALL available years.
+    Returns a list of all years with data and the stats for each property.
+    """
+    from django.utils import timezone
+    from properties.models import Property, PropertyCost, FinancialHistory
+    from django.db.models import Sum, Q
+    from decimal import Decimal
+    from maintenance.models import Maintenance
+    
+    properties = Property.objects.filter(user=user)
+    
+    # 1. Find all years with any data
+    years_set = set()
+    
+    # Years from reservations
+    res_years = Reservation.objects.filter(property__user=user).dates('end_date', 'year')
+    for d in res_years: years_set.add(d.year)
+    
+    # Years from property costs
+    cost_years = PropertyCost.objects.filter(property__user=user, year__isnull=False).values_list('year', flat=True)
+    for y in cost_years: years_set.add(y)
+    
+    cost_p_years = PropertyCost.objects.filter(property__user=user, payment_date__isnull=False).dates('payment_date', 'year')
+    for d in cost_p_years: years_set.add(d.year)
+    
+    # Years from history
+    hist_years = FinancialHistory.objects.filter(property__user=user).values_list('year', flat=True)
+    for y in hist_years: years_set.add(y)
+    
+    # If no data, at least show current year
+    if not years_set:
+        years_set.add(timezone.localtime(timezone.now()).year)
+        
+    years = sorted(list(years_set), reverse=True)
+    
+    data = {
+        'all_years': years,
+        'properties': []
+    }
+    
+    for prop in properties:
+        prop_data = {
+            'name': prop.name,
+            'color': prop.color or '#3b82f6',
+            'data_by_year': {}
+        }
+        for year in years:
+            # Gross from reservations ending in this year
+            res_gross = Reservation.objects.filter(
+                property=prop,
+                end_date__year=year,
+                is_cancelled=False
+            ).aggregate(total=Sum('total_value'))['total'] or Decimal(0)
+            
+            # Costs from reservations ending in this year
+            res_costs = ReservationCost.objects.filter(
+                reservation__property=prop,
+                reservation__end_date__year=year,
+                reservation__is_cancelled=False
+            ).aggregate(total=Sum('value'))['total'] or Decimal(0)
+            
+            # Fixed costs for this year
+            fixed_costs = PropertyCost.objects.filter(
+                Q(property=prop) &
+                (
+                    Q(payment_date__year=year) |
+                    (Q(year=year) & Q(payment_date__isnull=True))
+                )
+            ).exclude(frequency='per_booking').aggregate(total=Sum('amount'))['total'] or Decimal(0)
+            
+            hist_sum = FinancialHistory.objects.filter(property=prop, year=year).aggregate(
+                g=Sum('gross_value'), c=Sum('costs')
+            )
+            
+            m_gross = hist_sum['g'] or Decimal(0)
+            m_costs = hist_sum['c'] or Decimal(0)
+
+            # Maintenance costs for this year
+            maint_costs = Maintenance.objects.filter(
+                property=prop,
+                status='finished'
+            ).filter(
+                Q(execution_end_date__year=year) |
+                Q(execution_end_date__isnull=True, updated_at__year=year)
+            ).aggregate(total=Sum('execution_value'))['total'] or Decimal(0)
+            
+            # Combine everything
+            gross = res_gross + m_gross
+            total_costs = res_costs + fixed_costs + m_costs + maint_costs
+            
+            prop_data['data_by_year'][year] = {
+                'gross': float(gross),
+                'costs': float(total_costs),
+                'net': float(gross - total_costs)
+            }
+            
+        data['properties'].append(prop_data)
+        
+    return data
+
+def get_operational_stats(user):
+    """
+    Returns counts for check-ins/outs today per property and global overdue maintenance.
+    """
+    from django.utils import timezone
+    from reservations.models import Reservation
+    from maintenance.models import Maintenance
+    from properties.models import Property
+    from django.db.models import Count, Q
+    
+    today = timezone.localtime(timezone.now()).date()
+    properties = Property.objects.filter(user=user)
+    
+    property_movements = []
+    for prop in properties:
+        ins = Reservation.objects.filter(property=prop, start_date=today, is_cancelled=False).count()
+        outs = Reservation.objects.filter(property=prop, end_date=today, is_cancelled=False).count()
+        
+        if ins > 0 or outs > 0:
+            property_movements.append({
+                'name': prop.name,
+                'checkins': ins,
+                'checkouts': outs
+            })
+    
+    overdue_maintenance = Maintenance.objects.filter(
+        property__user=user,
+        status__in=['open', 'budgeting', 'in_progress'],
+        end_date__lt=today,
+        is_archived=False
+    ).count()
+    
+    return {
+        'property_movements': property_movements,
+        'overdue_maintenance': overdue_maintenance,
+        'total_movements': sum(m['checkins'] + m['checkouts'] for m in property_movements)
     }

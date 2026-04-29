@@ -131,6 +131,11 @@ class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, Detail
             else:
                 step = 1
         
+        
+        # Check for read_only mode
+        is_read_only = self.request.GET.get('read_only') == 'true' or self.request.POST.get('read_only') == 'true'
+        context['is_read_only'] = is_read_only
+        
         context['wizard_step'] = int(step)
         context['budgets'] = maintenance.budgets.all()
         context['budget_form'] = BudgetForm()
@@ -158,6 +163,10 @@ class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, Detail
     def post(self, request, *args, **kwargs):
         maintenance = self.get_object()
         action = request.POST.get('action')
+        is_read_only = request.POST.get('read_only') == 'true'
+
+        if is_read_only and action in ['advance', 'regress', 'save_execution', 'submit_evaluation']:
+            return JsonResponse({'status': 'error', 'message': _("Modo somente leitura ativo.")}, status=403)
 
         if action == 'advance':
             current_step = int(request.POST.get('step', 1))

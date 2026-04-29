@@ -1,41 +1,515 @@
 {% extends 'dashboard_layout.html' %}
 {% load static i18n %}
 
-{% block title %}Dashboard - VerticeBook{% endblock %}
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .grid-area {
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 2rem;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .area-small {
+        min-height: 180px;
+        padding: 1.2rem 1.5rem;
+    }
+
+    .area-full-width {
+        grid-column: span 2;
+        min-height: 450px;
+    }
+    
+    /* Operational Grid Styles */
+    .operational-grid {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex: 1;
+        padding: 0.5rem 0;
+    }
+
+    .op-card {
+        text-align: center;
+        flex: 1;
+    }
+
+    .op-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        font-family: 'Outfit', sans-serif;
+    }
+
+    .op-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+    }
+
+    .op-divider {
+        width: 1px;
+        height: 80px;
+        background: var(--glass-border);
+        margin: 0 1.5rem;
+    }
+
+    .op-list-container {
+        flex: 1.5;
+        max-height: 110px;
+        overflow-y: auto;
+        padding-right: 0.8rem;
+    }
+
+    .op-property-item {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+    }
+    
+    .op-property-item:last-child { border-bottom: none; }
+
+    .op-property-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-main);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .op-property-movements {
+        display: flex;
+        gap: 0.8rem;
+    }
+
+    .op-mov-item {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .op-mov-in { color: #22c55e; }
+    .op-mov-out { color: #3b82f6; }
+
+    .op-maintenance-card {
+        flex: 0.8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        padding: 0.8rem;
+        border: 1px solid var(--glass-border);
+    }
+
+    .op-status-icon {
+        margin-bottom: 0.3rem;
+    }
+
+    .status-ok { color: #22c55e; }
+    .status-warning { color: #ef4444; }
+    
+    .area-title-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .area-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Year Tags Styles */
+    .year-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .year-tag {
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 100px;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        user-select: none;
+    }
+
+    .year-tag:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-main);
+    }
+
+    .year-tag.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .chart-container {
+        flex: 1;
+        position: relative;
+        min-height: 380px;
+    }
+
+    @media (max-width: 1200px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+        .area-full-width {
+            grid-column: span 1;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block dashboard_content %}
-    <div class="dashboard-header">
-        <div>
-            <h1>{% trans "Olá" %}, {{ user.full_name|default:user.email }}!</h1>
-            <p style="color: var(--text-muted);">{% trans "Bem-vindo de volta ao seu painel." %}</p>
+    <div class="dashboard-grid">
+        <!-- Area 1 & 2: Yearly Financial Performance (Full Width) -->
+        <div class="grid-area area-full-width">
+            <div class="area-title-container">
+                <div class="area-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-3"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                    {% trans "Desempenho Financeiro Anual" %}
+                </div>
+                <div class="year-tags" id="yearTagsContainer">
+                    <!-- Tags will be injected here -->
+                </div>
+            </div>
+            <div class="chart-container" style="min-height: 300px;">
+                <canvas id="yearlyPerformanceChart"></canvas>
+            </div>
         </div>
-        <div class="header-actions">
-             <button class="btn btn-primary">+ {% trans "Nova Postagem" %}</button>
+
+        <!-- Area 3: Revenue Distribution -->
+        <div class="grid-area area-small">
+            <div class="area-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                {% trans "Distribuição de Receita" %} ({{ current_year|stringformat:"d" }})
+            </div>
+            <div style="height: 140px; position: relative; margin-top: 1rem;">
+                <canvas id="revenuePieChart"></canvas>
+                <div id="noRevenueMessage" style="display: none; position: absolute; inset: 0; align-items: center; justify-content: center; color: var(--text-muted); font-style: italic; text-align: center; font-size: 0.9rem;">
+                    {% trans "Sem dados financeiros para o ano atual" %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Area 4: Operational Panel -->
+        <div class="grid-area area-small">
+            <div class="area-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                {% trans "Status Operacional" %}
+            </div>
+            <div class="operational-grid" style="gap: 1.5rem;">
+                <div class="op-list-container">
+                    {% if operational_stats.property_movements %}
+                        {% for mov in operational_stats.property_movements %}
+                        <div class="op-property-item">
+                            <div class="op-property-name" title="{{ mov.name }}">{{ mov.name }}</div>
+                            <div class="op-property-movements">
+                                {% if mov.checkins > 0 %}
+                                <div class="op-mov-item op-mov-in">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m7 10 5 5 5-5"/><path d="M12 3v12"/></svg>
+                                    {{ mov.checkins }}
+                                </div>
+                                {% endif %}
+                                {% if mov.checkouts > 0 %}
+                                <div class="op-mov-item op-mov-out">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m17 14-5-5-5 5"/><path d="M12 21V9"/></svg>
+                                    {{ mov.checkouts }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.8rem; font-style: italic;">
+                            {% trans "Tudo tranquilo por hoje" %} ✨
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="op-maintenance-card">
+                    <div class="op-status-icon">
+                        {% if operational_stats.overdue_maintenance > 0 %}
+                            <svg class="status-warning" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        {% else %}
+                            <svg class="status-ok" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        {% endif %}
+                    </div>
+                    <div class="op-value {% if operational_stats.overdue_maintenance > 0 %}text-danger{% endif %}" style="font-size: 1.8rem; margin-bottom: 0;">
+                        {{ operational_stats.overdue_maintenance }}
+                    </div>
+                    <div class="op-label" style="font-size: 0.6rem; opacity: 0.8;">{% trans "Manutenções em atraso" %}</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <h3>{% trans "Conexões" %}</h3>
-            <p class="value">128</p>
-            <small style="color: #10b981;">+12 {% trans "esta semana" %}</small>
-        </div>
-        <div class="stat-card">
-            <h3>{% trans "Visualizações" %}</h3>
-            <p class="value">1,402</p>
-            <small style="color: #10b981;">+5.4%</small>
-        </div>
-        <div class="stat-card">
-            <h3>{% trans "Mensagens" %}</h3>
-            <p class="value">24</p>
-            <small style="color: var(--secondary);">3 {% trans "novas" %}</small>
-        </div>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statsData = {{ yearly_stats_json|safe }};
+            const ctx = document.getElementById('yearlyPerformanceChart').getContext('2d');
+            const tagsContainer = document.getElementById('yearTagsContainer');
+            
+            // Initial selected years (last 5 available)
+            let selectedYears = statsData.all_years.slice(0, 5);
+            let chart = null;
 
-    <div style="margin-top: 4rem;">
-        <h2>{% trans "Atividade Recente" %}</h2>
-        <div class="glass-card" style="max-width: 100%; margin-top: 1.5rem; padding: 2rem;">
-            <p style="color: var(--text-muted); text-align: center;">{% trans "Nenhuma atividade recente para mostrar." %}</p>
-        </div>
-    </div>
+            function updateChart() {
+                // Sort years ascending for the labels (oldest to newest)
+                const sortedActiveYears = [...selectedYears].sort((a, b) => a - b);
+                const labels = sortedActiveYears.map(y => y.toString());
+                
+                const datasets = [];
+                const propertyColors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
+                
+                statsData.properties.forEach((prop, index) => {
+                    const baseColor = prop.color || propertyColors[index % propertyColors.length];
+                    
+                    const netData = sortedActiveYears.map(y => (prop.data_by_year[y] ? prop.data_by_year[y].net : 0));
+                    const costData = sortedActiveYears.map(y => (prop.data_by_year[y] ? prop.data_by_year[y].costs : 0));
+
+                    // 1. Net dataset
+                    datasets.push({
+                        label: prop.name,
+                        data: netData,
+                        backgroundColor: baseColor,
+                        borderColor: baseColor,
+                        borderWidth: 1,
+                        stack: 'stack' + index,
+                        borderRadius: 0,
+                        barPercentage: 0.8,
+                        categoryPercentage: 0.9
+                    });
+
+                    // 2. Costs dataset
+                    datasets.push({
+                        label: prop.name + ' ({% trans "Custos" %})',
+                        data: costData,
+                        backgroundColor: baseColor + '44',
+                        borderColor: baseColor,
+                        borderWidth: 1,
+                        stack: 'stack' + index,
+                        borderRadius: { topLeft: 6, topRight: 6 },
+                        barPercentage: 0.8,
+                        categoryPercentage: 0.9
+                    });
+                });
+
+                if (chart) {
+                    chart.data.labels = labels;
+                    chart.data.datasets = datasets;
+                    chart.update();
+                } else {
+                    chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: { labels: labels, datasets: datasets },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    onClick: function(e, legendItem, legend) {
+                                        const ci = legend.chart;
+                                        const propertyName = legendItem.text;
+                                        ci.data.datasets.forEach((dataset, i) => {
+                                            if (dataset.label === propertyName || dataset.label === propertyName + ' ({% trans "Custos" %})') {
+                                                const meta = ci.getDatasetMeta(i);
+                                                meta.hidden = meta.hidden === null ? !ci.data.datasets[i].hidden : null;
+                                            }
+                                        });
+                                        ci.update();
+                                    },
+                                    labels: {
+                                        color: '#94a3b8',
+                                        font: { size: 11 },
+                                        boxWidth: 15,
+                                        padding: 20,
+                                        filter: function(item) {
+                                            return !item.text.includes('({% trans "Custos" %})');
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    mode: 'nearest',
+                                    intersect: true,
+                                    backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                                    padding: 12,
+                                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderWidth: 1,
+                                    callbacks: {
+                                        title: function(context) {
+                                            const year = context[0].label;
+                                            const fullLabel = context[0].dataset.label.replace(' ({% trans "Custos" %})', '');
+                                            return year + ' - ' + fullLabel;
+                                        },
+                                        label: function(context) {
+                                            const chart = context.chart;
+                                            const dataIndex = context.dataIndex;
+                                            const datasetIndex = context.datasetIndex;
+                                            const dataset = chart.data.datasets[datasetIndex];
+                                            
+                                            // Get the base property name
+                                            const propertyName = dataset.label.replace(' ({% trans "Custos" %})', '');
+                                            
+                                            // Find the Net and Cost values for this property/year
+                                            let netValue = 0;
+                                            let costValue = 0;
+                                            
+                                            chart.data.datasets.forEach(ds => {
+                                                if (ds.label === propertyName) {
+                                                    netValue = ds.data[dataIndex];
+                                                } else if (ds.label === propertyName + ' ({% trans "Custos" %})') {
+                                                    costValue = ds.data[dataIndex];
+                                                }
+                                            });
+                                            
+                                            const grossValue = netValue + costValue;
+                                            const fmt = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
+                                            
+                                            return [
+                                                '{% trans "Bruto" %}: ' + fmt(grossValue),
+                                                '{% trans "Líquido" %}: ' + fmt(netValue),
+                                                '{% trans "Custos" %}: ' + fmt(costValue)
+                                            ];
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: { grid: { display: false }, ticks: { color: '#f1f5f9', font: { weight: 'bold' } } },
+                                y: {
+                                    grid: { 
+                                        color: 'rgba(148, 163, 184, 0.3)', // Slate color that works on light/dark
+                                        borderDash: [8, 4], 
+                                        drawBorder: false,
+                                        lineWidth: 1
+                                    },
+                                    ticks: { 
+                                        color: '#64748b', // Darker text for light backgrounds
+                                        callback: v => 'R$ ' + v.toLocaleString() 
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            function renderTags() {
+                tagsContainer.innerHTML = '';
+                statsData.all_years.forEach(year => {
+                    const tag = document.createElement('div');
+                    tag.className = 'year-tag' + (selectedYears.includes(year) ? ' active' : '');
+                    tag.textContent = year;
+                    tag.onclick = () => {
+                        if (selectedYears.includes(year)) {
+                            if (selectedYears.length > 1) {
+                                selectedYears = selectedYears.filter(y => y !== year);
+                            }
+                        } else {
+                            selectedYears.push(year);
+                        }
+                        renderTags();
+                        updateChart();
+                    };
+                    tagsContainer.appendChild(tag);
+                });
+            }
+
+            renderTags();
+            updateChart();
+
+            // --- Area 3: Revenue Distribution Doughnut Chart ---
+            const revenueData = {{ revenue_distribution_json|safe }};
+            
+            if (revenueData && revenueData.length > 0) {
+                const ctxPie = document.getElementById('revenuePieChart').getContext('2d');
+                new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: revenueData.map(d => d.name),
+                        datasets: [{
+                            data: revenueData.map(d => d.value),
+                            backgroundColor: revenueData.map(d => d.color),
+                            borderWidth: 0,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    color: 'rgba(148, 163, 184, 0.8)',
+                                    font: { size: 10 },
+                                    boxWidth: 10,
+                                    padding: 10
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                padding: 12,
+                                titleColor: '#fff',
+                                bodyColor: '#94a3b8',
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        let value = context.raw || 0;
+                                        return ` ${label}: R$ ${value.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                const noMsg = document.getElementById('noRevenueMessage');
+                if (noMsg) noMsg.style.display = 'flex';
+            }
+        });
+    </script>
 {% endblock %}

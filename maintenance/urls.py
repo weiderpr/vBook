@@ -13,7 +13,7 @@ urlpatterns = [
     path('<int:property_pk>/<int:pk>/arquivar/', views.MaintenanceArchiveView.as_view(), name='archive'),
 
     # Legacy AJAX / Dashboard Views (Kept for compatibility)
-    path('<int:pk>/dashboard/', views.MaintenanceDashboardView.as_view(), name='dashboard'),
+    path('<int:pk>/dashboard/', views.MaintenanceDashboardView.as_view(), name='maint_dashboard'),
     path('list-ajax/<int:property_pk>/', views.MaintenanceListViewOld.as_view(), name='list_ajax'),
     path('detail-ajax/<int:pk>/', views.MaintenanceDetailView.as_view(), name='detail_ajax'),
     path('create-ajax/<int:property_pk>/', views.MaintenanceCreateViewOld.as_view(), name='create_ajax'),

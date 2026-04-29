@@ -1,0 +1,100 @@
+{% extends 'administration/admin_base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Interações do Chat" %} - VerticeBook{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1 class="dashboard-title">{% trans "Interações do Chat" %}</h1>
+        <p class="dashboard-subtitle">{% trans "Monitore as dúvidas e respostas geradas pela IA" %}</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" class="filter-form">
+            <select name="status" class="form-control" onchange="this.form.submit()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-main); padding: 0.5rem 1rem; border-radius: 8px;">
+                <option value="">{% trans "Todos os Status" %}</option>
+                <option value="answered" {% if request.GET.status == 'answered' %}selected{% endif %}>{% trans "Respondidos" %}</option>
+                <option value="unresolved" {% if request.GET.status == 'unresolved' %}selected{% endif %}>{% trans "Incapacidade" %}</option>
+                <option value="error" {% if request.GET.status == 'error' %}selected{% endif %}>{% trans "Erros" %}</option>
+            </select>
+        </form>
+    </div>
+</div>
+
+<div class="card-premium" style="overflow: hidden; padding: 0;">
+    <div style="overflow-x: auto;">
+        <table class="table-premium" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: rgba(255,255,255,0.03);">
+                    <th style="padding: 1.2rem 1.5rem; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">{% trans "Data/Hora" %}</th>
+                    <th style="padding: 1.2rem 1.5rem; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">{% trans "Usuário" %}</th>
+                    <th style="padding: 1.2rem 1.5rem; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">{% trans "Pergunta" %}</th>
+                    <th style="padding: 1.2rem 1.5rem; text-align: center; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">{% trans "Status" %}</th>
+                    <th style="padding: 1.2rem 1.5rem; text-align: right; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">{% trans "Ações" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for interaction in interactions %}
+                <tr style="border-top: 1px solid var(--glass-border); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                    <td style="padding: 1.2rem 1.5rem; color: var(--text-main); font-weight: 500;">
+                        {{ interaction.created_at|date:"d/m/Y" }}<br>
+                        <small style="opacity: 0.6;">{{ interaction.created_at|date:"H:i" }}</small>
+                    </td>
+                    <td style="padding: 1.2rem 1.5rem;">
+                        {% if interaction.user %}
+                            <div style="display: flex; flex-direction: column;">
+                                <span style="font-weight: 600; color: var(--text-main);">{{ interaction.user.full_name }}</span>
+                                <small style="color: var(--text-muted); font-size: 0.75rem;">{{ interaction.user.email }}</small>
+                            </div>
+                        {% else %}
+                            <span style="padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.05); color: var(--text-muted); font-size: 0.75rem;">{% trans "Anônimo" %}</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 1.2rem 1.5rem;">
+                        <div style="max-width: 350px; color: var(--text-main); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ interaction.question }}">
+                            {{ interaction.question }}
+                        </div>
+                        <small style="display: block; color: var(--text-muted); font-size: 0.7rem; opacity: 0.6; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 300px;">{{ interaction.current_url }}</small>
+                    </td>
+                    <td style="padding: 1.2rem 1.5rem; text-align: center;">
+                        {% if interaction.status == 'answered' %}
+                            <span style="padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(0, 184, 148, 0.1); color: #00b894;">{% trans "Respondido" %}</span>
+                        {% elif interaction.status == 'unresolved' %}
+                            <span style="padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(245, 158, 11, 0.1); color: #f59e0b;">{% trans "Incapacidade" %}</span>
+                        {% else %}
+                            <span style="padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(239, 68, 68, 0.1); color: #ef4444;">{% trans "Erro" %}</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 1.2rem 1.5rem; text-align: right;">
+                        <a href="{% url 'administration:chat_interaction_detail' interaction.pk %}" class="btn-icon" title="{% trans 'Ver Detalhes' %}" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-muted); transition: all 0.2s;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="padding: 4rem; text-align: center; color: var(--text-muted);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1rem; opacity: 0.2;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <p>{% trans "Nenhuma interação registrada." %}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if is_paginated %}
+<div class="pagination" style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 0.5rem;">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="btn btn-outline" style="padding: 0.5rem 1rem;">{% trans "Anterior" %}</a>
+    {% endif %}
+    <span style="display: flex; align-items: center; padding: 0 1.5rem; color: var(--text-muted); font-size: 0.9rem; background: rgba(255,255,255,0.05); border-radius: 8px; font-weight: 600;">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}" class="btn btn-outline" style="padding: 0.5rem 1rem;">{% trans "Próxima" %}</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

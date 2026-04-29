@@ -397,19 +397,19 @@
                 <div style="background: rgba(255,255,255,0.01); padding: 1.2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
                     <h4 style="margin: 0 0 0.5rem; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); text-align: center; letter-spacing: 0.05em;">{% trans "Sua Avaliação" %}</h4>
                     
-                    <div class="star-rating">
-                        <input type="radio" id="star5" name="rating" value="5" {% if evaluation.rating == 5 %}checked{% endif %}><label for="star5">★</label>
-                        <input type="radio" id="star4" name="rating" value="4" {% if evaluation.rating == 4 %}checked{% endif %}><label for="star4">★</label>
-                        <input type="radio" id="star3" name="rating" value="3" {% if evaluation.rating == 3 %}checked{% endif %}><label for="star3">★</label>
-                        <input type="radio" id="star2" name="rating" value="2" {% if evaluation.rating == 2 %}checked{% endif %}><label for="star2">★</label>
-                        <input type="radio" id="star1" name="rating" value="1" {% if evaluation.rating == 1 %}checked{% endif %}><label for="star1">★</label>
+                    <div class="star-rating" style="{% if is_read_only %}pointer-events: none; opacity: 0.8;{% endif %}">
+                        <input type="radio" id="star5" name="rating" value="5" {% if evaluation.rating == 5 %}checked{% endif %} {% if is_read_only %}disabled{% endif %}><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4" {% if evaluation.rating == 4 %}checked{% endif %} {% if is_read_only %}disabled{% endif %}><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3" {% if evaluation.rating == 3 %}checked{% endif %} {% if is_read_only %}disabled{% endif %}><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2" {% if evaluation.rating == 2 %}checked{% endif %} {% if is_read_only %}disabled{% endif %}><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1" {% if evaluation.rating == 1 %}checked{% endif %} {% if is_read_only %}disabled{% endif %}><label for="star1">★</label>
                     </div>
                     
-                    <textarea id="evaluationComment" placeholder="{% trans 'Comentários adicionais...' %}" 
+                    <textarea id="evaluationComment" placeholder="{% trans 'Comentários adicionais...' %}" {% if is_read_only %}disabled{% endif %}
                               style="width: 100%; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.7rem; color: var(--text-main); font-size: 0.8rem; height: 70px; resize: none; margin-bottom: 0.8rem;">{{ evaluation.comment|default:'' }}</textarea>
                     
-                    <button type="button" onclick="submitEvaluation('{{ maintenance.pk }}')" id="btnSubmitEval"
-                            class="btn btn-primary" style="width: 100%; font-weight: 800; font-size: 0.85rem; padding: 0.7rem;">
+                    <button type="button" {% if is_read_only %}disabled{% else %}onclick="submitEvaluation('{{ maintenance.pk }}')"{% endif %} id="btnSubmitEval"
+                            class="btn btn-primary" style="width: 100%; font-weight: 800; font-size: 0.85rem; padding: 0.7rem; {% if is_read_only %}opacity: 0.5; cursor: not-allowed;{% endif %}">
                         {% if evaluation %}{% trans "Atualizar Avaliação" %}{% else %}{% trans "Salvar Avaliação" %}{% endif %}
                     </button>
                 </div>
@@ -421,7 +421,7 @@
     <div class="wizard-footer" id="partialFooter" style="display: flex; justify-content: space-between; align-items: center; width: 100%; border: none; margin: 0; padding: 0;">
         <div class="footer-left">
             {% if wizard_step > 1 %}
-                <button type="button" class="btn btn-outline" onclick="regressWizard('{{ maintenance.pk }}')" style="display: flex; align-items: center; gap: 8px; font-weight: 700;">
+                <button type="button" class="btn btn-outline" {% if is_read_only %}disabled{% else %}onclick="regressWizard('{{ maintenance.pk }}')"{% endif %} style="display: flex; align-items: center; gap: 8px; font-weight: 700; {% if is_read_only %}opacity: 0.5; cursor: not-allowed;{% endif %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                     {% trans "Voltar" %}
                 </button>
@@ -429,9 +429,9 @@
         </div>
         
         <div class="footer-right" style="display: flex; gap: 1rem; align-items: center;">
-            <button type="button" class="btn btn-outline" onclick="closeWizardModal()" style="font-weight: 700;">{% trans "Fechar" %}</button>
+            <button type="button" class="btn btn-outline" onclick="closeWizardModal()" style="font-weight: 700; {% if is_read_only and wizard_step == 4 %}opacity: 0.5; cursor: not-allowed; pointer-events: none;{% endif %}" {% if is_read_only and wizard_step == 4 %}disabled{% endif %}>{% trans "Fechar" %}</button>
             {% if wizard_step < 4 %}
-                <button type="button" onclick="advanceWizard('{{ maintenance.pk }}')" class="btn btn-primary" id="advanceBtn" style="min-width: 180px; font-weight: 800;">
+                <button type="button" {% if is_read_only %}disabled{% else %}onclick="advanceWizard('{{ maintenance.pk }}')"{% endif %} class="btn btn-primary" id="advanceBtn" style="min-width: 180px; font-weight: 800; {% if is_read_only %}opacity: 0.5; cursor: not-allowed;{% endif %}">
                     {% if wizard_step == 1 %}{% trans "Próximo: Orçamentos" %}{% elif wizard_step == 2 %}{% trans "Aprovar e Iniciar" %}{% elif wizard_step == 3 %}{% trans "Finalizar Serviço" %}{% endif %}
                 </button>
             {% endif %}

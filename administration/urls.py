@@ -36,4 +36,8 @@ urlpatterns = [
 
     # Configurações Globais
     path('configuracoes/', views.SystemSettingUpdateView.as_view(), name='settings'),
+
+    # Interações do Chat
+    path('interacoes-chat/', views.ChatInteractionListView.as_view(), name='chat_interaction_list'),
+    path('interacoes-chat/<int:pk>/', views.ChatInteractionDetailView.as_view(), name='chat_interaction_detail'),
 ]

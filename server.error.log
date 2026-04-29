@@ -12197,3 +12197,1187 @@ AttributeError: module 'maintenance.views' has no attribute 'ProviderAutocomplet
 [2026-04-28 17:45:14 -0300] [728206] [INFO] Booting worker with pid: 728206
 [2026-04-28 17:45:15 -0300] [728207] [INFO] Booting worker with pid: 728207
 [2026-04-28 17:45:15 -0300] [728199] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 19:13:24 -0300] [728205] [INFO] Worker exiting (pid: 728205)
+[2026-04-28 19:13:24 -0300] [728206] [INFO] Worker exiting (pid: 728206)
+[2026-04-28 19:13:24 -0300] [728199] [INFO] Handling signal: term
+[2026-04-28 19:13:24 -0300] [728207] [INFO] Worker exiting (pid: 728207)
+[2026-04-28 19:13:24 -0300] [728199] [INFO] Worker (pid:728205) was sent SIGTERM!
+[2026-04-28 19:13:24 -0300] [728199] [INFO] Worker (pid:728206) was sent SIGTERM!
+[2026-04-28 19:13:25 -0300] [728199] [INFO] Shutting down: Master
+[2026-04-28 19:13:26 -0300] [736095] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 19:13:26 -0300] [736095] [INFO] Listening at: http://127.0.0.1:8000 (736095)
+[2026-04-28 19:13:26 -0300] [736095] [INFO] Using worker: sync
+[2026-04-28 19:13:26 -0300] [736097] [INFO] Booting worker with pid: 736097
+[2026-04-28 19:13:26 -0300] [736098] [INFO] Booting worker with pid: 736098
+[2026-04-28 19:13:26 -0300] [736099] [INFO] Booting worker with pid: 736099
+[2026-04-28 19:13:26 -0300] [736095] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 19:21:32 -0300] [736095] [INFO] Handling signal: term
+[2026-04-28 19:21:32 -0300] [736099] [INFO] Worker exiting (pid: 736099)
+[2026-04-28 19:21:32 -0300] [736098] [INFO] Worker exiting (pid: 736098)
+[2026-04-28 19:21:32 -0300] [736097] [INFO] Worker exiting (pid: 736097)
+[2026-04-28 19:21:33 -0300] [736095] [INFO] Shutting down: Master
+[2026-04-28 19:21:34 -0300] [737431] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 19:21:34 -0300] [737431] [INFO] Listening at: http://127.0.0.1:8000 (737431)
+[2026-04-28 19:21:34 -0300] [737431] [INFO] Using worker: sync
+[2026-04-28 19:21:34 -0300] [737433] [INFO] Booting worker with pid: 737433
+[2026-04-28 19:21:35 -0300] [737434] [INFO] Booting worker with pid: 737434
+[2026-04-28 19:21:35 -0300] [737435] [INFO] Booting worker with pid: 737435
+[2026-04-28 19:21:35 -0300] [737431] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 19:39:00 -0300] [737431] [INFO] Handling signal: term
+[2026-04-28 19:39:00 -0300] [737435] [INFO] Worker exiting (pid: 737435)
+[2026-04-28 19:39:00 -0300] [737434] [INFO] Worker exiting (pid: 737434)
+[2026-04-28 19:39:00 -0300] [737433] [INFO] Worker exiting (pid: 737433)
+[2026-04-28 19:39:00 -0300] [737431] [INFO] Worker (pid:737434) was sent SIGTERM!
+[2026-04-28 19:39:02 -0300] [737431] [INFO] Shutting down: Master
+[2026-04-28 19:39:02 -0300] [740672] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 19:39:02 -0300] [740672] [INFO] Listening at: http://127.0.0.1:8000 (740672)
+[2026-04-28 19:39:02 -0300] [740672] [INFO] Using worker: sync
+[2026-04-28 19:39:02 -0300] [740673] [INFO] Booting worker with pid: 740673
+[2026-04-28 19:39:03 -0300] [740674] [INFO] Booting worker with pid: 740674
+[2026-04-28 19:39:03 -0300] [740675] [INFO] Booting worker with pid: 740675
+[2026-04-28 19:39:03 -0300] [740672] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 19:41:38 -0300] [740672] [INFO] Handling signal: term
+[2026-04-28 19:41:38 -0300] [740675] [INFO] Worker exiting (pid: 740675)
+[2026-04-28 19:41:38 -0300] [740674] [INFO] Worker exiting (pid: 740674)
+[2026-04-28 19:41:38 -0300] [740673] [INFO] Worker exiting (pid: 740673)
+[2026-04-28 19:41:40 -0300] [741183] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 19:41:40 -0300] [741183] [INFO] Listening at: http://127.0.0.1:8000 (741183)
+[2026-04-28 19:41:40 -0300] [741183] [INFO] Using worker: sync
+[2026-04-28 19:41:40 -0300] [741184] [INFO] Booting worker with pid: 741184
+[2026-04-28 19:41:40 -0300] [741185] [INFO] Booting worker with pid: 741185
+[2026-04-28 19:41:40 -0300] [741186] [INFO] Booting worker with pid: 741186
+[2026-04-28 19:41:41 -0300] [741183] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 19:41:41 -0300] [740672] [INFO] Shutting down: Master
+[2026-04-28 19:52:39 -0300] [741183] [INFO] Handling signal: term
+[2026-04-28 19:52:39 -0300] [741185] [INFO] Worker exiting (pid: 741185)
+[2026-04-28 19:52:39 -0300] [741184] [INFO] Worker exiting (pid: 741184)
+[2026-04-28 19:52:39 -0300] [741186] [INFO] Worker exiting (pid: 741186)
+[2026-04-28 19:52:39 -0300] [741183] [INFO] Worker (pid:741184) was sent SIGTERM!
+[2026-04-28 19:52:39 -0300] [741183] [INFO] Worker (pid:741185) was sent SIGTERM!
+[2026-04-28 19:52:41 -0300] [743101] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 19:52:41 -0300] [743101] [INFO] Listening at: http://127.0.0.1:8000 (743101)
+[2026-04-28 19:52:41 -0300] [743101] [INFO] Using worker: sync
+[2026-04-28 19:52:41 -0300] [743103] [INFO] Booting worker with pid: 743103
+[2026-04-28 19:52:41 -0300] [743104] [INFO] Booting worker with pid: 743104
+[2026-04-28 19:52:42 -0300] [743105] [INFO] Booting worker with pid: 743105
+[2026-04-28 19:52:42 -0300] [743101] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 19:52:42 -0300] [741183] [INFO] Shutting down: Master
+[2026-04-28 19:54:56 -0300] [743101] [INFO] Handling signal: term
+[2026-04-28 19:54:56 -0300] [743103] [INFO] Worker exiting (pid: 743103)
+[2026-04-28 19:54:56 -0300] [743104] [INFO] Worker exiting (pid: 743104)
+[2026-04-28 19:54:56 -0300] [743105] [INFO] Worker exiting (pid: 743105)
+[2026-04-28 19:54:57 -0300] [743101] [INFO] Shutting down: Master
+[2026-04-28 19:54:58 -0300] [743563] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 19:54:58 -0300] [743563] [INFO] Listening at: http://127.0.0.1:8000 (743563)
+[2026-04-28 19:54:58 -0300] [743563] [INFO] Using worker: sync
+[2026-04-28 19:54:58 -0300] [743564] [INFO] Booting worker with pid: 743564
+[2026-04-28 19:54:58 -0300] [743565] [INFO] Booting worker with pid: 743565
+[2026-04-28 19:54:58 -0300] [743566] [INFO] Booting worker with pid: 743566
+[2026-04-28 19:54:58 -0300] [743563] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 19:59:41 -0300] [743564] [INFO] Worker exiting (pid: 743564)
+[2026-04-28 19:59:41 -0300] [743563] [INFO] Handling signal: term
+[2026-04-28 19:59:41 -0300] [743566] [INFO] Worker exiting (pid: 743566)
+[2026-04-28 19:59:41 -0300] [743565] [INFO] Worker exiting (pid: 743565)
+[2026-04-28 19:59:41 -0300] [743563] [INFO] Worker (pid:743564) was sent SIGTERM!
+[2026-04-28 19:59:43 -0300] [744665] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 19:59:43 -0300] [744665] [INFO] Listening at: http://127.0.0.1:8000 (744665)
+[2026-04-28 19:59:43 -0300] [744665] [INFO] Using worker: sync
+[2026-04-28 19:59:43 -0300] [744666] [INFO] Booting worker with pid: 744666
+[2026-04-28 19:59:43 -0300] [744667] [INFO] Booting worker with pid: 744667
+[2026-04-28 19:59:43 -0300] [744668] [INFO] Booting worker with pid: 744668
+[2026-04-28 19:59:44 -0300] [744665] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 19:59:44 -0300] [743563] [INFO] Shutting down: Master
+[2026-04-28 20:00:02 -0300] [744667] [INFO] Worker exiting (pid: 744667)
+[2026-04-28 20:00:02 -0300] [744665] [INFO] Handling signal: term
+[2026-04-28 20:00:02 -0300] [744666] [INFO] Worker exiting (pid: 744666)
+[2026-04-28 20:00:02 -0300] [744668] [INFO] Worker exiting (pid: 744668)
+[2026-04-28 20:00:03 -0300] [744665] [INFO] Worker (pid:744666) was sent SIGTERM!
+[2026-04-28 20:00:03 -0300] [744665] [INFO] Worker (pid:744667) was sent SIGTERM!
+[2026-04-28 20:00:03 -0300] [744665] [INFO] Worker (pid:744668) was sent SIGTERM!
+[2026-04-28 20:00:03 -0300] [744665] [INFO] Shutting down: Master
+[2026-04-28 20:00:05 -0300] [744769] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:00:05 -0300] [744769] [INFO] Listening at: http://127.0.0.1:8000 (744769)
+[2026-04-28 20:00:05 -0300] [744769] [INFO] Using worker: sync
+[2026-04-28 20:00:05 -0300] [744771] [INFO] Booting worker with pid: 744771
+[2026-04-28 20:00:05 -0300] [744772] [INFO] Booting worker with pid: 744772
+[2026-04-28 20:00:05 -0300] [744774] [INFO] Booting worker with pid: 744774
+[2026-04-28 20:00:05 -0300] [744769] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:10:50 -0300] [744769] [INFO] Handling signal: term
+[2026-04-28 20:10:50 -0300] [744771] [INFO] Worker exiting (pid: 744771)
+[2026-04-28 20:10:50 -0300] [744774] [INFO] Worker exiting (pid: 744774)
+[2026-04-28 20:10:50 -0300] [744772] [INFO] Worker exiting (pid: 744772)
+[2026-04-28 20:10:52 -0300] [746686] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:10:52 -0300] [746686] [INFO] Listening at: http://127.0.0.1:8000 (746686)
+[2026-04-28 20:10:52 -0300] [746686] [INFO] Using worker: sync
+[2026-04-28 20:10:52 -0300] [746688] [INFO] Booting worker with pid: 746688
+[2026-04-28 20:10:52 -0300] [746689] [INFO] Booting worker with pid: 746689
+[2026-04-28 20:10:52 -0300] [746690] [INFO] Booting worker with pid: 746690
+[2026-04-28 20:10:53 -0300] [746686] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:10:54 -0300] [744769] [INFO] Shutting down: Master
+[2026-04-28 20:14:35 -0300] [746686] [INFO] Handling signal: term
+[2026-04-28 20:14:35 -0300] [746690] [INFO] Worker exiting (pid: 746690)
+[2026-04-28 20:14:35 -0300] [746689] [INFO] Worker exiting (pid: 746689)
+[2026-04-28 20:14:35 -0300] [746688] [INFO] Worker exiting (pid: 746688)
+[2026-04-28 20:14:37 -0300] [747333] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:14:37 -0300] [747333] [INFO] Listening at: http://127.0.0.1:8000 (747333)
+[2026-04-28 20:14:37 -0300] [747333] [INFO] Using worker: sync
+[2026-04-28 20:14:37 -0300] [747335] [INFO] Booting worker with pid: 747335
+[2026-04-28 20:14:37 -0300] [747336] [INFO] Booting worker with pid: 747336
+[2026-04-28 20:14:38 -0300] [747337] [INFO] Booting worker with pid: 747337
+[2026-04-28 20:14:38 -0300] [747333] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:14:39 -0300] [746686] [INFO] Shutting down: Master
+[2026-04-28 20:25:39 -0300] [747336] [INFO] Worker exiting (pid: 747336)
+[2026-04-28 20:25:39 -0300] [747333] [INFO] Handling signal: term
+[2026-04-28 20:25:39 -0300] [747335] [INFO] Worker exiting (pid: 747335)
+[2026-04-28 20:25:39 -0300] [747337] [INFO] Worker exiting (pid: 747337)
+[2026-04-28 20:25:41 -0300] [749160] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:25:41 -0300] [749160] [INFO] Listening at: http://127.0.0.1:8000 (749160)
+[2026-04-28 20:25:41 -0300] [749160] [INFO] Using worker: sync
+[2026-04-28 20:25:41 -0300] [749164] [INFO] Booting worker with pid: 749164
+[2026-04-28 20:25:41 -0300] [749167] [INFO] Booting worker with pid: 749167
+[2026-04-28 20:25:41 -0300] [749168] [INFO] Booting worker with pid: 749168
+[2026-04-28 20:25:41 -0300] [749160] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:25:43 -0300] [747333] [INFO] Shutting down: Master
+[2026-04-28 20:31:01 -0300] [749168] [INFO] Worker exiting (pid: 749168)
+[2026-04-28 20:31:01 -0300] [749167] [INFO] Worker exiting (pid: 749167)
+[2026-04-28 20:31:01 -0300] [749160] [INFO] Handling signal: term
+[2026-04-28 20:31:01 -0300] [749164] [INFO] Worker exiting (pid: 749164)
+[2026-04-28 20:31:01 -0300] [749160] [INFO] Worker (pid:749164) was sent SIGTERM!
+[2026-04-28 20:31:01 -0300] [749160] [INFO] Worker (pid:749167) was sent SIGTERM!
+[2026-04-28 20:31:01 -0300] [749160] [INFO] Worker (pid:749168) was sent SIGTERM!
+[2026-04-28 20:31:01 -0300] [749160] [INFO] Shutting down: Master
+[2026-04-28 20:31:03 -0300] [750140] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:31:03 -0300] [750140] [INFO] Listening at: http://127.0.0.1:8000 (750140)
+[2026-04-28 20:31:03 -0300] [750140] [INFO] Using worker: sync
+[2026-04-28 20:31:03 -0300] [750142] [INFO] Booting worker with pid: 750142
+[2026-04-28 20:31:03 -0300] [750143] [INFO] Booting worker with pid: 750143
+[2026-04-28 20:31:04 -0300] [750144] [INFO] Booting worker with pid: 750144
+[2026-04-28 20:31:04 -0300] [750140] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:34:36 -0300] [750140] [INFO] Handling signal: term
+[2026-04-28 20:34:36 -0300] [750142] [INFO] Worker exiting (pid: 750142)
+[2026-04-28 20:34:36 -0300] [750143] [INFO] Worker exiting (pid: 750143)
+[2026-04-28 20:34:36 -0300] [750144] [INFO] Worker exiting (pid: 750144)
+[2026-04-28 20:34:36 -0300] [750140] [INFO] Worker (pid:750142) was sent SIGTERM!
+[2026-04-28 20:34:36 -0300] [750140] [INFO] Worker (pid:750143) was sent SIGTERM!
+[2026-04-28 20:34:38 -0300] [750896] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:34:38 -0300] [750896] [INFO] Listening at: http://127.0.0.1:8000 (750896)
+[2026-04-28 20:34:38 -0300] [750896] [INFO] Using worker: sync
+[2026-04-28 20:34:38 -0300] [750898] [INFO] Booting worker with pid: 750898
+[2026-04-28 20:34:38 -0300] [750899] [INFO] Booting worker with pid: 750899
+[2026-04-28 20:34:39 -0300] [750900] [INFO] Booting worker with pid: 750900
+[2026-04-28 20:34:39 -0300] [750896] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:34:39 -0300] [750140] [INFO] Shutting down: Master
+[2026-04-28 20:38:11 -0300] [750900] [INFO] Worker exiting (pid: 750900)
+[2026-04-28 20:38:11 -0300] [750896] [INFO] Handling signal: term
+[2026-04-28 20:38:11 -0300] [750898] [INFO] Worker exiting (pid: 750898)
+[2026-04-28 20:38:11 -0300] [750899] [INFO] Worker exiting (pid: 750899)
+[2026-04-28 20:38:13 -0300] [751633] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:38:13 -0300] [751633] [INFO] Listening at: http://127.0.0.1:8000 (751633)
+[2026-04-28 20:38:13 -0300] [751633] [INFO] Using worker: sync
+[2026-04-28 20:38:13 -0300] [751639] [INFO] Booting worker with pid: 751639
+[2026-04-28 20:38:13 -0300] [751640] [INFO] Booting worker with pid: 751640
+[2026-04-28 20:38:13 -0300] [751641] [INFO] Booting worker with pid: 751641
+[2026-04-28 20:38:13 -0300] [751633] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:38:14 -0300] [750896] [INFO] Shutting down: Master
+[2026-04-28 20:40:20 -0300] [751640] [INFO] Worker exiting (pid: 751640)
+[2026-04-28 20:40:20 -0300] [751641] [INFO] Worker exiting (pid: 751641)
+[2026-04-28 20:40:20 -0300] [751639] [INFO] Worker exiting (pid: 751639)
+[2026-04-28 20:40:20 -0300] [751633] [INFO] Handling signal: term
+[2026-04-28 20:40:20 -0300] [751633] [INFO] Worker (pid:751640) was sent SIGTERM!
+[2026-04-28 20:40:20 -0300] [751633] [INFO] Worker (pid:751641) was sent SIGTERM!
+[2026-04-28 20:40:22 -0300] [752108] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:40:22 -0300] [752108] [INFO] Listening at: http://127.0.0.1:8000 (752108)
+[2026-04-28 20:40:22 -0300] [752108] [INFO] Using worker: sync
+[2026-04-28 20:40:22 -0300] [752110] [INFO] Booting worker with pid: 752110
+[2026-04-28 20:40:22 -0300] [752111] [INFO] Booting worker with pid: 752111
+[2026-04-28 20:40:23 -0300] [752112] [INFO] Booting worker with pid: 752112
+[2026-04-28 20:40:23 -0300] [752108] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:40:23 -0300] [751633] [INFO] Shutting down: Master
+[2026-04-28 20:43:28 -0300] [752108] [INFO] Handling signal: term
+[2026-04-28 20:43:28 -0300] [752111] [INFO] Worker exiting (pid: 752111)
+[2026-04-28 20:43:28 -0300] [752110] [INFO] Worker exiting (pid: 752110)
+[2026-04-28 20:43:28 -0300] [752112] [INFO] Worker exiting (pid: 752112)
+[2026-04-28 20:43:28 -0300] [752108] [INFO] Worker (pid:752111) was sent SIGTERM!
+[2026-04-28 20:43:30 -0300] [752667] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:43:30 -0300] [752667] [INFO] Listening at: http://127.0.0.1:8000 (752667)
+[2026-04-28 20:43:30 -0300] [752667] [INFO] Using worker: sync
+[2026-04-28 20:43:30 -0300] [752669] [INFO] Booting worker with pid: 752669
+[2026-04-28 20:43:30 -0300] [752670] [INFO] Booting worker with pid: 752670
+[2026-04-28 20:43:30 -0300] [752671] [INFO] Booting worker with pid: 752671
+[2026-04-28 20:43:30 -0300] [752667] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:43:31 -0300] [752108] [INFO] Shutting down: Master
+[2026-04-28 20:57:29 -0300] [752667] [INFO] Handling signal: term
+[2026-04-28 20:57:29 -0300] [752669] [INFO] Worker exiting (pid: 752669)
+[2026-04-28 20:57:29 -0300] [752671] [INFO] Worker exiting (pid: 752671)
+[2026-04-28 20:57:29 -0300] [752670] [INFO] Worker exiting (pid: 752670)
+[2026-04-28 20:57:29 -0300] [752667] [INFO] Worker (pid:752669) was sent SIGTERM!
+[2026-04-28 20:57:31 -0300] [755009] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:57:31 -0300] [755009] [INFO] Listening at: http://127.0.0.1:8000 (755009)
+[2026-04-28 20:57:31 -0300] [755009] [INFO] Using worker: sync
+[2026-04-28 20:57:31 -0300] [755011] [INFO] Booting worker with pid: 755011
+[2026-04-28 20:57:31 -0300] [755012] [INFO] Booting worker with pid: 755012
+[2026-04-28 20:57:31 -0300] [755013] [INFO] Booting worker with pid: 755013
+[2026-04-28 20:57:31 -0300] [755009] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:57:32 -0300] [752667] [INFO] Shutting down: Master
+[2026-04-28 20:59:24 -0300] [755013] [INFO] Worker exiting (pid: 755013)
+[2026-04-28 20:59:24 -0300] [755009] [INFO] Handling signal: term
+[2026-04-28 20:59:24 -0300] [755011] [INFO] Worker exiting (pid: 755011)
+[2026-04-28 20:59:24 -0300] [755012] [INFO] Worker exiting (pid: 755012)
+[2026-04-28 20:59:26 -0300] [755363] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 20:59:26 -0300] [755363] [INFO] Listening at: http://127.0.0.1:8000 (755363)
+[2026-04-28 20:59:26 -0300] [755363] [INFO] Using worker: sync
+[2026-04-28 20:59:26 -0300] [755365] [INFO] Booting worker with pid: 755365
+[2026-04-28 20:59:26 -0300] [755366] [INFO] Booting worker with pid: 755366
+[2026-04-28 20:59:26 -0300] [755367] [INFO] Booting worker with pid: 755367
+[2026-04-28 20:59:27 -0300] [755363] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 20:59:28 -0300] [755009] [INFO] Shutting down: Master
+[2026-04-28 21:01:25 -0300] [755363] [INFO] Handling signal: term
+[2026-04-28 21:01:25 -0300] [755367] [INFO] Worker exiting (pid: 755367)
+[2026-04-28 21:01:25 -0300] [755366] [INFO] Worker exiting (pid: 755366)
+[2026-04-28 21:01:25 -0300] [755365] [INFO] Worker exiting (pid: 755365)
+[2026-04-28 21:01:25 -0300] [755363] [INFO] Worker (pid:755367) was sent SIGTERM!
+[2026-04-28 21:01:27 -0300] [755736] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:01:27 -0300] [755736] [INFO] Listening at: http://127.0.0.1:8000 (755736)
+[2026-04-28 21:01:27 -0300] [755736] [INFO] Using worker: sync
+[2026-04-28 21:01:27 -0300] [755738] [INFO] Booting worker with pid: 755738
+[2026-04-28 21:01:27 -0300] [755739] [INFO] Booting worker with pid: 755739
+[2026-04-28 21:01:28 -0300] [755740] [INFO] Booting worker with pid: 755740
+[2026-04-28 21:01:28 -0300] [755736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:01:28 -0300] [755363] [INFO] Shutting down: Master
+[2026-04-28 21:05:00 -0300] [755736] [CRITICAL] WORKER TIMEOUT (pid:755739)
+[2026-04-28 21:05:00 -0300] [755739] [ERROR] Error handling request POST /Ajuda/chat/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1051, in request
+    response.raise_for_status()
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '429 Too Many Requests' for url 'https://api.groq.com/openai/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/core/middleware/language.py", line 13, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/subscriptions/middleware.py", line 17, in __call__
+    return self.get_response(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/ajuda/views.py", line 215, in chat_query_view
+    text_response = provider.chat(user_message, history[-6:], system_instruction)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/ajuda/views.py", line 114, in chat
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/resources/chat/completions.py", line 461, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1284, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1057, in request
+    self._sleep_for_retry(
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1097, in _sleep_for_retry
+    time.sleep(timeout)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 198, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2026-04-28 21:05:00 -0300] [755739] [INFO] Worker exiting (pid: 755739)
+[2026-04-28 21:05:01 -0300] [755736] [ERROR] Worker (pid:755739) was sent SIGKILL! Perhaps out of memory?
+[2026-04-28 21:05:01 -0300] [756378] [INFO] Booting worker with pid: 756378
+[2026-04-28 21:05:01 -0300] [755736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:05:19 -0300] [755736] [INFO] Handling signal: term
+[2026-04-28 21:05:19 -0300] [756378] [INFO] Worker exiting (pid: 756378)
+[2026-04-28 21:05:19 -0300] [755740] [INFO] Worker exiting (pid: 755740)
+[2026-04-28 21:05:19 -0300] [755738] [INFO] Worker exiting (pid: 755738)
+[2026-04-28 21:05:19 -0300] [755736] [INFO] Worker (pid:755738) was sent SIGTERM!
+[2026-04-28 21:05:19 -0300] [755736] [INFO] Worker (pid:756378) was sent SIGTERM!
+[2026-04-28 21:05:21 -0300] [756469] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:05:21 -0300] [756469] [INFO] Listening at: http://127.0.0.1:8000 (756469)
+[2026-04-28 21:05:21 -0300] [756469] [INFO] Using worker: sync
+[2026-04-28 21:05:21 -0300] [756471] [INFO] Booting worker with pid: 756471
+[2026-04-28 21:05:21 -0300] [756472] [INFO] Booting worker with pid: 756472
+[2026-04-28 21:05:21 -0300] [756473] [INFO] Booting worker with pid: 756473
+[2026-04-28 21:05:22 -0300] [756469] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:05:22 -0300] [755736] [INFO] Shutting down: Master
+[2026-04-28 21:07:42 -0300] [756469] [CRITICAL] WORKER TIMEOUT (pid:756471)
+[2026-04-28 21:07:42 -0300] [756471] [ERROR] Error handling request POST /Ajuda/chat/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1051, in request
+    response.raise_for_status()
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '429 Too Many Requests' for url 'https://api.groq.com/openai/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/core/middleware/language.py", line 13, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/subscriptions/middleware.py", line 17, in __call__
+    return self.get_response(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/ajuda/views.py", line 215, in chat_query_view
+    break # Sucesso!
+                    ^
+  File "/root/verticebook/ajuda/views.py", line 114, in chat
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/resources/chat/completions.py", line 461, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1284, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1057, in request
+    self._sleep_for_retry(
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1097, in _sleep_for_retry
+    time.sleep(timeout)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 198, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2026-04-28 21:07:42 -0300] [756471] [INFO] Worker exiting (pid: 756471)
+[2026-04-28 21:07:42 -0300] [756469] [INFO] Handling signal: term
+[2026-04-28 21:07:42 -0300] [756472] [INFO] Worker exiting (pid: 756472)
+[2026-04-28 21:07:42 -0300] [756473] [INFO] Worker exiting (pid: 756473)
+[2026-04-28 21:07:42 -0300] [756469] [INFO] Worker (pid:756471) was sent SIGTERM!
+[2026-04-28 21:07:45 -0300] [756942] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:07:45 -0300] [756942] [INFO] Listening at: http://127.0.0.1:8000 (756942)
+[2026-04-28 21:07:45 -0300] [756942] [INFO] Using worker: sync
+[2026-04-28 21:07:45 -0300] [756944] [INFO] Booting worker with pid: 756944
+[2026-04-28 21:07:45 -0300] [756945] [INFO] Booting worker with pid: 756945
+[2026-04-28 21:07:45 -0300] [756946] [INFO] Booting worker with pid: 756946
+[2026-04-28 21:07:45 -0300] [756942] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:07:46 -0300] [756469] [INFO] Shutting down: Master
+[2026-04-28 21:11:15 -0300] [756942] [INFO] Handling signal: term
+[2026-04-28 21:11:15 -0300] [756944] [INFO] Worker exiting (pid: 756944)
+[2026-04-28 21:11:15 -0300] [756945] [INFO] Worker exiting (pid: 756945)
+[2026-04-28 21:11:15 -0300] [756946] [INFO] Worker exiting (pid: 756946)
+[2026-04-28 21:11:17 -0300] [757681] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:11:17 -0300] [757681] [INFO] Listening at: http://127.0.0.1:8000 (757681)
+[2026-04-28 21:11:17 -0300] [757681] [INFO] Using worker: sync
+[2026-04-28 21:11:17 -0300] [757683] [INFO] Booting worker with pid: 757683
+[2026-04-28 21:11:17 -0300] [757684] [INFO] Booting worker with pid: 757684
+[2026-04-28 21:11:17 -0300] [757685] [INFO] Booting worker with pid: 757685
+[2026-04-28 21:11:18 -0300] [757681] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:11:19 -0300] [756942] [INFO] Shutting down: Master
+[2026-04-28 21:13:45 -0300] [757681] [INFO] Handling signal: term
+[2026-04-28 21:13:45 -0300] [757685] [INFO] Worker exiting (pid: 757685)
+[2026-04-28 21:13:45 -0300] [757683] [INFO] Worker exiting (pid: 757683)
+[2026-04-28 21:13:45 -0300] [757684] [INFO] Worker exiting (pid: 757684)
+[2026-04-28 21:13:47 -0300] [758142] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:13:47 -0300] [758142] [INFO] Listening at: http://127.0.0.1:8000 (758142)
+[2026-04-28 21:13:47 -0300] [758142] [INFO] Using worker: sync
+[2026-04-28 21:13:47 -0300] [758144] [INFO] Booting worker with pid: 758144
+[2026-04-28 21:13:48 -0300] [758145] [INFO] Booting worker with pid: 758145
+[2026-04-28 21:13:48 -0300] [758146] [INFO] Booting worker with pid: 758146
+[2026-04-28 21:13:48 -0300] [758142] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:13:49 -0300] [757681] [INFO] Shutting down: Master
+[2026-04-28 21:15:16 -0300] [758142] [INFO] Handling signal: term
+[2026-04-28 21:15:16 -0300] [758145] [INFO] Worker exiting (pid: 758145)
+[2026-04-28 21:15:16 -0300] [758146] [INFO] Worker exiting (pid: 758146)
+[2026-04-28 21:15:16 -0300] [758144] [INFO] Worker exiting (pid: 758144)
+[2026-04-28 21:15:18 -0300] [758431] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:15:18 -0300] [758431] [INFO] Listening at: http://127.0.0.1:8000 (758431)
+[2026-04-28 21:15:18 -0300] [758431] [INFO] Using worker: sync
+[2026-04-28 21:15:18 -0300] [758433] [INFO] Booting worker with pid: 758433
+[2026-04-28 21:15:18 -0300] [758434] [INFO] Booting worker with pid: 758434
+[2026-04-28 21:15:19 -0300] [758435] [INFO] Booting worker with pid: 758435
+[2026-04-28 21:15:19 -0300] [758431] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:15:20 -0300] [758142] [INFO] Shutting down: Master
+[2026-04-28 21:16:23 -0300] [758435] [INFO] Worker exiting (pid: 758435)
+[2026-04-28 21:16:23 -0300] [758431] [INFO] Handling signal: term
+[2026-04-28 21:16:23 -0300] [758434] [INFO] Worker exiting (pid: 758434)
+[2026-04-28 21:16:23 -0300] [758433] [INFO] Worker exiting (pid: 758433)
+[2026-04-28 21:16:23 -0300] [758431] [INFO] Worker (pid:758433) was sent SIGTERM!
+[2026-04-28 21:16:23 -0300] [758431] [INFO] Worker (pid:758434) was sent SIGTERM!
+[2026-04-28 21:16:23 -0300] [758431] [INFO] Worker (pid:758435) was sent SIGTERM!
+[2026-04-28 21:16:23 -0300] [758431] [INFO] Shutting down: Master
+[2026-04-28 21:16:25 -0300] [758662] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:16:25 -0300] [758662] [INFO] Listening at: http://127.0.0.1:8000 (758662)
+[2026-04-28 21:16:25 -0300] [758662] [INFO] Using worker: sync
+[2026-04-28 21:16:25 -0300] [758664] [INFO] Booting worker with pid: 758664
+[2026-04-28 21:16:25 -0300] [758665] [INFO] Booting worker with pid: 758665
+[2026-04-28 21:16:25 -0300] [758666] [INFO] Booting worker with pid: 758666
+[2026-04-28 21:16:26 -0300] [758662] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:20:43 -0300] [758662] [INFO] Handling signal: term
+[2026-04-28 21:20:43 -0300] [758664] [INFO] Worker exiting (pid: 758664)
+[2026-04-28 21:20:43 -0300] [758665] [INFO] Worker exiting (pid: 758665)
+[2026-04-28 21:20:43 -0300] [758666] [INFO] Worker exiting (pid: 758666)
+[2026-04-28 21:20:43 -0300] [758662] [INFO] Worker (pid:758665) was sent SIGTERM!
+[2026-04-28 21:20:43 -0300] [758662] [INFO] Worker (pid:758666) was sent SIGTERM!
+[2026-04-28 21:20:43 -0300] [758662] [INFO] Shutting down: Master
+[2026-04-28 21:20:45 -0300] [759408] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:20:45 -0300] [759408] [INFO] Listening at: http://127.0.0.1:8000 (759408)
+[2026-04-28 21:20:45 -0300] [759408] [INFO] Using worker: sync
+[2026-04-28 21:20:45 -0300] [759409] [INFO] Booting worker with pid: 759409
+[2026-04-28 21:20:45 -0300] [759410] [INFO] Booting worker with pid: 759410
+[2026-04-28 21:20:45 -0300] [759411] [INFO] Booting worker with pid: 759411
+[2026-04-28 21:20:45 -0300] [759408] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:23:05 -0300] [759408] [CRITICAL] WORKER TIMEOUT (pid:759411)
+[2026-04-28 21:23:05 -0300] [759411] [ERROR] Error handling request POST /Ajuda/chat/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 142, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/sync.py", line 185, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 141, in get_response
+    response = self._middleware_chain(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/core/middleware/language.py", line 13, in __call__
+    response = self.get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/subscriptions/middleware.py", line 17, in __call__
+    return self.get_response(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 309, in __call__
+    response = response or self.get_response(request)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/ajuda/views.py", line 226, in chat_query_view
+    text_response = provider.chat(user_message, history[-20:], system_instruction)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/ajuda/views.py", line 114, in chat
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/resources/chat/completions.py", line 461, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1284, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1007, in request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 128, in read
+    return self._sock.recv(max_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/ssl.py", line 1233, in recv
+    return self.read(buflen)
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/ssl.py", line 1106, in read
+    return self._sslobj.read(len)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 198, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2026-04-28 21:23:05 -0300] [759411] [INFO] Worker exiting (pid: 759411)
+[2026-04-28 21:23:06 -0300] [759408] [ERROR] Worker (pid:759411) was sent SIGKILL! Perhaps out of memory?
+[2026-04-28 21:23:06 -0300] [759849] [INFO] Booting worker with pid: 759849
+[2026-04-28 21:23:06 -0300] [759408] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:24:33 -0300] [759408] [INFO] Handling signal: term
+[2026-04-28 21:24:33 -0300] [759409] [INFO] Worker exiting (pid: 759409)
+[2026-04-28 21:24:33 -0300] [759849] [INFO] Worker exiting (pid: 759849)
+[2026-04-28 21:24:33 -0300] [759410] [INFO] Worker exiting (pid: 759410)
+[2026-04-28 21:24:33 -0300] [759408] [INFO] Worker (pid:759410) was sent SIGTERM!
+[2026-04-28 21:24:33 -0300] [759408] [INFO] Worker (pid:759849) was sent SIGTERM!
+[2026-04-28 21:24:35 -0300] [760134] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:24:35 -0300] [760134] [INFO] Listening at: http://127.0.0.1:8000 (760134)
+[2026-04-28 21:24:35 -0300] [760134] [INFO] Using worker: sync
+[2026-04-28 21:24:35 -0300] [760136] [INFO] Booting worker with pid: 760136
+[2026-04-28 21:24:35 -0300] [760137] [INFO] Booting worker with pid: 760137
+[2026-04-28 21:24:35 -0300] [760138] [INFO] Booting worker with pid: 760138
+[2026-04-28 21:24:35 -0300] [760134] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:24:35 -0300] [759408] [INFO] Shutting down: Master
+[2026-04-28 21:28:12 -0300] [760134] [INFO] Handling signal: term
+[2026-04-28 21:28:12 -0300] [760137] [INFO] Worker exiting (pid: 760137)
+[2026-04-28 21:28:12 -0300] [760136] [INFO] Worker exiting (pid: 760136)
+[2026-04-28 21:28:12 -0300] [760138] [INFO] Worker exiting (pid: 760138)
+[2026-04-28 21:28:14 -0300] [760871] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:28:14 -0300] [760871] [INFO] Listening at: http://127.0.0.1:8000 (760871)
+[2026-04-28 21:28:14 -0300] [760871] [INFO] Using worker: sync
+[2026-04-28 21:28:14 -0300] [760873] [INFO] Booting worker with pid: 760873
+[2026-04-28 21:28:14 -0300] [760874] [INFO] Booting worker with pid: 760874
+[2026-04-28 21:28:14 -0300] [760875] [INFO] Booting worker with pid: 760875
+[2026-04-28 21:28:14 -0300] [760871] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:28:16 -0300] [760134] [INFO] Shutting down: Master
+[2026-04-28 21:35:45 -0300] [760871] [INFO] Handling signal: term
+[2026-04-28 21:35:45 -0300] [760873] [INFO] Worker exiting (pid: 760873)
+[2026-04-28 21:35:45 -0300] [760874] [INFO] Worker exiting (pid: 760874)
+[2026-04-28 21:35:45 -0300] [760875] [INFO] Worker exiting (pid: 760875)
+[2026-04-28 21:35:45 -0300] [760871] [INFO] Worker (pid:760874) was sent SIGTERM!
+[2026-04-28 21:35:47 -0300] [762153] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:35:47 -0300] [762153] [INFO] Listening at: http://127.0.0.1:8000 (762153)
+[2026-04-28 21:35:47 -0300] [762153] [INFO] Using worker: sync
+[2026-04-28 21:35:47 -0300] [762154] [INFO] Booting worker with pid: 762154
+[2026-04-28 21:35:47 -0300] [762155] [INFO] Booting worker with pid: 762155
+[2026-04-28 21:35:47 -0300] [762156] [INFO] Booting worker with pid: 762156
+[2026-04-28 21:35:48 -0300] [762153] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:35:49 -0300] [760871] [INFO] Shutting down: Master
+[2026-04-28 21:49:51 -0300] [762155] [INFO] Worker exiting (pid: 762155)
+[2026-04-28 21:49:51 -0300] [762154] [INFO] Worker exiting (pid: 762154)
+[2026-04-28 21:49:51 -0300] [762153] [INFO] Handling signal: term
+[2026-04-28 21:49:51 -0300] [762156] [INFO] Worker exiting (pid: 762156)
+[2026-04-28 21:49:53 -0300] [764721] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:49:53 -0300] [764721] [INFO] Listening at: http://127.0.0.1:8000 (764721)
+[2026-04-28 21:49:53 -0300] [764721] [INFO] Using worker: sync
+[2026-04-28 21:49:53 -0300] [764723] [INFO] Booting worker with pid: 764723
+[2026-04-28 21:49:54 -0300] [764724] [INFO] Booting worker with pid: 764724
+[2026-04-28 21:49:54 -0300] [764725] [INFO] Booting worker with pid: 764725
+[2026-04-28 21:49:54 -0300] [764721] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:49:55 -0300] [762153] [INFO] Shutting down: Master
+[2026-04-28 21:59:28 -0300] [764721] [INFO] Handling signal: term
+[2026-04-28 21:59:28 -0300] [764724] [INFO] Worker exiting (pid: 764724)
+[2026-04-28 21:59:28 -0300] [764723] [INFO] Worker exiting (pid: 764723)
+[2026-04-28 21:59:28 -0300] [764725] [INFO] Worker exiting (pid: 764725)
+[2026-04-28 21:59:31 -0300] [766398] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 21:59:31 -0300] [766398] [INFO] Listening at: http://127.0.0.1:8000 (766398)
+[2026-04-28 21:59:31 -0300] [766398] [INFO] Using worker: sync
+[2026-04-28 21:59:31 -0300] [766404] [INFO] Booting worker with pid: 766404
+[2026-04-28 21:59:31 -0300] [766405] [INFO] Booting worker with pid: 766405
+[2026-04-28 21:59:31 -0300] [766406] [INFO] Booting worker with pid: 766406
+[2026-04-28 21:59:31 -0300] [766398] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 21:59:32 -0300] [764721] [INFO] Shutting down: Master
+[2026-04-28 22:14:27 -0300] [766405] [INFO] Worker exiting (pid: 766405)
+[2026-04-28 22:14:27 -0300] [766398] [INFO] Handling signal: term
+[2026-04-28 22:14:27 -0300] [766406] [INFO] Worker exiting (pid: 766406)
+[2026-04-28 22:14:27 -0300] [766404] [INFO] Worker exiting (pid: 766404)
+[2026-04-28 22:14:29 -0300] [769216] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 22:14:29 -0300] [769216] [INFO] Listening at: http://127.0.0.1:8000 (769216)
+[2026-04-28 22:14:29 -0300] [769216] [INFO] Using worker: sync
+[2026-04-28 22:14:29 -0300] [769217] [INFO] Booting worker with pid: 769217
+[2026-04-28 22:14:30 -0300] [769222] [INFO] Booting worker with pid: 769222
+[2026-04-28 22:14:30 -0300] [769223] [INFO] Booting worker with pid: 769223
+[2026-04-28 22:14:30 -0300] [769216] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 22:14:31 -0300] [766398] [INFO] Shutting down: Master
+[2026-04-28 22:19:06 -0300] [769223] [INFO] Worker exiting (pid: 769223)
+[2026-04-28 22:19:06 -0300] [769216] [INFO] Handling signal: term
+[2026-04-28 22:19:06 -0300] [769222] [INFO] Worker exiting (pid: 769222)
+[2026-04-28 22:19:06 -0300] [769217] [INFO] Worker exiting (pid: 769217)
+[2026-04-28 22:19:08 -0300] [770044] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 22:19:08 -0300] [770044] [INFO] Listening at: http://127.0.0.1:8000 (770044)
+[2026-04-28 22:19:08 -0300] [770044] [INFO] Using worker: sync
+[2026-04-28 22:19:08 -0300] [770050] [INFO] Booting worker with pid: 770050
+[2026-04-28 22:19:08 -0300] [770051] [INFO] Booting worker with pid: 770051
+[2026-04-28 22:19:08 -0300] [770052] [INFO] Booting worker with pid: 770052
+[2026-04-28 22:19:08 -0300] [770044] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 22:19:10 -0300] [769216] [INFO] Shutting down: Master
+[2026-04-28 22:22:37 -0300] [770050] [INFO] Worker exiting (pid: 770050)
+[2026-04-28 22:22:37 -0300] [770044] [INFO] Handling signal: term
+[2026-04-28 22:22:37 -0300] [770051] [INFO] Worker exiting (pid: 770051)
+[2026-04-28 22:22:37 -0300] [770052] [INFO] Worker exiting (pid: 770052)
+[2026-04-28 22:22:39 -0300] [770653] [INFO] Starting gunicorn 25.3.0
+[2026-04-28 22:22:39 -0300] [770653] [INFO] Listening at: http://127.0.0.1:8000 (770653)
+[2026-04-28 22:22:39 -0300] [770653] [INFO] Using worker: sync
+[2026-04-28 22:22:39 -0300] [770655] [INFO] Booting worker with pid: 770655
+[2026-04-28 22:22:39 -0300] [770656] [INFO] Booting worker with pid: 770656
+[2026-04-28 22:22:39 -0300] [770657] [INFO] Booting worker with pid: 770657
+[2026-04-28 22:22:40 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-28 22:22:41 -0300] [770044] [INFO] Shutting down: Master
+[2026-04-29 09:55:34 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 09:55:34 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 09:55:34 -0300] [796871] [INFO] Booting worker with pid: 796871
+[2026-04-29 09:55:34 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 09:55:36 -0300] [796890] [INFO] Booting worker with pid: 796890
+[2026-04-29 09:55:36 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 09:55:38 -0300] [796895] [INFO] Booting worker with pid: 796895
+[2026-04-29 09:55:38 -0300] [770653] [WARNING] Worker (pid:770655) was sent SIGHUP!
+[2026-04-29 09:55:38 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 09:55:38 -0300] [770653] [WARNING] Worker (pid:770656) was sent SIGHUP!
+[2026-04-29 09:55:38 -0300] [770653] [WARNING] Worker (pid:770657) was sent SIGHUP!
+[2026-04-29 10:01:22 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 10:01:22 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 10:01:22 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:01:22 -0300] [797597] [INFO] Booting worker with pid: 797597
+[2026-04-29 10:01:22 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:01:22 -0300] [797599] [INFO] Booting worker with pid: 797599
+[2026-04-29 10:01:22 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:01:22 -0300] [770653] [WARNING] Worker (pid:796871) was sent SIGHUP!
+[2026-04-29 10:01:22 -0300] [770653] [WARNING] Worker (pid:796890) was sent SIGHUP!
+[2026-04-29 10:01:22 -0300] [770653] [WARNING] Worker (pid:796895) was sent SIGHUP!
+[2026-04-29 10:01:22 -0300] [797601] [INFO] Booting worker with pid: 797601
+[2026-04-29 10:52:15 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 10:52:15 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 10:52:15 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:52:15 -0300] [802707] [INFO] Booting worker with pid: 802707
+[2026-04-29 10:52:15 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:52:15 -0300] [802709] [INFO] Booting worker with pid: 802709
+[2026-04-29 10:52:15 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:52:15 -0300] [770653] [WARNING] Worker (pid:797597) was sent SIGHUP!
+[2026-04-29 10:52:15 -0300] [770653] [WARNING] Worker (pid:797599) was sent SIGHUP!
+[2026-04-29 10:52:15 -0300] [770653] [WARNING] Worker (pid:797601) was sent SIGHUP!
+[2026-04-29 10:52:15 -0300] [802711] [INFO] Booting worker with pid: 802711
+[2026-04-29 10:56:05 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 10:56:05 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 10:56:05 -0300] [803077] [INFO] Booting worker with pid: 803077
+[2026-04-29 10:56:05 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:56:07 -0300] [803095] [INFO] Booting worker with pid: 803095
+[2026-04-29 10:56:07 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:56:07 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 10:56:07 -0300] [803097] [INFO] Booting worker with pid: 803097
+[2026-04-29 10:56:07 -0300] [770653] [WARNING] Worker (pid:802707) was sent SIGHUP!
+[2026-04-29 10:56:07 -0300] [770653] [WARNING] Worker (pid:802709) was sent SIGHUP!
+[2026-04-29 10:56:07 -0300] [770653] [WARNING] Worker (pid:802711) was sent SIGHUP!
+[2026-04-29 11:00:15 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:00:15 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:00:15 -0300] [803527] [INFO] Booting worker with pid: 803527
+[2026-04-29 11:00:15 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:00:17 -0300] [803548] [INFO] Booting worker with pid: 803548
+[2026-04-29 11:00:17 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:00:17 -0300] [803550] [INFO] Booting worker with pid: 803550
+[2026-04-29 11:00:17 -0300] [770653] [WARNING] Worker (pid:803077) was sent SIGHUP!
+[2026-04-29 11:00:17 -0300] [770653] [WARNING] Worker (pid:803095) was sent SIGHUP!
+[2026-04-29 11:00:17 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:00:17 -0300] [770653] [WARNING] Worker (pid:803097) was sent SIGHUP!
+[2026-04-29 11:06:35 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:06:35 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:06:36 -0300] [804107] [INFO] Booting worker with pid: 804107
+[2026-04-29 11:06:36 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:06:38 -0300] [804124] [INFO] Booting worker with pid: 804124
+[2026-04-29 11:06:38 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:06:38 -0300] [770653] [WARNING] Worker (pid:803527) was sent SIGHUP!
+[2026-04-29 11:06:38 -0300] [770653] [WARNING] Worker (pid:803548) was sent SIGHUP!
+[2026-04-29 11:06:38 -0300] [770653] [WARNING] Worker (pid:803550) was sent SIGHUP!
+[2026-04-29 11:06:38 -0300] [804127] [INFO] Booting worker with pid: 804127
+[2026-04-29 11:06:38 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:07:46 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:07:46 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:07:46 -0300] [804252] [INFO] Booting worker with pid: 804252
+[2026-04-29 11:07:46 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:07:46 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:07:46 -0300] [804254] [INFO] Booting worker with pid: 804254
+[2026-04-29 11:07:48 -0300] [804275] [INFO] Booting worker with pid: 804275
+[2026-04-29 11:07:48 -0300] [770653] [WARNING] Worker (pid:804107) was sent SIGHUP!
+[2026-04-29 11:07:48 -0300] [770653] [WARNING] Worker (pid:804124) was sent SIGHUP!
+[2026-04-29 11:07:48 -0300] [770653] [WARNING] Worker (pid:804127) was sent SIGHUP!
+[2026-04-29 11:07:48 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:11:05 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:11:05 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:11:06 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:11:06 -0300] [804617] [INFO] Booting worker with pid: 804617
+[2026-04-29 11:11:08 -0300] [804635] [INFO] Booting worker with pid: 804635
+[2026-04-29 11:11:08 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:11:08 -0300] [770653] [WARNING] Worker (pid:804252) was sent SIGHUP!
+[2026-04-29 11:11:08 -0300] [770653] [WARNING] Worker (pid:804254) was sent SIGHUP!
+[2026-04-29 11:11:08 -0300] [770653] [WARNING] Worker (pid:804275) was sent SIGHUP!
+[2026-04-29 11:11:08 -0300] [804637] [INFO] Booting worker with pid: 804637
+[2026-04-29 11:11:08 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:13:53 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:13:53 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:13:53 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:13:53 -0300] [804891] [INFO] Booting worker with pid: 804891
+[2026-04-29 11:13:53 -0300] [804893] [INFO] Booting worker with pid: 804893
+[2026-04-29 11:13:53 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:13:53 -0300] [804895] [INFO] Booting worker with pid: 804895
+[2026-04-29 11:13:53 -0300] [770653] [WARNING] Worker (pid:804617) was sent SIGHUP!
+[2026-04-29 11:13:53 -0300] [770653] [WARNING] Worker (pid:804635) was sent SIGHUP!
+[2026-04-29 11:13:53 -0300] [770653] [WARNING] Worker (pid:804637) was sent SIGHUP!
+[2026-04-29 11:13:53 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:15:46 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:15:46 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:15:46 -0300] [805090] [INFO] Booting worker with pid: 805090
+[2026-04-29 11:15:46 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:15:46 -0300] [805092] [INFO] Booting worker with pid: 805092
+[2026-04-29 11:15:46 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:15:46 -0300] [805094] [INFO] Booting worker with pid: 805094
+[2026-04-29 11:15:46 -0300] [770653] [WARNING] Worker (pid:804891) was sent SIGHUP!
+[2026-04-29 11:15:46 -0300] [770653] [WARNING] Worker (pid:804893) was sent SIGHUP!
+[2026-04-29 11:15:46 -0300] [770653] [WARNING] Worker (pid:804895) was sent SIGHUP!
+[2026-04-29 11:15:46 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:19:13 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:19:13 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:19:13 -0300] [805432] [INFO] Booting worker with pid: 805432
+[2026-04-29 11:19:13 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:19:15 -0300] [805455] [INFO] Booting worker with pid: 805455
+[2026-04-29 11:19:15 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:19:15 -0300] [770653] [WARNING] Worker (pid:805090) was sent SIGHUP!
+[2026-04-29 11:19:15 -0300] [770653] [WARNING] Worker (pid:805092) was sent SIGHUP!
+[2026-04-29 11:19:15 -0300] [770653] [WARNING] Worker (pid:805094) was sent SIGHUP!
+[2026-04-29 11:19:15 -0300] [805457] [INFO] Booting worker with pid: 805457
+[2026-04-29 11:19:15 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:22:50 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:22:50 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:22:50 -0300] [805765] [INFO] Booting worker with pid: 805765
+[2026-04-29 11:22:50 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:22:50 -0300] [805767] [INFO] Booting worker with pid: 805767
+[2026-04-29 11:22:50 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:22:52 -0300] [770653] [WARNING] Worker (pid:805432) was sent SIGHUP!
+[2026-04-29 11:22:52 -0300] [770653] [WARNING] Worker (pid:805455) was sent SIGHUP!
+[2026-04-29 11:22:52 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:22:52 -0300] [770653] [WARNING] Worker (pid:805457) was sent SIGHUP!
+[2026-04-29 11:22:52 -0300] [805788] [INFO] Booting worker with pid: 805788
+[2026-04-29 11:24:32 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:24:32 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:24:32 -0300] [805955] [INFO] Booting worker with pid: 805955
+[2026-04-29 11:24:32 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:24:34 -0300] [805978] [INFO] Booting worker with pid: 805978
+[2026-04-29 11:24:34 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:24:34 -0300] [770653] [WARNING] Worker (pid:805765) was sent SIGHUP!
+[2026-04-29 11:24:34 -0300] [770653] [WARNING] Worker (pid:805767) was sent SIGHUP!
+[2026-04-29 11:24:34 -0300] [770653] [WARNING] Worker (pid:805788) was sent SIGHUP!
+[2026-04-29 11:24:34 -0300] [805980] [INFO] Booting worker with pid: 805980
+[2026-04-29 11:24:34 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:25:55 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:25:55 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:25:55 -0300] [806128] [INFO] Booting worker with pid: 806128
+[2026-04-29 11:25:55 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:25:55 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:25:55 -0300] [806130] [INFO] Booting worker with pid: 806130
+[2026-04-29 11:25:57 -0300] [806150] [INFO] Booting worker with pid: 806150
+[2026-04-29 11:25:57 -0300] [770653] [WARNING] Worker (pid:805955) was sent SIGHUP!
+[2026-04-29 11:25:57 -0300] [770653] [WARNING] Worker (pid:805978) was sent SIGHUP!
+[2026-04-29 11:25:57 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:25:57 -0300] [770653] [WARNING] Worker (pid:805980) was sent SIGHUP!
+[2026-04-29 11:29:23 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:29:23 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:29:24 -0300] [806452] [INFO] Booting worker with pid: 806452
+[2026-04-29 11:29:24 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:29:26 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:29:26 -0300] [806477] [INFO] Booting worker with pid: 806477
+[2026-04-29 11:29:28 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:29:28 -0300] [770653] [WARNING] Worker (pid:806128) was sent SIGHUP!
+[2026-04-29 11:29:28 -0300] [770653] [WARNING] Worker (pid:806130) was sent SIGHUP!
+[2026-04-29 11:29:28 -0300] [770653] [WARNING] Worker (pid:806150) was sent SIGHUP!
+[2026-04-29 11:29:28 -0300] [806479] [INFO] Booting worker with pid: 806479
+[2026-04-29 11:31:51 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:31:51 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:31:51 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:31:51 -0300] [806706] [INFO] Booting worker with pid: 806706
+[2026-04-29 11:31:53 -0300] [806727] [INFO] Booting worker with pid: 806727
+[2026-04-29 11:31:53 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:31:55 -0300] [770653] [WARNING] Worker (pid:806452) was sent SIGHUP!
+[2026-04-29 11:31:55 -0300] [770653] [WARNING] Worker (pid:806477) was sent SIGHUP!
+[2026-04-29 11:31:55 -0300] [770653] [WARNING] Worker (pid:806479) was sent SIGHUP!
+[2026-04-29 11:31:55 -0300] [806731] [INFO] Booting worker with pid: 806731
+[2026-04-29 11:31:55 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:36:09 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:36:09 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:36:10 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:36:10 -0300] [807095] [INFO] Booting worker with pid: 807095
+[2026-04-29 11:36:12 -0300] [807113] [INFO] Booting worker with pid: 807113
+[2026-04-29 11:36:12 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:36:14 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:36:14 -0300] [770653] [WARNING] Worker (pid:806706) was sent SIGHUP!
+[2026-04-29 11:36:14 -0300] [770653] [WARNING] Worker (pid:806727) was sent SIGHUP!
+[2026-04-29 11:36:14 -0300] [770653] [WARNING] Worker (pid:806731) was sent SIGHUP!
+[2026-04-29 11:36:14 -0300] [807118] [INFO] Booting worker with pid: 807118
+[2026-04-29 11:38:20 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:38:20 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:38:20 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:38:20 -0300] [807345] [INFO] Booting worker with pid: 807345
+[2026-04-29 11:38:22 -0300] [807362] [INFO] Booting worker with pid: 807362
+[2026-04-29 11:38:22 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:38:24 -0300] [770653] [WARNING] Worker (pid:807095) was sent SIGHUP!
+[2026-04-29 11:38:24 -0300] [807364] [INFO] Booting worker with pid: 807364
+[2026-04-29 11:38:24 -0300] [770653] [WARNING] Worker (pid:807113) was sent SIGHUP!
+[2026-04-29 11:38:24 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:38:24 -0300] [770653] [WARNING] Worker (pid:807118) was sent SIGHUP!
+[2026-04-29 11:40:30 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:40:30 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:40:30 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:40:30 -0300] [807630] [INFO] Booting worker with pid: 807630
+[2026-04-29 11:40:32 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:40:32 -0300] [807651] [INFO] Booting worker with pid: 807651
+[2026-04-29 11:40:32 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:40:32 -0300] [770653] [WARNING] Worker (pid:807345) was sent SIGHUP!
+[2026-04-29 11:40:32 -0300] [770653] [WARNING] Worker (pid:807362) was sent SIGHUP!
+[2026-04-29 11:40:32 -0300] [770653] [WARNING] Worker (pid:807364) was sent SIGHUP!
+[2026-04-29 11:40:32 -0300] [807653] [INFO] Booting worker with pid: 807653
+[2026-04-29 11:41:26 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 11:41:26 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 11:41:26 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:41:26 -0300] [807749] [INFO] Booting worker with pid: 807749
+[2026-04-29 11:41:26 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:41:26 -0300] [807751] [INFO] Booting worker with pid: 807751
+[2026-04-29 11:41:28 -0300] [807772] [INFO] Booting worker with pid: 807772
+[2026-04-29 11:41:28 -0300] [770653] [WARNING] Worker (pid:807630) was sent SIGHUP!
+[2026-04-29 11:41:28 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 11:41:28 -0300] [770653] [WARNING] Worker (pid:807651) was sent SIGHUP!
+[2026-04-29 11:41:28 -0300] [770653] [WARNING] Worker (pid:807653) was sent SIGHUP!
+[2026-04-29 13:43:10 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 13:43:10 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 13:43:11 -0300] [818651] [INFO] Booting worker with pid: 818651
+[2026-04-29 13:43:11 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:43:13 -0300] [818672] [INFO] Booting worker with pid: 818672
+[2026-04-29 13:43:13 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:43:15 -0300] [770653] [WARNING] Worker (pid:807749) was sent SIGHUP!
+[2026-04-29 13:43:15 -0300] [770653] [WARNING] Worker (pid:807751) was sent SIGHUP!
+[2026-04-29 13:43:15 -0300] [818678] [INFO] Booting worker with pid: 818678
+[2026-04-29 13:43:15 -0300] [770653] [WARNING] Worker (pid:807772) was sent SIGHUP!
+[2026-04-29 13:43:15 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:49:18 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 13:49:18 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 13:49:18 -0300] [819214] [INFO] Booting worker with pid: 819214
+[2026-04-29 13:49:18 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:49:19 -0300] [819216] [INFO] Booting worker with pid: 819216
+[2026-04-29 13:49:19 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:49:21 -0300] [819237] [INFO] Booting worker with pid: 819237
+[2026-04-29 13:49:21 -0300] [770653] [WARNING] Worker (pid:818651) was sent SIGHUP!
+[2026-04-29 13:49:21 -0300] [770653] [WARNING] Worker (pid:818672) was sent SIGHUP!
+[2026-04-29 13:49:21 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:49:21 -0300] [770653] [WARNING] Worker (pid:818678) was sent SIGHUP!
+[2026-04-29 13:50:41 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 13:50:41 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 13:50:41 -0300] [819383] [INFO] Booting worker with pid: 819383
+[2026-04-29 13:50:41 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:50:43 -0300] [819404] [INFO] Booting worker with pid: 819404
+[2026-04-29 13:50:43 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:50:43 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:50:43 -0300] [770653] [WARNING] Worker (pid:819214) was sent SIGHUP!
+[2026-04-29 13:50:43 -0300] [770653] [WARNING] Worker (pid:819216) was sent SIGHUP!
+[2026-04-29 13:50:43 -0300] [819406] [INFO] Booting worker with pid: 819406
+[2026-04-29 13:50:43 -0300] [770653] [WARNING] Worker (pid:819237) was sent SIGHUP!
+[2026-04-29 13:51:44 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 13:51:44 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 13:51:44 -0300] [819525] [INFO] Booting worker with pid: 819525
+[2026-04-29 13:51:44 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:51:44 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:51:44 -0300] [819529] [INFO] Booting worker with pid: 819529
+[2026-04-29 13:51:46 -0300] [819551] [INFO] Booting worker with pid: 819551
+[2026-04-29 13:51:46 -0300] [770653] [WARNING] Worker (pid:819383) was sent SIGHUP!
+[2026-04-29 13:51:46 -0300] [770653] [WARNING] Worker (pid:819404) was sent SIGHUP!
+[2026-04-29 13:51:46 -0300] [770653] [WARNING] Worker (pid:819406) was sent SIGHUP!
+[2026-04-29 13:51:46 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:53:39 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 13:53:39 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 13:53:39 -0300] [819775] [INFO] Booting worker with pid: 819775
+[2026-04-29 13:53:39 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:53:39 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:53:39 -0300] [819779] [INFO] Booting worker with pid: 819779
+[2026-04-29 13:53:41 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:53:41 -0300] [770653] [WARNING] Worker (pid:819525) was sent SIGHUP!
+[2026-04-29 13:53:41 -0300] [770653] [WARNING] Worker (pid:819529) was sent SIGHUP!
+[2026-04-29 13:53:41 -0300] [770653] [WARNING] Worker (pid:819551) was sent SIGHUP!
+[2026-04-29 13:53:41 -0300] [819797] [INFO] Booting worker with pid: 819797
+[2026-04-29 13:55:14 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 13:55:14 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 13:55:14 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:55:14 -0300] [819964] [INFO] Booting worker with pid: 819964
+[2026-04-29 13:55:16 -0300] [819985] [INFO] Booting worker with pid: 819985
+[2026-04-29 13:55:16 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:55:16 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:55:16 -0300] [770653] [WARNING] Worker (pid:819775) was sent SIGHUP!
+[2026-04-29 13:55:16 -0300] [770653] [WARNING] Worker (pid:819779) was sent SIGHUP!
+[2026-04-29 13:55:16 -0300] [770653] [WARNING] Worker (pid:819797) was sent SIGHUP!
+[2026-04-29 13:55:16 -0300] [819987] [INFO] Booting worker with pid: 819987
+[2026-04-29 13:59:18 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 13:59:18 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 13:59:18 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:59:18 -0300] [820546] [INFO] Booting worker with pid: 820546
+[2026-04-29 13:59:20 -0300] [820564] [INFO] Booting worker with pid: 820564
+[2026-04-29 13:59:20 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:59:22 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 13:59:22 -0300] [770653] [WARNING] Worker (pid:819964) was sent SIGHUP!
+[2026-04-29 13:59:22 -0300] [820566] [INFO] Booting worker with pid: 820566
+[2026-04-29 13:59:22 -0300] [770653] [WARNING] Worker (pid:819985) was sent SIGHUP!
+[2026-04-29 13:59:22 -0300] [770653] [WARNING] Worker (pid:819987) was sent SIGHUP!
+[2026-04-29 14:01:07 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 14:01:07 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 14:01:07 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:01:07 -0300] [820739] [INFO] Booting worker with pid: 820739
+[2026-04-29 14:01:09 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:01:09 -0300] [820760] [INFO] Booting worker with pid: 820760
+[2026-04-29 14:01:11 -0300] [820762] [INFO] Booting worker with pid: 820762
+[2026-04-29 14:01:11 -0300] [770653] [WARNING] Worker (pid:820546) was sent SIGHUP!
+[2026-04-29 14:01:12 -0300] [770653] [WARNING] Worker (pid:820564) was sent SIGHUP!
+[2026-04-29 14:01:12 -0300] [770653] [WARNING] Worker (pid:820566) was sent SIGHUP!
+[2026-04-29 14:01:12 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:04:31 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 14:04:31 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 14:04:31 -0300] [821110] [INFO] Booting worker with pid: 821110
+[2026-04-29 14:04:31 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:04:33 -0300] [821131] [INFO] Booting worker with pid: 821131
+[2026-04-29 14:04:33 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:04:33 -0300] [770653] [WARNING] Worker (pid:820739) was sent SIGHUP!
+[2026-04-29 14:04:33 -0300] [770653] [WARNING] Worker (pid:820760) was sent SIGHUP!
+[2026-04-29 14:04:33 -0300] [821133] [INFO] Booting worker with pid: 821133
+[2026-04-29 14:04:33 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:04:33 -0300] [770653] [WARNING] Worker (pid:820762) was sent SIGHUP!
+[2026-04-29 14:11:37 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 14:11:37 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 14:11:37 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:11:37 -0300] [821953] [INFO] Booting worker with pid: 821953
+[2026-04-29 14:11:39 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:11:39 -0300] [821975] [INFO] Booting worker with pid: 821975
+[2026-04-29 14:11:41 -0300] [770653] [WARNING] Worker (pid:821110) was sent SIGHUP!
+[2026-04-29 14:11:41 -0300] [770653] [WARNING] Worker (pid:821131) was sent SIGHUP!
+[2026-04-29 14:11:41 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:11:41 -0300] [821980] [INFO] Booting worker with pid: 821980
+[2026-04-29 14:11:41 -0300] [770653] [WARNING] Worker (pid:821133) was sent SIGHUP!
+[2026-04-29 14:18:04 -0300] [770653] [INFO] Handling signal: hup
+[2026-04-29 14:18:04 -0300] [770653] [INFO] Hang up: Master
+[2026-04-29 14:18:04 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:18:04 -0300] [822674] [INFO] Booting worker with pid: 822674
+[2026-04-29 14:18:06 -0300] [822692] [INFO] Booting worker with pid: 822692
+[2026-04-29 14:18:06 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:18:08 -0300] [822697] [INFO] Booting worker with pid: 822697
+[2026-04-29 14:18:08 -0300] [770653] [WARNING] Worker (pid:821953) was sent SIGHUP!
+[2026-04-29 14:18:08 -0300] [770653] [WARNING] Worker (pid:821975) was sent SIGHUP!
+[2026-04-29 14:18:08 -0300] [770653] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 14:18:08 -0300] [770653] [WARNING] Worker (pid:821980) was sent SIGHUP!
+[2026-04-29 14:48:16 -0300] [770653] [INFO] Handling signal: term
+[2026-04-29 14:48:16 -0300] [822697] [INFO] Worker exiting (pid: 822697)
+[2026-04-29 14:48:16 -0300] [822674] [INFO] Worker exiting (pid: 822674)
+[2026-04-29 14:48:16 -0300] [822692] [INFO] Worker exiting (pid: 822692)
+[2026-04-29 14:48:19 -0300] [825838] [INFO] Starting gunicorn 25.3.0
+[2026-04-29 14:48:19 -0300] [825838] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-29 14:48:19 -0300] [825838] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-29 14:48:20 -0300] [825838] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-29 14:48:20 -0300] [825838] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-29 14:48:21 -0300] [825838] [ERROR] Connection in use: ('127.0.0.1', 8000)
+[2026-04-29 14:48:21 -0300] [825838] [ERROR] connection to ('127.0.0.1', 8000) failed: [Errno 98] Address already in use
+[2026-04-29 14:48:22 -0300] [770653] [INFO] Shutting down: Master
+[2026-04-29 14:48:22 -0300] [825838] [INFO] Listening at: http://127.0.0.1:8000 (825838)
+[2026-04-29 14:48:22 -0300] [825838] [INFO] Using worker: sync
+[2026-04-29 14:48:22 -0300] [825843] [INFO] Booting worker with pid: 825843
+[2026-04-29 14:48:22 -0300] [825844] [INFO] Booting worker with pid: 825844
+[2026-04-29 14:48:22 -0300] [825845] [INFO] Booting worker with pid: 825845
+[2026-04-29 14:48:22 -0300] [825838] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 15:21:16 -0300] [825838] [INFO] Handling signal: hup
+[2026-04-29 15:21:16 -0300] [825838] [INFO] Hang up: Master
+[2026-04-29 15:21:16 -0300] [828750] [INFO] Booting worker with pid: 828750
+[2026-04-29 15:21:16 -0300] [825838] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 15:21:16 -0300] [828752] [INFO] Booting worker with pid: 828752
+[2026-04-29 15:21:16 -0300] [825838] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-04-29 15:21:16 -0300] [828754] [INFO] Booting worker with pid: 828754
+[2026-04-29 15:21:16 -0300] [825838] [WARNING] Worker (pid:825843) was sent SIGHUP!
+[2026-04-29 15:21:16 -0300] [825838] [WARNING] Worker (pid:825844) was sent SIGHUP!
+[2026-04-29 15:21:16 -0300] [825838] [WARNING] Worker (pid:825845) was sent SIGHUP!
+[2026-04-29 15:21:16 -0300] [825838] [INFO] Control socket listening at /run/user/0/gunicorn.ctl

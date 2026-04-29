@@ -276,3 +276,26 @@ class SystemSettingUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView
     def form_valid(self, form):
         messages.success(self.request, _("Configurações atualizadas com sucesso!"))
         return super().form_valid(form)
+
+from ajuda.models import ChatInteraction
+
+class ChatInteractionListView(LoginRequiredMixin, AdminRequiredMixin, ListView):
+    model = ChatInteraction
+    template_name = 'administration/chat_interactions/chat_interaction_list.html'
+    context_object_name = 'interactions'
+    paginate_by = 20
+    ordering = ['-created_at']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        status_filter = self.request.GET.get('status')
+        if status_filter:
+            queryset = queryset.filter(status=status_filter)
+        return queryset
+
+from django.views.generic import DetailView
+
+class ChatInteractionDetailView(LoginRequiredMixin, AdminRequiredMixin, DetailView):
+    model = ChatInteraction
+    template_name = 'administration/chat_interactions/chat_interaction_detail.html'
+    context_object_name = 'interaction'

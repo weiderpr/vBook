@@ -3,6 +3,20 @@
 
 {% block navbar_class %}navbar-dashboard{% endblock %}
 
+{% block extra_head %}
+<style>
+    .footer { display: none !important; }
+    .dashboard-container { 
+        min-height: calc(100vh - var(--navbar-height, 70px)); 
+        margin-bottom: 0 !important;
+    }
+    .dashboard-main {
+        padding-bottom: 2rem !important;
+    }
+</style>
+{{ block.super }}
+{% endblock %}
+
 {% block content %}
 <div class="dashboard-container">
     <aside class="sidebar">
@@ -52,3 +66,5 @@
     </main>
 </div>
 {% endblock %}
+
+{% block footer %}{% endblock %}

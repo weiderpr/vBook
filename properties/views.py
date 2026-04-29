@@ -184,8 +184,49 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
         
         costs = self.object.costs.all()
         context['costs_booking'] = costs.filter(frequency='per_booking')
-        # Initially load only the first 20 payments, the rest will be loaded via API
-        context['costs_payments'] = costs.exclude(frequency='per_booking').order_by('-payment_date', '-id')[:20]
+        
+        # Merge Property Costs and Finished Maintenances for the payments list
+        from maintenance.models import Maintenance
+        maintenances = Maintenance.objects.filter(property=self.object, status='finished').order_by('-execution_end_date')[:20]
+        
+        # Prepare a unified list for display
+        unified_payments = []
+        for pc in costs.exclude(frequency='per_booking').order_by('-payment_date', '-id')[:20]:
+            unified_payments.append({
+                'pk': pc.pk,
+                'date': pc.payment_date,
+                'name': pc.name,
+                'amount': pc.amount,
+                'type': 'cost',
+                'description': pc.description,
+                'amount_type': pc.amount_type,
+                'recipient': pc.recipient,
+                'frequency': pc.frequency,
+                'month': pc.month,
+                'year': pc.year,
+                'provider_id': pc.provider_id,
+                'provider_name': pc.provider.name if pc.provider else '',
+                'provider_photo': pc.provider.photo.url if pc.provider and pc.provider.photo else ''
+            })
+        for m in maintenances:
+            m_date = m.execution_end_date
+            if not m_date:
+                m_date = m.updated_at.date() if hasattr(m.updated_at, 'date') else m.updated_at
+            
+            unified_payments.append({
+                'pk': m.pk,
+                'date': m_date,
+                'name': f"{_('Manutenção')}: {m.title}",
+                'amount': m.execution_value or Decimal(0),
+                'type': 'maintenance',
+                'description': f"{_('Prestador')}: {m.provider.name if m.provider else _('N/A')}",
+                'm_id': m.id,
+                'p_id': m.property.id
+            })
+        
+        # Sort unified list by date descending
+        unified_payments.sort(key=lambda x: (x['date'] or date.min), reverse=True)
+        context['costs_payments'] = unified_payments[:20]
         
         context['cost_form'] = PropertyCostForm()
         
@@ -223,6 +264,15 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
             if m and y:
                 key = (m, y)
                 prop_costs_data[key] = prop_costs_data.get(key, Decimal(0)) + pc.amount
+        
+        # 2.5 Fetch all finished maintenances for financial structure
+        maint_data = {} # Key: (month, year), Value: sum
+        finished_maints = Maintenance.objects.filter(property=self.object, status='finished')
+        for m in finished_maints:
+            dt = m.execution_end_date or m.updated_at
+            if dt:
+                key = (dt.month, dt.year)
+                maint_data[key] = maint_data.get(key, Decimal(0)) + (m.execution_value or Decimal(0))
                 
         # 3. Fetch all manual financial history in bulk
         history_data = {} # Key: (month, year), Value: {'gross': D, 'costs': D}
@@ -252,13 +302,18 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
                 costs_sum = res_data[key]['costs']
                 if has_prop_costs:
                     costs_sum += prop_costs_data[key]
+                if key in maint_data:
+                    costs_sum += maint_data[key]
             else:
                 history = history_data.get(key)
                 if history:
                     gross = history['gross']
                     costs_sum = history['costs']
-                elif has_prop_costs:
-                    costs_sum = prop_costs_data[key]
+                else:
+                    if has_prop_costs:
+                        costs_sum += prop_costs_data[key]
+                    if key in maint_data:
+                        costs_sum += maint_data[key]
             
             net = gross - costs_sum
             margin = (net / gross * 100) if gross > 0 else Decimal(0)
@@ -522,7 +577,9 @@ class ServiceProviderListView(LoginRequiredMixin, ListView):
         service_id = self.request.GET.get("service")
         if service_id:
             queryset = queryset.filter(services__id=service_id).distinct()
-        return queryset
+        # Sort by financial balance: Most negative (highest debt) first
+        providers_list = sorted(list(queryset), key=lambda p: p.financial_balance)
+        return providers_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -617,6 +674,126 @@ class ServiceProviderDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, _("Prestador removido com sucesso!"))
         return super().delete(request, *args, **kwargs)
+
+class ServiceProviderFinancialMovementsView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        provider = get_object_or_404(ServiceProvider, pk=pk, user=request.user)
+        
+        from maintenance.models import Maintenance
+        from reservations.models import ReservationCost
+        
+        movements = []
+        
+        # 1. Debits: Reservation Costs
+        res_costs = ReservationCost.objects.filter(
+            provider=provider, 
+            is_completed=True
+        ).select_related('reservation', 'reservation__property')
+        
+        for rc in res_costs:
+            movements.append({
+                'type': 'debit',
+                'category': _('Reserva'),
+                'description': f"{rc.description} - {rc.reservation.property.name} ({rc.reservation.client_name})",
+                'date': rc.completed_at.strftime('%Y-%m-%d') if rc.completed_at else rc.created_at.strftime('%Y-%m-%d'),
+                'created_at': rc.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'value': float(rc.value)
+            })
+            
+        # 2. Debits: Finished Maintenances
+        maint_finished = Maintenance.objects.filter(
+            provider=provider, 
+            status='finished'
+        ).select_related('property')
+        
+        for m in maint_finished:
+            movements.append({
+                'type': 'debit',
+                'category': _('Manutenção'),
+                'description': f"{m.title} - {m.property.name}",
+                'date': m.execution_end_date.strftime('%Y-%m-%d') if m.execution_end_date else m.updated_at.strftime('%Y-%m-%d'),
+                'created_at': m.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'value': float(m.execution_value) if m.execution_value else 0
+            })
+            
+        # 3. Credits: Payments made
+        from .models import ProviderPayment
+        payments = provider.payments.all()
+        for p in payments:
+            movements.append({
+                'type': 'credit',
+                'category': _('Pagamento'),
+                'description': p.observations or _("Liquidação de Saldo"),
+                'date': p.date.strftime('%Y-%m-%d'),
+                'created_at': p.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'value': float(p.value)
+            })
+            
+        # 4. Debits: Fixed Property Costs
+        prop_costs = provider.property_costs.exclude(frequency='per_booking').select_related('property')
+        for pc in prop_costs:
+            movements.append({
+                'type': 'debit',
+                'category': _('Custo Fixo'),
+                'description': f"{pc.name} - {pc.property.name}",
+                'date': pc.payment_date.strftime('%Y-%m-%d') if pc.payment_date else pc.created_at.strftime('%Y-%m-%d'),
+                'created_at': pc.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'value': float(pc.amount)
+            })
+            
+        # Sort by date descending, and credits first on same day, then by created_at
+        movements.sort(key=lambda x: (x['date'], x['type'] == 'credit', x['created_at']), reverse=True)
+        
+        # Pagination (20 per page)
+        try:
+            page = int(request.GET.get('page', 1))
+        except (ValueError, TypeError):
+            page = 1
+            
+        page_size = 20
+        start = (page - 1) * page_size
+        end = start + page_size
+        
+        paginated_movements = movements[start:end]
+        has_more = len(movements) > end
+        
+        return JsonResponse({
+            'provider_name': provider.name,
+            'balance': float(provider.financial_balance),
+            'movements': paginated_movements,
+            'has_more': has_more,
+            'page': page
+        })
+
+class ServiceProviderAddPaymentView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        provider = get_object_or_404(ServiceProvider, pk=pk, user=request.user)
+        from .models import ProviderPayment
+        
+        try:
+            val_str = request.POST.get('value', '0').replace('R$', '').replace(' ', '').replace('.', '').replace(',', '.')
+            value = Decimal(val_str)
+            date_str = request.POST.get('date')
+            observations = request.POST.get('observations', '')
+            
+            if value <= 0:
+                return JsonResponse({'status': 'error', 'message': _("O valor deve ser maior que zero.")}, status=400)
+                
+            payment = ProviderPayment.objects.create(
+                provider=provider,
+                user=request.user,
+                date=date_str or timezone.now().date(),
+                value=value,
+                observations=observations
+            )
+            
+            return JsonResponse({
+                'status': 'success', 
+                'balance': float(provider.financial_balance),
+                'message': _("Pagamento registrado com sucesso!")
+            })
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 
 class ServiceProviderPublicView(View):
@@ -777,6 +954,23 @@ class PropertyReportsView(LoginRequiredMixin, DetailView):
                 costs_by_name[name]['values'][key] = costs_by_name[name]['values'].get(key, Decimal(0)) + pc.amount
                 costs_by_name[name]['total'] += pc.amount
                 monthly_costs_total[key] = monthly_costs_total.get(key, Decimal(0)) + pc.amount
+
+        # 5.5 Fetch Finished Maintenances for Reports
+        from maintenance.models import Maintenance
+        maintenances_rep = Maintenance.objects.filter(property=self.object, status='finished')
+        maint_category_name = _("Manutenções")
+        for m in maintenances_rep:
+            dt = m.execution_end_date or m.updated_at
+            if dt:
+                # Ensure we handle both date and datetime
+                key = (dt.month, dt.year)
+                val = m.execution_value or Decimal(0)
+                if maint_category_name not in costs_by_name:
+                    costs_by_name[maint_category_name] = {'values': {}, 'total': Decimal(0)}
+                
+                costs_by_name[maint_category_name]['values'][key] = costs_by_name[maint_category_name]['values'].get(key, Decimal(0)) + val
+                costs_by_name[maint_category_name]['total'] += val
+                monthly_costs_total[key] = monthly_costs_total.get(key, Decimal(0)) + val
 
         # 6. Fetch Manual Financial History (Optional entries for months without full data)
         histories = self.object.financial_histories.filter(year=selected_year)
