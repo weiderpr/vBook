@@ -659,6 +659,7 @@ class ServiceProviderUpdateView(LoginRequiredMixin, UpdateView):
 
 class ServiceProviderDeleteView(LoginRequiredMixin, DeleteView):
     model = ServiceProvider
+    template_name = 'properties/serviceprovider_confirm_delete.html'
 
     def get_queryset(self):
         return ServiceProvider.objects.filter(user=self.request.user)

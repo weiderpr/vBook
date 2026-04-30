@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'mobile',
     'maintenance',
     'ajuda',
+    'mobilecondominio',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'properties.context_processors.user_properties',
                 'subscriptions.context_processors.subscription_info',
+                'ajuda.context_processors.help_context',
             ],
         },
     },
@@ -140,7 +142,7 @@ SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = False 
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_USE_SESSIONS = True
+CSRF_USE_SESSIONS = False
 CSRF_COOKIE_PATH = '/' 
 SESSION_COOKIE_PATH = '/' 
 X_FRAME_OPTIONS = 'SAMEORIGIN'

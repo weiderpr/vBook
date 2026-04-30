@@ -31,5 +31,20 @@ class ChatInteraction(models.Model):
         verbose_name_plural = "Interações do Chat"
         ordering = ['-created_at']
 
+class HelpPreference(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE,
+        related_name='help_preferences'
+    )
+    help_id = models.CharField(max_length=100, verbose_name="ID da Ajuda/Wizard")
+    show_again = models.BooleanField(default=True, verbose_name="Mostrar Novamente")
+    last_seen = models.DateTimeField(auto_now=True, verbose_name="Última Visualização")
+
+    class Meta:
+        unique_together = ('user', 'help_id')
+        verbose_name = "Preferência de Ajuda"
+        verbose_name_plural = "Preferências de Ajuda"
+
     def __str__(self):
-        return f"{self.user} - {self.created_at.strftime('%d/%m/%Y %H:%M')}"
+        return f"{self.user} - {self.help_id} (Show: {self.show_again})"

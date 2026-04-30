@@ -173,6 +173,114 @@
         border-radius: 8px !important;
         box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
     }
+    /* Modal Styles */
+    .vbook-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(8px);
+        z-index: 10000;
+        justify-content: center;
+        align-items: center;
+    }
+    .vbook-modal-overlay.active {
+        display: flex;
+    }
+    .vbook-modal-content {
+        background: var(--bg-dark); /* Follows theme */
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        position: relative;
+        box-shadow: var(--glass-shadow);
+        width: 95%;
+        max-width: 500px;
+        padding: 2.5rem;
+        color: var(--text-main);
+    }
+    .modal-close-btn {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: rgba(255,255,255,0.05);
+        border: none;
+        color: var(--text-muted);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        z-index: 10;
+    }
+    .modal-close-btn:hover {
+        background: #ef4444;
+        color: white;
+    }
+
+    /* Professional Table Styles */
+    .professional-table {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+    .professional-table thead th {
+        color: var(--text-muted);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border: none;
+        padding: 1rem;
+    }
+    .professional-table tbody tr {
+        background: rgba(255, 255, 255, 0.02);
+        transition: all 0.2s;
+    }
+    .professional-table tbody tr:hover {
+        background: rgba(255, 255, 255, 0.05);
+        transform: scale(1.005);
+    }
+    .professional-table tbody td {
+        padding: 1.2rem 1rem;
+        border-top: 1px solid var(--glass-border);
+        border-bottom: 1px solid var(--glass-border);
+    }
+    .professional-table tbody td:first-child {
+        border-left: 1px solid var(--glass-border);
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
+    .professional-table tbody td:last-child {
+        border-right: 1px solid var(--glass-border);
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+    /* Actions Buttons */
+    .btn-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-muted);
+        border: 1px solid var(--glass-border);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn-icon:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+    }
+    .btn-icon.delete:hover {
+        background: #ef4444;
+        border-color: #ef4444;
+    }
 </style>
 {% endblock %}
 
@@ -227,6 +335,9 @@
     <div class="tabs-header">
         <button type="button" class="tab-btn active" id="btn-cadastrais" onclick="showTab('cadastrais')">{% trans "Dados Cadastrais" %}</button>
         <button type="button" class="tab-btn" id="btn-autorizacao" onclick="showTab('autorizacao')">{% trans "Modelo de Autorização" %}</button>
+        {% if object %}
+            <button type="button" class="tab-btn" id="btn-usuarios" onclick="showTab('usuarios')">{% trans "Usuários" %}</button>
+        {% endif %}
     </div>
 
     <form method="post" id="condo-form">
@@ -283,11 +394,20 @@
                     {% endif %}
                 </div>
 
-                <div class="form-group" style="grid-column: span 2;">
+                <div class="form-group">
                     <div class="form-check">
                         {{ form.requires_authorization }}
                         <label for="{{ form.requires_authorization.id_for_label }}" style="font-weight: 600; font-size: 0.9rem; cursor: pointer;">
                             {{ form.requires_authorization.label }}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check" style="border-color: var(--primary); background: rgba(108, 92, 231, 0.05);">
+                        {{ form.is_automated }}
+                        <label for="{{ form.is_automated.id_for_label }}" style="font-weight: 700; font-size: 0.9rem; cursor: pointer; color: var(--primary);">
+                            {{ form.is_automated.label }}
                         </label>
                     </div>
                 </div>
@@ -326,14 +446,14 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M12 3v18"/><path d="M3 12h18"/></svg>
                             {% trans "Rodapé" %}
                         </button>
-
+ 
                         <button type="button" class="variable-btn variable-btn-danger" onclick="copyToEditor('{% templatetag openvariable %}assinatura_proprietario{% templatetag closevariable %}')" style="margin-top: 0.5rem;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="m15.06 11.06 1.41-1.41a2 2 0 1 0-2.83-2.83l-1.41 1.41"/><path d="m9.6 16.03-3.6 3.6a2 2 0 0 1-2.83-2.83l3.6-3.6"/><path d="M12 12 8.5 8.5"/></svg>
                             {% trans "Assinatura" %}
                         </button>
                     </div>
                 </div>
-
+ 
                 <!-- Editor Container -->
                 <div class="authorization-editor-container">
                     {{ form.authorization_template }}
@@ -341,6 +461,37 @@
             </div>
         </div>
     </form>
+
+    <!-- Tab: Usuários -->
+    {% if object %}
+    <div id="usuarios" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--text-main);">{% trans "Colaboradores do Condomínio" %}</h3>
+            <button type="button" class="btn btn-primary btn-sm" onclick="openUserModal()" style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; padding: 0.5rem 1rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                {% trans "Adicionar Usuário" %}
+            </button>
+        </div>
+        <div id="users-table-container">
+            <div style="text-align: center; padding: 3rem;">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p style="margin-top: 1rem; color: var(--text-muted);">{% trans "Carregando usuários..." %}</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Modal Usuário -->
+<div id="userModal" class="vbook-modal-overlay">
+    <div class="vbook-modal-content" style="max-width: 500px; padding: 2.5rem;">
+        <button class="modal-close-btn" onclick="closeUserModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+        </button>
+        <div id="userModalBody">
+            <!-- Content loaded via AJAX -->
+        </div>
+    </div>
 </div>
 
 {% include 'properties/includes/modal_authorization_preview.html' %}
@@ -360,6 +511,97 @@
         } else {
             previewBtn.style.display = 'none';
         }
+
+        if (tabId === 'usuarios') {
+            loadCondoUsers();
+        }
+    }
+
+    // User CRUD Logic
+    function loadCondoUsers() {
+        const container = document.getElementById('users-table-container');
+        fetch("{% url 'administration:condo_user_list' object.pk %}")
+            .then(response => response.text())
+            .then(html => {
+                container.innerHTML = html;
+            });
+    }
+
+    function openUserModal(userId = null) {
+        const modal = document.getElementById('userModal');
+        const body = document.getElementById('userModalBody');
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+
+        let url = userId ? 
+            "{% url 'administration:condo_user_edit' 0 %}".replace('0', userId) : 
+            "{% url 'administration:condo_user_create' object.pk %}";
+
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                body.innerHTML = html;
+            });
+    }
+
+    function closeUserModal() {
+        document.getElementById('userModal').classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function saveUser(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                closeUserModal();
+                loadCondoUsers();
+            } else {
+                alert('Erro ao salvar usuário. Verifique os dados.');
+            }
+        });
+    }
+
+    function deleteUser(userId) {
+        if (!confirm('{% trans "Tem certeza que deseja excluir este usuário?" %}')) return;
+
+        fetch("{% url 'administration:condo_user_delete' 0 %}".replace('0', userId), {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                loadCondoUsers();
+            }
+        });
     }
 
     function initializeEditor() {

@@ -126,6 +126,8 @@
         border: 1px solid rgba(0, 198, 255, 0.2);
         cursor: pointer;
         transition: all 0.2s;
+        padding: 2px 8px;
+        font-size: 0.6rem;
     }
 
     .checkin-badge:hover {
@@ -364,6 +366,36 @@
                         <div class="period-text">
                             {{ res.start_date|date:"SHORT_DATE_FORMAT" }} <span style="opacity: 0.4;">➔</span> {{ res.end_date|date:"SHORT_DATE_FORMAT" }}
                         </div>
+                        {% if res.entry_release %}
+                        <div class="gate-release-info" style="margin-top: 8px; display: flex; align-items: center; gap: 8px; font-size: 0.7rem; color: #10b981; opacity: 0.9; background: rgba(16, 185, 129, 0.05); padding: 4px 8px; border-radius: 8px; width: fit-content; border: 1px solid rgba(16, 185, 129, 0.1);">
+                            <div style="width: 20px; height: 20px; border-radius: 50%; overflow: hidden; background: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(16, 185, 129, 0.2);">
+                                {% if res.entry_release.user.profile_picture %}
+                                    <img src="{{ res.entry_release.user.profile_picture.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                {% endif %}
+                            </div>
+                            <div style="display: flex; flex-direction: column; line-height: 1.1;">
+                                <span style="font-weight: 600;">{{ res.entry_release.user.first_name_display }} <span style="font-weight: 400; opacity: 0.7; font-size: 0.65rem;">• {{ res.entry_release.released_at|date:"d/m H:i" }}</span></span>
+                                <span style="text-transform: uppercase; font-size: 0.55rem; letter-spacing: 0.05em; font-weight: 800; opacity: 0.8;">{% trans "Entrada no condomínio" %}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if res.exit_release %}
+                        <div class="gate-release-info" style="margin-top: 4px; display: flex; align-items: center; gap: 8px; font-size: 0.7rem; color: #ef4444; opacity: 0.9; background: rgba(239, 68, 68, 0.05); padding: 4px 8px; border-radius: 8px; width: fit-content; border: 1px solid rgba(239, 68, 68, 0.1);">
+                            <div style="width: 20px; height: 20px; border-radius: 50%; overflow: hidden; background: #ef4444; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(239, 68, 68, 0.2);">
+                                {% if res.exit_release.user.profile_picture %}
+                                    <img src="{{ res.exit_release.user.profile_picture.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                {% endif %}
+                            </div>
+                            <div style="display: flex; flex-direction: column; line-height: 1.1;">
+                                <span style="font-weight: 600;">{{ res.exit_release.user.first_name_display }} <span style="font-weight: 400; opacity: 0.7; font-size: 0.65rem;">• {{ res.exit_release.released_at|date:"d/m H:i" }}</span></span>
+                                <span style="text-transform: uppercase; font-size: 0.55rem; letter-spacing: 0.05em; font-weight: 800; opacity: 0.8;">{% trans "Saída do condomínio" %}</span>
+                            </div>
+                        </div>
+                        {% endif %}
                     </td>
                     <td>
                         <div style="display: flex; flex-direction: column; gap: 6px; align-items: flex-start;">
@@ -383,7 +415,7 @@
                                 <div class="checkin-badge-container">
                                     <span class="status-badge checkin-badge" onclick="openGuestDetail('{{ res.pk }}')">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><polyline points="20 6 9 17 4 12"/></svg>
-                                        {% trans "Check-in Realizado" %}
+                                        {% trans "Dados preenchidos" %}
                                     </span>
                                     <form method="post" action="{% url 'reservations:reset_checkin' property.pk res.pk %}" onsubmit="return confirmAction('reset_checkin')" style="display: inline;">
                                         {% csrf_token %}

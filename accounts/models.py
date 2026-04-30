@@ -37,9 +37,37 @@ class CustomUser(AbstractUser):
     # Admin field
     is_admin = models.BooleanField(default=False, verbose_name="Administrador")
 
+    # Condominium association
+    condo = models.ForeignKey(
+        'administration.Condo', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='users',
+        verbose_name="Condomínio"
+    )
+
+    USER_TYPE_CHOICES = [
+        ('admin', 'Administrador do Sistema'),
+        ('manager', 'Gestor de Propriedades'),
+        ('staff', 'Colaborador de Condomínio'),
+    ]
+    user_type = models.CharField(
+        max_length=20,
+        choices=USER_TYPE_CHOICES,
+        default='manager',
+        verbose_name="Tipo de Usuário"
+    )
+
     # Use email as the identifier for login
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'full_name']
+
+    @property
+    def first_name_display(self):
+        if self.full_name:
+            return self.full_name.split()[0]
+        return self.username.split('@')[0]
 
     def save(self, *args, **kwargs):
         if not self.username:

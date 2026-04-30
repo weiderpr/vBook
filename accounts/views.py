@@ -100,6 +100,10 @@ def profile_view(request):
     })
 
 
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils import translation
+
+@ensure_csrf_cookie
 def login_view(request):
     if request.method == 'POST':
         form = UserLoginForm(request, data=request.POST)
@@ -112,13 +116,18 @@ def login_view(request):
                 return redirect('dashboard')
                 
             # Verifica se tem assinatura válida
-            from subscriptions.models import Subscription
-            subscription = Subscription.objects.filter(user=user).first()
-            # Se o plano não for válido (vencido ou pendente), vai para o perfil
-            if not subscription or not subscription.is_valid:
-                if is_mobile(request):
-                    return redirect('mobile:plans')
-                return redirect('profile')
+            # Bypass para admins e staff de condomínio
+            if not getattr(user, 'is_admin', False) and getattr(user, 'user_type', '') != 'staff':
+                from subscriptions.models import Subscription
+                subscription = Subscription.objects.filter(user=user).first()
+                # Se o plano não for válido (vencido ou pendente), vai para o perfil
+                if not subscription or not subscription.is_valid:
+                    if is_mobile(request):
+                        return redirect('mobile:plans')
+                    return redirect('profile')
+                
+            if getattr(user, 'user_type', '') == 'staff':
+                return redirect('mobilecondominio:dashboard')
                 
             if is_mobile(request):
                 return redirect('mobile:home')

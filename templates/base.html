@@ -184,6 +184,7 @@
     <div id="toast-container" class="toast-container"></div>
 
     <!-- Chatbot Widget -->
+    {% block chatbot_widget %}
     <div id="chatbot-widget" class="chatbot-widget">
         <div id="chatbot-window" class="chatbot-window hidden">
             <div class="chatbot-header">
@@ -211,6 +212,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
         </button>
     </div>
+    {% endblock %}
 
     {% block footer %}
     <footer class="footer">
@@ -485,6 +487,25 @@
             }
         }
     </script>
+    {% if user.is_authenticated and show_welcome_wizard %}
+        {% include "ajuda/welcome_wizard.html" with help_id="welcome_wizard" %}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    const planModal = document.getElementById('plansModal');
+                    const isPlanModalOpen = planModal && planModal.style.display === 'flex';
+                    
+                    if (!isPlanModalOpen) {
+                        const welcomeModal = document.getElementById('helpModal_welcome_wizard');
+                        if (welcomeModal) {
+                            welcomeModal.style.display = 'flex';
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+                }, 1500); // 1.5s delay to ensure it's the last thing to pop up
+            });
+        </script>
+    {% endif %}
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>

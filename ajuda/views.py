@@ -338,3 +338,30 @@ def chat_query_view(request):
 
 def help_center_view(request):
     return render(request, 'ajuda/help_center.html')
+
+@csrf_exempt
+def save_help_preference(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+        
+    try:
+        data = json.loads(request.body)
+        help_id = data.get('help_id')
+        show_again = data.get('show_again', True)
+        
+        if not help_id:
+            return JsonResponse({'error': 'Missing help_id'}, status=400)
+            
+        from .models import HelpPreference
+        pref, created = HelpPreference.objects.update_or_create(
+            user=request.user,
+            help_id=help_id,
+            defaults={'show_again': show_again}
+        )
+        
+        return JsonResponse({'status': 'success', 'created': created})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

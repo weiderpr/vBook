@@ -1,0 +1,50 @@
+{% load i18n %}
+<div class="table-responsive">
+    <table class="professional-table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>{% trans "Usuário" %}</th>
+                <th>{% trans "E-mail" %}</th>
+                <th style="text-align: right;">{% trans "Ações" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in condo_users %}
+            <tr>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 36px; height: 36px; border-radius: 50%; overflow: hidden; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border);">
+                            {% if u.profile_picture %}
+                                <img src="{{ u.profile_picture.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            {% endif %}
+                        </div>
+                        <span style="font-weight: 600; color: var(--text-main);">{{ u.full_name }}</span>
+                    </div>
+                </td>
+                <td style="color: var(--text-muted);">{{ u.email }}</td>
+                <td>
+                    <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                        <button type="button" class="btn-icon" onclick="openUserModal('{{ u.pk }}')" title="{% trans 'Editar' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                        </button>
+                        <button type="button" class="btn-icon delete" onclick="deleteUser('{{ u.pk }}')" title="{% trans 'Excluir' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" style="text-align: center; padding: 4rem; color: var(--text-muted);">
+                    <div style="opacity: 0.5; margin-bottom: 1rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 5 5"/><path d="m22 11-5 5"/></svg>
+                    </div>
+                    {% trans "Nenhum usuário vinculado a este condomínio." %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

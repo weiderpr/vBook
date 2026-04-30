@@ -1,0 +1,384 @@
+{% load i18n static %}
+
+<div id="helpModal_{{ help_id }}" class="help-modal-backdrop" style="display: none;">
+    <div class="help-modal-glass">
+        <div class="help-modal-content">
+            <div class="help-wizard-header">
+                <div class="header-logo">
+                    Vertice<span>Book</span> <small>{% trans "Guia" %}</small>
+                </div>
+                <button type="button" class="help-modal-close" onclick="window['closeHelpModal_{{ help_id }}']()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+
+            <div class="help-wizard-body">
+                <div class="help-slides-container" id="slides_{{ help_id }}">
+                    {% block help_slides %}{% endblock %}
+                </div>
+            </div>
+
+            <div class="help-wizard-footer">
+                <div class="dont-show-again">
+                    <label class="help-checkbox-container">
+                        <input type="checkbox" id="dontShowAgain_{{ help_id }}">
+                        <span class="checkmark"></span>
+                        {% trans "Não exibir novamente" %}
+                    </label>
+                </div>
+                <div class="help-dots" id="dots_{{ help_id }}">
+                    <!-- Dots will be generated via JS -->
+                </div>
+                <div class="help-navigation">
+                    <button type="button" class="btn-help-nav prev" onclick="window['moveHelpSlide_{{ help_id }}'](-1)" id="prevBtn_{{ help_id }}" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                        {% trans "Anterior" %}
+                    </button>
+                    <button type="button" class="btn-help-nav next" onclick="window['moveHelpSlide_{{ help_id }}'](1)" id="nextBtn_{{ help_id }}">
+                        {% trans "Próximo" %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                    <button type="button" class="btn-help-nav finish" onclick="window['closeHelpModal_{{ help_id }}']()" id="finishBtn_{{ help_id }}" style="display: none;">
+                        {% trans "Começar" %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .help-modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3000;
+        animation: helpFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .help-modal-glass {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 32px;
+        width: 90%;
+        max-width: 800px;
+        min-height: 500px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.6);
+        animation: helpSlideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .help-modal-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 2.5rem;
+    }
+
+    .help-wizard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .header-logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+    .header-logo span { color: var(--primary); }
+    .header-logo small { 
+        font-size: 0.7rem; 
+        text-transform: uppercase; 
+        background: rgba(0, 198, 255, 0.15);
+        color: #00c6ff;
+        padding: 2px 8px;
+        border-radius: 12px;
+        margin-left: 8px;
+        font-weight: 600;
+    }
+
+    .help-modal-close {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+    .help-modal-close:hover {
+        background: rgba(255,255,255,0.1);
+        transform: rotate(90deg);
+    }
+
+    .help-wizard-body {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+        min-height: 300px;
+    }
+
+    .help-slides-container {
+        display: flex;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+    }
+
+    .help-slide {
+        min-width: 100%;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        animation: slideFadeIn 0.5s ease forwards;
+    }
+
+    .help-slide h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .help-slide p {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        line-height: 1.6;
+        max-width: 600px;
+    }
+
+    .help-slide-media {
+        margin-top: 2rem;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 20px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .media-icon {
+        width: 64px;
+        height: 64px;
+        background: rgba(0, 198, 255, 0.1);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00c6ff;
+        flex-shrink: 0;
+    }
+
+    .media-text { font-size: 0.95rem; color: #cbd5e1; }
+
+    .help-wizard-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        gap: 1rem;
+    }
+    .help-navigation {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        flex-shrink: 0;
+    }
+
+    .btn-help-nav {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.8rem 1.2rem;
+        border-radius: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        white-space: nowrap !important;
+        flex-shrink: 0;
+        min-width: 110px;
+    }
+    .btn-help-nav:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 198, 255, 0.3); }
+    .btn-help-nav.prev { background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); }
+    .btn-help-nav.prev:hover { background: rgba(255,255,255,0.1); color: white; }
+    .btn-help-nav.finish { background: #10b981; }
+    .btn-help-nav.finish:hover { box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+
+    .help-dots { display: flex; gap: 8px; }
+    .help-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        transition: all 0.3s;
+    }
+    .help-dot.active {
+        background: var(--primary);
+        width: 24px;
+        border-radius: 4px;
+    }
+
+    /* Checkbox Styling */
+    .help-checkbox-container {
+        display: block;
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #64748b;
+        user-select: none;
+        transition: color 0.2s;
+    }
+    .help-checkbox-container:hover { color: #94a3b8; }
+    .help-checkbox-container input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 18px;
+        width: 18px;
+        background-color: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 4px;
+    }
+    .help-checkbox-container input:checked ~ .checkmark { background-color: var(--primary); border-color: var(--primary); }
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+    .help-checkbox-container input:checked ~ .checkmark:after { display: block; }
+
+    @keyframes helpFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes helpSlideUp { from { transform: translateY(40px) scale(0.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+    @keyframes slideFadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+    @media (max-width: 600px) {
+        .help-modal-glass { width: 95%; min-height: 400px; }
+        .help-modal-content { padding: 1.5rem; }
+        .help-slide h2 { font-size: 1.8rem; }
+        .help-slide p { font-size: 1rem; }
+        .dont-show-again { display: none; }
+    }
+</style>
+
+<script>
+    (function() {
+        const helpId = '{{ help_id }}';
+        let currentSlide = 0;
+        const modal = document.getElementById(`helpModal_${helpId}`);
+        const slidesContainer = document.getElementById(`slides_${helpId}`);
+        const dotsContainer = document.getElementById(`dots_${helpId}`);
+        const prevBtn = document.getElementById(`prevBtn_${helpId}`);
+        const nextBtn = document.getElementById(`nextBtn_${helpId}`);
+        const finishBtn = document.getElementById(`finishBtn_${helpId}`);
+        const slides = slidesContainer.querySelectorAll('.help-slide');
+        const totalSlides = slides.length;
+
+        function init() {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = i === 0 ? 'help-dot active' : 'help-dot';
+                dotsContainer.appendChild(dot);
+            }
+            updateNav();
+        }
+
+        function moveSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+
+            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            const dots = dotsContainer.querySelectorAll('.help-dot');
+            dots.forEach((dot, index) => {
+                dot.className = index === currentSlide ? 'help-dot active' : 'help-dot';
+            });
+
+            updateNav();
+        }
+
+        function updateNav() {
+            if (prevBtn) prevBtn.style.display = currentSlide === 0 ? 'none' : 'flex';
+            
+            if (currentSlide === totalSlides - 1) {
+                if (nextBtn) nextBtn.style.display = 'none';
+                if (finishBtn) finishBtn.style.display = 'flex';
+            } else {
+                if (nextBtn) nextBtn.style.display = 'flex';
+                if (finishBtn) finishBtn.style.display = 'none';
+            }
+        }
+
+        function close() {
+            const dontShow = document.getElementById(`dontShowAgain_${helpId}`).checked;
+            if (dontShow) {
+                savePreference();
+            }
+            modal.style.opacity = '0';
+            modal.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        function savePreference() {
+            fetch("{% url 'ajuda:save_preference' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    help_id: helpId,
+                    show_again: false
+                })
+            }).catch(err => console.error("Erro ao salvar preferência de ajuda:", err));
+        }
+
+        // Global exposing for the buttons
+        window[`moveHelpSlide_${helpId}`] = moveSlide;
+        window[`closeHelpModal_${helpId}`] = close;
+
+        init();
+    })();
+</script>

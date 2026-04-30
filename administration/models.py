@@ -10,6 +10,7 @@ class Condo(models.Model):
     address_state = models.CharField(_("Estado"), max_length=2)
     
     requires_authorization = models.BooleanField(_("Exige autorização de acesso"), default=False)
+    is_automated = models.BooleanField(_("Portaria automatizada com VerticeBook?"), default=False)
     authorization_template = models.TextField(_("Modelo de autorização"), blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)

@@ -20,6 +20,7 @@ def get_property_stats(prop, month=None, year=None):
     
     # Imports inside to avoid circular dependencies if called from models
     from .models import PropertyCost, FinancialHistory
+    from reservations.models import Reservation, ReservationCost
     from maintenance.models import Maintenance
 
     # Reservations for the month (accounting reference: end_date)
@@ -181,6 +182,7 @@ def get_yearly_stats(user):
     """
     from django.utils import timezone
     from properties.models import Property, PropertyCost, FinancialHistory
+    from reservations.models import Reservation, ReservationCost
     from django.db.models import Sum, Q
     from decimal import Decimal
     from maintenance.models import Maintenance

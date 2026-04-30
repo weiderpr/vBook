@@ -12,13 +12,20 @@ class SubscriptionMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # Se o usuário não está logado ou é o super-admin do sistema, permitimos
-        if not request.user.is_authenticated or getattr(request.user, 'is_admin', False):
+        # 1. Se não autenticado, segue fluxo normal (login vai tratar)
+        if not request.user.is_authenticated:
             return self.get_response(request)
 
-        # Tentamos identificar a view atual de forma robusta
+        # 2. Bypass CRÍTICO: Admins e Staff de Condomínio não precisam de plano pessoal
+        user = request.user
+        is_admin = getattr(user, 'is_admin', False)
+        user_type = getattr(user, 'user_type', '')
+        
+        if is_admin or user_type == 'staff':
+            return self.get_response(request)
+
+        # 3. Identificação da View
         try:
-            # path_info ignora o prefixo do script (como /book)
             match = resolve(request.path_info)
             view_name = match.view_name
         except:

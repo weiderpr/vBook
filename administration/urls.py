@@ -28,6 +28,12 @@ urlpatterns = [
     path('condominios/<int:pk>/excluir/', views.CondoDeleteView.as_view(), name='condo_delete'),
     path('condominios/<int:pk>/json/', views.CondoDetailAjaxView.as_view(), name='condo_detail_json'),
     
+    # Usuários do Condomínio (Gerenciamento interno)
+    path('condominios/<int:pk>/usuarios/', views.CondoUserListView.as_view(), name='condo_user_list'),
+    path('condominios/<int:pk>/usuarios/novo/', views.CondoUserCreateView.as_view(), name='condo_user_create'),
+    path('condominios/usuarios/<int:pk>/editar/', views.CondoUserUpdateView.as_view(), name='condo_user_edit'),
+    path('condominios/usuarios/<int:pk>/excluir/', views.CondoUserDeleteView.as_view(), name='condo_user_delete'),
+    
     # Planos
     path('planos/', views.PlanListView.as_view(), name='plan_list'),
     path('planos/novo/', views.PlanCreateView.as_view(), name='plan_create'),

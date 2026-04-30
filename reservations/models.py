@@ -115,6 +115,11 @@ class Reservation(models.Model):
         verbose_name=_("Check-in Realizado")
     )
     
+    checkout_completed = models.BooleanField(
+        default=False,
+        verbose_name=_("Check-out Realizado")
+    )
+    
     authorization_sent = models.BooleanField(
         default=False,
         verbose_name=_("Autorização Enviada")
@@ -166,6 +171,14 @@ class Reservation(models.Model):
                 property_cost=pc,
                 provider=pc.provider
             )
+
+    @_property
+    def entry_release(self):
+        return self.gate_releases.filter(release_type='entry').first()
+        
+    @_property
+    def exit_release(self):
+        return self.gate_releases.filter(release_type='exit').first()
 
     def __str__(self):
         return f"{self.client_name} ({self.start_date} - {self.end_date})"
@@ -306,3 +319,37 @@ class ReservationPayment(models.Model):
 
     def __str__(self):
         return f"{self.description}: {self.value} ({self.reservation})"
+class GateRelease(models.Model):
+    reservation = models.ForeignKey(
+        Reservation,
+        on_delete=models.CASCADE,
+        related_name='gate_releases',
+        verbose_name=_("Reserva")
+    )
+    user = models.ForeignKey(
+        'accounts.CustomUser',
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Porteiro/Usuário")
+    )
+    
+    TYPE_CHOICES = [
+        ('entry', _('Entrada')),
+        ('exit', _('Saída')),
+    ]
+    release_type = models.CharField(
+        max_length=10, 
+        choices=TYPE_CHOICES, 
+        default='entry',
+        verbose_name=_("Tipo de Liberação")
+    )
+    
+    released_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Liberado em"))
+
+    class Meta:
+        verbose_name = _("Liberação de Portaria")
+        verbose_name_plural = _("Liberações de Portaria")
+        unique_together = ('reservation', 'release_type')
+
+    def __str__(self):
+        return f"{self.get_release_type_display()}: {self.reservation.client_name} em {self.released_at}"

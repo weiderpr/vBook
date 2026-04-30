@@ -299,3 +299,59 @@ class ChatInteractionDetailView(LoginRequiredMixin, AdminRequiredMixin, DetailVi
     model = ChatInteraction
     template_name = 'administration/chat_interactions/chat_interaction_detail.html'
     context_object_name = 'interaction'
+from .forms import CondoUserForm
+
+class CondoUserListView(LoginRequiredMixin, AdminRequiredMixin, ListView):
+    model = CustomUser
+    template_name = 'administration/condos/includes/user_table.html'
+    context_object_name = 'condo_users'
+
+    def get_queryset(self):
+        self.condo = get_object_or_404(Condo, pk=self.kwargs['pk'])
+        return CustomUser.objects.filter(condo=self.condo).order_by('full_name')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['condo'] = self.condo
+        return context
+
+class CondoUserCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
+    model = CustomUser
+    form_class = CondoUserForm
+    template_name = 'administration/condos/includes/user_form_modal.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pk'] = self.kwargs['pk']
+        return context
+
+    def form_valid(self, form):
+        condo = get_object_or_404(Condo, pk=self.kwargs['pk'])
+        user = form.save(commit=False)
+        user.condo = condo
+        user.user_type = 'staff'
+        user.save()
+        return JsonResponse({'status': 'success', 'message': _("Usuário criado com sucesso!")})
+
+    def form_invalid(self, form):
+        return JsonResponse({'status': 'error', 'errors': form.errors})
+
+class CondoUserUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = CondoUserForm
+    template_name = 'administration/condos/includes/user_form_modal.html'
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({'status': 'success', 'message': _("Usuário atualizado com sucesso!")})
+
+    def form_invalid(self, form):
+        return JsonResponse({'status': 'error', 'errors': form.errors})
+
+class CondoUserDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
+    model = CustomUser
+
+    def post(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.delete()
+        return JsonResponse({'status': 'success', 'message': _("Usuário excluído com sucesso!")})

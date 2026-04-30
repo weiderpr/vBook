@@ -19,7 +19,7 @@ class CondoForm(forms.ModelForm):
         model = Condo
         fields = [
             'name', 'address_street', 'address_number', 'address_neighborhood',
-            'address_city', 'address_state', 'requires_authorization', 'authorization_template'
+            'address_city', 'address_state', 'requires_authorization', 'is_automated', 'authorization_template'
         ]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Ex: Condomínio Solar das Águas')}),
@@ -29,6 +29,7 @@ class CondoForm(forms.ModelForm):
             'address_city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Cidade...')}),
             'address_state': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('UF'), 'maxlength': '2'}),
             'requires_authorization': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_automated': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'authorization_template': forms.Textarea(attrs={'id': 'editor'}),
         }
 
@@ -90,3 +91,36 @@ class PlanForm(forms.ModelForm):
             except:
                 raise forms.ValidationError(_("Valor inválido."))
         return value
+from accounts.models import CustomUser
+
+class CondoUserForm(forms.ModelForm):
+    password = forms.CharField(
+        label=_("Senha"), 
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': _('Mínimo 6 caracteres')}),
+        required=False  # Required only for creation
+    )
+    
+    class Meta:
+        model = CustomUser
+        fields = ['full_name', 'email', 'password']
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Nome do colaborador')}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': _('email@exemplo.com')}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['password'].help_text = _("Deixe em branco para manter a senha atual.")
+            self.fields['password'].required = False
+        else:
+            self.fields['password'].required = True
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data.get("password")
+        if password:
+            user.set_password(password)
+        if commit:
+            user.save()
+        return user

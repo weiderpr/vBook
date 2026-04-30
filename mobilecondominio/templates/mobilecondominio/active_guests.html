@@ -1,0 +1,214 @@
+{% extends 'mobilecondominio/base_mobile.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Hóspedes Ativos" %} - VerticeBook{% endblock %}
+{% block page_title %}{% trans "Consulta de Hóspedes" %}{% endblock %}
+
+{% block back_button %}
+<a href="{% url 'mobilecondominio:dashboard' %}" class="menu-toggle" style="text-decoration: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+</a>
+{% endblock %}
+
+{% block extra_style %}
+    .guests-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding-bottom: 2rem;
+    }
+
+    .guest-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        transition: var(--transition);
+        animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .guest-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .property-complement {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-light);
+    }
+
+    .guest-name {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-main);
+    }
+
+    .stay-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 0.75rem;
+        border-radius: 12px;
+    }
+
+    .info-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+    }
+
+    .info-row svg {
+        width: 14px;
+        height: 14px;
+        color: var(--primary);
+    }
+
+    .info-value {
+        color: var(--text-main);
+        font-weight: 500;
+    }
+
+    .checkout-badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .badge-upcoming {
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--primary-light);
+    }
+
+    .badge-today {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-dim);
+    }
+
+    .empty-icon {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 1rem;
+        opacity: 0.3;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="guests-container">
+        {% if guests %}
+            {% for reservation in guests %}
+                <div class="guest-card" style="animation-delay: {{ forloop.counter0|add:1 }}00ms;">
+                    <div class="guest-header">
+                        <div class="property-complement">
+                            {{ reservation.property.address_complement|default:reservation.property.name }}
+                        </div>
+                        {% if reservation.end_date == today %}
+                            <span class="checkout-badge badge-today">{% trans "Checkout Hoje" %}</span>
+                        {% else %}
+                            <span class="checkout-badge badge-upcoming">{% trans "Ativo" %}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="guest-name">
+                        {{ reservation.client_name }}
+                    </div>
+
+                    <div class="stay-info">
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            <span>{% trans "Entrada:" %}</span>
+                            <span class="info-value">{{ reservation.start_date|date:"d/m/Y" }}</span>
+                        </div>
+                        <div class="info-row" style="opacity: 0.8; font-size: 0.75rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #10b981;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <span>{% trans "Recepcionado:" %}</span>
+                            <span class="info-value">{{ reservation.entry_release.released_at|date:"d/m/Y H:i" }}</span>
+                            <span style="color: var(--text-dim); margin-left: 2px;">({{ reservation.entry_release.user.first_name_display }})</span>
+                        </div>
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                            <span>{% trans "Saída:" %}</span>
+                            <span class="info-value">{{ reservation.end_date|date:"d/m/Y" }} às {{ reservation.display_checkout_time|time:"H:i" }}</span>
+                        </div>
+                    </div>
+
+                    {% if reservation.provider_costs %}
+                        <div class="providers-section" style="margin-top: 0.25rem; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 0.75rem;">
+                            <div style="font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; font-weight: 700;">
+                                {% trans "Serviços Associados" %}
+                            </div>
+                            {% for cost in reservation.provider_costs %}
+                                <div class="info-row" style="margin-bottom: 0.25rem;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #10b981;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    <span style="font-weight: 600;">{{ cost.description }}:</span>
+                                    <span class="info-value">{{ cost.provider.name|default:"---" }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
+                        <a href="{% url 'mobilecondominio:reservation_detail' reservation.pk %}" style="flex: 1; text-align: center; font-size: 0.85rem; color: var(--primary-light); text-decoration: none; font-weight: 600; padding: 0.5rem; border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 8px;">
+                            {% trans "Detalhes" %}
+                        </a>
+                        <button onclick="handleCheckout('{{ reservation.pk }}', '{{ reservation.client_name }}')" style="flex: 1; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; padding: 0.5rem;">
+                            {% trans "Checkout" %}
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <p>{% trans "Nenhum hóspede ativo no momento." %}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        async function handleCheckout(pk, name) {
+            if (!confirm(`{% trans "Confirmar check-out para" %} ${name}?`)) return;
+            
+            try {
+                const response = await fetch(`{% url 'mobilecondominio:checkout' 0 %}`.replace('0', pk), {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    window.location.href = data.redirect_url;
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error(error);
+                alert('{% trans "Erro ao realizar check-out." %}');
+            }
+        }
+    </script>
+{% endblock %}

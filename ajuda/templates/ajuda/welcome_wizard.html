@@ -1,0 +1,68 @@
+{% extends "ajuda/help_modal_base.html" %}
+{% load i18n %}
+
+{% block help_slides %}
+    <!-- Slide 1: Welcome -->
+    <div class="help-slide">
+        <h2>{% trans "Bem-vindo ao VérticeBook" %}</h2>
+        <p>
+            {% trans "Estamos felizes em ter você aqui! O VérticeBook é o seu sistema completo para gerenciamento profissional de propriedades de aluguel por temporada (Airbnb)." %}
+        </p>
+        <div class="help-slide-media">
+            <div class="media-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="media-text">
+                {% trans "Domine a gestão de suas unidades com ferramentas desenhadas para alta performance e escala." %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Control -->
+    <div class="help-slide">
+        <h2>{% trans "Controle Total" %}</h2>
+        <p>
+            {% trans "Gerencie suas reservas, manutenções e prestadores de serviço em um só lugar. Tenha uma visão clara do status de cada propriedade em tempo real." %}
+        </p>
+        <div class="help-slide-media">
+            <div class="media-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            </div>
+            <div class="media-text">
+                {% trans "Calendário global, histórico de manutenções e rede de prestadores atualizada." %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: WhatsApp Automation -->
+    <div class="help-slide">
+        <h2>{% trans "Automação via WhatsApp" %}</h2>
+        <p>
+            {% trans "Dê adeus aos processos manuais. Envie mensagens automáticas para seus hóspedes e documentos para o condomínio de forma 100% digital e integrada." %}
+        </p>
+        <div class="help-slide-media">
+            <div class="media-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="media-text">
+                {% trans "Comunicação fluida e registro automático de interações de forma segura e transparente." %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Real-time Reports -->
+    <div class="help-slide">
+        <h2>{% trans "Relatórios Estratégicos" %}</h2>
+        <p>
+            {% trans "Acompanhe sua performance com relatórios financeiros e administrativos em tempo real. Tome decisões baseadas em dados e maximize sua lucratividade." %}
+        </p>
+        <div class="help-slide-media">
+            <div class="media-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6"/><path d="M6 20V10"/><path d="M18 20V4"/></svg>
+            </div>
+            <div class="media-text">
+                {% trans "Dashboard intuitivo com métricas de receita, ocupação e custos operacionais." %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
