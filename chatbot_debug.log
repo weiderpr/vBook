@@ -3358,3 +3358,491 @@ Please retry in 7.555663181s. [links {
 [2026-04-29T21:31:41.305335] GroqProvider adicionado.
 [2026-04-29T21:31:41.325209] OpenRouterProvider adicionado.
 [2026-04-29T21:31:41.325379] Tentando provedor: GeminiProvider
+[2026-04-30T10:45:44.972869] GeminiProvider adicionado.
+[2026-04-30T10:45:45.059622] GroqProvider adicionado.
+[2026-04-30T10:45:45.084899] OpenRouterProvider adicionado.
+[2026-04-30T10:45:45.084978] Tentando provedor: GeminiProvider
+[2026-04-30T11:10:27.729843] GeminiProvider adicionado.
+[2026-04-30T11:10:27.889661] GroqProvider adicionado.
+[2026-04-30T11:10:27.923676] OpenRouterProvider adicionado.
+[2026-04-30T11:10:27.923866] Tentando provedor: GeminiProvider
+[2026-04-30T11:10:50.983128] GeminiProvider adicionado.
+[2026-04-30T11:10:51.023732] GroqProvider adicionado.
+[2026-04-30T11:10:51.050983] OpenRouterProvider adicionado.
+[2026-04-30T11:10:51.051190] Tentando provedor: GeminiProvider
+[2026-04-30T11:10:59.714181] GeminiProvider adicionado.
+[2026-04-30T11:10:59.847059] GroqProvider adicionado.
+[2026-04-30T11:10:59.880931] OpenRouterProvider adicionado.
+[2026-04-30T11:10:59.881172] Tentando provedor: GeminiProvider
+[2026-04-30T11:11:08.871502] GeminiProvider adicionado.
+[2026-04-30T11:11:08.924358] GroqProvider adicionado.
+[2026-04-30T11:11:08.969001] OpenRouterProvider adicionado.
+[2026-04-30T11:11:08.969914] Tentando provedor: GeminiProvider
+[2026-04-30T11:11:17.862711] GeminiProvider adicionado.
+[2026-04-30T11:11:17.885923] GroqProvider adicionado.
+[2026-04-30T11:11:17.905384] OpenRouterProvider adicionado.
+[2026-04-30T11:11:17.905542] Tentando provedor: GeminiProvider
+[2026-04-30T11:11:26.272949] GeminiProvider adicionado.
+[2026-04-30T11:11:26.297828] GroqProvider adicionado.
+[2026-04-30T11:11:26.319198] OpenRouterProvider adicionado.
+[2026-04-30T11:11:26.319384] Tentando provedor: GeminiProvider
+[2026-04-30T11:11:38.212400] GeminiProvider adicionado.
+[2026-04-30T11:11:38.240372] GroqProvider adicionado.
+[2026-04-30T11:11:38.268162] OpenRouterProvider adicionado.
+[2026-04-30T11:11:38.269406] Tentando provedor: GeminiProvider
+[2026-04-30T11:11:40.681084] Gemini solicitou tool: create_reservation_tool
+[2026-04-30T11:11:40.715512] Falha no provedor GeminiProvider: module 'google.generativeai.types' has no attribute 'Content'
+[2026-04-30T11:11:40.715645] Tentando provedor: GroqProvider
+[2026-04-30T11:11:41.905325] Falha no provedor GroqProvider: Error code: 400 - {'error': {'message': "tool call validation failed: parameters for tool create_reservation_tool did not match schema: errors: [missing properties: 'property_id']", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': 'Número de hóspedes anotado: <b>5</b>.\n\nAgora, estou todo registrado. Você está pronto para gerar a reserva. Posso criar-a automaticamente para você.\n\n<function=create_reservation_tool>{"client_name": "Teste de reserva", "client_phone": "35988080089", "start_date": "01/05/2026", "end_date": "03/05/2026", "total_value": 1500, "guests_count": 5}</function>'}}
+[2026-04-30T11:11:41.905834] Tentando provedor: OpenRouterProvider
+[2026-04-30T11:11:42.591557] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T11:12:27.129548] GeminiProvider adicionado.
+[2026-04-30T11:12:27.154375] GroqProvider adicionado.
+[2026-04-30T11:12:27.179533] OpenRouterProvider adicionado.
+[2026-04-30T11:12:27.179734] Tentando provedor: GeminiProvider
+[2026-04-30T11:13:30.480199] GeminiProvider adicionado.
+[2026-04-30T11:13:30.507243] GroqProvider adicionado.
+[2026-04-30T11:13:30.532437] OpenRouterProvider adicionado.
+[2026-04-30T11:13:30.532629] Tentando provedor: GeminiProvider
+[2026-04-30T11:15:35.467895] GeminiProvider adicionado.
+[2026-04-30T11:15:35.496983] GroqProvider adicionado.
+[2026-04-30T11:15:35.524128] OpenRouterProvider adicionado.
+[2026-04-30T11:15:35.524373] Tentando provedor: GeminiProvider
+[2026-04-30T11:24:58.130380] GeminiProvider adicionado.
+[2026-04-30T11:24:58.181354] GroqProvider adicionado.
+[2026-04-30T11:24:58.210358] OpenRouterProvider adicionado.
+[2026-04-30T11:24:58.210554] Tentando provedor: GeminiProvider
+[2026-04-30T11:25:07.673955] GeminiProvider adicionado.
+[2026-04-30T11:25:07.730033] GroqProvider adicionado.
+[2026-04-30T11:25:07.762524] OpenRouterProvider adicionado.
+[2026-04-30T11:25:07.762703] Tentando provedor: GeminiProvider
+[2026-04-30T11:25:15.751377] GeminiProvider adicionado.
+[2026-04-30T11:25:15.781347] GroqProvider adicionado.
+[2026-04-30T11:25:15.806896] OpenRouterProvider adicionado.
+[2026-04-30T11:25:15.807112] Tentando provedor: GeminiProvider
+[2026-04-30T11:25:22.708743] GeminiProvider adicionado.
+[2026-04-30T11:25:22.772011] GroqProvider adicionado.
+[2026-04-30T11:25:22.798820] OpenRouterProvider adicionado.
+[2026-04-30T11:25:22.799011] Tentando provedor: GeminiProvider
+[2026-04-30T11:25:29.167997] GeminiProvider adicionado.
+[2026-04-30T11:25:29.192015] GroqProvider adicionado.
+[2026-04-30T11:25:29.214017] OpenRouterProvider adicionado.
+[2026-04-30T11:25:29.214214] Tentando provedor: GeminiProvider
+[2026-04-30T11:25:35.315774] GeminiProvider adicionado.
+[2026-04-30T11:25:35.345966] GroqProvider adicionado.
+[2026-04-30T11:25:35.371923] OpenRouterProvider adicionado.
+[2026-04-30T11:25:35.372130] Tentando provedor: GeminiProvider
+[2026-04-30T11:25:42.943543] GeminiProvider adicionado.
+[2026-04-30T11:25:42.995167] GroqProvider adicionado.
+[2026-04-30T11:25:43.039583] OpenRouterProvider adicionado.
+[2026-04-30T11:25:43.039648] Tentando provedor: GeminiProvider
+[2026-04-30T11:25:45.344114] Gemini solicitou tool: create_reservation_tool
+[2026-04-30T11:25:45.382227] Falha no provedor GeminiProvider: module 'google.generativeai.types' has no attribute 'Content'
+[2026-04-30T11:25:45.382355] Tentando provedor: GroqProvider
+[2026-04-30T11:35:19.282073] GeminiProvider adicionado.
+[2026-04-30T11:35:19.472560] GroqProvider adicionado.
+[2026-04-30T11:35:19.500990] OpenRouterProvider adicionado.
+[2026-04-30T11:35:19.501299] Tentando provedor: GeminiProvider
+[2026-04-30T11:35:20.022634] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 40.059120673s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 40
+}
+]
+[2026-04-30T11:35:20.022840] Tentando provedor: GroqProvider
+[2026-04-30T11:36:02.331588] GeminiProvider adicionado.
+[2026-04-30T11:36:02.401693] GroqProvider adicionado.
+[2026-04-30T11:36:02.473648] OpenRouterProvider adicionado.
+[2026-04-30T11:36:02.473746] Tentando provedor: GeminiProvider
+[2026-04-30T11:36:12.023017] GeminiProvider adicionado.
+[2026-04-30T11:36:12.169939] GroqProvider adicionado.
+[2026-04-30T11:36:12.224211] OpenRouterProvider adicionado.
+[2026-04-30T11:36:12.225408] Tentando provedor: GeminiProvider
+[2026-04-30T11:36:20.791135] GeminiProvider adicionado.
+[2026-04-30T11:36:20.822939] GroqProvider adicionado.
+[2026-04-30T11:36:20.852822] OpenRouterProvider adicionado.
+[2026-04-30T11:36:20.853047] Tentando provedor: GeminiProvider
+[2026-04-30T11:36:27.692200] GeminiProvider adicionado.
+[2026-04-30T11:36:27.717893] GroqProvider adicionado.
+[2026-04-30T11:36:27.736778] OpenRouterProvider adicionado.
+[2026-04-30T11:36:27.736971] Tentando provedor: GeminiProvider
+[2026-04-30T11:36:28.139540] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 31.944609369s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 31
+}
+]
+[2026-04-30T11:36:28.139745] Tentando provedor: GroqProvider
+[2026-04-30T11:36:31.332545] GeminiProvider adicionado.
+[2026-04-30T11:36:31.496086] GroqProvider adicionado.
+[2026-04-30T11:36:31.522026] OpenRouterProvider adicionado.
+[2026-04-30T11:36:31.522214] Tentando provedor: GeminiProvider
+[2026-04-30T11:36:31.972967] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 28.111676779s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 28
+}
+]
+[2026-04-30T11:36:31.973120] Tentando provedor: GroqProvider
+[2026-04-30T11:36:32.084776] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4033, Requested 4429. Please try again in 24.62s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-04-30T11:36:32.085014] Tentando provedor: OpenRouterProvider
+[2026-04-30T11:36:32.611923] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T11:37:31.771427] GeminiProvider adicionado.
+[2026-04-30T11:37:31.800172] GroqProvider adicionado.
+[2026-04-30T11:37:31.827591] OpenRouterProvider adicionado.
+[2026-04-30T11:37:31.827753] Tentando provedor: GeminiProvider
+[2026-04-30T11:37:45.083393] GeminiProvider adicionado.
+[2026-04-30T11:37:45.111691] GroqProvider adicionado.
+[2026-04-30T11:37:45.132835] OpenRouterProvider adicionado.
+[2026-04-30T11:37:45.133015] Tentando provedor: GeminiProvider
+[2026-04-30T11:37:52.999842] GeminiProvider adicionado.
+[2026-04-30T11:37:53.021615] GroqProvider adicionado.
+[2026-04-30T11:37:53.040109] OpenRouterProvider adicionado.
+[2026-04-30T11:37:53.040259] Tentando provedor: GeminiProvider
+[2026-04-30T11:37:53.441410] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 6.642102488s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 6
+}
+]
+[2026-04-30T11:37:53.441500] Tentando provedor: GroqProvider
+[2026-04-30T11:37:59.793576] GeminiProvider adicionado.
+[2026-04-30T11:37:59.820427] GroqProvider adicionado.
+[2026-04-30T11:37:59.847290] OpenRouterProvider adicionado.
+[2026-04-30T11:37:59.847482] Tentando provedor: GeminiProvider
+[2026-04-30T11:38:00.238914] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 59.843732275s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 59
+}
+]
+[2026-04-30T11:38:00.240468] Tentando provedor: GroqProvider
+[2026-04-30T11:38:00.302150] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3652, Requested 4480. Please try again in 21.32s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-04-30T11:38:00.302358] Tentando provedor: OpenRouterProvider
+[2026-04-30T11:38:00.907691] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T11:38:21.485657] GeminiProvider adicionado.
+[2026-04-30T11:38:21.525705] GroqProvider adicionado.
+[2026-04-30T11:38:21.592781] OpenRouterProvider adicionado.
+[2026-04-30T11:38:21.592993] Tentando provedor: GeminiProvider
+[2026-04-30T11:38:22.031788] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 38.051200846s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 38
+}
+]
+[2026-04-30T11:38:22.031901] Tentando provedor: GroqProvider
+[2026-04-30T11:38:22.845609] Falha no provedor GroqProvider: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=create_reservation_tool>{"property_id":1,"reservations_count":}</function>'}}
+[2026-04-30T11:38:22.845993] Tentando provedor: OpenRouterProvider
+[2026-04-30T11:38:23.193365] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T11:38:30.451246] GeminiProvider adicionado.
+[2026-04-30T11:38:30.478080] GroqProvider adicionado.
+[2026-04-30T11:38:30.503719] OpenRouterProvider adicionado.
+[2026-04-30T11:38:30.503921] Tentando provedor: GeminiProvider
+[2026-04-30T11:38:30.925205] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 29.157572652s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 29
+}
+]
+[2026-04-30T11:38:30.926394] Tentando provedor: GroqProvider
+[2026-04-30T11:38:30.986861] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4709, Requested 4162. Please try again in 28.709999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-04-30T11:38:30.987136] Tentando provedor: OpenRouterProvider
+[2026-04-30T11:38:31.051043] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T14:42:14.028504] GeminiProvider adicionado.
+[2026-04-30T14:42:14.184356] GroqProvider adicionado.
+[2026-04-30T14:42:14.259369] OpenRouterProvider adicionado.
+[2026-04-30T14:42:14.259603] Tentando provedor: GeminiProvider
+[2026-04-30T14:42:55.642763] GeminiProvider adicionado.
+[2026-04-30T14:42:55.702832] GroqProvider adicionado.
+[2026-04-30T14:42:55.753137] OpenRouterProvider adicionado.
+[2026-04-30T14:42:55.753576] Tentando provedor: GeminiProvider
+[2026-04-30T14:43:33.844322] GeminiProvider adicionado.
+[2026-04-30T14:43:33.870128] GroqProvider adicionado.
+[2026-04-30T14:43:33.898612] OpenRouterProvider adicionado.
+[2026-04-30T14:43:33.898822] Tentando provedor: GeminiProvider
+[2026-04-30T14:43:34.298469] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 25.796332903s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 25
+}
+]
+[2026-04-30T14:43:34.299166] Tentando provedor: GroqProvider
+[2026-04-30T14:44:28.320376] GeminiProvider adicionado.
+[2026-04-30T14:44:28.365506] GroqProvider adicionado.
+[2026-04-30T14:44:28.410193] OpenRouterProvider adicionado.
+[2026-04-30T14:44:28.410544] Tentando provedor: GeminiProvider
+[2026-04-30T14:44:28.927263] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 31.155507107s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 31
+}
+]
+[2026-04-30T14:44:28.927517] Tentando provedor: GroqProvider
+[2026-04-30T14:44:29.721425] Falha no provedor GroqProvider: Error code: 400 - {'error': {'message': "tool call validation failed: parameters for tool create_reservation_tool did not match schema: errors: [missing properties: 'property_id', 'client_name', 'client_phone', 'start_date', 'end_date', 'total_value']", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=create_reservation_tool>{"message": "Custos por Reserva: São valores adicionais cobrados em cada reserva para custos diversos, como limpeza, lavanderia, impostos locais, taxas de condomínio, etc. Por exemplo, se você reservar uma casa por 3 noites, pode ser cobrado um valor adicional para a limpeza do local após o uso.", "can_answer": true}</function>'}}
+[2026-04-30T14:44:29.721527] Tentando provedor: OpenRouterProvider
+[2026-04-30T14:44:30.104512] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T14:45:08.414346] GeminiProvider adicionado.
+[2026-04-30T14:45:08.441848] GroqProvider adicionado.
+[2026-04-30T14:45:08.477237] OpenRouterProvider adicionado.
+[2026-04-30T14:45:08.477477] Tentando provedor: GeminiProvider
+[2026-04-30T14:45:08.858326] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 51.215521743s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 51
+}
+]
+[2026-04-30T14:45:08.858496] Tentando provedor: GroqProvider
+[2026-04-30T14:51:31.400979] GeminiProvider adicionado.
+[2026-04-30T14:51:31.441840] GroqProvider adicionado.
+[2026-04-30T14:51:31.487651] OpenRouterProvider adicionado.
+[2026-04-30T14:51:31.488007] Tentando provedor: GeminiProvider
+[2026-04-30T14:51:31.872454] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-3-flash
+Please retry in 28.214522262s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-3-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 28
+}
+]
+[2026-04-30T14:51:31.872571] Tentando provedor: GroqProvider
+[2026-04-30T14:52:03.001965] GeminiProvider adicionado.
+[2026-04-30T14:52:03.075399] GroqProvider adicionado.
+[2026-04-30T14:52:03.102835] OpenRouterProvider adicionado.
+[2026-04-30T14:52:03.103008] Tentando provedor: GeminiProvider
+[2026-04-30T14:52:03.514008] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T14:52:03.514860] Tentando provedor: GroqProvider
+[2026-04-30T14:52:04.242639] Falha no provedor GroqProvider: Error code: 400 - {'error': {'message': "tool call validation failed: attempted to call tool 'create_maintenance_tool' which was not in request.tools", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': 'Ao criar uma manutenção você entra em um fluxo que guia o processo.\n\n<function=create_maintenance_tool>{"description": "Manutenção", "priority": "Baixa"})</function>\n\n'}}
+[2026-04-30T14:52:04.243389] Tentando provedor: OpenRouterProvider
+[2026-04-30T14:52:05.049997] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T14:53:07.694232] GeminiProvider adicionado.
+[2026-04-30T14:53:07.810985] GroqProvider adicionado.
+[2026-04-30T14:53:07.866693] OpenRouterProvider adicionado.
+[2026-04-30T14:53:07.866775] Tentando provedor: GeminiProvider
+[2026-04-30T14:53:08.265091] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T14:53:08.265206] Tentando provedor: GroqProvider
+[2026-04-30T14:54:00.054791] GeminiProvider adicionado.
+[2026-04-30T14:54:00.096194] GroqProvider adicionado.
+[2026-04-30T14:54:00.156500] OpenRouterProvider adicionado.
+[2026-04-30T14:54:00.156682] Tentando provedor: GeminiProvider
+[2026-04-30T14:54:01.095663] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T14:54:01.095764] Tentando provedor: GroqProvider
+[2026-04-30T14:54:29.606844] GeminiProvider adicionado.
+[2026-04-30T14:54:29.629117] GroqProvider adicionado.
+[2026-04-30T14:54:29.652910] OpenRouterProvider adicionado.
+[2026-04-30T14:54:29.653113] Tentando provedor: GeminiProvider
+[2026-04-30T14:54:29.994460] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T14:54:29.994674] Tentando provedor: GroqProvider
+[2026-04-30T14:54:30.690521] Groq solicitou tool: create_reservation_tool
+[2026-04-30T14:54:30.740929] Falha na resposta final do Groq após tool: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5849, Requested 4383. Please try again in 42.32s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-04-30T14:54:30.741031] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5849, Requested 4383. Please try again in 42.32s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-04-30T14:54:30.741071] Tentando provedor: OpenRouterProvider
+[2026-04-30T14:54:30.997528] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T14:55:18.802163] GeminiProvider adicionado.
+[2026-04-30T14:55:18.853949] GroqProvider adicionado.
+[2026-04-30T14:55:18.878243] OpenRouterProvider adicionado.
+[2026-04-30T14:55:18.878458] Tentando provedor: GeminiProvider
+[2026-04-30T14:55:19.285555] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T14:55:19.285783] Tentando provedor: GroqProvider
+[2026-04-30T14:55:46.135234] GeminiProvider adicionado.
+[2026-04-30T14:55:46.269729] GroqProvider adicionado.
+[2026-04-30T14:55:46.335750] OpenRouterProvider adicionado.
+[2026-04-30T14:55:46.335976] Tentando provedor: GeminiProvider
+[2026-04-30T14:55:46.741766] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T14:55:46.741869] Tentando provedor: GroqProvider
+[2026-04-30T14:55:46.823704] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 2478, Requested 4298. Please try again in 7.76s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-04-30T14:55:46.823916] Tentando provedor: OpenRouterProvider
+[2026-04-30T14:55:47.472923] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T18:20:29.009163] GeminiProvider adicionado.
+[2026-04-30T18:20:29.064528] GroqProvider adicionado.
+[2026-04-30T18:20:29.089981] OpenRouterProvider adicionado.
+[2026-04-30T18:20:29.090154] Tentando provedor: GeminiProvider
+[2026-04-30T18:20:29.659304] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T18:20:29.659949] Tentando provedor: GroqProvider
+[2026-04-30T18:20:30.432997] Falha no provedor GroqProvider: Error code: 400 - {'error': {'message': "tool call validation failed: parameters for tool create_reservation_tool did not match schema: errors: [missing properties: 'property_id', 'client_name', 'client_phone', 'start_date', 'end_date', 'total_value']", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=create_reservation_tool>{ "message": "É importante verificar se o mês está sendo incluído no relatório corretamente. Pode ser que haja um filtro ou uma configuração que está excluindo o mês de maio.", "can_answer": true }</function>'}}
+[2026-04-30T18:20:30.433194] Tentando provedor: OpenRouterProvider
+[2026-04-30T18:20:30.677652] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}

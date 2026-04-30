@@ -44,12 +44,13 @@ AVAILABLE_TOOLS = {
 
 class AIProvider:
     def chat(self, message, history, system_instruction):
+        # Retorna (texto_da_resposta, se_executou_tool)
         raise NotImplementedError
 
 class GeminiProvider(AIProvider):
     def __init__(self, api_key):
         genai.configure(api_key=api_key)
-        self.model_name = "gemini-3-flash-preview"
+        self.model_name = "gemini-1.5-flash"
 
     def chat(self, message, history, system_instruction):
         model = genai.GenerativeModel(
@@ -64,16 +65,34 @@ class GeminiProvider(AIProvider):
         parts = response.candidates[0].content.parts
         function_call = next((part.function_call for part in parts if part.function_call), None)
         
+        was_tool_called = False
         if function_call:
+            was_tool_called = True
             log_debug(f"Gemini solicitou tool: {function_call.name}")
             tool_func = AVAILABLE_TOOLS.get(function_call.name)
             if tool_func:
                 result = tool_func(**{k: v for k, v in function_call.args.items()})
-                response = chat.send_message(
-                    genai.types.Content(parts=[genai.types.Part.from_function_response(name=function_call.name, response=result)])
-                )
+                try:
+                    # Forma correta e mais compatível de enviar a resposta da tool
+                    response = chat.send_message(
+                        parts=[{
+                            'function_response': {
+                                'name': function_call.name,
+                                'response': result
+                            }
+                        }]
+                    )
+                except Exception as e:
+                    log_debug(f"Falha na resposta final do Gemini após tool: {str(e)}")
+                    # Se a ação no banco foi um sucesso, garantimos a resposta ao usuário mesmo com erro na IA
+                    if result.get('status') == 'success':
+                        return json.dumps({
+                            "message": f"<b>Ok! {result.get('message')}</b><br>A reserva foi registrada com sucesso no sistema. (Houve um problema técnico ao gerar a mensagem final de confirmação, mas a ação foi concluída).",
+                            "can_answer": True
+                        }), True
+                    raise e
         
-        return response.text
+        return response.text, was_tool_called
 
 class GroqProvider(AIProvider):
     def __init__(self, api_key):
@@ -143,14 +162,23 @@ class GroqProvider(AIProvider):
                         "content": json.dumps(result)
                     })
                     
-                    # Segunda chamada para resposta final
-                    final_response = self.client.chat.completions.create(
-                        model=self.model_name,
-                        messages=messages
-                    )
-                    return final_response.choices[0].message.content
+                    try:
+                        # Segunda chamada para resposta final
+                        final_response = self.client.chat.completions.create(
+                            model=self.model_name,
+                            messages=messages
+                        )
+                        return final_response.choices[0].message.content, True
+                    except Exception as e:
+                        log_debug(f"Falha na resposta final do Groq após tool: {str(e)}")
+                        if result.get('status') == 'success':
+                            return json.dumps({
+                                "message": f"<b>Ok! {result.get('message')}</b><br>A reserva foi criada.",
+                                "can_answer": True
+                            }), True
+                        raise e
 
-        return response_message.content
+        return response_message.content, False
 
 class OpenRouterProvider(AIProvider):
     def __init__(self, api_key):
@@ -176,7 +204,7 @@ class OpenRouterProvider(AIProvider):
                 "X-Title": "VerticeBook Help Desk",
             }
         )
-        return response.choices[0].message.content
+        return response.choices[0].message.content, False
 
 # --- View Principal ---
 
@@ -219,8 +247,9 @@ def chat_query_view(request):
             f"ID da Propriedade Atual: {property_id if property_id else 'Nenhuma'}\n"
             f"PÁGINA ONDE O USUÁRIO ESTÁ AGORA: {current_url}\n\n"
             "REGRAS DE OURO (NÃO DESVIE):\n"
-            "1. Responda APENAS em JSON: {\"message\": \"sua resposta aqui\", \"can_answer\": true}.\n"
-            "2. ESTILO VISUAL: Use HTML rico. Use <b> para termos importantes, <br> para quebras de linha e <ul>/<li> para listas e passos.\n"
+            "1. Responda EXCLUSIVAMENTE em formato JSON. NUNCA escreva texto fora das chaves { }.\n"
+            "2. ESTRUTURA OBRIGATÓRIA: {\"message\": \"sua resposta aqui\", \"can_answer\": true}.\n"
+            "3. ESTILO VISUAL: Use HTML rico dentro do campo 'message'. Use <b> para termos importantes, <br> para quebras de linha e <ul>/<li> para listas e passos.\n"
             "3. TOM DE VOZ: Seja profissional, prestativo e direto. Evite textos em bloco único; prefira listas escaneáveis.\n"
             "4. Se o usuário quiser criar reserva, explique o passo a passo de forma elegante e pergunte se ele quer sua ajuda.\n"
             "5. Se ele aceitar ajuda, você deve coletar EXATAMENTE estes 6 campos e NADA MAIS:\n"
@@ -271,11 +300,16 @@ def chat_query_view(request):
         for provider in providers:
             try:
                 log_debug(f"Tentando provedor: {provider.__class__.__name__}")
-                text_response = provider.chat(user_message, history[-20:], system_instruction)
+                text_response, tool_executed = provider.chat(user_message, history[-20:], system_instruction)
                 if text_response:
                     break # Sucesso!
             except Exception as e:
                 log_debug(f"Falha no provedor {provider.__class__.__name__}: {str(e)}")
+                # Se uma tool foi executada (mesmo que tenha falhado depois), NÃO tentamos outro provedor
+                # para evitar duplicidade de ações no banco de dados.
+                if 'tool_executed' in locals() and tool_executed:
+                    log_debug("Interrompendo fallback pois uma tool já foi executada.")
+                    break
                 continue # Próximo...
 
         if not text_response:
@@ -293,16 +327,36 @@ def chat_query_view(request):
         # Processar resposta JSON com mais robustez
         try:
             import re
-            # Procura por algo que comece com { e termine com }
-            json_match = re.search(r'({.*})', text_response, re.DOTALL)
+            # Tentar extrair o JSON (procurando a primeira e última chave)
+            json_match = re.search(r'(\{.*\})', text_response, re.DOTALL)
             if json_match:
-                clean_text = json_match.group(1)
+                clean_json = json_match.group(1)
+                try:
+                    response_data = json.loads(clean_json)
+                except:
+                    # Se falhar o parse mas houver texto útil, tentamos limpar
+                    # Se a IA misturou JSON com texto livre, pegamos o texto livre como mensagem
+                    if '"message":' in clean_json:
+                        # Tenta extrair apenas o valor da chave message via regex simples
+                        msg_extract = re.search(r'"message":\s*"(.*?)"', clean_json, re.DOTALL)
+                        if msg_extract:
+                            response_data = {"message": msg_extract.group(1), "can_answer": True}
+                        else:
+                            response_data = {"message": text_response, "can_answer": True}
+                    else:
+                        response_data = {"message": text_response, "can_answer": True}
             else:
-                clean_text = text_response.strip()
-                
-            response_data = json.loads(clean_text)
+                response_data = {"message": text_response, "can_answer": True}
         except:
             response_data = {"message": text_response, "can_answer": True}
+            
+        # Limpeza final: se a mensagem ainda contiver a estrutura JSON exposta, removemos
+        if isinstance(response_data.get('message'), str) and response_data['message'].startswith('{"message":'):
+            try:
+                second_attempt = json.loads(response_data['message'])
+                response_data['message'] = second_attempt.get('message', response_data['message'])
+            except:
+                pass
         
         # Registrar no Banco de Dados
         from .models import ChatInteraction

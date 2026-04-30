@@ -281,13 +281,25 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
             key = (h.month, h.year)
             history_data[key] = {'gross': h.gross_value, 'costs': h.costs}
             
+        # 4. Build financial_structure
         financial_structure = []
         
-        # Iterate from acquisition to today
+        # Determine the iteration range: Start from acquisition, go until max of (today, last reservation, last cost, last history, last maintenance)
+        acquisition_date = self.object.acquisition_date or (timezone.now().date() - timedelta(days=365))
+        today = timezone.localtime(timezone.now()).date()
+        
+        max_year, max_month = today.year, today.month
+        
+        # Check all data sources for a later date to include in the report
+        all_keys = list(res_data.keys()) + list(prop_costs_data.keys()) + list(history_data.keys()) + list(maint_data.keys())
+        for m, y in all_keys:
+            if y > max_year or (y == max_year and m > max_month):
+                max_year, max_month = y, m
+        
         curr_year = acquisition_date.year
         curr_month = acquisition_date.month
         
-        while curr_year < today.year or (curr_year == today.year and curr_month <= today.month):
+        while curr_year < max_year or (curr_year == max_year and curr_month <= max_month):
             key = (curr_month, curr_year)
             has_reservations = key in res_data
             has_prop_costs = key in prop_costs_data
