@@ -32,4 +32,5 @@ urlpatterns = [
     path('acesso-prestador/<uuid:token>/concluir/<int:cost_id>/', views.ServiceProviderCompleteServiceView.as_view(), name='provider_complete_service'),
     path('acesso-prestador/<uuid:token>/cancelar-conclusao/<int:cost_id>/', views.ServiceProviderCancelCompletionView.as_view(), name='provider_cancel_completion'),
     path('calendarios/', GlobalReservationCalendarView.as_view(), name='global_calendar'),
+    path('relatorios/', views.GlobalReportsView.as_view(), name='global_reports'),
 ]

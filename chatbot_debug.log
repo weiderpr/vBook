@@ -3846,3 +3846,1214 @@ Please retry in 28.214522262s. [links {
 [2026-04-30T18:20:30.432997] Falha no provedor GroqProvider: Error code: 400 - {'error': {'message': "tool call validation failed: parameters for tool create_reservation_tool did not match schema: errors: [missing properties: 'property_id', 'client_name', 'client_phone', 'start_date', 'end_date', 'total_value']", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=create_reservation_tool>{ "message": "É importante verificar se o mês está sendo incluído no relatório corretamente. Pode ser que haja um filtro ou uma configuração que está excluindo o mês de maio.", "can_answer": true }</function>'}}
 [2026-04-30T18:20:30.433194] Tentando provedor: OpenRouterProvider
 [2026-04-30T18:20:30.677652] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T18:48:53.349867] GeminiProvider adicionado.
+[2026-04-30T18:48:53.410032] GroqProvider adicionado.
+[2026-04-30T18:48:53.432906] OpenRouterProvider adicionado.
+[2026-04-30T18:48:53.433072] Tentando provedor: GeminiProvider
+[2026-04-30T18:48:53.821935] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T18:48:53.822142] Tentando provedor: GroqProvider
+[2026-04-30T18:49:38.030978] GeminiProvider adicionado.
+[2026-04-30T18:49:38.072777] GroqProvider adicionado.
+[2026-04-30T18:49:38.096956] OpenRouterProvider adicionado.
+[2026-04-30T18:49:38.097101] Tentando provedor: GeminiProvider
+[2026-04-30T18:49:38.504456] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T18:49:38.504560] Tentando provedor: GroqProvider
+[2026-04-30T18:53:17.677172] GeminiProvider adicionado.
+[2026-04-30T18:53:17.729846] GroqProvider adicionado.
+[2026-04-30T18:53:17.755109] OpenRouterProvider adicionado.
+[2026-04-30T18:53:17.755331] Tentando provedor: GeminiProvider
+[2026-04-30T18:53:18.142236] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T18:53:18.142388] Tentando provedor: GroqProvider
+[2026-04-30T18:53:37.707979] GeminiProvider adicionado.
+[2026-04-30T18:53:37.756075] GroqProvider adicionado.
+[2026-04-30T18:53:37.782229] OpenRouterProvider adicionado.
+[2026-04-30T18:53:37.782422] Tentando provedor: GeminiProvider
+[2026-04-30T18:53:38.173318] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T18:53:38.173428] Tentando provedor: GroqProvider
+[2026-04-30T18:53:38.262547] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 2055, Requested 4009. Please try again in 640ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-04-30T18:53:38.262649] Tentando provedor: OpenRouterProvider
+[2026-04-30T18:53:39.231935] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T18:56:04.395962] GeminiProvider adicionado.
+[2026-04-30T18:56:04.518160] GroqProvider adicionado.
+[2026-04-30T18:56:04.568788] OpenRouterProvider adicionado.
+[2026-04-30T18:56:04.568874] Tentando provedor: GeminiProvider
+[2026-04-30T18:56:05.027385] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T18:56:05.028238] Tentando provedor: GroqProvider
+[2026-04-30T18:57:21.610753] GeminiProvider adicionado.
+[2026-04-30T18:57:21.673236] GroqProvider adicionado.
+[2026-04-30T18:57:21.706103] OpenRouterProvider adicionado.
+[2026-04-30T18:57:21.706303] Tentando provedor: GeminiProvider
+[2026-04-30T18:57:22.106945] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T18:57:22.107409] Tentando provedor: GroqProvider
+[2026-04-30T18:57:32.016190] GeminiProvider adicionado.
+[2026-04-30T18:57:32.039557] GroqProvider adicionado.
+[2026-04-30T18:57:32.061257] OpenRouterProvider adicionado.
+[2026-04-30T18:57:32.061460] Tentando provedor: GeminiProvider
+[2026-04-30T18:57:32.415570] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T18:57:32.415653] Tentando provedor: GroqProvider
+[2026-04-30T18:57:32.446652] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 2702, Requested 3804. Please try again in 5.06s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-04-30T18:57:32.446722] Tentando provedor: OpenRouterProvider
+[2026-04-30T18:57:32.986615] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-04-30T19:00:13.471730] GeminiProvider adicionado.
+[2026-04-30T19:00:13.527655] GroqProvider adicionado.
+[2026-04-30T19:00:13.557819] OpenRouterProvider adicionado.
+[2026-04-30T19:00:13.558003] Tentando provedor: GeminiProvider
+[2026-04-30T19:00:13.900935] Falha no provedor GeminiProvider: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+[2026-04-30T19:00:13.901257] Tentando provedor: GroqProvider
+[2026-04-30T19:02:56.293692] GeminiProvider adicionado.
+[2026-04-30T19:02:56.338952] GroqProvider adicionado.
+[2026-04-30T19:02:56.362509] OpenRouterProvider adicionado.
+[2026-04-30T19:02:56.362718] Tentando provedor: GeminiProvider
+[2026-04-30T19:02:56.757371] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 3.321479481s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 3
+}
+]
+[2026-04-30T19:02:56.757588] Tentando provedor: GroqProvider
+[2026-04-30T19:03:20.281761] GeminiProvider adicionado.
+[2026-04-30T19:03:20.321888] GroqProvider adicionado.
+[2026-04-30T19:03:20.343966] OpenRouterProvider adicionado.
+[2026-04-30T19:03:20.344161] Tentando provedor: GeminiProvider
+[2026-04-30T19:03:20.723619] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 39.348749023s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 39
+}
+]
+[2026-04-30T19:03:20.723716] Tentando provedor: GroqProvider
+[2026-04-30T19:03:50.680725] GeminiProvider adicionado.
+[2026-04-30T19:03:50.700595] GroqProvider adicionado.
+[2026-04-30T19:03:50.730454] OpenRouterProvider adicionado.
+[2026-04-30T19:03:50.730725] Tentando provedor: GeminiProvider
+[2026-04-30T19:03:51.095796] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+Please retry in 8.980623904s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 8
+}
+]
+[2026-04-30T19:03:51.096053] Tentando provedor: GroqProvider
+[2026-05-04T11:09:21.770470] GeminiProvider adicionado.
+[2026-05-04T11:09:21.855161] GroqProvider adicionado.
+[2026-05-04T11:09:21.890717] OpenRouterProvider adicionado.
+[2026-05-04T11:09:21.891111] Tentando provedor: GeminiProvider
+[2026-05-04T11:09:22.366420] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+Please retry in 37.711821749s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 37
+}
+]
+[2026-05-04T11:09:22.366635] Tentando provedor: GroqProvider
+[2026-05-04T11:09:42.750414] GeminiProvider adicionado.
+[2026-05-04T11:09:42.815070] GroqProvider adicionado.
+[2026-05-04T11:09:42.848556] OpenRouterProvider adicionado.
+[2026-05-04T11:09:42.848722] Tentando provedor: GeminiProvider
+[2026-05-04T11:09:43.190202] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 16.87931236s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 16
+}
+]
+[2026-05-04T11:09:43.190473] Tentando provedor: GroqProvider
+[2026-05-04T11:09:57.610183] GeminiProvider adicionado.
+[2026-05-04T11:09:57.651444] GroqProvider adicionado.
+[2026-05-04T11:09:57.674609] OpenRouterProvider adicionado.
+[2026-05-04T11:09:57.674816] Tentando provedor: GeminiProvider
+[2026-05-04T11:09:58.044067] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 2.024798212s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 2
+}
+]
+[2026-05-04T11:09:58.044173] Tentando provedor: GroqProvider
+[2026-05-04T11:09:58.114165] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3755, Requested 3716. Please try again in 14.71s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-05-04T11:09:58.114372] Tentando provedor: OpenRouterProvider
+[2026-05-04T11:09:58.785631] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-05-04T11:24:03.191504] GeminiProvider adicionado.
+[2026-05-04T11:24:03.257487] GroqProvider adicionado.
+[2026-05-04T11:24:03.291104] OpenRouterProvider adicionado.
+[2026-05-04T11:24:03.291354] Tentando provedor: GeminiProvider
+[2026-05-04T11:24:03.680934] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 56.391147097s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 56
+}
+]
+[2026-05-04T11:24:03.681171] Tentando provedor: GroqProvider
+[2026-05-04T16:46:37.851551] GeminiProvider adicionado.
+[2026-05-04T16:46:37.973563] GroqProvider adicionado.
+[2026-05-04T16:46:37.995290] OpenRouterProvider adicionado.
+[2026-05-04T16:46:37.995448] Tentando provedor: GeminiProvider
+[2026-05-04T16:46:38.462043] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 21.612378865s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 21
+}
+]
+[2026-05-04T16:46:38.462141] Tentando provedor: GroqProvider
+[2026-05-04T16:48:05.580648] GeminiProvider adicionado.
+[2026-05-04T16:48:05.672916] GroqProvider adicionado.
+[2026-05-04T16:48:05.705711] OpenRouterProvider adicionado.
+[2026-05-04T16:48:05.705904] Tentando provedor: GeminiProvider
+[2026-05-04T16:48:06.077978] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 53.995212957s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 53
+}
+]
+[2026-05-04T16:48:06.078961] Tentando provedor: GroqProvider
+[2026-05-04T16:48:06.876699] Groq solicitou tool: trigger_reservation_wizard
+[2026-05-04T16:48:50.250304] Erro no Wizard: 'bool' object is not callable
+Traceback (most recent call last):
+  File "/root/verticebook/ajuda/wizard_logic.py", line 159, in finalize_reservation
+    msg = f"✅ <b>{_('Reserva criada com sucesso!')}</b><br>{_('O código da reserva é')} #{res.id}.<br><br>{_('Posso ajudar com algo mais?')}"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'bool' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/verticebook/ajuda/views.py", line 436, in chat_wizard_step_view
+    reply, is_done, mode = wizard.process_answer(message, request.user)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/ajuda/wizard_logic.py", line 134, in process_answer
+    return self.finalize_reservation()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/ajuda/wizard_logic.py", line 162, in finalize_reservation
+    return f"❌ {_('Erro ao criar reserva')}: {str(e)}", True, 'normal'
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'bool' object is not callable
+
+[2026-05-04T16:57:58.119227] GeminiProvider adicionado.
+[2026-05-04T16:57:58.168730] GroqProvider adicionado.
+[2026-05-04T16:57:58.208389] OpenRouterProvider adicionado.
+[2026-05-04T16:57:58.208599] Tentando provedor: GeminiProvider
+[2026-05-04T16:57:58.571231] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 1.501657294s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 1
+}
+]
+[2026-05-04T16:57:58.571508] Tentando provedor: GroqProvider
+[2026-05-04T16:59:47.353793] GeminiProvider adicionado.
+[2026-05-04T16:59:47.377878] GroqProvider adicionado.
+[2026-05-04T16:59:47.398441] OpenRouterProvider adicionado.
+[2026-05-04T16:59:47.398628] Tentando provedor: GeminiProvider
+[2026-05-04T16:59:47.765908] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 12.30636933s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 12
+}
+]
+[2026-05-04T16:59:47.766110] Tentando provedor: GroqProvider
+[2026-05-04T17:02:27.364456] GeminiProvider adicionado.
+[2026-05-04T17:02:27.407247] GroqProvider adicionado.
+[2026-05-04T17:02:27.428821] OpenRouterProvider adicionado.
+[2026-05-04T17:02:27.428996] Tentando provedor: GeminiProvider
+[2026-05-04T17:02:27.811714] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 32.260201706s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 32
+}
+]
+[2026-05-04T17:02:27.812315] Tentando provedor: GroqProvider
+[2026-05-04T17:06:45.755270] GeminiProvider adicionado.
+[2026-05-04T17:06:45.805417] GroqProvider adicionado.
+[2026-05-04T17:06:45.826445] OpenRouterProvider adicionado.
+[2026-05-04T17:06:45.826625] Tentando provedor: GeminiProvider
+[2026-05-04T17:06:46.177221] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 13.894704352s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 13
+}
+]
+[2026-05-04T17:06:46.177427] Tentando provedor: GroqProvider
+[2026-05-04T17:16:04.701214] Detecção por palavras-chave: intenção de reserva detectada. property_id=None
+[2026-05-04T17:16:25.800462] Detecção por palavras-chave: intenção de reserva detectada. property_id=None
+[2026-05-04T17:17:38.596974] Detecção por palavras-chave: intenção de reserva detectada. property_id=4
+[2026-05-04T17:19:28.718708] GeminiProvider adicionado.
+[2026-05-04T17:19:28.763527] GroqProvider adicionado.
+[2026-05-04T17:19:28.783641] OpenRouterProvider adicionado.
+[2026-05-04T17:19:28.783840] Tentando provedor: GeminiProvider
+[2026-05-04T17:19:29.242640] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 30.834614952s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 30
+}
+]
+[2026-05-04T17:19:29.242851] Tentando provedor: GroqProvider
+[2026-05-04T17:23:12.769792] GeminiProvider adicionado.
+[2026-05-04T17:23:12.811075] GroqProvider adicionado.
+[2026-05-04T17:23:12.834587] OpenRouterProvider adicionado.
+[2026-05-04T17:23:12.834745] Tentando provedor: GeminiProvider
+[2026-05-04T17:23:13.221158] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+Please retry in 46.852420487s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 46
+}
+]
+[2026-05-04T17:23:13.221410] Tentando provedor: GroqProvider
+[2026-05-04T17:23:24.040491] GeminiProvider adicionado.
+[2026-05-04T17:23:24.084240] GroqProvider adicionado.
+[2026-05-04T17:23:24.106862] OpenRouterProvider adicionado.
+[2026-05-04T17:23:24.107050] Tentando provedor: GeminiProvider
+[2026-05-04T17:23:24.462198] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 35.610174846s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 35
+}
+]
+[2026-05-04T17:23:24.462387] Tentando provedor: GroqProvider
+[2026-05-04T17:23:24.520554] GroqProvider erro na chamada inicial: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 2692, Requested 3778. Please try again in 4.7s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-05-04T17:23:24.520734] Falha no provedor GroqProvider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.1-8b-instant` in organization `org_01km88sdghe2r87s1tak2zpeq5` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 2692, Requested 3778. Please try again in 4.7s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+[2026-05-04T17:23:24.520805] Tentando provedor: OpenRouterProvider
+[2026-05-04T17:23:25.064234] Falha no provedor OpenRouterProvider: Error code: 401 - {'error': {'message': 'User not found.', 'code': 401}}
+[2026-05-04T17:31:41.831979] Avaliando detecção rápida para: 'me ajude a criar uma reserva'
+[2026-05-04T17:31:41.832417] Detecção por palavras-chave: intenção de reserva detectada. property_id=4
+[2026-05-04T17:32:57.725113] Avaliando detecção rápida para: 'o que é uma reserva?'
+[2026-05-04T17:32:57.726410] GeminiProvider adicionado.
+[2026-05-04T17:32:57.767599] GroqProvider adicionado.
+[2026-05-04T17:32:57.788766] OpenRouterProvider adicionado.
+[2026-05-04T17:32:57.788909] Tentando provedor: GeminiProvider
+[2026-05-04T17:32:58.199972] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+Please retry in 1.877659577s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 1
+}
+]
+[2026-05-04T17:32:58.200240] Tentando provedor: GroqProvider
+[2026-05-04T17:33:20.584262] Avaliando detecção rápida para: 'me explique essa tela'
+[2026-05-04T17:33:20.585788] GeminiProvider adicionado.
+[2026-05-04T17:33:20.633628] GroqProvider adicionado.
+[2026-05-04T17:33:20.655519] OpenRouterProvider adicionado.
+[2026-05-04T17:33:20.655714] Tentando provedor: GeminiProvider
+[2026-05-04T17:33:20.994801] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 39.077411299s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 39
+}
+]
+[2026-05-04T17:33:20.995012] Tentando provedor: GroqProvider
+[2026-05-04T17:36:36.974124] Avaliando detecção rápida para: 'me ajude a criar uma reserva'
+[2026-05-04T17:36:36.974329] Detecção por palavras-chave: intenção de reserva detectada. property_id=1
+[2026-05-04T17:38:02.270897] Avaliando detecção rápida para: 'me explique essa tela'
+[2026-05-04T17:38:02.272821] GeminiProvider adicionado.
+[2026-05-04T17:38:02.316240] GroqProvider adicionado.
+[2026-05-04T17:38:02.349930] OpenRouterProvider adicionado.
+[2026-05-04T17:38:02.350091] Tentando provedor: GeminiProvider
+[2026-05-04T17:38:03.509415] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 56.564837795s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 56
+}
+]
+[2026-05-04T17:38:03.510986] Tentando provedor: GroqProvider
+[2026-05-04T17:39:42.553953] Avaliando detecção rápida para: 'me ajude a fazer uma manutenção'
+[2026-05-04T17:39:42.554127] Detecção por palavras-chave: intenção de reserva detectada. property_id=5
+[2026-05-04T17:43:21.227994] Avaliando detecção rápida para: 'me ajude a entender o que é uma manutenção'
+[2026-05-04T17:43:21.230801] GeminiProvider adicionado.
+[2026-05-04T17:43:21.275797] GroqProvider adicionado.
+[2026-05-04T17:43:21.296179] OpenRouterProvider adicionado.
+[2026-05-04T17:43:21.296344] Tentando provedor: GeminiProvider
+[2026-05-04T17:43:21.729067] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 38.347689488s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 38
+}
+]
+[2026-05-04T17:43:21.729338] Tentando provedor: GroqProvider
+[2026-05-04T17:43:40.633725] Avaliando detecção rápida para: 'me ajude a fazer uma manutenção'
+[2026-05-04T17:43:40.635375] GeminiProvider adicionado.
+[2026-05-04T17:43:40.655414] GroqProvider adicionado.
+[2026-05-04T17:43:40.682329] OpenRouterProvider adicionado.
+[2026-05-04T17:43:40.682470] Tentando provedor: GeminiProvider
+[2026-05-04T17:43:41.696450] Falha no provedor GeminiProvider: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 18.380170509s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 18
+}
+]
+[2026-05-04T17:43:41.696785] Tentando provedor: GroqProvider
+[2026-05-04T17:43:42.215148] Groq solicitou tool: trigger_reservation_wizard

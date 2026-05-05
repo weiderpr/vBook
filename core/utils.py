@@ -10,7 +10,7 @@ def is_mobile(request):
 
     user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
     mobile_patterns = [
-        'iphone', 'android', 'phone', 'mobile', 'webos', 'ipod', 'blackberry',
+        'iphone', 'android', 'phone', 'mobile', 'mobi', 'webos', 'ipod', 'blackberry',
         'windows phone', 'iemobile', 'opera mini', 'standalone'
     ]
     return any(pattern in user_agent for pattern in mobile_patterns)

@@ -105,11 +105,16 @@ from django.utils import translation
 
 @ensure_csrf_cookie
 def login_view(request):
+    next_url = request.GET.get('next')
     if request.method == 'POST':
         form = UserLoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            
+            # Se tivermos um next_url que aponte para mobile, respeitamos ele com prioridade
+            if next_url and ('mobile' in next_url or '/book/mobile' in next_url):
+                return redirect(next_url)
             
             # Se for super-admin, vai direto para o dashboard
             if getattr(user, 'is_admin', False):
@@ -122,19 +127,24 @@ def login_view(request):
                 subscription = Subscription.objects.filter(user=user).first()
                 # Se o plano não for válido (vencido ou pendente), vai para o perfil
                 if not subscription or not subscription.is_valid:
-                    if is_mobile(request):
+                    if is_mobile(request) or (next_url and 'mobile' in next_url):
                         return redirect('mobile:plans')
                     return redirect('profile')
                 
             if getattr(user, 'user_type', '') == 'staff':
                 return redirect('mobilecondominio:dashboard')
                 
+            # Se não tiver next_url mas for mobile, vai para home mobile
             if is_mobile(request):
                 return redirect('mobile:home')
+                
+            # Fallback para next_url geral ou dashboard
+            if next_url:
+                return redirect(next_url)
             return redirect('dashboard')
     else:
         form = UserLoginForm()
-    return render(request, 'accounts/login.html', {'form': form})
+    return render(request, 'accounts/login.html', {'form': form, 'next': next_url})
 
 def logout_view(request):
     logout(request)

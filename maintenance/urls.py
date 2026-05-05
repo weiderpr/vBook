@@ -25,4 +25,5 @@ urlpatterns = [
     path('delete-photo/<int:pk>/', views.MaintenancePhotoDeleteView.as_view(), name='delete_photo'),
     path('provider-autocomplete/', views.ProviderAutocompleteView.as_view(), name='provider_autocomplete'),
     path('submit-evaluation/<int:maintenance_pk>/', views.SubmitEvaluationView.as_view(), name='submit_evaluation'),
+    path('evaluate-provider/<int:provider_pk>/', views.DirectProviderEvaluationView.as_view(), name='evaluate_provider'),
 ]

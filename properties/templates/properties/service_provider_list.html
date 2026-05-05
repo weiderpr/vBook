@@ -174,10 +174,15 @@
                                     </div>
                                     <div>
                                         <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">{{ provider.name }}</div>
-                                        <div style="font-size: 0.7rem; color: #fbbf24; display: flex; gap: 1px; margin-top: 2px;">
-                                            {% if provider.average_rating > 0 %}
-                                                {% for i in provider.average_rating|star_range %}★{% endfor %}
-                                            {% endif %}
+                                        <div style="font-size: 0.75rem; color: #fbbf24; display: flex; gap: 2px; margin-top: 4px;" title="Média: {{ provider.average_rating }}">
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= provider.average_rating %}
+                                                    <span style="color: #fbbf24;">★</span>
+                                                {% else %}
+                                                    <span style="color: rgba(255,255,255,0.1);">★</span>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <span style="color: var(--text-muted); font-size: 0.65rem; margin-left: 4px; font-weight: 700;">({{ provider.evaluation_count }})</span>
                                         </div>
                                     </div>
                                 </div>
@@ -204,8 +209,13 @@
                                     <button onclick="openV3Modal({{ provider.pk }})" class="v3-btn-action" style="color: var(--primary);" title="{% trans 'Movimentação financeira do prestador' %}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                                     </button>
+                                    {% if provider.is_active %}
                                     <button onclick="copyPublicLink('{{ request.scheme }}://{{ request.get_host }}{% url 'properties:provider_public' provider.access_token %}')" class="v3-btn-action" style="color: #10b981;" title="{% trans 'Copiar link de acesso para o prestador' %}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                                    </button>
+                                    {% endif %}
+                                    <button onclick="openRatingModal({{ provider.pk }}, '{{ provider.name }}')" class="v3-btn-action" style="color: #fbbf24;" title="{% trans 'Avaliar prestador' %}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                                     </button>
                                     <a href="{% url 'properties:provider_update' provider.pk %}" class="v3-btn-action" title="{% trans 'Editar prestador' %}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
@@ -276,6 +286,44 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- MODAL DE AVALIAÇÃO (ESTILO V3) -->
+<div id="v3-rating-modal" class="v3-modal-overlay">
+    <div class="v3-modal-container" style="height: auto !important; max-height: 90vh;">
+        <div class="v3-modal-header">
+            <div>
+                <h2 id="v3-rating-provider-name" style="margin: 0; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">{% trans "Avaliar Prestador" %}</h2>
+                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">{% trans "Sua avaliação ajuda a manter a qualidade dos serviços." %}</div>
+            </div>
+            <button onclick="closeRatingModal()" style="background: transparent; border: none; cursor: pointer; color: var(--text-muted);"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        </div>
+
+        <form id="v3-rating-form" style="padding: 1rem 0;">
+            {% csrf_token %}
+            <input type="hidden" id="v3-rating-provider-id">
+            
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <div class="star-rating" style="display: flex; justify-content: center; gap: 8px; font-size: 2rem;">
+                    <span class="star" data-value="1" style="cursor: pointer; color: var(--text-muted);">★</span>
+                    <span class="star" data-value="2" style="cursor: pointer; color: var(--text-muted);">★</span>
+                    <span class="star" data-value="3" style="cursor: pointer; color: var(--text-muted);">★</span>
+                    <span class="star" data-value="4" style="cursor: pointer; color: var(--text-muted);">★</span>
+                    <span class="star" data-value="5" style="cursor: pointer; color: var(--text-muted);">★</span>
+                </div>
+                <input type="hidden" name="rating" id="v3-rating-input" required>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label style="font-size: 0.7rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 8px;">{% trans "Comentário (Opcional)" %}</label>
+                <textarea name="comment" class="v3-modal-input" style="height: 100px !important; padding: 12px !important; resize: none;" placeholder="{% trans 'Como foi a experiência com este prestador?' %}"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; height: 44px; font-weight: 800; font-size: 0.9rem;">
+                {% trans "ENVIAR AVALIAÇÃO" %}
+            </button>
+        </form>
     </div>
 </div>
 
@@ -370,6 +418,76 @@
         document.getElementById('v3-modal').classList.remove('active'); 
         document.getElementById('v3-payment-form').reset(); 
     }
+
+    // LÓGICA DE AVALIAÇÃO
+    let selectedRating = 0;
+
+    function openRatingModal(id, name) {
+        currentProviderId = id;
+        selectedRating = 0;
+        document.getElementById('v3-rating-provider-id').value = id;
+        document.getElementById('v3-rating-provider-name').innerText = name;
+        document.getElementById('v3-rating-modal').classList.add('active');
+        document.getElementById('v3-rating-input').value = '';
+        
+        // Reset stars
+        document.querySelectorAll('.star').forEach(s => {
+            s.style.color = 'var(--text-muted)';
+        });
+    }
+
+    function closeRatingModal() {
+        document.getElementById('v3-rating-modal').classList.remove('active');
+        document.getElementById('v3-rating-form').reset();
+    }
+
+    document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', function() {
+            selectedRating = this.dataset.value;
+            document.getElementById('v3-rating-input').value = selectedRating;
+            
+            document.querySelectorAll('.star').forEach(s => {
+                s.style.color = s.dataset.value <= selectedRating ? '#fbbf24' : 'var(--text-muted)';
+            });
+        });
+        
+        star.addEventListener('mouseover', function() {
+            const val = this.dataset.value;
+            document.querySelectorAll('.star').forEach(s => {
+                s.style.color = s.dataset.value <= val ? '#fbbf24' : 'var(--text-muted)';
+            });
+        });
+        
+        star.addEventListener('mouseout', function() {
+            document.querySelectorAll('.star').forEach(s => {
+                s.style.color = s.dataset.value <= selectedRating ? '#fbbf24' : 'var(--text-muted)';
+            });
+        });
+    });
+
+    document.getElementById('v3-rating-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const rating = document.getElementById('v3-rating-input').value;
+        if (!rating) {
+            showToast("{% trans 'Por favor, selecione uma nota.' %}", "warning");
+            return;
+        }
+
+        const fd = new FormData(this);
+        fetch(`/book/manutencoes/evaluate-provider/${currentProviderId}/`, {
+            method: 'POST',
+            body: fd,
+            headers: { 'X-CSRFToken': fd.get('csrfmiddlewaretoken') }
+        }).then(r => r.json()).then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, "success");
+                closeRatingModal();
+                setTimeout(() => location.reload(), 1000); // Reload to update averages
+            } else {
+                showToast(data.message, "error");
+            }
+        });
+    });
     
     document.getElementById('v3-payment-form').addEventListener('submit', function(e) {
         e.preventDefault();

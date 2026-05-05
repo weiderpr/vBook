@@ -1,0 +1,424 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static humanize l10n property_tags %}
+
+{% block title %}{% trans "Relatórios Globais" %} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Rigid Layout Enforcement */
+    .settings-container {
+        padding: 2rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+    }
+
+    .property-mini-header {
+        margin-bottom: 2rem !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: flex-end !important;
+        flex-wrap: wrap !important;
+        gap: 1rem !important;
+    }
+
+    .settings-tabs {
+        display: flex !important;
+        gap: 0.5rem !important;
+        margin-bottom: 2rem !important;
+        padding: 6px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-radius: 14px !important;
+        width: fit-content !important;
+    }
+    
+    .tab-link {
+        padding: 0.6rem 1.2rem !important;
+        color: var(--text-muted) !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+        border-radius: 10px !important;
+        transition: all 0.3s !important;
+        cursor: pointer !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .tab-link.active {
+        background: var(--primary) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+    }
+
+    .selector-group {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        background: rgba(255,255,255,0.05) !important;
+        padding: 6px 12px !important;
+        border-radius: 10px !important;
+        border: 1px solid var(--glass-border) !important;
+    }
+    
+    .selector-group select {
+        background: transparent !important;
+        border: none !important;
+        color: var(--text-main) !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        outline: none !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .selector-group span {
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        color: var(--text-muted) !important;
+        text-transform: uppercase !important;
+    }
+
+    .table-responsive {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        border-radius: 16px !important;
+        border: 1px solid var(--glass-border) !important;
+        background: rgba(255, 255, 255, 0.01) !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .report-table {
+        width: 100% !important;
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+        font-size: 0.8rem !important;
+        table-layout: auto !important;
+    }
+
+    .report-table th, .report-table td {
+        white-space: nowrap !important;
+        padding: 0.5rem 0.75rem !important;
+        border-bottom: 1px solid var(--glass-border) !important;
+        border-right: 1px solid var(--glass-border) !important;
+        text-align: right !important;
+    }
+
+    .report-table thead th {
+        background: var(--bg-dark) !important;
+        color: var(--text-muted) !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        font-size: 0.65rem !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 20 !important;
+        border-bottom: 2px solid var(--glass-border) !important;
+        text-align: center !important;
+    }
+
+    .report-table .sticky-col {
+        position: sticky !important;
+        left: 0 !important;
+        background: var(--bg-card) !important;
+        z-index: 25 !important;
+        border-right: 1px solid var(--glass-border) !important;
+        text-align: left !important;
+        min-width: 180px !important;
+        max-width: 180px !important;
+        width: 180px !important;
+    }
+
+    .report-table .sticky-col-2 {
+        position: sticky !important;
+        left: 180px !important;
+        background: var(--bg-card) !important;
+        z-index: 25 !important;
+        border-right: 2px solid var(--glass-border) !important;
+        text-align: center !important;
+        min-width: 80px !important;
+        max-width: 80px !important;
+        width: 80px !important;
+        font-size: 0.6rem !important;
+        font-weight: 800 !important;
+        text-transform: uppercase !important;
+    }
+
+    .report-table thead th.sticky-col { z-index: 30 !important; background: var(--bg-dark) !important; }
+    .report-table thead th.sticky-col-2 { z-index: 30 !important; background: var(--bg-dark) !important; left: 180px !important; border-right: 2px solid var(--glass-border) !important; }
+
+    .total-row {
+        background: rgba(99, 102, 241, 0.1) !important;
+    }
+
+    .total-row-main {
+        background: rgba(99, 102, 241, 0.2) !important;
+    }
+
+    .total-row td, .total-row-main td {
+        font-weight: 800 !important;
+        color: var(--text-main) !important;
+    }
+
+    .property-name-truncate {
+        font-weight: 700;
+        display: block;
+        color: var(--text-main);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+        font-size: 0.75rem;
+    }
+
+    .val-gross { color: var(--text-main); font-weight: 600; }
+    .val-costs { color: #ef4444; font-weight: 600; }
+    .val-net { color: #22c55e; font-weight: 800; }
+    .val-net.negative { color: #f87171; }
+
+    @media (max-width: 768px) {
+        .settings-container {
+            padding: 1rem !important;
+        }
+        .dashboard-main {
+            padding: 1rem !important;
+            padding-top: 5rem !important;
+        }
+        .header-flex {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="settings-container">
+    <div class="property-mini-header">
+        <div>
+            <h1 style="margin: 0; font-size: 2rem; font-weight: 800; color: var(--text-main);">{% trans "Relatórios Globais" %}</h1>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">{% trans "Gestão financeira consolidada de todas as propriedades." %}</p>
+        </div>
+    </div>
+
+    <div class="settings-tabs">
+        <a href="?tab=to_receive&month={{ selected_month }}&year={{ selected_year }}" class="tab-link {% if active_tab == 'to_receive' %}active{% endif %}">
+            {% trans "Valores a Receber" %}
+        </a>
+        <a href="?tab=consolidated&year={{ selected_year }}" class="tab-link {% if active_tab == 'consolidated' %}active{% endif %}">
+            {% trans "Resultado Consolidado" %}
+        </a>
+    </div>
+
+    <!-- Tab Content: Values to Receive -->
+    {% if active_tab == 'to_receive' %}
+    <div id="to_receive" class="tab-content active">
+        <div class="glass-card" style="width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 1.5rem !important; box-sizing: border-box !important; overflow: hidden !important; display: block !important; margin-bottom: 2rem !important; background: var(--bg-card); border-radius: 24px; border: 1px solid var(--glass-border);">
+            
+            <div class="header-flex" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; gap: 1rem;">
+                <div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">{% trans "Saldos por Propriedade" %}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">{{ current_month_name }} de {{ selected_year }}</p>
+                </div>
+
+                <form method="GET" style="display: flex; gap: 0.5rem; align-items: center;">
+                    <input type="hidden" name="tab" value="to_receive">
+                    <div class="selector-group">
+                        <span>{% trans "Mês" %}</span>
+                        <select name="month" onchange="this.form.submit()">
+                            {% for m_val, m_name in months %}
+                                <option value="{{ m_val }}" {% if m_val == selected_month %}selected{% endif %}>{{ m_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="selector-group">
+                        <span>{% trans "Ano" %}</span>
+                        <select name="year" onchange="this.form.submit()">
+                            {% for y in years %}
+                                <option value="{{ y|unlocalize }}" {% if y == selected_year %}selected{% endif %}>{{ y|unlocalize }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th class="sticky-col">{% trans "Propriedade" %}</th>
+                            <th style="text-align: right;">{% trans "Comissão" %}</th>
+                            <th style="text-align: right;">{% trans "Recebidos" %}</th>
+                            <th style="text-align: right;">{% trans "Saldo" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in report_data %}
+                        <tr>
+                            <td class="sticky-col">
+                                <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
+                                    {% if item.property.image %}
+                                        <img src="{{ item.property.image.url }}" style="width: 32px; height: 32px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
+                                    {% else %}
+                                        <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; flex-shrink: 0; font-size: 0.8rem;">{{ item.property.name|first|upper }}</div>
+                                    {% endif %}
+                                    <div style="min-width: 0; overflow: hidden;">
+                                        <span class="property-name-truncate">{{ item.property.name }}</span>
+                                        <small style="color: var(--text-muted); font-size: 0.65rem;">R$ {{ item.total_value|floatformat:0|localize }}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: right; color: #ef4444; font-weight: 600;">R$ {{ item.comissao|floatformat:2|localize }}</td>
+                            <td style="text-align: right; color: #22c55e; font-weight: 600;">R$ {{ item.received|floatformat:2|localize }}</td>
+                            <td style="text-align: right; font-weight: 800; color: var(--primary);">R$ {{ item.balance|floatformat:2|localize }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
+                                {% trans "Nenhuma reserva ativa para checkout neste período." %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    {% if report_data %}
+                    <tfoot>
+                        <tr class="total-row">
+                            <td class="sticky-col">{% trans "TOTAL CONSOLIDADO" %}</td>
+                            <td style="text-align: right;">R$ {{ totals.comissao|floatformat:2|localize }}</td>
+                            <td style="text-align: right;">R$ {{ totals.received|floatformat:2|localize }}</td>
+                            <td style="text-align: right; color: var(--primary);">R$ {{ totals.balance|floatformat:2|localize }}</td>
+                        </tr>
+                    </tfoot>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Tab Content: Consolidated Result -->
+    {% if active_tab == 'consolidated' %}
+    <div id="consolidated" class="tab-content active">
+        <div class="glass-card" style="width: 100% !important; max-width: 100% !important; min-width: 0 !important; padding: 1.5rem !important; box-sizing: border-box !important; overflow: hidden !important; display: block !important; margin-bottom: 2rem !important; background: var(--bg-card); border-radius: 24px; border: 1px solid var(--glass-border);">
+            
+            <div class="header-flex" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; gap: 1rem;">
+                <div>
+                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">{% trans "Resultado Consolidado" %}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">{% trans "Ano de" %} {{ selected_year }}</p>
+                </div>
+
+                <form method="GET" style="display: flex; gap: 0.5rem; align-items: center;">
+                    <input type="hidden" name="tab" value="consolidated">
+                    <div class="selector-group">
+                        <span>{% trans "Ano" %}</span>
+                        <select name="year" onchange="this.form.submit()">
+                            {% for y in years %}
+                                <option value="{{ y|unlocalize }}" {% if y == selected_year %}selected{% endif %}>{{ y|unlocalize }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="report-table consolidated-table">
+                    <thead>
+                        <tr>
+                            <th class="sticky-col">{% trans "Propriedade" %}</th>
+                            <th class="sticky-col-2">{% trans "Tipo" %}</th>
+                            {% for m_val, m_name in months %}
+                                <th>{{ m_name|slice:":3" }}</th>
+                            {% endfor %}
+                            <th style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">{% trans "TOTAL" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in consolidated_data %}
+                        <!-- Row 1: Gross -->
+                        <tr>
+                            <td class="sticky-col" rowspan="3" style="vertical-align: middle; background: var(--bg-card); border-bottom: 2px solid var(--glass-border) !important;">
+                                <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                                    {% if item.property.image %}
+                                        <img src="{{ item.property.image.url }}" style="width: 24px; height: 24px; border-radius: 6px; object-fit: cover; flex-shrink: 0;">
+                                    {% else %}
+                                        <div style="width: 24px; height: 24px; border-radius: 6px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; color: white; flex-shrink: 0;">{{ item.property.name|first|upper }}</div>
+                                    {% endif %}
+                                    <span class="property-name-truncate">{{ item.property.name }}</span>
+                                </div>
+                            </td>
+                            <td class="sticky-col-2">{% trans "Bruto" %}</td>
+                            {% for m in months_range %}
+                                {% with item.months|get_item:m as m_data %}
+                                <td class="val-gross">{% if m_data.gross > 0 %}R$ {{ m_data.gross|floatformat:0|localize }}{% else %}-{% endif %}</td>
+                                {% endwith %}
+                            {% endfor %}
+                            <td class="val-gross" style="background: rgba(255,255,255,0.02);">R$ {{ item.total_year.gross|floatformat:0|localize }}</td>
+                        </tr>
+                        <!-- Row 2: Costs -->
+                        <tr>
+                            <td class="sticky-col-2">{% trans "Custos" %}</td>
+                            {% for m in months_range %}
+                                {% with item.months|get_item:m as m_data %}
+                                <td class="val-costs">{% if m_data.costs > 0 %}R$ {{ m_data.costs|floatformat:0|localize }}{% else %}-{% endif %}</td>
+                                {% endwith %}
+                            {% endfor %}
+                            <td class="val-costs" style="background: rgba(255,255,255,0.02);">R$ {{ item.total_year.costs|floatformat:0|localize }}</td>
+                        </tr>
+                        <!-- Row 3: Net -->
+                        <tr style="border-bottom: 2px solid var(--glass-border) !important;">
+                            <td class="sticky-col-2" style="border-bottom: 2px solid var(--glass-border) !important;">{% trans "Líquido" %}</td>
+                            {% for m in months_range %}
+                                {% with item.months|get_item:m as m_data %}
+                                <td class="val-net {% if m_data.net < 0 %}negative{% endif %}" style="border-bottom: 2px solid var(--glass-border) !important;">R$ {{ m_data.net|floatformat:0|localize }}</td>
+                                {% endwith %}
+                            {% endfor %}
+                            <td class="val-net {% if item.total_year.net < 0 %}negative{% endif %}" style="background: rgba(255,255,255,0.02); border-bottom: 2px solid var(--glass-border) !important;">R$ {{ item.total_year.net|floatformat:0|localize }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <!-- Totals Row 1: Gross -->
+                        <tr class="total-row">
+                            <td class="sticky-col" rowspan="3" style="vertical-align: middle;">{% trans "TOTAL CONSOLIDADO" %}</td>
+                            <td class="sticky-col-2">{% trans "Bruto" %}</td>
+                            {% for m in months_range %}
+                                {% with global_totals_months|get_item:m as g_data %}
+                                <td class="val-gross">R$ {{ g_data.gross|floatformat:0|localize }}</td>
+                                {% endwith %}
+                            {% endfor %}
+                            <td class="val-gross" style="background: rgba(99, 102, 241, 0.1);">R$ {{ global_grand_total.gross|floatformat:0|localize }}</td>
+                        </tr>
+                        <!-- Totals Row 2: Costs -->
+                        <tr class="total-row">
+                            <td class="sticky-col-2">{% trans "Custos" %}</td>
+                            {% for m in months_range %}
+                                {% with global_totals_months|get_item:m as g_data %}
+                                <td class="val-costs">R$ {{ g_data.costs|floatformat:0|localize }}</td>
+                                {% endwith %}
+                            {% endfor %}
+                            <td class="val-costs" style="background: rgba(99, 102, 241, 0.1);">R$ {{ global_grand_total.costs|floatformat:0|localize }}</td>
+                        </tr>
+                        <!-- Totals Row 3: Net -->
+                        <tr class="total-row-main">
+                            <td class="sticky-col-2">{% trans "Líquido" %}</td>
+                            {% for m in months_range %}
+                                {% with global_totals_months|get_item:m as g_data %}
+                                <td class="val-net {% if g_data.net < 0 %}negative{% endif %}">R$ {{ g_data.net|floatformat:0|localize }}</td>
+                                {% endwith %}
+                            {% endfor %}
+                            <td class="val-net {% if global_grand_total.net < 0 %}negative{% endif %}" style="background: rgba(99, 102, 241, 0.3);">R$ {{ global_grand_total.net|floatformat:0|localize }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div style="margin-top: 1rem; display: flex; gap: 1.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                <span><b style="color: var(--text-main);">RB:</b> Rendimento Bruto</span>
+                <span><b style="color: var(--text-main);">C:</b> Custos (Reservas + Mensais)</span>
+                <span><b style="color: var(--text-main);">RL:</b> Resultado Líquido</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

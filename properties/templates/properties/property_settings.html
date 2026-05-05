@@ -1009,7 +1009,7 @@
         
         if (typeof VMasker !== 'undefined' && amountInput) {
             if (amountTypeSelect.value === 'fixed') {
-                // If it's fixed, format the current value as money
+                // Para valor fixo: o amount está em R$ (ex: 150.00), VMasker recebe em centavos
                 const val = (parseFloat(data.amount) || 0) * 100;
                 amountInput.value = VMasker.toMoney(Math.round(val), {
                     precision: 2,
@@ -1027,6 +1027,8 @@
                     zeroCents: false
                 });
             } else {
+                // Para percentual: o amount é o valor puro (ex: 13), apenas formatar como número
+                amountInput.value = parseFloat(data.amount) || 0;
                 VMasker(amountInput).maskNumber();
             }
         }

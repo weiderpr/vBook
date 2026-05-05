@@ -14,7 +14,9 @@ from django.db.models import Sum, Q
 from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider
 from .utils import get_property_stats
 from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
-from reservations.models import Reservation, ReservationCost
+from reservations.models import Reservation, ReservationCost, ReservationPayment
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 
 class PropertyInstructionsUpdateView(LoginRequiredMixin, UpdateView):
     model = Property
@@ -1054,3 +1056,194 @@ class PropertyReportsView(LoginRequiredMixin, DetailView):
             _('Set'), _('Out'), _('Nov'), _('Dez')
         ]
         return meses[month_index - 1]
+
+@method_decorator(never_cache, name='dispatch')
+class GlobalReportsView(LoginRequiredMixin, View):
+    def get(self, request):
+        today = timezone.localtime(timezone.now()).date()
+        active_tab = request.GET.get('tab', 'to_receive')
+        
+        # 1. Month/Year Navigation
+        try:
+            selected_month = int(request.GET.get('month', today.month))
+            selected_year = int(request.GET.get('year', today.year))
+        except (ValueError, TypeError):
+            selected_month = today.month
+            selected_year = today.year
+
+        # 2. Fetch all properties for this user
+        properties = Property.objects.filter(user=request.user)
+
+        # Context shared between tabs
+        context = {
+            'selected_month': selected_month,
+            'selected_year': selected_year,
+            'active_tab': active_tab,
+            'active_item': 'global_reports',
+            'properties_list': properties,
+        }
+
+        # 3. Handle specific tab logic
+        if active_tab == 'consolidated':
+            self._handle_consolidated_tab(request, context, properties, selected_year)
+        else:
+            self._handle_to_receive_tab(request, context, properties, selected_month, selected_year)
+
+        # 4. Month names and Years range (Shared UI data)
+        months = [
+            (1, _('Janeiro')), (2, _('Fevereiro')), (3, _('Março')), (4, _('Abril')),
+            (5, _('Maio')), (6, _('Junho')), (7, _('Julho')), (8, _('Agosto')),
+            (9, _('Setembro')), (10, _('Outubro')), (11, _('Novembro')), (12, _('Dezembro'))
+        ]
+        context['months'] = months
+        context['current_month_name'] = dict(months)[selected_month]
+
+        # Calculate available years with movements
+        from django.db.models.functions import ExtractYear
+        from reservations.models import Reservation
+        from maintenance.models import Maintenance
+        
+        years_res = Reservation.objects.annotate(y=ExtractYear('end_date')).values_list('y', flat=True).distinct()
+        years_cost = PropertyCost.objects.values_list('year', flat=True).distinct()
+        years_maint = Maintenance.objects.annotate(y=ExtractYear('execution_end_date')).values_list('y', flat=True).distinct()
+        years_hist = FinancialHistory.objects.values_list('year', flat=True).distinct()
+        
+        # Combine all years and filter out None
+        all_years = set(list(years_res) + list(years_cost) + list(years_maint) + list(years_hist))
+        available_years = sorted([int(y) for y in all_years if y is not None], reverse=True)
+        
+        # Ensure current year is at least available if list is empty (fallback)
+        if not available_years:
+            available_years = [today.year]
+        
+        context['years'] = available_years
+
+        return render(request, 'properties/global_reports.html', context)
+
+    def _handle_to_receive_tab(self, request, context, properties, selected_month, selected_year):
+        report_data = []
+        for prop in properties:
+            reservations = prop.reservations.filter(
+                end_date__month=selected_month,
+                end_date__year=selected_year,
+                is_cancelled=False
+            )
+            
+            res_ids = reservations.values_list('id', flat=True)
+            total_val = reservations.aggregate(Sum('total_value'))['total_value__sum'] or Decimal(0)
+            
+            comissao = ReservationCost.objects.filter(
+                reservation_id__in=res_ids,
+                property_cost__recipient='platform'
+            ).aggregate(Sum('value'))['value__sum'] or Decimal(0)
+            
+            received = ReservationPayment.objects.filter(reservation_id__in=res_ids).aggregate(Sum('value'))['value__sum'] or Decimal(0)
+            
+            balance = (total_val - comissao) - received
+            
+            if total_val > 0 or comissao > 0 or received > 0:
+                report_data.append({
+                    'property': prop,
+                    'comissao': comissao,
+                    'received': received,
+                    'balance': balance,
+                    'total_value': total_val
+                })
+        
+        context['report_data'] = report_data
+        context['totals'] = {
+            'comissao': sum(item['comissao'] for item in report_data),
+            'received': sum(item['received'] for item in report_data),
+            'balance': sum(item['balance'] for item in report_data),
+            'total_value': sum(item['total_value'] for item in report_data)
+        }
+
+    def _handle_consolidated_tab(self, request, context, properties, selected_year):
+        from maintenance.models import Maintenance
+        
+        # Prepare months list for iteration
+        months_range = range(1, 13)
+        
+        # Data container
+        consolidated_data = []
+        
+        # Global totals for the footer
+        global_totals = {m: {'gross': Decimal(0), 'costs': Decimal(0), 'net': Decimal(0)} for m in months_range}
+        global_grand_total = {'gross': Decimal(0), 'costs': Decimal(0), 'net': Decimal(0)}
+
+        for prop in properties:
+            prop_row = {
+                'property': prop,
+                'months': {m: {'gross': Decimal(0), 'costs': Decimal(0), 'net': Decimal(0)} for m in months_range},
+                'total_year': {'gross': Decimal(0), 'costs': Decimal(0), 'net': Decimal(0)}
+            }
+            
+            # 1. Reservations and their costs
+            reservations = prop.reservations.filter(end_date__year=selected_year, is_cancelled=False).prefetch_related('costs')
+            for res in reservations:
+                m = res.end_date.month
+                prop_row['months'][m]['gross'] += res.total_value
+                for rc in res.costs.all():
+                    prop_row['months'][m]['costs'] += rc.value
+            
+            # 2. Fixed/Monthly property costs
+            prop_costs = prop.costs.filter(
+                (Q(frequency='monthly') & (Q(year=selected_year) | Q(year__isnull=True))) | 
+                Q(payment_date__year=selected_year) |
+                (Q(year=selected_year) & Q(month__isnull=False))
+            )
+            for pc in prop_costs:
+                m = None
+                if pc.frequency == 'monthly' and pc.month:
+                    m = pc.month
+                elif pc.payment_date:
+                    m = pc.payment_date.month
+                elif pc.month:
+                    m = pc.month
+                
+                if m:
+                    prop_row['months'][m]['costs'] += pc.amount
+            
+            # 3. Maintenances
+            maintenances = Maintenance.objects.filter(property=prop, status='finished').filter(
+                Q(execution_end_date__year=selected_year) | 
+                Q(execution_end_date__isnull=True, updated_at__year=selected_year)
+            )
+            for mt in maintenances:
+                dt = mt.execution_end_date or mt.updated_at
+                m = dt.month
+                prop_row['months'][m]['costs'] += (mt.execution_value or Decimal(0))
+                
+            # 4. Financial History
+            histories = prop.financial_histories.filter(year=selected_year)
+            for h in histories:
+                m = h.month
+                prop_row['months'][m]['gross'] += h.gross_value
+                prop_row['months'][m]['costs'] += h.costs
+
+            # Calculate Net and Yearly totals for this property
+            for m in months_range:
+                prop_row['months'][m]['net'] = prop_row['months'][m]['gross'] - prop_row['months'][m]['costs']
+                
+                # Add to property yearly total
+                prop_row['total_year']['gross'] += prop_row['months'][m]['gross']
+                prop_row['total_year']['costs'] += prop_row['months'][m]['costs']
+                prop_row['total_year']['net'] += prop_row['months'][m]['net']
+                
+                # Add to global totals
+                global_totals[m]['gross'] += prop_row['months'][m]['gross']
+                global_totals[m]['costs'] += prop_row['months'][m]['costs']
+                global_totals[m]['net'] += prop_row['months'][m]['net']
+            
+            # Global grand total
+            global_grand_total['gross'] += prop_row['total_year']['gross']
+            global_grand_total['costs'] += prop_row['total_year']['costs']
+            global_grand_total['net'] += prop_row['total_year']['net']
+            
+            # Add to consolidated data
+            consolidated_data.append(prop_row)
+
+        context['consolidated_data'] = consolidated_data
+        context['global_totals_months'] = global_totals
+        context['global_grand_total'] = global_grand_total
+        context['months_range'] = months_range

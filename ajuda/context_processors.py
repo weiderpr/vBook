@@ -1,4 +1,5 @@
 from .models import HelpPreference
+from core.utils import is_mobile
 
 def help_context(request):
     """
@@ -6,6 +7,14 @@ def help_context(request):
     """
     if not request.user.is_authenticated:
         return {}
+        
+    # Se for mobile, não mostramos wizards de ajuda (conforme solicitação do usuário)
+    # Isso evita que o modal de ajuda interfira na navegação mobile ou cause
+    # redirecionamentos indesejados.
+    if is_mobile(request):
+        return {
+            'show_welcome_wizard': False
+        }
         
     # List of all help tools we want to check
     help_tools = ['welcome_wizard']

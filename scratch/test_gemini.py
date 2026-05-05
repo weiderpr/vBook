@@ -1,16 +1,21 @@
-import os
 import google.generativeai as genai
-from dotenv import load_dotenv
+import os
+from django.conf import settings
+import django
 
-load_dotenv('/root/verticebook/.env')
-api_key = os.getenv('GEMINI_API_KEY')
-print(f"API Key found: {api_key[:10]}...")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'verticebook.settings')
+django.setup()
 
-genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-1.5-flash')
+def trigger_reservation_wizard(property_id: int = None):
+    return {"status": "trigger_wizard", "property_id": property_id}
 
-try:
-    response = model.generate_content("Oi, teste")
-    print("Response:", response.text)
-except Exception as e:
-    print("Error:", e)
+genai.configure(api_key=settings.GEMINI_API_KEY)
+model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    system_instruction="Se o usuário quiser criar reserva, chame trigger_reservation_wizard IMEDIATAMENTE. Responda apenas em JSON: {\"message\": \"...\", \"can_answer\": true}.",
+    tools=[trigger_reservation_wizard]
+)
+
+response = model.generate_content("me ajude a criar uma reserva")
+print("Response content:")
+print(response.candidates[0].content)

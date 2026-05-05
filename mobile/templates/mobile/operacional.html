@@ -1,0 +1,298 @@
+{% extends 'mobile/mobile_home.html' %}
+{% load i18n static l10n %}
+
+{% block title %}{% trans "Operacional" %} - VerticeBook{% endblock %}
+
+{% block dashboard_content %}
+<style>
+    /* Estilos específicos para a tela Operacional */
+    .op-container {
+        padding: 1rem;
+        padding-bottom: 80px; /* Espaço para a barra inferior */
+    }
+
+    .op-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .op-header h1 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin: 0;
+        color: var(--text-main);
+    }
+
+    .provider-header {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .provider-header:active {
+        transform: scale(0.98);
+    }
+
+    .provider-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 0.85rem;
+        color: var(--text-main);
+        text-transform: uppercase;
+    }
+
+    .provider-count {
+        background: var(--primary);
+        color: white;
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-weight: 900;
+    }
+
+    .chevron {
+        transition: transform 0.3s;
+        color: var(--text-muted);
+    }
+
+    .provider-section.collapsed .chevron {
+        transform: rotate(-90deg);
+    }
+
+    .services-container {
+        max-height: 5000px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0.5rem 0.25rem;
+    }
+
+    .provider-section.collapsed .services-container {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .service-card {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-status-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+    }
+
+    .status-completed { background: #10b981; }
+    .status-pending { background: #fbbf24; }
+    .status-cancelled { background: var(--danger); }
+
+    .service-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+    }
+
+    .service-prop {
+        font-weight: 800;
+        font-size: 1rem;
+        color: var(--text-main);
+    }
+
+    .service-date {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+    }
+
+    .service-desc {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 12px;
+    }
+
+    .service-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .service-val {
+        font-weight: 900;
+        color: var(--text-main);
+    }
+
+    .status-badge {
+        font-size: 0.65rem;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 100px;
+        text-transform: uppercase;
+    }
+
+    .badge-completed { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+    .badge-pending { background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+    .badge-cancelled { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+    
+    .cancel-info {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--danger);
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        text-transform: uppercase;
+    }
+
+    /* Barra de Navegação Inferior Fixa (Padrão Financeiro) */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        background: var(--header-bg);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        z-index: 1000;
+        padding: 0 1rem;
+    }
+
+    .nav-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        color: var(--text-dim);
+        text-decoration: none;
+        transition: var(--transition);
+        background: none;
+        border: none;
+    }
+
+    .nav-btn.active {
+        color: var(--primary);
+    }
+
+    .nav-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .nav-btn span {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+</style>
+
+<div class="op-container">
+    {% if grouped_services %}
+        {% for provider, services in grouped_services.items %}
+            <div class="provider-section {% if not forloop.first %}collapsed{% endif %}" id="provider-{{ forloop.counter }}">
+                <div class="provider-header" onclick="toggleProvider({{ forloop.counter }})">
+                    <div class="provider-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        <span>{{ provider.name }}</span>
+                        <span class="provider-count">{{ services|length }}</span>
+                    </div>
+                    <div class="chevron">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </div>
+                </div>
+                
+                <div class="services-container">
+                    {% for s in services %}
+                        <div class="service-card animate-fade" {% if s.reservation.is_cancelled %}style="border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.02);"{% endif %}>
+                            <div class="service-status-bar {% if s.reservation.is_cancelled %}status-cancelled{% elif s.is_completed %}status-completed{% else %}status-pending{% endif %}"></div>
+                            
+                            <div class="service-header">
+                                <div class="service-prop" {% if s.reservation.is_cancelled %}style="color: var(--danger);"{% endif %}>
+                                    {{ s.reservation.property.name }}
+                                </div>
+                                <div class="service-date">{{ s.reservation.start_date|date:"d/m/Y" }}</div>
+                            </div>
+                            
+                            <div class="service-desc">
+                                {{ s.description }} ({{ s.reservation.client_name }})
+                                {% if s.reservation.is_cancelled %}
+                                    <div class="cancel-info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+                                        {% trans "Reserva Cancelada" %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="service-footer">
+                                <div class="service-val">R$ {{ s.value|floatformat:2 }}</div>
+                                <div class="status-badge {% if s.reservation.is_cancelled %}badge-cancelled{% elif s.is_completed %}badge-completed{% else %}badge-pending{% endif %}">
+                                    {% if s.reservation.is_cancelled %}
+                                        {% trans "Cancelado" %}
+                                    {% elif s.is_completed %}
+                                        {% trans "Realizado" %}
+                                    {% else %}
+                                        {% trans "Pendente" %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div style="text-align: center; padding: 3rem 1rem; opacity: 0.5;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1rem;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+            <p>{% trans "Nenhum serviço programado para este mês." %}</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Navegação Inferior (Padronizada) -->
+<div class="bottom-nav">
+    <a href="?tab=servicos" class="nav-btn {% if active_tab == 'servicos' %}active{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <span>{% trans "Serviços" %}</span>
+    </a>
+    <button class="nav-btn" style="opacity: 0.3;" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span>{% trans "Checklist" %}</span>
+    </button>
+    <a href="{% url 'mobile:home' %}" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>{% trans "Início" %}</span>
+    </a>
+</div>
+
+<script>
+    function toggleProvider(id) {
+        const section = document.getElementById('provider-' + id);
+        section.classList.toggle('collapsed');
+    }
+</script>
+{% endblock %}

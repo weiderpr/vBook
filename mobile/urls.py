@@ -23,4 +23,6 @@ urlpatterns = [
     path('perfil/senha/', views.mobile_password_change, name='password_change'),
     path('perfil/update-theme/', views.mobile_update_theme, name='update_theme'),
     path('planos/', views.mobile_plans, name='plans'),
+    path('financeiro/', views.mobile_financeiro, name='financeiro'),
+    path('operacional/', views.mobile_operacional, name='operacional'),
 ]

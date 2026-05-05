@@ -146,9 +146,10 @@ def mobile_property_detail(request, pk):
     last_month_end = first_day_this_month - timedelta(days=1)
     first_day_last_month = last_month_end.replace(day=1).date()
     
+    from django.db.models import Q
     reservations = Reservation.objects.filter(
-        property=prop,
-        start_date__gte=first_day_last_month
+        Q(property=prop) &
+        (Q(start_date__gte=first_day_last_month) | Q(end_date__gte=first_day_last_month))
     ).prefetch_related('costs', 'costs__provider', 'payments').order_by('-start_date')
     
     # Annotate with totals for display
@@ -392,3 +393,160 @@ def mobile_plans(request):
         'subscription_days_remaining': subscription_days_remaining,
         'title': _("Planos e Assinatura")
     })
+@login_required
+def mobile_financeiro(request):
+    from reservations.models import Reservation, ReservationCost, ReservationPayment
+    from maintenance.models import Maintenance
+    from django.db.models import Q
+    
+    now = timezone.localtime(timezone.now())
+    selected_month = int(request.GET.get('month', now.month))
+    
+    # Handle localized year (e.g. '2.026')
+    year_val = request.GET.get('year')
+    if year_val:
+        try:
+            selected_year = int(str(year_val).replace('.', '').replace(',', ''))
+        except ValueError:
+            selected_year = now.year
+    else:
+        selected_year = now.year
+    active_tab = request.GET.get('tab', 'receber')
+    
+    user_properties = Property.objects.filter(user=request.user)
+    
+    # Months for selector
+    months = [
+        (1, _('Janeiro')), (2, _('Fevereiro')), (3, _('Março')), (4, _('Abril')),
+        (5, _('Maio')), (6, _('Junho')), (7, _('Julho')), (8, _('Agosto')),
+        (9, _('Setembro')), (10, _('Outubro')), (11, _('Novembro')), (12, _('Dezembro'))
+    ]
+    
+    context = {
+        'selected_month': selected_month,
+        'selected_year': selected_year,
+        'active_tab': active_tab,
+        'months': months,
+        'title': _("Financeiro")
+    }
+
+    if active_tab == 'receber':
+        report_data = []
+        for prop in user_properties:
+            reservations = prop.reservations.filter(
+                end_date__month=selected_month,
+                end_date__year=selected_year,
+                is_cancelled=False
+            )
+            res_ids = reservations.values_list('id', flat=True)
+            total_val = reservations.aggregate(total=Sum('total_value'))['total'] or Decimal(0)
+            comissao = ReservationCost.objects.filter(
+                reservation_id__in=res_ids,
+                property_cost__recipient='platform'
+            ).aggregate(total=Sum('value'))['total'] or Decimal(0)
+            received = ReservationPayment.objects.filter(reservation_id__in=res_ids).aggregate(total=Sum('value'))['total'] or Decimal(0)
+            balance = (total_val - comissao) - received
+            
+            if total_val > 0 or comissao > 0 or received > 0:
+                report_data.append({
+                    'property': prop,
+                    'comissao': comissao,
+                    'received': received,
+                    'balance': balance,
+                    'total_value': total_val
+                })
+        
+        context['report_data'] = report_data
+        context['totals'] = {
+            'comissao': sum(item['comissao'] for item in report_data),
+            'received': sum(item['received'] for item in report_data),
+            'balance': sum(item['balance'] for item in report_data),
+            'total_value': sum(item['total_value'] for item in report_data)
+        }
+
+    elif active_tab == 'consolidado':
+        consolidated_data = []
+        global_totals = {'gross': Decimal(0), 'costs': Decimal(0), 'net': Decimal(0)}
+        
+        for prop in user_properties:
+            # Monthly metrics for selected month
+            # 1. Reservations
+            res_m = prop.reservations.filter(end_date__month=selected_month, end_date__year=selected_year, is_cancelled=False)
+            gross_m = res_m.aggregate(total=Sum('total_value'))['total'] or Decimal(0)
+            res_costs_m = ReservationCost.objects.filter(reservation__in=res_m).aggregate(total=Sum('value'))['total'] or Decimal(0)
+            
+            # 2. Fixed/Property Costs
+            prop_costs_m = prop.costs.filter(
+                (Q(frequency='monthly') & (Q(year=selected_year) | Q(year__isnull=True)) & (Q(month=selected_month) | Q(month__isnull=True))) | 
+                Q(payment_date__year=selected_year, payment_date__month=selected_month) |
+                (Q(year=selected_year, month=selected_month))
+            ).aggregate(total=Sum('amount'))['total'] or Decimal(0)
+            
+            # 3. Maintenances
+            maint_m = Maintenance.objects.filter(property=prop, status='finished').filter(
+                Q(execution_end_date__year=selected_year, execution_end_date__month=selected_month) | 
+                Q(execution_end_date__isnull=True, updated_at__year=selected_year, updated_at__month=selected_month)
+            ).aggregate(total=Sum('execution_value'))['total'] or Decimal(0)
+            
+            # 4. Financial History
+            hist_m = prop.financial_histories.filter(year=selected_year, month=selected_month).aggregate(
+                g=Sum('gross_value'), c=Sum('costs')
+            )
+            gross_m += (hist_m['g'] or Decimal(0))
+            costs_m = res_costs_m + prop_costs_m + maint_m + (hist_m['c'] or Decimal(0))
+            
+            net_m = gross_m - costs_m
+            
+            # Add to global
+            global_totals['gross'] += gross_m
+            global_totals['costs'] += costs_m
+            global_totals['net'] += net_m
+            
+            consolidated_data.append({
+                'property': prop,
+                'gross': gross_m,
+                'costs': costs_m,
+                'net': net_m
+            })
+            
+        context['consolidated_data'] = consolidated_data
+        context['global_totals'] = global_totals
+
+    return render(request, 'mobile/financeiro.html', context)
+
+@login_required
+def mobile_operacional(request):
+    from reservations.models import ReservationCost
+    from django.utils import timezone
+    from collections import defaultdict
+    import datetime
+
+    # Filtro de data: do início do mês ANTERIOR em diante
+    now = timezone.now().date()
+    # Calcula o primeiro dia do mês anterior
+    if now.month == 1:
+        start_of_range = now.replace(year=now.year - 1, month=12, day=1)
+    else:
+        start_of_range = now.replace(month=now.month - 1, day=1)
+
+    # Buscar custos de reserva (diárias/serviços) com prestador
+    # Usamos end_date (checkout) para garantir que serviços de saída apareçam
+    services = ReservationCost.objects.filter(
+        reservation__property__user=request.user,
+        provider__isnull=False,
+        reservation__end_date__gte=start_of_range
+    ).select_related('provider', 'reservation', 'reservation__property').order_by('-reservation__end_date')
+
+    # Agrupar por prestador
+    # Usamos o nome do prestador como chave para facilitar o agrupamento no template
+    providers_dict = defaultdict(list)
+    for service in services:
+        providers_dict[service.provider].append(service)
+
+    # Converter para lista de tuplas (provider, services) para manter a ordem se necessário, 
+    # ou apenas passar o dicionário
+    context = {
+        'grouped_services': dict(providers_dict),
+        'active_tab': request.GET.get('tab', 'servicos'),
+    }
+    return render(request, 'mobile/operacional.html', context)

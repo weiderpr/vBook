@@ -133,7 +133,8 @@ O VerticeBook oferece três níveis de análise financeira:
 Ao entrar em uma propriedade, você vê um resumo do **mês atual**:
 - **Receita Mensal:** Soma de todas as reservas que terminam naquele mês.
 - **Quantidade de Reservas:** Total de estadias no período.
-- **Dias Ociosos:** Quantos dias a propriedade ficou sem hóspedes (ajuda a medir a ocupação).
+- **Dias Ociosos:** Representa a quantidade total de dias no mês em que a propriedade ficou **totalmente vazia** (sem nenhuma reserva confirmada). **Atenção:** O sistema NÃO utiliza regras de porcentagem (como 80%) para definir ociosidade; se não há reserva no dia, o dia é 100% ocioso.
+- **Perda por Ociosidade (Financeiro):** É o cálculo de quanto faturamento potencial você deixou de ganhar por causa dos dias que a casa ficou vazia. O sistema calcula o valor médio da sua diária e multiplica pelos dias ociosos para te mostrar o "dinheiro que ficou na mesa".
 
 ### B. Estrutura Financeira (Configurações)
 Acessível pelo ícone de engrenagem na propriedade:

@@ -430,13 +430,19 @@
                 chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
             }
             
+            // State management
+            window.chatMode = 'normal';
+            window.wizardPropertyId = null;
+
             function sendMessage() {
                 const text = chatbotInput.value.trim();
-                if (!text) return;
+                if (!text && window.chatMode !== 'wizard_init') return;
                 
                 const userMessage = text;
-                appendMessage(userMessage, 'user');
-                chatbotInput.value = '';
+                if (window.chatMode !== 'wizard_init') {
+                    appendMessage(userMessage, 'user');
+                    chatbotInput.value = '';
+                }
                 
                 // Show loading state
                 const loadingDiv = document.createElement('div');
@@ -448,17 +454,24 @@
                 // Track history
                 if (!window.chatHistory) window.chatHistory = [];
                 
-                fetch("{% url 'ajuda:chat_query' %}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
+                const url = window.chatMode === 'normal' ? "{% url 'ajuda:chat_query' %}" : "{% url 'ajuda:chat_wizard_step' %}";
+                const body = window.chatMode === 'normal' ? { 
                         message: userMessage,
                         property_id: "{{ property.id|default:'' }}",
                         current_url: window.location.pathname,
                         history: window.chatHistory
-                    })
+                    } : {
+                        message: userMessage,
+                        property_id: window.wizardPropertyId || "{{ property.id|default:'' }}",
+                        init: window.chatMode === 'wizard_init'
+                    };
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body)
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -467,13 +480,30 @@
                     let reply = data.message;
                     appendMessage(reply, 'bot', true);
                     
-                    // Add to history
-                    window.chatHistory.push({ role: 'user', parts: [userMessage] });
-                    window.chatHistory.push({ role: 'model', parts: [data.message] });
-                    if (window.chatHistory.length > 20) window.chatHistory.splice(0, 2);
+                    if (window.chatMode === 'normal') {
+                        // Add to history
+                        window.chatHistory.push({ role: 'user', parts: [userMessage] });
+                        window.chatHistory.push({ role: 'model', parts: [data.message] });
+                        if (window.chatHistory.length > 20) window.chatHistory.splice(0, 2);
+
+                        // Check if we should switch to wizard
+                        if (data.mode === 'wizard') {
+                            window.chatMode = 'wizard_init';
+                            window.wizardPropertyId = data.property_id || "{{ property.id|default:'' }}";
+                            // Auto-trigger first wizard question
+                            setTimeout(sendMessage, 1500);
+                        }
+                    } else {
+                        // Wizard mode
+                        window.chatMode = 'wizard';
+                        if (data.is_done) {
+                            window.chatMode = 'normal';
+                            window.wizardPropertyId = null;
+                        }
+                    }
                 })
                 .catch(err => {
-                    chatbotMessages.removeChild(loadingDiv);
+                    if (chatbotMessages.contains(loadingDiv)) chatbotMessages.removeChild(loadingDiv);
                     appendMessage('Ocorreu um erro de comunicação.', 'bot');
                     console.error(err);
                 });

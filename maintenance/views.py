@@ -527,3 +527,30 @@ class SubmitEvaluationView(LoginRequiredMixin, View):
             import traceback
             print(traceback.format_exc())
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+class DirectProviderEvaluationView(LoginRequiredMixin, View):
+    def post(self, request, provider_pk):
+        provider = get_object_or_404(ServiceProvider, pk=provider_pk, user=request.user)
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+
+        if not rating:
+            return JsonResponse({'status': 'error', 'message': _('Nota não fornecida.')}, status=400)
+
+        try:
+            ProviderEvaluation.objects.create(
+                provider=provider,
+                rating=int(rating),
+                comment=comment,
+                user=request.user,
+                maintenance=None
+            )
+            
+            # Recalculate average for response if needed, 
+            # though the template will reload or update via JS
+            return JsonResponse({
+                'status': 'success', 
+                'message': _('Avaliação registrada com sucesso!'),
+                'new_average': provider.average_rating
+            })
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)

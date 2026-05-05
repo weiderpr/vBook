@@ -129,7 +129,9 @@ class ProviderEvaluation(models.Model):
         Maintenance,
         on_delete=models.CASCADE,
         related_name='evaluation',
-        verbose_name=_("Manutenção")
+        verbose_name=_("Manutenção"),
+        null=True,
+        blank=True
     )
     provider = models.ForeignKey(
         ServiceProvider,

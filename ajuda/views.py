@@ -36,8 +36,13 @@ def create_reservation_tool(property_id: int, client_name: str, client_phone: st
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
+def trigger_reservation_wizard(property_id: int = None):
+    """Aciona o assistente do sistema para coletar dados e criar uma reserva de forma guiada."""
+    return {"status": "trigger_wizard", "property_id": property_id}
+
 AVAILABLE_TOOLS = {
-    "create_reservation_tool": create_reservation_tool
+    "create_reservation_tool": create_reservation_tool,
+    "trigger_reservation_wizard": trigger_reservation_wizard
 }
 
 # --- Provedores de IA ---
@@ -50,13 +55,13 @@ class AIProvider:
 class GeminiProvider(AIProvider):
     def __init__(self, api_key):
         genai.configure(api_key=api_key)
-        self.model_name = "gemini-1.5-flash"
+        self.model_name = "gemini-2.0-flash"
 
     def chat(self, message, history, system_instruction):
         model = genai.GenerativeModel(
             model_name=self.model_name,
             system_instruction=system_instruction,
-            tools=[create_reservation_tool]
+            tools=[create_reservation_tool, trigger_reservation_wizard]
         )
         chat = model.start_chat(history=history)
         response = chat.send_message(message)
@@ -72,6 +77,16 @@ class GeminiProvider(AIProvider):
             tool_func = AVAILABLE_TOOLS.get(function_call.name)
             if tool_func:
                 result = tool_func(**{k: v for k, v in function_call.args.items()})
+                
+                # Check for Wizard Trigger
+                if result.get('status') == 'trigger_wizard':
+                    return json.dumps({
+                        "message": "Perfeito! Vou te ajudar com isso agora mesmo. Iniciando assistente de reserva...",
+                        "mode": "wizard",
+                        "property_id": result.get('property_id'),
+                        "can_answer": True
+                    }), True
+
                 try:
                     # Forma correta e mais compatível de enviar a resposta da tool
                     response = chat.send_message(
@@ -107,7 +122,6 @@ class GroqProvider(AIProvider):
             role = "assistant" if h['role'] == "model" else "user"
             content = h['parts'][0]
             # Trunca respostas muito longas do assistente para economizar tokens
-            # Mantém as mensagens do usuário intactas pois contêm os dados reais
             if role == "assistant" and len(content) > 150:
                 content = content[:150] + "... (truncated)"
             messages.append({"role": role, "content": content})
@@ -115,6 +129,19 @@ class GroqProvider(AIProvider):
 
         # Groq Tool definition
         tools = [
+            {
+                "type": "function",
+                "function": {
+                    "name": "trigger_reservation_wizard",
+                    "description": "Aciona o assistente do sistema para criar uma reserva de forma guiada",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "property_id": {"type": "integer"}
+                        }
+                    }
+                }
+            },
             {
                 "type": "function",
                 "function": {
@@ -137,15 +164,21 @@ class GroqProvider(AIProvider):
             }
         ]
 
-        response = self.client.chat.completions.create(
-            model=self.model_name,
-            messages=messages,
-            tools=tools,
-            tool_choice="auto"
-        )
+        # Captura explícita de erros HTTP (429, 503, etc.) para garantir fallback ao próximo provider
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=messages,
+                tools=tools,
+                tool_choice="auto",
+                timeout=15.0
+            )
+        except Exception as groq_err:
+            log_debug(f"GroqProvider erro na chamada inicial: {str(groq_err)}")
+            raise  # Re-lança para o loop de fallback capturar e ir para OpenRouter
 
         response_message = response.choices[0].message
-        
+
         if response_message.tool_calls:
             log_debug(f"Groq solicitou tool: {response_message.tool_calls[0].function.name}")
             for tool_call in response_message.tool_calls:
@@ -153,7 +186,16 @@ class GroqProvider(AIProvider):
                 if tool_func:
                     args = json.loads(tool_call.function.arguments)
                     result = tool_func(**args)
-                    
+
+                    # Check for Wizard Trigger
+                    if result.get('status') == 'trigger_wizard':
+                        return json.dumps({
+                            "message": "Com certeza! Iniciando o assistente de reserva para você...",
+                            "mode": "wizard",
+                            "property_id": result.get('property_id'),
+                            "can_answer": True
+                        }), True
+
                     messages.append(response_message)
                     messages.append({
                         "tool_call_id": tool_call.id,
@@ -161,12 +203,13 @@ class GroqProvider(AIProvider):
                         "name": tool_call.function.name,
                         "content": json.dumps(result)
                     })
-                    
+
                     try:
                         # Segunda chamada para resposta final
                         final_response = self.client.chat.completions.create(
                             model=self.model_name,
-                            messages=messages
+                            messages=messages,
+                            timeout=15.0
                         )
                         return final_response.choices[0].message.content, True
                     except Exception as e:
@@ -180,13 +223,20 @@ class GroqProvider(AIProvider):
 
         return response_message.content, False
 
+
 class OpenRouterProvider(AIProvider):
     def __init__(self, api_key):
         self.client = OpenAI(
             base_url="https://openrouter.ai/api/v1",
             api_key=api_key,
         )
-        self.model_name = "openrouter/auto"
+        # Lista de modelos free/baratos para fallback interno
+        self.models = [
+            "google/gemini-2.0-flash-001",
+            "meta-llama/llama-3.1-8b-instruct:free",
+            "mistralai/mistral-7b-instruct:free",
+            "openrouter/auto"
+        ]
 
     def chat(self, message, history, system_instruction):
         messages = [{"role": "system", "content": system_instruction}]
@@ -196,15 +246,26 @@ class OpenRouterProvider(AIProvider):
             messages.append({"role": role, "content": content})
         messages.append({"role": "user", "content": message})
 
-        response = self.client.chat.completions.create(
-            model=self.model_name,
-            messages=messages,
-            extra_headers={
-                "HTTP-Referer": "https://verticebook.com.br",
-                "X-Title": "VerticeBook Help Desk",
-            }
-        )
-        return response.choices[0].message.content, False
+        last_error = None
+        for model in self.models:
+            try:
+                log_debug(f"OpenRouter: tentando modelo {model}")
+                response = self.client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    extra_headers={
+                        "HTTP-Referer": "https://verticebook.com.br",
+                        "X-Title": "VerticeBook Help Desk",
+                    },
+                    timeout=20.0
+                )
+                return response.choices[0].message.content, False
+            except Exception as e:
+                last_error = str(e)
+                log_debug(f"OpenRouter: falha no modelo {model}: {last_error}")
+                continue
+        
+        raise Exception(f"Todos os modelos do OpenRouter falharam. Último erro: {last_error}")
 
 # --- View Principal ---
 
@@ -220,6 +281,35 @@ def chat_query_view(request):
         current_url = data.get('current_url', 'Página inicial')
         history = data.get('history', [])
         
+        # --- Detecção Rápida de Intenção (sem IA) ---
+        # Exige VERBOS DE AÇÃO junto com palavras de reserva para evitar acionar o wizard
+        # em perguntas informativas como "o que é uma reserva?"
+        RESERVATION_ACTION_PATTERNS = [
+            'fazer uma reserva', 'fazer reserva', 'criar reserva', 'nova reserva',
+            'registrar reserva', 'cadastrar reserva', 'agendar', 'agendamento',
+            'quero reservar', 'preciso reservar', 'cadastrar hóspede', 'registrar hóspede',
+            'me ajude a reservar', 'fazer um check-in', 'fazer checkin',
+            'adicionar reserva', 'incluir reserva', 'abrir reserva', 'criar uma reserva',
+            'ajuda com reserva', 'marcar reserva', 'marcar agendamento'
+        ]
+        msg_lower = user_message.strip().lower()
+        
+        # Filtro de segurança: se falar em "manutenção", não é reserva
+        is_maintenance = 'manutenção' in msg_lower or 'manutencao' in msg_lower
+        
+        log_debug(f"Avaliando detecção rápida para: '{msg_lower}'")
+        
+        if not is_maintenance and any(pattern in msg_lower for pattern in RESERVATION_ACTION_PATTERNS):
+            prop_id_for_wizard = property_id if str(property_id).isdigit() else None
+            log_debug(f"Detecção por palavras-chave: intenção de reserva detectada. property_id={prop_id_for_wizard}")
+            return JsonResponse({
+                "message": "Com certeza! Iniciando o assistente de reserva para você...",
+                "mode": "wizard",
+                "property_id": prop_id_for_wizard,
+                "can_answer": True
+            })
+        # --- Fim da Detecção Rápida ---
+
         # Carregar contexto - OTIMIZADO EXTREMO: Apenas o Guia de Ajuda
         base_dir = settings.BASE_DIR
         files_to_read = [
@@ -241,35 +331,15 @@ def chat_query_view(request):
             user_props_str = "Propriedades: " + ", ".join([f"{p['name']} (ID:{p['id']})" for p in user_properties])
 
         system_instruction = (
-            "Você é o assistente virtual do VerticeBook. Use o Guia de Ajuda para responder dúvidas.\n\n"
-            f"CONTEXTO DO SISTEMA:\n{context}\n\n"
+            "Você é o assistente do VerticeBook. REGRAS:\n"
+            "1. Responda APENAS em JSON: {\"message\": \"...\", \"can_answer\": true}.\n"
+            "2. Estilo: Use <b> e <br> para formatar a 'message'. Seja direto.\n"
+            "3. RESERVA/AGENDAMENTO: Se o usuário quiser criar uma reserva, registrar hóspede ou agendar, chame IMEDIATAMENTE 'trigger_reservation_wizard' e pare. Resposta: 'Iniciando assistente...'.\n"
+            "4. Não tente coletar dados sozinho nem desenhar formulários.\n"
+            f"CONTEXTO:\n{context}\n"
             f"{user_props_str}\n"
-            f"ID da Propriedade Atual: {property_id if property_id else 'Nenhuma'}\n"
-            f"PÁGINA ONDE O USUÁRIO ESTÁ AGORA: {current_url}\n\n"
-            "REGRAS DE OURO (NÃO DESVIE):\n"
-            "1. Responda EXCLUSIVAMENTE em formato JSON. NUNCA escreva texto fora das chaves { }.\n"
-            "2. ESTRUTURA OBRIGATÓRIA: {\"message\": \"sua resposta aqui\", \"can_answer\": true}.\n"
-            "3. ESTILO VISUAL: Use HTML rico dentro do campo 'message'. Use <b> para termos importantes, <br> para quebras de linha e <ul>/<li> para listas e passos.\n"
-            "3. TOM DE VOZ: Seja profissional, prestativo e direto. Evite textos em bloco único; prefira listas escaneáveis.\n"
-            "4. Se o usuário quiser criar reserva, explique o passo a passo de forma elegante e pergunte se ele quer sua ajuda.\n"
-            "5. Se ele aceitar ajuda, você deve coletar EXATAMENTE estes 6 campos e NADA MAIS:\n"
-            "   - client_name (Nome completo)\n"
-            "   - client_phone (Telefone)\n"
-            "   - start_date (Data inicial YYYY-MM-DD)\n"
-            "   - end_date (Data final YYYY-MM-DD)\n"
-            "   - total_value (Valor total em reais)\n"
-            "   - guests_count (Quantidade de hóspedes)\n"
-            "6. NUNCA peça por 'inquilino', 'descrição de moradia' ou 'prestadores' durante este fluxo.\n"
-            "7. Peça um campo por vez. Se o usuário já informou alguns no histórico, NÃO peça de novo.\n"
-            "8. Quando tiver os 6 campos, chame obrigatoriamente 'create_reservation_tool'.\n"
-            "9. LINKS: Ao sugerir links do Guia de Ajuda, SUBSTITUA SEMPRE o termo '[ID]' pelo ID Real da propriedade atual informado acima.\n"
-            "10. PRIVACIDADE TÉCNICA CRÍTICA: NUNCA mencione termos como 'Regras de Ouro', 'Contexto do Sistema', 'System Instruction', 'ID da Propriedade', 'Tool', 'JSON' ou qualquer variável técnica na sua resposta final para o usuário. Se você não souber a resposta ou não puder ajudar, defina \"can_answer\": false e peça desculpas de forma amigável, sugerindo que o administrador será notificado.\n"
-            "11. CONTEXTO DE TELA (CRÍTICO): Se o usuário perguntar 'me explique essa tela' ou similar, você DEVE olhar o campo 'PÁGINA ONDE O USUÁRIO ESTÁ AGORA'. \n"
-            "   - Se a URL for '/dashboard/', use EXCLUSIVAMENTE a seção '4. Dashboard de Gestão Centralizada' do Guia de Ajuda para explicar os 3 componentes (Desempenho Anual, Distribuição de Receita e Status Operacional).\n"
-            "   - Se a URL contiver '/painel/', use a seção '6. Análise Financeira' (Dashboard da Propriedade).\n"
-            "   - Seja detalhado e aponte o que cada gráfico/card naquela tela específica faz.\n"
-            "12. Se você não encontrar a informação no Guia de Ajuda, responda que não tem essa informação no momento e que registrou a dúvida para nossa equipe. Defina \"can_answer\": false.\n"
-            "Data Atual: " + datetime.now().strftime('%Y-%m-%d')
+            f"Página: {current_url}\n"
+            "Data: " + datetime.now().strftime('%Y-%m-%d')
         )
 
         providers = []
@@ -350,13 +420,16 @@ def chat_query_view(request):
         except:
             response_data = {"message": text_response, "can_answer": True}
             
-        # Limpeza final: se a mensagem ainda contiver a estrutura JSON exposta, removemos
-        if isinstance(response_data.get('message'), str) and response_data['message'].startswith('{"message":'):
+        # Limpeza final: se a mensagem contiver JSON interno, preservamos TODOS os campos
+        # IMPORTANTE: isso garante que mode/property_id do wizard não sejam descartados
+        if isinstance(response_data.get('message'), str) and response_data['message'].strip().startswith('{'):
             try:
                 second_attempt = json.loads(response_data['message'])
-                response_data['message'] = second_attempt.get('message', response_data['message'])
+                if isinstance(second_attempt, dict) and 'message' in second_attempt:
+                    response_data.update(second_attempt)  # merge completo, preserva mode/property_id
             except:
                 pass
+
         
         # Registrar no Banco de Dados
         from .models import ChatInteraction
@@ -389,6 +462,50 @@ def chat_query_view(request):
         except:
             pass
         return JsonResponse({'message': msg})
+
+@csrf_exempt
+def chat_wizard_step_view(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+    try:
+        data = json.loads(request.body)
+        message = data.get('message', '')
+        raw_property_id = data.get('property_id')
+        is_init = data.get('init', False)
+        
+        # Converte property_id para int ou None com segurança
+        property_id = None
+        if raw_property_id and str(raw_property_id).isdigit():
+            property_id = int(raw_property_id)
+
+        from .wizard_logic import ReservationWizard
+        wizard = ReservationWizard(request.session)
+        
+        if is_init:
+            # First question
+            reply = wizard.get_next_question(property_id)
+            is_done = False
+            mode = 'wizard'
+        else:
+            # Process answer
+            reply, is_done, mode = wizard.process_answer(message, request.user)
+            
+        if is_done:
+            # Clear wizard state
+            if 'wizard_data' in request.session: del request.session['wizard_data']
+            if 'wizard_step' in request.session: del request.session['wizard_step']
+        else:
+            wizard.save_state(request.session)
+            
+        return JsonResponse({
+            'message': reply,
+            'is_done': is_done,
+            'mode': mode
+        })
+    except Exception as e:
+        log_debug(f"Erro no Wizard: {str(e)}\n{traceback.format_exc()}")
+        return JsonResponse({'message': 'Houve um problema no assistente. Voltando ao chat normal.', 'is_done': True, 'mode': 'normal'})
 
 def help_center_view(request):
     return render(request, 'ajuda/help_center.html')

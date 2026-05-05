@@ -1,15 +1,15 @@
-import os
 import google.generativeai as genai
-from dotenv import load_dotenv
+import os
+from django.conf import settings
 
-load_dotenv('/root/verticebook/.env')
-api_key = os.getenv('GEMINI_API_KEY')
-genai.configure(api_key=api_key)
+# This script needs the Django environment
+import django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'verticebook.settings')
+django.setup()
 
-print("Available models:")
-try:
-    for m in genai.list_models():
-        if 'generateContent' in m.supported_generation_methods:
-            print(m.name)
-except Exception as e:
-    print("Error listing models:", e)
+genai.configure(api_key=settings.GEMINI_API_KEY)
+
+print("Listing models:")
+for m in genai.list_models():
+    if 'generateContent' in m.supported_generation_methods:
+        print(m.name)
