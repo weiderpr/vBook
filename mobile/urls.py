@@ -25,4 +25,8 @@ urlpatterns = [
     path('planos/', views.mobile_plans, name='plans'),
     path('financeiro/', views.mobile_financeiro, name='financeiro'),
     path('operacional/', views.mobile_operacional, name='operacional'),
+    path('notifications/', views.mobile_notifications, name='notifications'),
+    path('notifications/<int:pk>/read/', views.mobile_mark_notification_read, name='notification_read'),
+    path('notifications/read-all/', views.mobile_mark_all_notifications_read, name='notifications_read_all'),
+    path('subscribe-push/', views.mobile_subscribe_push, name='subscribe_push'),
 ]

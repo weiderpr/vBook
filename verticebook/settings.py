@@ -92,6 +92,7 @@ TEMPLATES = [
                 'properties.context_processors.user_properties',
                 'subscriptions.context_processors.subscription_info',
                 'ajuda.context_processors.help_context',
+                'core.context_processors.notifications',
             ],
         },
     },
@@ -143,8 +144,10 @@ CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_USE_SESSIONS = False
-CSRF_COOKIE_PATH = '/' 
-SESSION_COOKIE_PATH = '/' 
+CSRF_COOKIE_NAME = 'vbook_csrftoken'
+SESSION_COOKIE_NAME = 'vbook_sessionid'
+CSRF_COOKIE_PATH = '/book/' 
+SESSION_COOKIE_PATH = '/book/' 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Session Security Settings
@@ -211,3 +214,8 @@ MEDIA_ROOT = '/var/www/verticebook/media'
 # Evolution API Settings
 EVOLUTION_API_URL = 'http://localhost:8010'
 AUTHENTICATION_API_KEY = 'vbook_secret_key_2026'
+
+# Web Push Settings
+VAPID_PUBLIC_KEY_PATH = os.path.join(BASE_DIR, 'public_key.pem')
+VAPID_PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'private_key.pem')
+VAPID_ADMIN_EMAIL = "admin@verticebook.tech"

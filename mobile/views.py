@@ -550,3 +550,45 @@ def mobile_operacional(request):
         'active_tab': request.GET.get('tab', 'servicos'),
     }
     return render(request, 'mobile/operacional.html', context)
+@login_required
+def mobile_subscribe_push(request):
+    if request.method == 'POST':
+        import json
+        from core.models import PushSubscription
+        data = json.loads(request.body)
+        
+        # Update or create subscription
+        PushSubscription.objects.update_or_create(
+            user=request.user,
+            endpoint=data['endpoint'],
+            defaults={
+                'p256dh': data['p256dh'],
+                'auth': data['auth']
+            }
+        )
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)
+@login_required
+def mobile_notifications(request):
+    from core.models import Notification
+    notifications = Notification.objects.filter(user=request.user).order_by('-created_at')[:50]
+    return render(request, 'mobile/mobile_notifications.html', {
+        'notifications': notifications,
+        'title': _("Notificações")
+    })
+
+@login_required
+def mobile_mark_notification_read(request, pk):
+    from core.models import Notification
+    notification = get_object_or_404(Notification, pk=pk, user=request.user)
+    notification.is_read = True
+    notification.save()
+    if notification.link:
+        return redirect(notification.link)
+    return redirect('mobile:notifications')
+
+@login_required
+def mobile_mark_all_notifications_read(request):
+    from core.models import Notification
+    Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
+    return redirect('mobile:notifications')

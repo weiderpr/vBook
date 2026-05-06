@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.db.models import Sum, Q
+from core.utils import send_notification
 
 from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider
 from .utils import get_property_stats
@@ -877,6 +878,17 @@ class ServiceProviderCompleteServiceView(View):
         cost.is_completed = True
         cost.completed_at = timezone.now()
         cost.save()
+        
+        # Notificar o proprietário
+        owner = cost.reservation.property.user
+        title = _("Serviço Concluído")
+        message = _("A {} da propriedade {} foi finalizada por {}.").format(
+            cost.description, 
+            cost.reservation.property.name, 
+            provider.name
+        )
+        link = f"/book/mobile/reserva/{cost.reservation.pk}/"
+        send_notification(owner, title, message, link)
         
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'status': 'success'})

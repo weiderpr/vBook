@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from administration.models import Plan
 from core.utils import is_mobile
@@ -20,6 +22,8 @@ def landing_view(request):
 
 @login_required
 def dashboard_view(request):
+    if is_mobile(request):
+        return redirect('mobile:home')
     from properties.utils import get_yearly_stats, get_operational_stats
     import json
     
@@ -50,3 +54,12 @@ def dashboard_view(request):
         'current_year': current_year,
     }
     return render(request, 'core/dashboard.html', context)
+
+@cache_control(max_age=86400, public=True)
+def service_worker(request):
+    import os
+    from django.conf import settings
+    sw_path = os.path.join(settings.BASE_DIR, 'static', 'sw.js')
+    with open(sw_path, 'rb') as f:
+        content = f.read()
+    return HttpResponse(content, content_type='application/javascript')

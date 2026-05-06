@@ -13381,3 +13381,670 @@ SystemExit: 1
 [2026-04-29 15:21:16 -0300] [825838] [WARNING] Worker (pid:825844) was sent SIGHUP!
 [2026-04-29 15:21:16 -0300] [825838] [WARNING] Worker (pid:825845) was sent SIGHUP!
 [2026-04-29 15:21:16 -0300] [825838] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-05 14:06:44 -0300] [1115097] [INFO] Starting gunicorn 25.3.0
+[2026-05-05 14:06:44 -0300] [1115097] [INFO] Listening at: http://127.0.0.1:8000 (1115097)
+[2026-05-05 14:06:44 -0300] [1115097] [INFO] Using worker: sync
+[2026-05-05 14:06:44 -0300] [1115099] [INFO] Booting worker with pid: 1115099
+[2026-05-05 14:06:44 -0300] [1115101] [INFO] Booting worker with pid: 1115101
+[2026-05-05 14:06:44 -0300] [1115106] [INFO] Booting worker with pid: 1115106
+[2026-05-05 14:06:45 -0300] [1115097] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-05 14:43:18 -0300] [1115097] [INFO] Handling signal: term
+[2026-05-05 14:43:18 -0300] [1115106] [INFO] Worker exiting (pid: 1115106)
+[2026-05-05 14:43:18 -0300] [1115101] [INFO] Worker exiting (pid: 1115101)
+[2026-05-05 14:43:18 -0300] [1115099] [INFO] Worker exiting (pid: 1115099)
+[2026-05-05 14:43:24 -0300] [1115097] [INFO] Shutting down: Master
+[2026-05-05 14:53:52 -0300] [1125454] [INFO] Starting gunicorn 25.3.0
+[2026-05-05 14:53:52 -0300] [1125454] [INFO] Listening at: http://127.0.0.1:8000 (1125454)
+[2026-05-05 14:53:52 -0300] [1125454] [INFO] Using worker: sync
+[2026-05-05 14:53:52 -0300] [1125455] [INFO] Booting worker with pid: 1125455
+[2026-05-05 14:53:52 -0300] [1125456] [INFO] Booting worker with pid: 1125456
+[2026-05-05 14:53:52 -0300] [1125458] [INFO] Booting worker with pid: 1125458
+[2026-05-05 14:53:53 -0300] [1125454] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+[2026-05-05 19:51:54 -0300] [1184859] [INFO] Starting gunicorn 25.3.0
+[2026-05-05 19:51:54 -0300] [1184859] [INFO] Listening at: http://127.0.0.1:8000 (1184859)
+[2026-05-05 19:51:54 -0300] [1184859] [INFO] Using worker: sync
+[2026-05-05 19:51:54 -0300] [1184861] [INFO] Booting worker with pid: 1184861
+[2026-05-05 19:51:54 -0300] [1184862] [INFO] Booting worker with pid: 1184862
+[2026-05-05 19:51:54 -0300] [1184863] [INFO] Booting worker with pid: 1184863
+[2026-05-05 19:51:54 -0300] [1184859] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-05 22:20:25 -0300] [1184859] [INFO] Handling signal: term
+[2026-05-05 22:20:24 -0300] [1184861] [INFO] Worker exiting (pid: 1184861)
+[2026-05-05 22:20:24 -0300] [1184863] [INFO] Worker exiting (pid: 1184863)
+[2026-05-05 22:20:24 -0300] [1184862] [INFO] Worker exiting (pid: 1184862)
+[2026-05-05 22:20:25 -0300] [1184859] [INFO] Worker (pid:1184861) was sent SIGTERM!
+[2026-05-05 22:20:25 -0300] [1184859] [INFO] Worker (pid:1184862) was sent SIGTERM!
+[2026-05-05 22:20:25 -0300] [1184859] [INFO] Worker (pid:1184863) was sent SIGTERM!
+[2026-05-05 22:20:25 -0300] [1184859] [INFO] Shutting down: Master
+[2026-05-05 22:36:40 -0300] [1236229] [INFO] Starting gunicorn 25.3.0
+[2026-05-05 22:36:40 -0300] [1236229] [INFO] Listening at: http://127.0.0.1:8000 (1236229)
+[2026-05-05 22:36:40 -0300] [1236229] [INFO] Using worker: sync
+[2026-05-05 22:36:40 -0300] [1236231] [INFO] Booting worker with pid: 1236231
+[2026-05-05 22:36:40 -0300] [1236232] [INFO] Booting worker with pid: 1236232
+[2026-05-05 22:36:40 -0300] [1236233] [INFO] Booting worker with pid: 1236233
+[2026-05-05 22:36:40 -0300] [1236229] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Internal Server Error: /book/mobile/home/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/contrib/auth/decorators.py", line 59, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/mobile/views.py", line 106, in mobile_home
+    return render(request, 'mobile/mobile_home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/template/base.py", line 174, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/template/base.py", line 166, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/template/base.py", line 1091, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/template/base.py", line 1052, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 511, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 842, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'notifications' not found. 'notifications' is not a valid view function or pattern name.
+[2026-05-06 10:14:02 -0300] [1300082] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 10:14:02 -0300] [1300082] [INFO] Listening at: http://127.0.0.1:8000 (1300082)
+[2026-05-06 10:14:02 -0300] [1300082] [INFO] Using worker: sync
+[2026-05-06 10:14:02 -0300] [1300084] [INFO] Booting worker with pid: 1300084
+[2026-05-06 10:14:02 -0300] [1300086] [INFO] Booting worker with pid: 1300086
+[2026-05-06 10:14:02 -0300] [1300089] [INFO] Booting worker with pid: 1300089
+[2026-05-06 10:14:03 -0300] [1300082] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 11:10:33 -0300] [1308608] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 11:10:33 -0300] [1308608] [INFO] Listening at: http://127.0.0.1:8000 (1308608)
+[2026-05-06 11:10:33 -0300] [1308608] [INFO] Using worker: sync
+[2026-05-06 11:10:33 -0300] [1308610] [INFO] Booting worker with pid: 1308610
+[2026-05-06 11:10:33 -0300] [1308611] [INFO] Booting worker with pid: 1308611
+[2026-05-06 11:10:33 -0300] [1308612] [INFO] Booting worker with pid: 1308612
+[2026-05-06 11:10:33 -0300] [1308608] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 11:13:36 -0300] [1309156] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 11:13:36 -0300] [1309156] [INFO] Listening at: http://127.0.0.1:8000 (1309156)
+[2026-05-06 11:13:36 -0300] [1309156] [INFO] Using worker: sync
+[2026-05-06 11:13:36 -0300] [1309158] [INFO] Booting worker with pid: 1309158
+[2026-05-06 11:13:36 -0300] [1309159] [INFO] Booting worker with pid: 1309159
+[2026-05-06 11:13:36 -0300] [1309160] [INFO] Booting worker with pid: 1309160
+[2026-05-06 11:13:36 -0300] [1309156] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Forbidden (CSRF cookie not set.): /book/accounts/login/
+Forbidden (CSRF cookie not set.): /book/accounts/login/
+Forbidden (CSRF cookie not set.): /book/accounts/login/
+[2026-05-06 11:19:41 -0300] [1310147] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 11:19:41 -0300] [1310147] [INFO] Listening at: http://127.0.0.1:8000 (1310147)
+[2026-05-06 11:19:41 -0300] [1310147] [INFO] Using worker: sync
+[2026-05-06 11:19:41 -0300] [1310148] [INFO] Booting worker with pid: 1310148
+[2026-05-06 11:19:41 -0300] [1310149] [INFO] Booting worker with pid: 1310149
+[2026-05-06 11:19:41 -0300] [1310150] [INFO] Booting worker with pid: 1310150
+[2026-05-06 11:19:41 -0300] [1310147] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF cookie not set.): /book/accounts/login/
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF cookie not set.): /book/accounts/login/
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 11:26:27 -0300] [1311259] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 11:26:27 -0300] [1311259] [INFO] Listening at: http://127.0.0.1:8000 (1311259)
+[2026-05-06 11:26:27 -0300] [1311259] [INFO] Using worker: sync
+[2026-05-06 11:26:27 -0300] [1311261] [INFO] Booting worker with pid: 1311261
+[2026-05-06 11:26:28 -0300] [1311262] [INFO] Booting worker with pid: 1311262
+[2026-05-06 11:26:28 -0300] [1311263] [INFO] Booting worker with pid: 1311263
+[2026-05-06 11:26:28 -0300] [1311259] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Erro genérico no Web Push: Object of type __proxy__ is not JSON serializable
+[2026-05-06 11:35:23 -0300] [1312936] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 11:35:23 -0300] [1312936] [INFO] Listening at: http://127.0.0.1:8000 (1312936)
+[2026-05-06 11:35:23 -0300] [1312936] [INFO] Using worker: sync
+[2026-05-06 11:35:23 -0300] [1312938] [INFO] Booting worker with pid: 1312938
+[2026-05-06 11:35:24 -0300] [1312939] [INFO] Booting worker with pid: 1312939
+[2026-05-06 11:35:24 -0300] [1312940] [INFO] Booting worker with pid: 1312940
+[2026-05-06 11:35:24 -0300] [1312936] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 11:43:42 -0300] [1314518] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 11:43:42 -0300] [1314518] [INFO] Listening at: http://127.0.0.1:8000 (1314518)
+[2026-05-06 11:43:42 -0300] [1314518] [INFO] Using worker: sync
+[2026-05-06 11:43:42 -0300] [1314520] [INFO] Booting worker with pid: 1314520
+[2026-05-06 11:43:42 -0300] [1314521] [INFO] Booting worker with pid: 1314521
+[2026-05-06 11:43:42 -0300] [1314522] [INFO] Booting worker with pid: 1314522
+[2026-05-06 11:43:42 -0300] [1314518] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 11:47:25 -0300] [1315390] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 11:47:25 -0300] [1315390] [INFO] Listening at: http://127.0.0.1:8000 (1315390)
+[2026-05-06 11:47:25 -0300] [1315390] [INFO] Using worker: sync
+[2026-05-06 11:47:25 -0300] [1315392] [INFO] Booting worker with pid: 1315392
+[2026-05-06 11:47:25 -0300] [1315395] [INFO] Booting worker with pid: 1315395
+[2026-05-06 11:47:25 -0300] [1315396] [INFO] Booting worker with pid: 1315396
+[2026-05-06 11:47:25 -0300] [1315390] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 13:26:32 -0300] [1329915] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 13:26:32 -0300] [1329915] [INFO] Listening at: http://127.0.0.1:8000 (1329915)
+[2026-05-06 13:26:32 -0300] [1329915] [INFO] Using worker: sync
+[2026-05-06 13:26:32 -0300] [1329916] [INFO] Booting worker with pid: 1329916
+[2026-05-06 13:26:32 -0300] [1329917] [INFO] Booting worker with pid: 1329917
+[2026-05-06 13:26:33 -0300] [1329918] [INFO] Booting worker with pid: 1329918
+[2026-05-06 13:26:34 -0300] [1329915] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 13:31:42 -0300] [1330765] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 13:31:42 -0300] [1330765] [INFO] Listening at: http://127.0.0.1:8000 (1330765)
+[2026-05-06 13:31:42 -0300] [1330765] [INFO] Using worker: sync
+[2026-05-06 13:31:42 -0300] [1330767] [INFO] Booting worker with pid: 1330767
+[2026-05-06 13:31:42 -0300] [1330768] [INFO] Booting worker with pid: 1330768
+[2026-05-06 13:31:42 -0300] [1330769] [INFO] Booting worker with pid: 1330769
+[2026-05-06 13:31:42 -0300] [1330765] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 13:36:29 -0300] [1331593] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 13:36:29 -0300] [1331593] [INFO] Listening at: http://127.0.0.1:8000 (1331593)
+[2026-05-06 13:36:29 -0300] [1331593] [INFO] Using worker: sync
+[2026-05-06 13:36:29 -0300] [1331595] [INFO] Booting worker with pid: 1331595
+[2026-05-06 13:36:29 -0300] [1331596] [INFO] Booting worker with pid: 1331596
+[2026-05-06 13:36:29 -0300] [1331597] [INFO] Booting worker with pid: 1331597
+[2026-05-06 13:36:29 -0300] [1331593] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 13:37:44 -0300] [1331869] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 13:37:44 -0300] [1331869] [INFO] Listening at: http://127.0.0.1:8000 (1331869)
+[2026-05-06 13:37:44 -0300] [1331869] [INFO] Using worker: sync
+[2026-05-06 13:37:44 -0300] [1331871] [INFO] Booting worker with pid: 1331871
+[2026-05-06 13:37:44 -0300] [1331872] [INFO] Booting worker with pid: 1331872
+[2026-05-06 13:37:44 -0300] [1331873] [INFO] Booting worker with pid: 1331873
+[2026-05-06 13:37:44 -0300] [1331869] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 13:40:51 -0300] [1332459] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 13:40:51 -0300] [1332459] [INFO] Listening at: http://127.0.0.1:8000 (1332459)
+[2026-05-06 13:40:51 -0300] [1332459] [INFO] Using worker: sync
+[2026-05-06 13:40:51 -0300] [1332460] [INFO] Booting worker with pid: 1332460
+[2026-05-06 13:40:51 -0300] [1332461] [INFO] Booting worker with pid: 1332461
+[2026-05-06 13:40:51 -0300] [1332462] [INFO] Booting worker with pid: 1332462
+[2026-05-06 13:40:52 -0300] [1332459] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 13:52:06 -0300] [1334363] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 13:52:06 -0300] [1334363] [INFO] Listening at: http://127.0.0.1:8000 (1334363)
+[2026-05-06 13:52:06 -0300] [1334363] [INFO] Using worker: sync
+[2026-05-06 13:52:06 -0300] [1334365] [INFO] Booting worker with pid: 1334365
+[2026-05-06 13:52:06 -0300] [1334366] [INFO] Booting worker with pid: 1334366
+[2026-05-06 13:52:06 -0300] [1334367] [INFO] Booting worker with pid: 1334367
+[2026-05-06 13:52:06 -0300] [1334363] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+[2026-05-06 13:55:17 -0300] [1334926] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 13:55:17 -0300] [1334926] [INFO] Listening at: http://127.0.0.1:8000 (1334926)
+[2026-05-06 13:55:17 -0300] [1334926] [INFO] Using worker: sync
+[2026-05-06 13:55:17 -0300] [1334928] [INFO] Booting worker with pid: 1334928
+[2026-05-06 13:55:17 -0300] [1334929] [INFO] Booting worker with pid: 1334929
+[2026-05-06 13:55:17 -0300] [1334930] [INFO] Booting worker with pid: 1334930
+[2026-05-06 13:55:17 -0300] [1334926] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai

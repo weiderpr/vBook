@@ -40,4 +40,95 @@
         --sidebar-width: 280px;
         --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+    #global-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(8px);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .loader-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-top: 4px solid var(--primary);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1.5rem;
+    }
+
+    .loader-text {
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
+
+<div id="global-loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Processando...</div>
+</div>
+
+<script>
+    (function() {
+        function showLoader() {
+            const loader = document.getElementById('global-loader');
+            if (loader) loader.style.display = 'flex';
+        }
+
+        function initLoader() {
+            // Links
+            document.addEventListener('click', function(e) {
+                const link = e.target.closest('a');
+                if (link && link.href && 
+                    !link.href.includes('#') && 
+                    !link.getAttribute('target') &&
+                    !link.href.startsWith('javascript:') &&
+                    !link.href.startsWith('tel:') &&
+                    !link.href.startsWith('mailto:')) {
+                    
+                    // Don't show if it's a simple back button or toggle
+                    if (!link.classList.contains('menu-toggle') && !link.classList.contains('back-btn')) {
+                        showLoader();
+                    }
+                }
+            });
+
+            // Forms
+            document.addEventListener('submit', function(e) {
+                // Previne mostrar se o formulário for invalidado pelo browser
+                if (!e.defaultPrevented) {
+                    showLoader();
+                }
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initLoader);
+        } else {
+            initLoader();
+        }
+        
+        // Esconder se o usuário voltar na página (cache do browser)
+        window.addEventListener('pageshow', function(event) {
+            const loader = document.getElementById('global-loader');
+            if (loader) loader.style.display = 'none';
+        });
+    })();
+</script>

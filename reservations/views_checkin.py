@@ -47,7 +47,7 @@ class GuestCheckInView(View):
         # Dynamic formset
         extra_companions = max(0, reservation.guests_count - 1)
         CompanionFormSet = get_companion_formset(extra=extra_companions)
-        formset = CompanionFormSet(instance=reservation, queryset=Companion.objects.none())
+        formset = CompanionFormSet(instance=reservation, queryset=Companion.objects.none(), prefix='companions')
         
         context = {
             'reservation': reservation,
@@ -95,7 +95,7 @@ class GuestCheckInView(View):
         CompanionFormSet = get_companion_formset(extra=extra_companions)
         
         form = ClientComplementForm(request.POST, instance=complement)
-        formset = CompanionFormSet(request.POST, instance=reservation)
+        formset = CompanionFormSet(request.POST, instance=reservation, prefix='companions')
 
         if form.is_valid() and formset.is_valid():
             comp = form.save(commit=False)
@@ -106,8 +106,25 @@ class GuestCheckInView(View):
             reservation.companions.all().delete()
             formset.save()
 
+            was_completed = reservation.checkin_completed
             reservation.checkin_completed = True
             reservation.save(update_fields=['checkin_completed'])
+
+            # Notificar o proprietário apenas na primeira vez
+            if not was_completed:
+                try:
+                    from core.utils import send_notification
+                    send_notification(
+                        owner,
+                        _("Novo Check-in Realizado"),
+                        _("O cliente {client} informou os dados de check-in da propriedade {property}.").format(
+                            client=client.name,
+                            property=reservation.property.name
+                        ),
+                        link=f"/book/mobile/reserva/{reservation.pk}/"
+                    )
+                except Exception as e:
+                    logger.error(f"Erro ao enviar notificação de check-in: {e}")
 
             return render(request, 'reservations/checkin_success.html', {'reservation': reservation})
         

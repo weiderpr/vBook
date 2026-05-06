@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from core.views import landing_view, dashboard_view
+from core.views import landing_view, dashboard_view, service_worker
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,6 +18,7 @@ urlpatterns = [
     path('mobile/', include('mobile.urls')),
     path('mobilecondominio/', include('mobilecondominio.urls')),
     path('manutencoes/', include('maintenance.urls')),
+    path('sw.js', service_worker, name='service_worker'),
 ]
 
 if settings.DEBUG:

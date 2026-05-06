@@ -477,10 +477,93 @@
             border-color: rgba(59, 130, 246, 0.5);
         }
 
-        .status-free {
-            background: rgba(16, 185, 129, 0.4);
-            color: #6ee7b7;
-            border-color: rgba(16, 185, 129, 0.5);
+        .prop-status-badge.status-free {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* PWA Install Banner Styles */
+        .pwa-install-banner {
+            position: fixed;
+            bottom: 25px;
+            left: 15px;
+            right: 15px;
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 14px;
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: space-between;
+            z-index: 2000;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            animation: slideUpPWA 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes slideUpPWA {
+            from { transform: translateY(120%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .pwa-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .pwa-icon-box {
+            width: 42px;
+            height: 42px;
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 15px rgba(0, 114, 255, 0.3);
+        }
+
+        .pwa-text-box strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .pwa-text-box p {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .btn-pwa-install {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-pwa-install:active {
+            transform: scale(0.95);
+        }
+
+        .btn-pwa-close {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            padding: 8px;
+            cursor: pointer;
+            margin-left: 8px;
+            opacity: 0.6;
         }
 
         .prop-info {
@@ -642,9 +725,56 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
         .btn-suttle:active {
             transform: scale(0.95);
             background: rgba(0, 114, 255, 0.15);
+        }
+
+        /* Notifications */
+        .notification-btn {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 0.5rem;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 800;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--header-bg);
+        }
+
+        .pwa-prompt {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 1.25rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 114, 255, 0.2);
         }
 
     </style>
@@ -691,6 +821,14 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
         </button>
         <div class="top-user-name">{{ user.full_name }}</div>
+        
+        <a href="{% url 'mobile:notifications' %}" class="notification-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            {% if unread_notifications_count > 0 %}
+                <span class="notification-badge">{{ unread_notifications_count }}</span>
+            {% endif %}
+        </a>
+
         <a href="{% url 'mobile:profile' %}" class="user-profile">
             {% if user.profile_picture %}
                 <img src="{{ user.profile_picture.url }}" alt="{{ user.full_name }}" class="user-avatar" style="object-fit: cover;">
@@ -701,6 +839,21 @@
     </div>
 
     <main class="main-wrapper">
+        <div id="pushPrompt" class="pwa-prompt animate-fade">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                </div>
+                <div>
+                    <h4 style="font-size: 0.9rem; font-weight: 700; margin: 0;">Notificações Push</h4>
+                    <p style="font-size: 0.75rem; margin: 0; opacity: 0.9;">Receba avisos de faxina e reservas</p>
+                </div>
+            </div>
+            <button onclick="handleEnablePush()" style="background: white; color: var(--primary); border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+                Ativar
+            </button>
+        </div>
+
         {% block dashboard_content %}
         <section class="financial-summary animate-fade">
             <div class="fin-card">
@@ -819,6 +972,23 @@
         {% endblock %}
     </main>
 
+    <!-- PWA Install Prompt -->
+    <div id="pwaInstallPrompt" class="pwa-install-banner">
+        <div class="pwa-content">
+            <div class="pwa-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div class="pwa-text-box">
+                <strong>Instalar VerticeBook</strong>
+                <p id="pwaInstruction">Adicione à tela inicial para acesso rápido.</p>
+            </div>
+        </div>
+        <button id="pwaInstallBtn" class="btn-pwa-install">Instalar</button>
+        <button id="pwaCloseBtn" class="btn-pwa-close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+
     <script>
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
@@ -838,6 +1008,128 @@
                 toggleMenu();
             }
         });
+
+        // PWA & Push Logic
+        const VAPID_PUBLIC_KEY = 'BE1CtcFZWRjO42kjA68rtGut2LAC5n93-65WrI7rBLi-CkO_rTxqQXPJ0XYE4BwVXpbouaHZAVMKJ7qpKaDj8_g';
+
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+            for (let i = 0; i < rawData.length; ++i) outputArray[i] = rawData.charCodeAt(i);
+            return outputArray;
+        }
+
+        async function handleEnablePush() {
+            console.log("Botão Ativar clicado");
+            
+            if (!('Notification' in window)) {
+                alert("Atenção: Seu navegador não suporta notificações nativas. No iPhone, você deve usar a opção 'Adicionar à Tela de Início' primeiro.");
+                return;
+            }
+
+            try {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    const registration = await navigator.serviceWorker.ready;
+                    const subscription = await registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+                    });
+
+                    // Enviar para o backend
+                    const response = await fetch('/book/mobile/subscribe-push/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            endpoint: subscription.endpoint,
+                            p256dh: btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey('p256dh')))),
+                            auth: btoa(String.fromCharCode.apply(null, new Uint8Array(subscription.getKey('auth'))))
+                        })
+                    });
+
+                    if (response.ok) {
+                        alert("Notificações ativadas com sucesso!");
+                        document.getElementById('pushPrompt').style.display = 'none';
+                    }
+                } else {
+                    alert("A permissão para notificações foi negada.");
+                }
+            } catch (err) {
+                alert("Erro ao configurar notificações: " + err.message);
+                console.error(err);
+            }
+        }
+
+        // Register SW
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/book/sw.js', { scope: '/book/' })
+                    .then(reg => console.log('SW registrado'))
+                    .catch(err => console.error('Erro SW', err));
+            });
+        }
+
+        // Show prompt if permission is default
+        if ('Notification' in window && Notification.permission === 'default') {
+            setTimeout(() => {
+                const prompt = document.getElementById('pushPrompt');
+                if (prompt) prompt.style.display = 'flex';
+            }, 2000);
+        }
+
+        // PWA Installation Logic
+        let deferredPrompt;
+        const pwaPrompt = document.getElementById('pwaInstallPrompt');
+        const pwaBtn = document.getElementById('pwaInstallBtn');
+        const pwaClose = document.getElementById('pwaCloseBtn');
+        const pwaInstruction = document.getElementById('pwaInstruction');
+
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+        if (!isStandalone) {
+            // Android detection
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                pwaPrompt.style.display = 'flex';
+            });
+
+            // iOS detection
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) {
+                // Check if we already asked in this session
+                if (!sessionStorage.getItem('pwaPromptDismissed')) {
+                    pwaInstruction.innerText = 'Toque em "Compartilhar" e depois "Adicionar à Tela de Início".';
+                    pwaBtn.style.display = 'none'; // iOS has no programmatic install
+                    pwaPrompt.style.display = 'flex';
+                }
+            }
+        }
+
+        if (pwaBtn) {
+            pwaBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        pwaPrompt.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                }
+            });
+        }
+
+        if (pwaClose) {
+            pwaClose.addEventListener('click', () => {
+                pwaPrompt.style.display = 'none';
+                sessionStorage.setItem('pwaPromptDismissed', 'true');
+            });
+        }
     </script>
 </body>
 </html>
