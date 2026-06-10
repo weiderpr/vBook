@@ -27,6 +27,9 @@
             {% if maintenance.status == 'open' or maintenance.status == 'budgeting' %}
                 <td style="text-align: right;">
                     <div style="display: flex; justify-content: flex-end; gap: 4px;">
+                        <button onclick="approveBudget('{{ b.pk }}', '{{ maintenance.pk }}')" class="btn-icon" style="width: 24px; height: 24px; border: none; background: rgba(34, 197, 94, 0.1); color: #22c55e; border-radius: 4px; display: flex; align-items: center; justify-content: center;" title="{% trans 'Aprovar Orçamento e Iniciar Execução' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        </button>
                         <button onclick="editBudget('{{ b.pk }}')" class="btn-icon" style="width: 24px; height: 24px; border: none; background: rgba(99, 102, 241, 0.1); color: var(--primary); border-radius: 4px;" title="{% trans 'Editar' %}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                         </button>

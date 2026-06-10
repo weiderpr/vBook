@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'maintenance',
     'ajuda',
     'mobilecondominio',
+    'admcondominio',
 ]
 
 MIDDLEWARE = [
@@ -144,6 +145,7 @@ CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_USE_SESSIONS = False
+CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 CSRF_COOKIE_NAME = 'vbook_csrftoken'
 SESSION_COOKIE_NAME = 'vbook_sessionid'
 CSRF_COOKIE_PATH = '/book/' 

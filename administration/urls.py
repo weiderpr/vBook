@@ -14,6 +14,7 @@ urlpatterns = [
     path('usuarios/<int:pk>/plano/', views.UserPlanDetailAjaxView.as_view(), name='user_plan_json'),
     path('usuarios/<int:pk>/remover-plano/', views.UserPlanRemoveView.as_view(), name='user_plan_remove'),
     path('usuarios/<int:pk>/alterar-vencimento/', views.UserPlanUpdateDateView.as_view(), name='user_plan_update_date'),
+    path('usuarios/<int:pk>/atribuir-plano/', views.UserPlanAssignView.as_view(), name='user_plan_assign'),
 
     # Categorias de Serviço
     path('categorias-servico/', views.ServiceCategoryListView.as_view(), name='service_category_list'),

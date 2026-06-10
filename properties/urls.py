@@ -19,6 +19,8 @@ urlpatterns = [
     path('configuracoes/custos/<int:pk>/excluir/', views.PropertyCostDeleteView.as_view(), name='cost_delete'),
     path('configuracoes/historico/salvar/<int:pk>/', views.PropertyFinancialHistorySaveView.as_view(), name='history_save'),
     path('<int:pk>/relatorios/', views.PropertyReportsView.as_view(), name='reports'),
+    path('<int:pk>/documentos/', views.PropertyDocumentListView.as_view(), name='document_list'),
+    path('documentos/<int:pk>/excluir/', views.PropertyDocumentDeleteView.as_view(), name='document_delete'),
     
     # Prestadores de Serviço (Globais)
     path('prestadores/', views.ServiceProviderListView.as_view(), name='provider_list'),

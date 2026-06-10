@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Sessão Expirada" %} - VerticeBook{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper" style="display: flex; align-items: center; justify-content: center; padding: 2rem;">
+    <div class="glass-card" style="max-width: 500px; text-align: center;">
+        <h2 style="color: var(--secondary); margin-bottom: 1rem;">
+            <i class="fa-solid fa-shield-halved" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+            {% trans "Sessão Expirada" %}
+        </h2>
+        
+        <p style="margin-bottom: 1rem; color: var(--text-color); line-height: 1.6;">
+            {% trans "Por motivos de segurança, sua sessão expirou ou o token de validação é inválido." %}
+        </p>
+        <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+            {% trans "Isso geralmente acontece quando a página fica aberta por muito tempo sem uso, quando você faz login em outra aba, ou ao usar o botão 'voltar' do navegador. Por favor, tente novamente." %}
+        </p>
+
+        {% if DEBUG %}
+        <div style="background: rgba(255,0,0,0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: left; font-size: 0.85rem; border: 1px solid rgba(255,0,0,0.2);">
+            <strong>Debug info:</strong> {{ reason|default:"CSRF falhou" }}
+        </div>
+        {% endif %}
+
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="javascript:window.location.reload(true)" class="btn btn-outline" onclick="history.back(); setTimeout(function(){ location.reload(true); }, 100); return false;">
+                <i class="fa-solid fa-arrow-rotate-right"></i> {% trans "Tentar Novamente" %}
+            </a>
+            <a href="{% url 'login' %}" class="btn btn-primary">
+                <i class="fa-solid fa-right-to-bracket"></i> {% trans "Fazer Login" %}
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

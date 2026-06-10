@@ -165,8 +165,21 @@ class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, Detail
         action = request.POST.get('action')
         is_read_only = request.POST.get('read_only') == 'true'
 
-        if is_read_only and action in ['advance', 'regress', 'save_execution', 'submit_evaluation']:
+        if is_read_only and action in ['advance', 'regress', 'save_execution', 'submit_evaluation', 'approve_budget']:
             return JsonResponse({'status': 'error', 'message': _("Modo somente leitura ativo.")}, status=403)
+
+        if action == 'approve_budget':
+            budget_id = request.POST.get('budget_id')
+            budget = get_object_or_404(Budget, pk=budget_id, maintenance=maintenance)
+            
+            maintenance.provider_name = budget.provider_name
+            maintenance.provider_phone = budget.phone
+            maintenance.execution_value = budget.value
+            maintenance.execution_start_date = budget.start_date
+            maintenance.execution_end_date = budget.end_date
+            maintenance.status = 'in_progress'
+            maintenance.save()
+            return JsonResponse({'status': 'success', 'new_status': 'in_progress', 'new_step': 3})
 
         if action == 'advance':
             current_step = int(request.POST.get('step', 1))
@@ -199,13 +212,6 @@ class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, Detail
                     
                     val = execution_value.replace('.', '').replace(',', '.')
                     maintenance.execution_value = decimal.Decimal(val)
-                    
-                    provider, created = ServiceProvider.objects.get_or_create(
-                        user=request.user,
-                        name=provider_name,
-                        defaults={'phone': provider_phone}
-                    )
-                    maintenance.provider = provider
                     
                     maintenance.status = 'finished'
                     maintenance.save()
@@ -240,13 +246,18 @@ class MaintenanceWizardView(LoginRequiredMixin, PropertyMaintenanceMixin, Detail
         elif action == 'save_execution':
             maintenance.provider_name = request.POST.get('provider_name')
             maintenance.provider_phone = request.POST.get('provider_phone')
-            maintenance.execution_start_date = request.POST.get('execution_start_date')
-            maintenance.execution_end_date = request.POST.get('execution_end_date')
+            
+            start_date = request.POST.get('execution_start_date')
+            end_date = request.POST.get('execution_end_date')
+            maintenance.execution_start_date = start_date if start_date else None
+            maintenance.execution_end_date = end_date if end_date else None
             
             value = request.POST.get('execution_value')
             if value:
                 value = value.replace('.', '').replace(',', '.')
                 maintenance.execution_value = decimal.Decimal(value)
+            else:
+                maintenance.execution_value = None
             
             maintenance.save()
             return JsonResponse({'status': 'success', 'message': _("Dados de execução salvos!")})
@@ -477,9 +488,10 @@ class ProviderAutocompleteView(LoginRequiredMixin, View):
     def get(self, request):
         query = request.GET.get('q', '')
         if query:
+            from django.db.models import Q
             # Search in ServiceProvider registration (global)
             providers = ServiceProvider.objects.filter(
-                name__icontains=query
+                Q(name__icontains=query) | Q(phone__icontains=query)
             ).values('name', 'phone').distinct()[:10]
             
             # Convert to list of dicts for JS to handle name/phone
@@ -495,12 +507,6 @@ class SubmitEvaluationView(LoginRequiredMixin, View):
 
             # If provider is not linked yet, try to link it now
             if not maintenance.provider and maintenance.provider_name:
-                provider, created = ServiceProvider.objects.get_or_create(
-                    user=request.user,
-                    name=maintenance.provider_name,
-                    defaults={'phone': maintenance.provider_phone}
-                )
-                maintenance.provider = provider
                 maintenance.save()
 
             if not maintenance.provider:

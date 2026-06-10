@@ -1,0 +1,971 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Painel da Portaria" %} - {{ condo.name }}{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+<style>
+    .badge-warning {
+        background: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+    }
+    .badge-success {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+    }
+    .badge-danger-badge {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+    }
+    .res-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--primary) !important;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+    }
+    .empty-msg {
+        animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+<ul class="sidebar-menu">
+    <li>
+        <a href="{% url 'admcondominio:dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard" style="margin-right: 10px; vertical-align: middle;"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+            {% trans "Painel da Portaria" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'admcondominio:properties_list' %}" class="{% if request.resolver_match.url_name == 'properties_list' %}active{% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" style="margin-right: 10px; vertical-align: middle;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            {% trans "Unidades" %}
+        </a>
+    </li>
+    <li style="margin-top: auto;">
+        <a href="{% url 'logout' %}" style="color: #ef4444;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out" style="margin-right: 10px; vertical-align: middle;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+            {% trans "Sair" %}
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-mini-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800; margin: 0; color: var(--text-main);">{{ condo.name }}</h1>
+        <p style="color: var(--text-muted); margin: 0.2rem 0 0 0; font-size: 0.9rem;">
+            {% trans "Controle de Acessos e Recepcão" %}
+        </p>
+    </div>
+    
+    <!-- Real-time Search Input -->
+    <div class="search-wrapper" style="position: relative;">
+        <input type="text" id="search-input" placeholder="{% trans 'Pesquisar por hóspede, apartamento ou placa...' %}" style="width: 350px; padding: 0.75rem 1rem; border-radius: 14px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: 'Outfit', sans-serif; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--glass-border)'">
+    </div>
+</div>
+
+<!-- Quick Stats Summary -->
+<div class="stats-grid" style="margin-bottom: 2.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+    <div class="stat-card" style="border: 1px solid var(--glass-border); background: var(--bg-card); padding: 1.5rem; border-radius: 20px; text-align: center; box-shadow: var(--glass-shadow);">
+        <h3 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 700; letter-spacing: 0.5px;">{% trans "Check-ins Hoje" %}</h3>
+        <div id="stat-checkins-count" class="value" style="font-size: 2.2rem; font-weight: 800; color: var(--primary);">{{ count_checkins_pending }}</div>
+    </div>
+    <div class="stat-card" style="border: 1px solid var(--glass-border); background: var(--bg-card); padding: 1.5rem; border-radius: 20px; text-align: center; box-shadow: var(--glass-shadow);">
+        <h3 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 700; letter-spacing: 0.5px;">{% trans "Check-outs Hoje" %}</h3>
+        <div id="stat-checkouts-count" class="value" style="font-size: 2.2rem; font-weight: 800; color: var(--secondary);">{{ count_checkouts_pending }}</div>
+    </div>
+    <div class="stat-card" style="border: 1px solid var(--glass-border); background: var(--bg-card); padding: 1.5rem; border-radius: 20px; text-align: center; box-shadow: var(--glass-shadow);">
+        <h3 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 700; letter-spacing: 0.5px;">{% trans "Aptos Ocupados" %}</h3>
+        <div id="stat-occupied-count" class="value" style="font-size: 2.2rem; font-weight: 800; color: #10b981;">{{ count_occupied }}</div>
+    </div>
+</div>
+
+<!-- Main Grid Columns -->
+<div class="columns-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; align-items: start;">
+    
+    <!-- Column 1: Check-ins de Hoje -->
+    <div class="column-card glass-card" style="padding: 1.5rem; max-width: 100%;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+            {% trans "Check-ins de Hoje" %}
+        </h2>
+        <div id="checkins-list" class="items-list" style="display: flex; flex-direction: column; gap: 1rem;">
+            {% for res in checkins_today %}
+                <div class="res-card" data-id="{{ res.pk }}" data-search="{{ res.client_name|lower }} {{ res.property.display_complement|lower }}" style="padding: 1.1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 16px; cursor: pointer; transition: all 0.2s ease; position: relative;" onclick="openDetails({{ res.pk }})">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 8px;">
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">{{ res.client_name }}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">
+                                {% trans "Apto/Complemento:" %} <strong style="color: var(--primary);">{{ res.property.display_complement|default:"N/A" }}</strong>
+                            </div>
+                        </div>
+                        <span id="badge-checkin-{{ res.pk }}" class="badge {% if res.checkin_completed %}badge-success{% else %}badge-warning{% endif %}" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; white-space: nowrap;">
+                            {% if res.checkin_completed %}{% trans "Realizado" %}{% else %}{% trans "Pendente" %}{% endif %}
+                        </span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 0.75rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        {{ res.checkin_time|default:"14:00" }}
+                    </div>
+                    
+                    <div id="btn-checkin-wrapper-{{ res.pk }}" class="action-btn-wrapper" onclick="event.stopPropagation();">
+                        {% if not res.checkin_completed %}
+                            <button id="btn-checkin-action-{{ res.pk }}" class="btn btn-primary" onclick="releaseEntry({{ res.pk }})" style="width: 100%; font-size: 0.8rem; padding: 0.45rem 1rem !important; border-radius: 10px !important; font-weight: 700;">
+                                {% trans "Liberar Entrada" %}
+                            </button>
+                        {% elif res.can_undo_checkin %}
+                            <button id="btn-undo-checkin-action-{{ res.pk }}" class="btn btn-outline" onclick="confirmUndoCheckin({{ res.pk }})" style="width: 100%; font-size: 0.8rem; padding: 0.45rem 1rem !important; border-radius: 10px !important; font-weight: 700; border-color: rgba(239, 68, 68, 0.2); color: #ef4444; background: transparent;">
+                                {% trans "Desfazer Check-in" %}
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p class="empty-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0; font-size: 0.9rem;">{% trans "Nenhum check-in agendado para hoje." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Column 2: Check-outs de Hoje -->
+    <div class="column-card glass-card" style="padding: 1.5rem; max-width: 100%;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+            {% trans "Check-outs de Hoje" %}
+        </h2>
+        <div id="checkouts-list" class="items-list" style="display: flex; flex-direction: column; gap: 1rem;">
+            {% for res in checkouts_today %}
+                <div class="res-card" data-id="{{ res.pk }}" data-search="{{ res.client_name|lower }} {{ res.property.display_complement|lower }}" style="padding: 1.1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 16px; cursor: pointer; transition: all 0.2s ease;" onclick="openDetails({{ res.pk }})">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 8px;">
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">{{ res.client_name }}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">
+                                {% trans "Apto/Complemento:" %} <strong style="color: var(--secondary);">{{ res.property.display_complement|default:"N/A" }}</strong>
+                            </div>
+                        </div>
+                        <span id="badge-checkout-{{ res.pk }}" class="badge {% if res.checkout_completed %}badge-danger-badge{% else %}badge-warning{% endif %}" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; white-space: nowrap;">
+                            {% if res.checkout_completed %}{% trans "Concluído" %}{% else %}{% trans "Pendente" %}{% endif %}
+                        </span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 0.75rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        {{ res.checkout_time|default:"11:00" }}
+                    </div>
+                    
+                    <div id="btn-checkout-wrapper-{{ res.pk }}" class="action-btn-wrapper" onclick="event.stopPropagation();">
+                        {% if not res.checkout_completed and res.checkin_completed %}
+                            <button id="btn-checkout-action-{{ res.pk }}" class="btn btn-outline" onclick="releaseExit({{ res.pk }})" style="width: 100%; font-size: 0.8rem; padding: 0.45rem 1rem !important; border-radius: 10px !important; font-weight: 700; border-color: rgba(239, 68, 68, 0.4); color: #ef4444; background: transparent;">
+                                {% trans "Registrar Saída" %}
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p class="empty-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0; font-size: 0.9rem;">{% trans "Nenhum check-out agendado para hoje." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Column 3: Apartamentos Ocupados -->
+    <div class="column-card glass-card" style="padding: 1.5rem; max-width: 100%;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            {% trans "Apartamentos Ocupados" %}
+        </h2>
+        <div id="occupied-list" class="items-list" style="display: flex; flex-direction: column; gap: 1rem;">
+            {% for res in occupied_apartments %}
+                <div class="res-card occupied-card-item" data-id="{{ res.pk }}" data-search="{{ res.client_name|lower }} {{ res.property.display_complement|lower }} {% if res.client.complement.car_plate %}{{ res.client.complement.car_plate|lower }}{% endif %}" style="padding: 1.1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 16px; cursor: pointer; transition: all 0.2s ease;" onclick="openDetails({{ res.pk }})">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 8px;">
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">{{ res.property.display_complement|default:"Apto N/A" }}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">
+                                {% trans "Hóspede:" %} <strong>{{ res.client_name }}</strong>
+                            </div>
+                        </div>
+                        <span class="badge" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; background: rgba(16, 185, 129, 0.15); color: #10b981; white-space: nowrap;">
+                            {% trans "Dentro" %}
+                        </span>
+                    </div>
+                    
+                    <!-- Veículo do Hóspede -->
+                    {% if res.client.complement.car_plate or res.client.complement.car_model %}
+                    <div style="margin-top: 0.6rem; padding: 0.5rem 0.75rem; background: rgba(255, 255, 255, 0.03); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.75rem; display: flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 17h6"/><path d="M5 12h14"/></svg>
+                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {% if res.client.complement.car_model %}{{ res.client.complement.car_model }}{% endif %}
+                            {% if res.client.complement.car_model and res.client.complement.car_plate %} - {% endif %}
+                            {% if res.client.complement.car_plate %}<strong style="color: var(--primary);">{{ res.client.complement.car_plate|upper }}</strong>{% endif %}
+                        </span>
+                    </div>
+                    {% endif %}
+
+                    <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.75rem; display: flex; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.03); padding-top: 0.5rem;">
+                        <span>{% trans "Entrada:" %} {{ res.start_date|date:"d/m" }}</span>
+                        <span>{% trans "Saída:" %} {{ res.end_date|date:"d/m" }}</span>
+                    </div>
+                </div>
+            {% empty %}
+                <p id="occupied-empty-msg" class="empty-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0; font-size: 0.9rem;">{% trans "Nenhum apartamento ocupado atualmente." %}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Slide-over Drawer -->
+<div id="details-drawer" style="position: fixed; top: 0; right: 0; width: 450px; height: 100vh; background: var(--bg-dark); border-left: 1px solid var(--glass-border); box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 2000; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column;">
+    <!-- Header -->
+    <div style="padding: 1.5rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.01);">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);" id="drawer-title">{% trans "Detalhes do Hóspede" %}</h2>
+        <button onclick="closeDetails()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 5px; transition: color 0.2s;" onmouseover="this.style.color='var(--text-main)'" onmouseout="this.style.color='var(--text-muted)'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+    </div>
+    <!-- Body -->
+    <div id="drawer-body" style="flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Dynamic content goes here -->
+    </div>
+</div>
+<!-- Backdrop -->
+<div id="drawer-backdrop" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); z-index: 1999; display: none; backdrop-filter: blur(4px);" onclick="closeDetails()"></div>
+
+<!-- Undo Checkin Confirmation Modal -->
+<div id="undo-checkin-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px);">
+    <div style="background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 20px; width: 90%; max-width: 450px; padding: 1.75rem; box-shadow: var(--glass-shadow); text-align: center;">
+        <div style="width: 50px; height: 50px; background: rgba(239, 68, 68, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.75rem; font-family: 'Outfit', sans-serif;">{% trans "Desfazer Check-in?" %}</h3>
+        <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem; font-family: 'Outfit', sans-serif;">
+            {% trans "Tem certeza que deseja desfazer este check-in? A liberação de entrada será excluída. Esta ação ficará registrada em log para fins de auditoria." %}
+        </p>
+        <div style="display: flex; gap: 1rem;">
+            <button onclick="closeUndoCheckinModal()" class="btn btn-outline" style="flex: 1; padding: 0.6rem !important; font-size: 0.85rem; border-radius: 10px !important; font-weight: 700; border-color: var(--glass-border); color: var(--text-muted); background: transparent; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--text-muted)'" onmouseout="this.style.borderColor='var(--glass-border)'">
+                {% trans "Cancelar" %}
+            </button>
+            <button id="confirm-undo-btn" class="btn" style="flex: 1; padding: 0.6rem !important; font-size: 0.85rem; border-radius: 10px !important; font-weight: 700; background: #ef4444; color: white; border: none; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+                {% trans "Confirmar" %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Real-time dynamic search logic
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('input', function(e) {
+        const q = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.res-card');
+        cards.forEach(card => {
+            const text = card.getAttribute('data-search') || '';
+            if (text.includes(q)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+
+    // Close Details Drawer
+    function closeDetails() {
+        const drawer = document.getElementById('details-drawer');
+        const backdrop = document.getElementById('drawer-backdrop');
+        drawer.style.transform = 'translateX(100%)';
+        backdrop.style.display = 'none';
+    }
+
+    // Open Details Drawer & Fetch JSON info
+    function openDetails(reservationId) {
+        const drawer = document.getElementById('details-drawer');
+        const backdrop = document.getElementById('drawer-backdrop');
+        const body = document.getElementById('drawer-body');
+        
+        // Clear body securely
+        body.replaceChildren();
+        
+        // Add loading state
+        const loading = document.createElement('div');
+        loading.style.textAlign = 'center';
+        loading.style.padding = '3rem 0';
+        loading.style.color = 'var(--text-muted)';
+        
+        const spinner = document.createElement('div');
+        spinner.style.border = '3px solid rgba(255,255,255,0.1)';
+        spinner.style.borderTop = '3px solid var(--primary)';
+        spinner.style.borderRadius = '50%';
+        spinner.style.width = '30px';
+        spinner.style.height = '30px';
+        spinner.style.margin = '0 auto 1rem auto';
+        spinner.style.animation = 'spin 1s linear infinite';
+        
+        // Simple keyframe hack for loading animation
+        if (!document.getElementById('spinner-keyframes')) {
+            const style = document.createElement('style');
+            style.id = 'spinner-keyframes';
+            style.textContent = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+            document.head.appendChild(style);
+        }
+        
+        const loadingText = document.createElement('div');
+        loadingText.textContent = '{% trans "Buscando dados..." %}';
+        
+        loading.appendChild(spinner);
+        loading.appendChild(loadingText);
+        body.appendChild(loading);
+        
+        // Open drawer visual
+        drawer.style.transform = 'translateX(0)';
+        backdrop.style.display = 'block';
+        
+        fetch(`/book/admCondominio/reserva/${reservationId}/detalhes/`)
+            .then(response => {
+                if (!response.ok) throw new Error('HTTP error');
+                return response.json();
+            })
+            .then(data => {
+                if (data.status !== 'success') {
+                    showToast(data.message || '{% trans "Erro ao buscar detalhes" %}', 'error');
+                    closeDetails();
+                    return;
+                }
+                
+                const res = data.data;
+                body.replaceChildren(); // Safe clear loading
+                
+                // 1. Titular Card Section
+                const titularSection = document.createElement('div');
+                titularSection.style.background = 'rgba(255, 255, 255, 0.02)';
+                titularSection.style.border = '1px solid var(--glass-border)';
+                titularSection.style.borderRadius = '16px';
+                titularSection.style.padding = '1.25rem';
+                
+                const titularTitle = document.createElement('h3');
+                titularTitle.style.fontSize = '0.95rem';
+                titularTitle.style.fontWeight = '800';
+                titularTitle.style.marginBottom = '1rem';
+                titularTitle.style.color = 'var(--primary)';
+                titularTitle.textContent = res.client_name;
+                titularSection.appendChild(titularTitle);
+                
+                const infoGrid = document.createElement('div');
+                infoGrid.style.display = 'grid';
+                infoGrid.style.gridTemplateColumns = '1fr 1fr';
+                infoGrid.style.gap = '1rem';
+                
+                const addInfo = (label, val) => {
+                    const item = document.createElement('div');
+                    const labelSpan = document.createElement('div');
+                    labelSpan.style.fontSize = '0.7rem';
+                    labelSpan.style.color = 'var(--text-muted)';
+                    labelSpan.style.textTransform = 'uppercase';
+                    labelSpan.style.fontWeight = '700';
+                    labelSpan.style.letterSpacing = '0.5px';
+                    labelSpan.style.marginBottom = '0.2rem';
+                    labelSpan.textContent = label;
+                    const valSpan = document.createElement('div');
+                    valSpan.style.fontWeight = '600';
+                    valSpan.style.fontSize = '0.9rem';
+                    valSpan.style.color = 'var(--text-main)';
+                    valSpan.textContent = val || '---';
+                    item.appendChild(labelSpan);
+                    item.appendChild(valSpan);
+                    infoGrid.appendChild(item);
+                };
+                
+                addInfo('{% trans "Telefone" %}', res.client_phone);
+                addInfo('CPF', res.cpf);
+                addInfo('RG', res.rg);
+                addInfo('{% trans "Apto/Complemento" %}', res.property_complement);
+                addInfo('{% trans "Check-in" %}', res.start_date);
+                addInfo('{% trans "Check-out" %}', res.end_date);
+                
+                titularSection.appendChild(infoGrid);
+                body.appendChild(titularSection);
+                
+                // 2. Veículo Section
+                if (res.car_model || res.car_plate) {
+                    const vehicleSection = document.createElement('div');
+                    vehicleSection.style.background = 'rgba(255, 255, 255, 0.02)';
+                    vehicleSection.style.border = '1px solid var(--glass-border)';
+                    vehicleSection.style.borderRadius = '16px';
+                    vehicleSection.style.padding = '1.25rem';
+                    
+                    const vTitle = document.createElement('h3');
+                    vTitle.style.fontSize = '0.75rem';
+                    vTitle.style.color = 'var(--text-muted)';
+                    vTitle.style.textTransform = 'uppercase';
+                    vTitle.style.fontWeight = '700';
+                    vTitle.style.letterSpacing = '0.5px';
+                    vTitle.style.marginBottom = '0.75rem';
+                    vTitle.textContent = '{% trans "Veículo Autorizado" %}';
+                    vehicleSection.appendChild(vTitle);
+                    
+                    const vGrid = document.createElement('div');
+                    vGrid.style.display = 'grid';
+                    vGrid.style.gridTemplateColumns = '1fr 1fr';
+                    vGrid.style.gap = '1rem';
+                    
+                    const addVInfo = (label, val) => {
+                        const item = document.createElement('div');
+                        const labelSpan = document.createElement('div');
+                        labelSpan.style.fontSize = '0.7rem';
+                        labelSpan.style.color = 'var(--text-muted)';
+                        labelSpan.style.marginBottom = '0.2rem';
+                        labelSpan.textContent = label;
+                        const valSpan = document.createElement('div');
+                        valSpan.style.fontWeight = '600';
+                        valSpan.style.fontSize = '0.9rem';
+                        valSpan.style.color = 'var(--text-main)';
+                        valSpan.textContent = val || '---';
+                        item.appendChild(labelSpan);
+                        item.appendChild(valSpan);
+                        vGrid.appendChild(item);
+                    };
+                    
+                    addVInfo('{% trans "Modelo" %}', res.car_model);
+                    addVInfo('{% trans "Placa" %}', res.car_plate ? res.car_plate.toUpperCase() : '---');
+                    
+                    vehicleSection.appendChild(vGrid);
+                    body.appendChild(vehicleSection);
+                }
+                
+                // 3. Acompanhantes Section
+                const companionsSection = document.createElement('div');
+                companionsSection.style.background = 'rgba(255, 255, 255, 0.02)';
+                companionsSection.style.border = '1px solid var(--glass-border)';
+                companionsSection.style.borderRadius = '16px';
+                companionsSection.style.padding = '1.25rem';
+                
+                const compTitle = document.createElement('h3');
+                compTitle.style.fontSize = '0.75rem';
+                compTitle.style.color = 'var(--text-muted)';
+                compTitle.style.textTransform = 'uppercase';
+                compTitle.style.fontWeight = '700';
+                compTitle.style.letterSpacing = '0.5px';
+                compTitle.style.marginBottom = '0.75rem';
+                compTitle.textContent = `{% trans "Acompanhantes" %} (${res.companions.length})`;
+                companionsSection.appendChild(compTitle);
+                
+                if (res.companions.length > 0) {
+                    const compList = document.createElement('div');
+                    compList.style.display = 'flex';
+                    compList.style.flexDirection = 'column';
+                    compList.style.gap = '0.5rem';
+                    
+                    res.companions.forEach(c => {
+                        const cItem = document.createElement('div');
+                        cItem.style.display = 'flex';
+                        cItem.style.justifyContent = 'space-between';
+                        cItem.style.fontSize = '0.85rem';
+                        cItem.style.padding = '0.4rem 0';
+                        cItem.style.borderBottom = '1px solid rgba(255,255,255,0.03)';
+                        
+                        const cName = document.createElement('span');
+                        cName.style.fontWeight = '600';
+                        cName.style.color = 'var(--text-main)';
+                        cName.textContent = c.name;
+                        
+                        const cRg = document.createElement('span');
+                        cRg.style.color = 'var(--text-muted)';
+                        cRg.textContent = c.rg ? `RG: ${c.rg}` : 'RG: ---';
+                        
+                        cItem.appendChild(cName);
+                        cItem.appendChild(cRg);
+                        compList.appendChild(cItem);
+                    });
+                    companionsSection.appendChild(compList);
+                } else {
+                    const noComp = document.createElement('p');
+                    noComp.style.fontSize = '0.8rem';
+                    noComp.style.color = 'var(--text-muted)';
+                    noComp.style.textAlign = 'center';
+                    noComp.style.margin = '0.5rem 0 0 0';
+                    noComp.textContent = '{% trans "Nenhum acompanhante cadastrado." %}';
+                    companionsSection.appendChild(noComp);
+                }
+                body.appendChild(companionsSection);
+                
+                // 4. Histórico de Portaria Section
+                const histSection = document.createElement('div');
+                histSection.style.background = 'rgba(255, 255, 255, 0.02)';
+                histSection.style.border = '1px solid var(--glass-border)';
+                histSection.style.borderRadius = '16px';
+                histSection.style.padding = '1.25rem';
+                
+                const histTitle = document.createElement('h3');
+                histTitle.style.fontSize = '0.75rem';
+                histTitle.style.color = 'var(--text-muted)';
+                histTitle.style.textTransform = 'uppercase';
+                histTitle.style.fontWeight = '700';
+                histTitle.style.letterSpacing = '0.5px';
+                histTitle.style.marginBottom = '0.75rem';
+                histTitle.textContent = '{% trans "Histórico de Portaria" %}';
+                histSection.appendChild(histTitle);
+                
+                if (res.releases.length > 0) {
+                    const rList = document.createElement('div');
+                    rList.style.display = 'flex';
+                    rList.style.flexDirection = 'column';
+                    rList.style.gap = '0.6rem';
+                    
+                    res.releases.forEach(r => {
+                        const rItem = document.createElement('div');
+                        rItem.style.fontSize = '0.8rem';
+                        rItem.style.display = 'flex';
+                        rItem.style.justifyContent = 'space-between';
+                        rItem.style.alignItems = 'center';
+                        
+                        const rType = document.createElement('span');
+                        rType.style.fontWeight = '700';
+                        rType.style.color = r.type_raw === 'entry' ? 'var(--primary)' : 'var(--secondary)';
+                        rType.textContent = r.type;
+                        
+                        const rTime = document.createElement('span');
+                        rTime.style.color = 'var(--text-muted)';
+                        rTime.textContent = `${r.time} (${r.user})`;
+                        
+                        rItem.appendChild(rType);
+                        rItem.appendChild(rTime);
+                        rList.appendChild(rItem);
+                    });
+                    histSection.appendChild(rList);
+                } else {
+                    const noHist = document.createElement('p');
+                    noHist.style.fontSize = '0.8rem';
+                    noHist.style.color = 'var(--text-muted)';
+                    noHist.style.textAlign = 'center';
+                    noHist.style.margin = '0.5rem 0 0 0';
+                    noHist.textContent = '{% trans "Nenhuma liberação registrada." %}';
+                    histSection.appendChild(noHist);
+                }
+                body.appendChild(histSection);
+            })
+            .catch(err => {
+                console.error(err);
+                showToast('{% trans "Erro ao carregar detalhes" %}', 'error');
+                closeDetails();
+            });
+    }
+
+    // Release entry access (Check-in) via AJAX
+    function releaseEntry(reservationId) {
+        const btn = document.getElementById(`btn-checkin-action-${reservationId}`);
+        if (!btn) return;
+        
+        btn.disabled = true;
+        const originalText = btn.textContent;
+        btn.textContent = '{% trans "Liberando..." %}';
+
+        fetch(`/book/admCondominio/reserva/${reservationId}/liberar-entrada/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('HTTP error');
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, 'success');
+                
+                // Update badge to Realizado
+                const badge = document.getElementById(`badge-checkin-${reservationId}`);
+                if (badge) {
+                    badge.className = 'badge badge-success';
+                    badge.textContent = '{% trans "Realizado" %}';
+                }
+                
+                // Replace button with Undo Checkin button
+                const btnWrapper = document.getElementById(`btn-checkin-wrapper-${reservationId}`);
+                if (btnWrapper) {
+                    btnWrapper.replaceChildren(); // Safe clear
+                    const undoBtn = document.createElement('button');
+                    undoBtn.id = `btn-undo-checkin-action-${reservationId}`;
+                    undoBtn.className = 'btn btn-outline';
+                    undoBtn.style.width = '100%';
+                    undoBtn.style.fontSize = '0.8rem';
+                    undoBtn.style.padding = '0.45rem 1rem !important';
+                    undoBtn.style.borderRadius = '10px !important';
+                    undoBtn.style.fontWeight = '700';
+                    undoBtn.style.borderColor = 'rgba(239, 68, 68, 0.2)';
+                    undoBtn.style.color = '#ef4444';
+                    undoBtn.style.background = 'transparent';
+                    undoBtn.textContent = '{% trans "Desfazer Check-in" %}';
+                    undoBtn.onclick = function() { confirmUndoCheckin(reservationId); };
+                    btnWrapper.appendChild(undoBtn);
+                }
+                
+                // Add to occupied column dynamically
+                const occupiedList = document.getElementById('occupied-list');
+                const occupiedEmptyMsg = document.getElementById('occupied-empty-msg');
+                if (occupiedEmptyMsg) {
+                    occupiedEmptyMsg.remove();
+                }
+                
+                const newCard = createOccupiedCard(data.reservation);
+                occupiedList.insertBefore(newCard, occupiedList.firstChild);
+                
+                // Recalculate stats counters
+                updateStatsCounters(-1, 0, 1);
+            } else {
+                showToast(data.message || '{% trans "Erro ao liberar acesso" %}', 'error');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('{% trans "Erro de conexão ao liberar acesso" %}', 'error');
+            btn.disabled = false;
+            btn.textContent = originalText;
+        });
+    }
+
+    // Release exit access (Check-out) via AJAX
+    function releaseExit(reservationId) {
+        const btn = document.getElementById(`btn-checkout-action-${reservationId}`);
+        if (!btn) return;
+        
+        btn.disabled = true;
+        const originalText = btn.textContent;
+        btn.textContent = '{% trans "Processando..." %}';
+
+        fetch(`/book/admCondominio/reserva/${reservationId}/registrar-saida/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('HTTP error');
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, 'success');
+                
+                // Update checkout badge
+                const badge = document.getElementById(`badge-checkout-${reservationId}`);
+                if (badge) {
+                    badge.className = 'badge badge-danger-badge';
+                    badge.textContent = '{% trans "Concluído" %}';
+                }
+                
+                // Remove the action button
+                const btnWrapper = document.getElementById(`btn-checkout-wrapper-${reservationId}`);
+                if (btnWrapper) {
+                    btnWrapper.replaceChildren(); // Safe clear
+                }
+                
+                // Remove from occupied list
+                const occupiedCards = document.querySelectorAll('.occupied-card-item');
+                occupiedCards.forEach(card => {
+                    if (card.getAttribute('data-id') == reservationId) {
+                        card.remove();
+                    }
+                });
+                
+                // Check if list is empty to show message
+                const occupiedList = document.getElementById('occupied-list');
+                if (occupiedList && occupiedList.querySelectorAll('.occupied-card-item').length === 0) {
+                    const p = document.createElement('p');
+                    p.id = 'occupied-empty-msg';
+                    p.className = 'empty-msg';
+                    p.style.color = 'var(--text-muted)';
+                    p.style.textAlign = 'center';
+                    p.style.padding = '2rem 0';
+                    p.style.fontSize = '0.9rem';
+                    p.textContent = '{% trans "Nenhum apartamento ocupado atualmente." %}';
+                    occupiedList.appendChild(p);
+                }
+                
+                // Recalculate stats counters
+                updateStatsCounters(0, -1, -1);
+            } else {
+                showToast(data.message || '{% trans "Erro ao registrar checkout" %}', 'error');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('{% trans "Erro de conexão ao registrar checkout" %}', 'error');
+            btn.disabled = false;
+            btn.textContent = originalText;
+        });
+    }
+
+    // Helper to update counter stats safely
+    function updateStatsCounters(checkinsChange, checkoutsChange, occupiedChange) {
+        const checkinsCountEl = document.getElementById('stat-checkins-count');
+        const checkoutsCountEl = document.getElementById('stat-checkouts-count');
+        const occupiedCountEl = document.getElementById('stat-occupied-count');
+        
+        if (checkinsCountEl && checkinsChange !== 0) {
+            let current = parseInt(checkinsCountEl.textContent, 10) || 0;
+            checkinsCountEl.textContent = Math.max(0, current + checkinsChange);
+        }
+        if (checkoutsCountEl && checkoutsChange !== 0) {
+            let current = parseInt(checkoutsCountEl.textContent, 10) || 0;
+            checkoutsCountEl.textContent = Math.max(0, current + checkoutsChange);
+        }
+        if (occupiedCountEl && occupiedChange !== 0) {
+            let current = parseInt(occupiedCountEl.textContent, 10) || 0;
+            occupiedCountEl.textContent = Math.max(0, current + occupiedChange);
+        }
+    }
+
+    // Helper function to build occupied card dynamically
+    function createOccupiedCard(res) {
+        const card = document.createElement('div');
+        card.className = 'res-card occupied-card-item';
+        card.setAttribute('data-id', res.id);
+        
+        let searchStr = `${res.client_name.toLowerCase()} ${res.property_complement.toLowerCase()}`;
+        if (res.car_plate) {
+            searchStr += ` ${res.car_plate.toLowerCase()}`;
+        }
+        card.setAttribute('data-search', searchStr);
+        card.style.padding = '1.1rem';
+        card.style.background = 'rgba(255, 255, 255, 0.02)';
+        card.style.border = '1px solid var(--glass-border)';
+        card.style.borderRadius = '16px';
+        card.style.cursor = 'pointer';
+        card.style.transition = 'all 0.2s ease';
+        card.addEventListener('click', () => openDetails(res.id));
+        
+        // Setup hover state triggers
+        card.addEventListener('mouseover', () => {
+            card.style.transform = 'translateY(-2px)';
+            card.style.borderColor = 'var(--primary)';
+            card.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.1)';
+        });
+        card.addEventListener('mouseout', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.borderColor = 'var(--glass-border)';
+            card.style.boxShadow = 'none';
+        });
+        
+        // Header row
+        const headerRow = document.createElement('div');
+        headerRow.style.display = 'flex';
+        headerRow.style.justifyContent = 'space-between';
+        headerRow.style.alignItems = 'flex-start';
+        headerRow.style.marginBottom = '0.5rem';
+        headerRow.style.gap = '8px';
+        
+        const titleCol = document.createElement('div');
+        const complementDiv = document.createElement('div');
+        complementDiv.style.fontWeight = '700';
+        complementDiv.style.fontSize = '0.95rem';
+        complementDiv.style.color = 'var(--text-main)';
+        complementDiv.textContent = res.property_complement || '{% trans "Apto N/A" %}';
+        
+        const guestDiv = document.createElement('div');
+        guestDiv.style.fontSize = '0.8rem';
+        guestDiv.style.color = 'var(--text-muted)';
+        guestDiv.style.marginTop = '0.15rem';
+        guestDiv.textContent = '{% trans "Hóspede: " %}';
+        const guestSpan = document.createElement('strong');
+        guestSpan.textContent = res.client_name;
+        guestDiv.appendChild(guestSpan);
+        
+        titleCol.appendChild(complementDiv);
+        titleCol.appendChild(guestDiv);
+        
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.style.fontSize = '0.65rem';
+        badge.style.padding = '0.25rem 0.5rem';
+        badge.style.borderRadius = '100px';
+        badge.style.fontWeight = '700';
+        badge.style.textTransform = 'uppercase';
+        badge.style.background = 'rgba(16, 185, 129, 0.15)';
+        badge.style.color = '#10b981';
+        badge.style.whiteSpace = 'nowrap';
+        badge.textContent = '{% trans "Dentro" %}';
+        
+        headerRow.appendChild(titleCol);
+        headerRow.appendChild(badge);
+        
+        card.appendChild(headerRow);
+        
+        // Vehicle row (if present)
+        if (res.car_plate || res.car_model) {
+            const vehicleDiv = document.createElement('div');
+            vehicleDiv.style.marginTop = '0.6rem';
+            vehicleDiv.style.padding = '0.5rem 0.75rem';
+            vehicleDiv.style.background = 'rgba(255, 255, 255, 0.03)';
+            vehicleDiv.style.borderRadius = '10px';
+            vehicleDiv.style.border = '1px solid rgba(255, 255, 255, 0.05)';
+            vehicleDiv.style.fontSize = '0.75rem';
+            vehicleDiv.style.display = 'flex';
+            vehicleDiv.style.alignItems = 'center';
+            vehicleDiv.style.gap = '8px';
+            
+            // Inline SVG creation for car icon
+            const svgDoc = new DOMParser().parseFromString(
+                '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 17h6"/><path d="M5 12h14"/></svg>',
+                'image/svg+xml'
+            );
+            vehicleDiv.appendChild(svgDoc.documentElement);
+            
+            const spanText = document.createElement('span');
+            spanText.style.overflow = 'hidden';
+            spanText.style.textOverflow = 'ellipsis';
+            spanText.style.whiteSpace = 'nowrap';
+            let vehicleInfo = '';
+            if (res.car_model) vehicleInfo += res.car_model;
+            if (res.car_model && res.car_plate) vehicleInfo += ' - ';
+            spanText.textContent = vehicleInfo;
+            
+            if (res.car_plate) {
+                const plateStrong = document.createElement('strong');
+                plateStrong.style.color = 'var(--primary)';
+                plateStrong.textContent = res.car_plate.toUpperCase();
+                spanText.appendChild(plateStrong);
+            }
+            
+            vehicleDiv.appendChild(spanText);
+            card.appendChild(vehicleDiv);
+        }
+        
+        // Footer dates
+        const footerDates = document.createElement('div');
+        footerDates.style.fontSize = '0.7rem';
+        footerDates.style.color = 'var(--text-muted)';
+        footerDates.style.marginTop = '0.75rem';
+        footerDates.style.display = 'flex';
+        footerDates.style.justifyContent = 'space-between';
+        footerDates.style.borderTop = '1px solid rgba(255, 255, 255, 0.03)';
+        footerDates.style.paddingTop = '0.5rem';
+        
+        const startSpan = document.createElement('span');
+        startSpan.textContent = `{% trans "Entrada: " %}${res.start_date.substring(0, 5)}`;
+        const endSpan = document.createElement('span');
+        endSpan.textContent = `{% trans "Saída: " %}${res.end_date.substring(0, 5)}`;
+        
+        footerDates.appendChild(startSpan);
+        footerDates.appendChild(endSpan);
+        
+        card.appendChild(footerDates);
+        
+        return card;
+    }
+
+    let undoReservationId = null;
+
+    function confirmUndoCheckin(reservationId) {
+        undoReservationId = reservationId;
+        const modal = document.getElementById('undo-checkin-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+        }
+    }
+
+    function closeUndoCheckinModal() {
+        const modal = document.getElementById('undo-checkin-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+        undoReservationId = null;
+    }
+
+    document.getElementById('confirm-undo-btn').addEventListener('click', function() {
+        if (!undoReservationId) return;
+        const btn = this;
+        btn.disabled = true;
+        const originalText = btn.textContent;
+        btn.textContent = '{% trans "Desfazendo..." %}';
+
+        fetch(`/book/admCondominio/reserva/${undoReservationId}/desfazer-entrada/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('HTTP error');
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, 'success');
+                
+                // Update badge to Pendente
+                const badge = document.getElementById(`badge-checkin-${undoReservationId}`);
+                if (badge) {
+                    badge.className = 'badge badge-warning';
+                    badge.textContent = '{% trans "Pendente" %}';
+                }
+                
+                // Replace button with Liberar Entrada
+                const btnWrapper = document.getElementById(`btn-checkin-wrapper-${undoReservationId}`);
+                if (btnWrapper) {
+                    btnWrapper.replaceChildren(); // Safe clear
+                    const releaseBtn = document.createElement('button');
+                    releaseBtn.id = `btn-checkin-action-${undoReservationId}`;
+                    releaseBtn.className = 'btn btn-primary';
+                    releaseBtn.style.width = '100%';
+                    releaseBtn.style.fontSize = '0.8rem';
+                    releaseBtn.style.padding = '0.45rem 1rem !important';
+                    releaseBtn.style.borderRadius = '10px !important';
+                    releaseBtn.style.fontWeight = '700';
+                    releaseBtn.textContent = '{% trans "Liberar Entrada" %}';
+                    releaseBtn.onclick = function() { releaseEntry(undoReservationId); };
+                    btnWrapper.appendChild(releaseBtn);
+                }
+                
+                // Remove from occupied list
+                const occupiedCards = document.querySelectorAll('.occupied-card-item');
+                occupiedCards.forEach(card => {
+                    if (card.getAttribute('data-id') == undoReservationId) {
+                        card.remove();
+                    }
+                });
+                
+                // Check if list is empty to show message
+                const occupiedList = document.getElementById('occupied-list');
+                if (occupiedList && occupiedList.querySelectorAll('.occupied-card-item').length === 0) {
+                    if (!document.getElementById('occupied-empty-msg')) {
+                        const p = document.createElement('p');
+                        p.id = 'occupied-empty-msg';
+                        p.className = 'empty-msg';
+                        p.style.color = 'var(--text-muted)';
+                        p.style.textAlign = 'center';
+                        p.style.padding = '2rem 0';
+                        p.style.fontSize = '0.9rem';
+                        p.textContent = '{% trans "Nenhum apartamento ocupado atualmente." %}';
+                        occupiedList.appendChild(p);
+                    }
+                }
+                
+                // Recalculate stats counters
+                updateStatsCounters(1, 0, -1);
+                
+                closeUndoCheckinModal();
+            } else {
+                showToast(data.message || '{% trans "Erro ao desfazer check-in" %}', 'error');
+            }
+            btn.disabled = false;
+            btn.textContent = originalText;
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('{% trans "Erro de conexão ao desfazer check-in" %}', 'error');
+            btn.disabled = false;
+            btn.textContent = originalText;
+        });
+    });
+</script>
+{% endblock %}

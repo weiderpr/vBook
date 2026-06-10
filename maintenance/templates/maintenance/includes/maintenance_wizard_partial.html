@@ -430,6 +430,11 @@
         
         <div class="footer-right" style="display: flex; gap: 1rem; align-items: center;">
             <button type="button" class="btn btn-outline" onclick="closeWizardModal()" style="font-weight: 700; {% if is_read_only and wizard_step == 4 %}opacity: 0.5; cursor: not-allowed; pointer-events: none;{% endif %}" {% if is_read_only and wizard_step == 4 %}disabled{% endif %}>{% trans "Fechar" %}</button>
+            {% if wizard_step == 3 %}
+                <button type="button" {% if is_read_only %}disabled{% else %}onclick="saveExecutionProgress('{{ maintenance.pk }}')"{% endif %} class="btn btn-outline" id="saveExecBtn" style="font-weight: 700; {% if is_read_only %}opacity: 0.5; cursor: not-allowed;{% endif %}">
+                    {% trans "Salvar Progresso" %}
+                </button>
+            {% endif %}
             {% if wizard_step < 4 %}
                 <button type="button" {% if is_read_only %}disabled{% else %}onclick="advanceWizard('{{ maintenance.pk }}')"{% endif %} class="btn btn-primary" id="advanceBtn" style="min-width: 180px; font-weight: 800; {% if is_read_only %}opacity: 0.5; cursor: not-allowed;{% endif %}">
                     {% if wizard_step == 1 %}{% trans "Próximo: Orçamentos" %}{% elif wizard_step == 2 %}{% trans "Aprovar e Iniciar" %}{% elif wizard_step == 3 %}{% trans "Finalizar Serviço" %}{% endif %}

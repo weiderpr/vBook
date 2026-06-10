@@ -211,9 +211,14 @@
         </div>
 
         <div id="modal-content">
-            <div class="plan-detail-row">
+            <div class="plan-detail-row" style="align-items: center;">
                 <span class="plan-detail-label">{% trans "Plano" %}</span>
-                <span class="plan-detail-value" id="plan-name">-</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="plan-detail-value" id="plan-name">-</span>
+                    <button type="button" id="change-plan-btn" class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem; border-radius: 6px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-muted); cursor: pointer; transition: all 0.2s;">
+                        {% trans "Alterar" %}
+                    </button>
+                </div>
             </div>
             <div class="plan-detail-row">
                 <span class="plan-detail-label">{% trans "Valor" %}</span>
@@ -260,6 +265,36 @@
             </div>
         </div>
 
+        <div id="modal-assign-form" style="display: none; margin-top: 1rem;">
+            <p id="assign-form-msg" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center;">
+                {% trans "Este usuário ainda não possui um plano associado. Escolha um plano abaixo para ativá-lo." %}
+            </p>
+            <form id="assign-plan-form" method="POST">
+                {% csrf_token %}
+                <div style="margin-bottom: 1.2rem;">
+                    <label for="assign-plan-select" style="display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-main);">
+                        {% trans "Selecione o Plano" %}
+                    </label>
+                    <select name="plan_id" id="assign-plan-select" class="form-control" style="width: 100%; padding: 10px 12px; font-size: 0.9rem; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-weight: 500;" required>
+                    </select>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="assign-plan-date" style="display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-main);">
+                        {% trans "Data de Vencimento" %}
+                    </label>
+                    <input type="date" name="end_date" id="assign-plan-date" class="form-control" style="width: 100%; padding: 10px 12px; font-size: 0.9rem; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main);" required>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" id="cancel-assign-btn" class="btn btn-outline" style="flex: 1; padding: 10px; font-size: 0.95rem; border-radius: 8px; cursor: pointer;">
+                        {% trans "Voltar" %}
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="flex: 2; padding: 10px; font-size: 0.95rem; border-radius: 8px; cursor: pointer;">
+                        {% trans "Atribuir Plano" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+
         <div id="modal-error" style="display: none; text-align: center; color: #ef4444; padding: 1rem; background: rgba(239, 68, 68, 0.05); border-radius: 12px; margin-top: 1rem;">
         </div>
 
@@ -283,6 +318,16 @@
             if (e.target === modal) closeModal();
         };
 
+        const modalContent = document.getElementById('modal-content');
+        const modalAssignForm = document.getElementById('modal-assign-form');
+        const changePlanBtn = document.getElementById('change-plan-btn');
+        const cancelAssignBtn = document.getElementById('cancel-assign-btn');
+        const assignFormMsg = document.getElementById('assign-form-msg');
+        const planSelect = document.getElementById('assign-plan-select');
+        const planDateInput = document.getElementById('assign-plan-date');
+        const assignForm = document.getElementById('assign-plan-form');
+        const modalPayments = document.getElementById('modal-payments');
+
         document.querySelectorAll('.view-plan-btn').forEach(btn => {
             btn.onclick = async () => {
                 const url = btn.getAttribute('data-url');
@@ -290,7 +335,9 @@
                 const userEmail = userRow.querySelector('td:nth-child(2)').textContent;
                 
                 document.getElementById('modal-user-email').textContent = userEmail;
-                document.getElementById('modal-content').style.display = 'none';
+                modalContent.style.display = 'none';
+                modalAssignForm.style.display = 'none';
+                modalPayments.style.display = 'none';
                 document.getElementById('modal-error').style.display = 'none';
                 document.getElementById('modal-loader').style.display = 'block';
                 
@@ -302,14 +349,44 @@
                     
                     document.getElementById('modal-loader').style.display = 'none';
                     
-                    if (data.error) {
-                        document.getElementById('modal-error').textContent = data.error;
-                        document.getElementById('modal-error').style.display = 'block';
-                    } else {
+                    // Preencher as opções do dropdown de planos sempre que abrir
+                    planSelect.innerHTML = '';
+                    if (data.plans && data.plans.length > 0) {
+                        data.plans.forEach(p => {
+                            const opt = document.createElement('option');
+                            opt.value = p.id;
+                            opt.textContent = p.description;
+                            opt.setAttribute('data-duration', p.duration_days);
+                            planSelect.appendChild(opt);
+                        });
+                    }
+
+                    // Função auxiliar para calcular data padrão de vencimento com base no plano selecionado
+                    const updateDefaultDate = () => {
+                        const selectedOption = planSelect.options[planSelect.selectedIndex];
+                        if (selectedOption) {
+                            const durationDays = parseInt(selectedOption.getAttribute('data-duration') || '0', 10);
+                            if (durationDays > 0) {
+                                const today = new Date();
+                                today.setDate(today.getDate() + durationDays);
+                                const year = today.getFullYear();
+                                const month = String(today.getMonth() + 1).padStart(2, '0');
+                                const day = String(today.getDate()).padStart(2, '0');
+                                planDateInput.value = `${year}-${month}-${day}`;
+                            }
+                        }
+                    };
+                    planSelect.onchange = updateDefaultDate;
+                    
+                    // Configurar a action do formulário de atribuição
+                    assignForm.action = data.assign_url;
+                    
+                    if (data.has_subscription) {
                         document.getElementById('plan-name').textContent = data.plan_description;
                         document.getElementById('plan-value').textContent = data.base_value;
                         document.getElementById('plan-period').textContent = data.periodicity;
                         document.getElementById('plan-start').textContent = data.start_date;
+                        
                         const endInput = document.getElementById('plan-end-input');
                         endInput.value = data.end_date_raw;
                         
@@ -331,7 +408,7 @@
                             statusBadge.style.color = '#ff7675';
                         }
                         
-                        document.getElementById('modal-content').style.display = 'block';
+                        modalContent.style.display = 'block';
 
                         // Payments History
                         const tbody = document.getElementById('payments-tbody');
@@ -354,10 +431,44 @@
                                 `;
                                 tbody.appendChild(tr);
                             });
-                            document.getElementById('modal-payments').style.display = 'block';
+                            modalPayments.style.display = 'block';
                         } else {
-                            document.getElementById('modal-payments').style.display = 'none';
+                            modalPayments.style.display = 'none';
                         }
+
+                        // Pre-set values in assign form
+                        assignFormMsg.textContent = "{% trans 'Alterar o plano deste usuário.' %}";
+                        planSelect.value = data.plan_id;
+                        planDateInput.value = data.end_date_raw;
+
+                        cancelAssignBtn.style.display = 'block'; // Mostrar botão Voltar
+                        
+                        changePlanBtn.onclick = () => {
+                            modalContent.style.display = 'none';
+                            modalPayments.style.display = 'none';
+                            modalAssignForm.style.display = 'block';
+                        };
+                        
+                        cancelAssignBtn.onclick = () => {
+                            modalAssignForm.style.display = 'none';
+                            modalContent.style.display = 'block';
+                            if (data.payments && data.payments.length > 0) {
+                                modalPayments.style.display = 'block';
+                            }
+                        };
+                        
+                    } else {
+                        // Não tem assinatura. Mostrar formulário diretamente
+                        assignFormMsg.textContent = "{% trans 'Este usuário ainda não possui um plano associado. Escolha um plano abaixo para ativá-lo.' %}";
+                        
+                        // Selecionar primeiro plano ativo e atualizar vencimento padrão
+                        if (planSelect.options.length > 0) {
+                            planSelect.selectedIndex = 0;
+                            updateDefaultDate();
+                        }
+                        
+                        cancelAssignBtn.style.display = 'none'; // Não há para onde voltar
+                        modalAssignForm.style.display = 'block';
                     }
                 } catch (err) {
                     document.getElementById('modal-loader').style.display = 'none';

@@ -1,0 +1,489 @@
+{% extends 'dashboard_layout.html' %}
+{% load static i18n humanize %}
+
+{% block title %}{% trans "Documentos" %} - {{ property.name }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .property-panel-content {
+        padding-top: 1rem;
+    }
+    
+    .property-mini-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .document-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .document-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .document-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary);
+        box-shadow: var(--glass-shadow);
+    }
+
+    .doc-preview-box {
+        height: 120px;
+        background: rgba(255,255,255,0.03);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+    }
+
+    .doc-preview-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .doc-icon {
+        color: var(--primary);
+        opacity: 0.6;
+    }
+
+    .doc-info {
+        flex: 1;
+    }
+
+    .doc-name {
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--text-main);
+        margin-bottom: 4px;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .doc-meta {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .doc-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: auto;
+    }
+
+    .btn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--glass-border);
+        background: rgba(255,255,255,0.05);
+        color: var(--text-main);
+        transition: all 0.2s;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-icon:hover {
+        background: var(--primary);
+        color: white;
+        border-color: transparent;
+    }
+
+    .btn-delete:hover {
+        background: #f87171;
+    }
+
+    /* Modal Styles */
+    .upload-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        width: 90%;
+        max-width: 500px;
+        padding: 2rem;
+        position: relative;
+        animation: modalFadeUp 0.3s ease;
+    }
+
+    @keyframes modalFadeUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+    }
+
+    .modal-content input, 
+    .modal-content textarea {
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        color: var(--text-main) !important;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+    }
+
+    .modal-content input:focus, 
+    .modal-content textarea:focus {
+        background: rgba(255,255,255,0.1);
+        border-color: var(--primary);
+        outline: none;
+    }
+
+    .btn-full {
+        width: 100%;
+        padding: 12px;
+        font-weight: 700;
+        margin-top: 1rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: rgba(255,255,255,0.02);
+        border-radius: 24px;
+        border: 2px dashed var(--glass-border);
+        margin-top: 2rem;
+    }
+    /* Preview Modal Styles */
+    .preview-modal {
+        display: none;
+        position: fixed;
+        z-index: 3000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-modal-header {
+        width: 95%;
+        max-width: 1200px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        color: white;
+    }
+
+    .preview-container {
+        width: 95%;
+        height: 85vh;
+        max-width: 1200px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .preview-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .preview-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: white;
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with property=property active_item='documents' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-panel-content">
+    <div class="property-mini-header">
+        <div>
+            <h1 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+                {% trans "Documentos da Propriedade" %}
+            </h1>
+            <p style="color: var(--text-muted); margin: 2px 0 0; font-size: 0.85rem;">
+                {% trans "Gerencie contratos, escrituras e outros arquivos importantes." %}
+            </p>
+        </div>
+        <button onclick="openModal()" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            {% trans "Novo Documento" %}
+        </button>
+    </div>
+
+    {% if documents %}
+        <div class="document-grid">
+            {% for doc in documents %}
+                <div class="document-card">
+                    <div class="doc-preview-box">
+                        {% with extension=doc.file.name|lower %}
+                            {% if ".jpg" in extension or ".jpeg" in extension or ".png" in extension or ".webp" in extension or ".gif" in extension %}
+                                <img src="{{ doc.file.url }}" alt="{{ doc.name }}" loading="lazy">
+                            {% elif ".pdf" in extension %}
+                                <div class="doc-icon" style="flex-direction: column; gap: 8px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: #ef4444;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15h3a2 2 0 0 0 0-4H9v9"/></svg>
+                                    <span style="font-size: 0.6rem; font-weight: 900; background: #ef4444; color: white; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">PDF</span>
+                                </div>
+                            {% else %}
+                                <div class="doc-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    
+                    <div class="doc-info">
+                        <span class="doc-name" title="{{ doc.name }}">{{ doc.name }}</span>
+                        <div class="doc-meta">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                {{ doc.document_date|date:"d/m/Y" }}
+                            </div>
+                            <span style="opacity: 0.5;">•</span>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                {{ doc.file.size|filesizeformat }}
+                            </div>
+                        </div>
+                        {% if doc.description %}
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin: 8px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                {{ doc.description }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div class="doc-actions">
+                        <button onclick="previewDocument('{{ doc.file.url|escapejs }}', '{{ doc.name|escapejs }}')" class="btn-icon" title="{% trans "Visualizar" %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                        <a href="{{ doc.file.url }}" download class="btn-icon" title="{% trans "Baixar" %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        </a>
+                        <form action="{% url 'properties:document_delete' doc.pk %}" method="post" style="margin-left: auto;" onsubmit="return confirm('{% trans "Tem certeza que deseja excluir este documento?" %}')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon btn-delete" title="{% trans "Excluir" %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state animate-fade">
+            <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.03); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--text-muted);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+            </div>
+            <h3 style="margin: 0; color: var(--text-main);">{% trans "Nenhum documento cadastrado" %}</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 8px 0 1.5rem;">{% trans "Comece enviando os primeiros documentos desta propriedade." %}</p>
+            <button onclick="openModal()" class="btn btn-primary">{% trans "Novo Documento" %}</button>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Upload Modal -->
+<div id="uploadModal" class="upload-modal">
+    <div class="modal-content">
+        <h2 style="margin: 0 0 1.5rem 0; font-size: 1.4rem; font-weight: 800;">{% trans "Novo Documento" %}</h2>
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.name == 'file' %}
+                        <div id="fileSizeInfo" style="margin-top: 8px; font-size: 0.8rem;"></div>
+                    {% endif %}
+                    {% if field.errors %}
+                        <small style="color: #f87171;">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="button" onclick="closeModal()" class="btn btn-secondary" style="flex: 1;">{% trans "Cancelar" %}</button>
+                <button type="submit" class="btn btn-primary" style="flex: 1;">{% trans "Enviar" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div id="previewModal" class="preview-modal">
+    <div class="preview-modal-header">
+        <h3 id="previewTitle" style="margin: 0; font-weight: 700;"></h3>
+        <button onclick="closePreview()" class="btn-icon" style="background: rgba(255,255,255,0.1); border: none; color: white;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="preview-container" id="previewContainer">
+        <!-- Content injected by JS -->
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById('uploadModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('uploadModal').style.display = 'none';
+    }
+
+    // File size validation and indicator
+    document.querySelector('input[type="file"]').onchange = function() {
+        const file = this.files[0];
+        const infoDiv = document.getElementById('fileSizeInfo');
+        if (file) {
+            const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+            infoDiv.innerHTML = `{% trans "Tamanho selecionado: " %} <strong>${sizeMB} MB</strong>`;
+            infoDiv.style.color = 'var(--text-muted)';
+            
+            const extension = file.name.split('.').pop().toLowerCase();
+            let limit = (['jpg', 'jpeg', 'png', 'webp'].includes(extension)) ? 2 : (extension === 'pdf' ? 10 : 5);
+            
+            if (sizeMB > limit) {
+                infoDiv.style.color = '#f87171';
+                infoDiv.innerHTML += ` <br> <small>{% trans "Atenção: O limite para este tipo de arquivo é " %} ${limit}MB</small>`;
+            }
+        } else {
+            infoDiv.innerHTML = '';
+        }
+    };
+
+    document.getElementById('uploadForm').onsubmit = function(e) {
+        const fileInput = this.querySelector('input[type="file"]');
+        if (fileInput && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const fileSize = file.size / 1024 / 1024;
+            const extension = file.name.split('.').pop().toLowerCase();
+            
+            let limit = 5;
+            let typeLabel = "arquivo";
+            
+            if (['jpg', 'jpeg', 'png', 'webp'].includes(extension)) {
+                limit = 2;
+                typeLabel = "imagem";
+            } else if (extension === 'pdf') {
+                limit = 10;
+                typeLabel = "PDF";
+            }
+            
+            if (fileSize > limit) {
+                const msg = `{% trans "Não foi possível enviar: O " %}${typeLabel} {% trans " selecionado tem " %}${fileSize.toFixed(2)}MB, {% trans "mas o limite permitido é de " %}${limit}MB. {% trans "Por favor, utilize um arquivo menor ou compacte-o antes de enviar." %}`;
+                alert(msg);
+                e.preventDefault();
+                return false;
+            }
+        }
+        return true;
+    };
+
+    function previewDocument(url, name) {
+        const modal = document.getElementById('previewModal');
+        const container = document.getElementById('previewContainer');
+        const title = document.getElementById('previewTitle');
+        
+        title.innerText = name;
+        container.innerHTML = '';
+        
+        const extension = url.split('.').pop().toLowerCase();
+        
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(extension)) {
+            const img = document.createElement('img');
+            img.src = url;
+            container.appendChild(img);
+        } else if (extension === 'pdf') {
+            const iframe = document.createElement('iframe');
+            iframe.src = url;
+            container.appendChild(iframe);
+        } else {
+            container.innerHTML = `<div style="color: white; text-align: center;">
+                <p>{% trans "Pré-visualização não disponível para este tipo de arquivo." %}</p>
+                <a href="${url}" download class="btn btn-primary">{% trans "Baixar Arquivo" %}</a>
+            </div>`;
+        }
+        
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePreview() {
+        document.getElementById('previewModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close on click outside
+    window.onclick = function(event) {
+        let uploadModal = document.getElementById('uploadModal');
+        let previewModal = document.getElementById('previewModal');
+        if (event.target == uploadModal) {
+            closeModal();
+        }
+        if (event.target == previewModal) {
+            closePreview();
+        }
+    }
+</script>
+{% endblock %}

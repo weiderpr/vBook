@@ -12,9 +12,9 @@ from django.utils import timezone
 from django.db.models import Sum, Q
 from core.utils import send_notification
 
-from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider
+from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider, PropertyDocument
 from .utils import get_property_stats
-from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm
+from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm, PropertyDocumentForm
 from reservations.models import Reservation, ReservationCost, ReservationPayment
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
@@ -188,9 +188,9 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
         costs = self.object.costs.all()
         context['costs_booking'] = costs.filter(frequency='per_booking')
         
-        # Merge Property Costs and Finished Maintenances for the payments list
+        # Merge Property Costs and In Progress / Finished Maintenances for the payments list
         from maintenance.models import Maintenance
-        maintenances = Maintenance.objects.filter(property=self.object, status='finished').order_by('-execution_end_date')[:20]
+        maintenances = Maintenance.objects.filter(property=self.object, status__in=['in_progress', 'finished']).order_by('-execution_end_date')[:20]
         
         # Prepare a unified list for display
         unified_payments = []
@@ -268,9 +268,9 @@ class PropertySettingsView(LoginRequiredMixin, DetailView):
                 key = (m, y)
                 prop_costs_data[key] = prop_costs_data.get(key, Decimal(0)) + pc.amount
         
-        # 2.5 Fetch all finished maintenances for financial structure
+        # 2.5 Fetch all in progress or finished maintenances for financial structure
         maint_data = {} # Key: (month, year), Value: sum
-        finished_maints = Maintenance.objects.filter(property=self.object, status='finished')
+        finished_maints = Maintenance.objects.filter(property=self.object, status__in=['in_progress', 'finished'])
         for m in finished_maints:
             dt = m.execution_end_date or m.updated_at
             if dt:
@@ -716,17 +716,18 @@ class ServiceProviderFinancialMovementsView(LoginRequiredMixin, View):
                 'value': float(rc.value)
             })
             
-        # 2. Debits: Finished Maintenances
+        # 2. Debits: Finished or In Progress Maintenances
         maint_finished = Maintenance.objects.filter(
             provider=provider, 
-            status='finished'
+            status__in=['in_progress', 'finished']
         ).select_related('property')
         
         for m in maint_finished:
+            status_desc = f" ({m.get_status_display()})" if m.status == 'in_progress' else ""
             movements.append({
                 'type': 'debit',
                 'category': _('Manutenção'),
-                'description': f"{m.title} - {m.property.name}",
+                'description': f"{m.title} - {m.property.name}{status_desc}",
                 'date': m.execution_end_date.strftime('%Y-%m-%d') if m.execution_end_date else m.updated_at.strftime('%Y-%m-%d'),
                 'created_at': m.created_at.strftime('%Y-%m-%d %H:%M:%S'),
                 'value': float(m.execution_value) if m.execution_value else 0
@@ -811,6 +812,38 @@ class ServiceProviderAddPaymentView(LoginRequiredMixin, View):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
+class PropertyDocumentListView(LoginRequiredMixin, CreateView):
+    model = PropertyDocument
+    form_class = PropertyDocumentForm
+    template_name = 'properties/property_document_list.html'
+
+    def get_queryset(self):
+        return PropertyDocument.objects.filter(property_id=self.kwargs['pk'], property__user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = get_object_or_404(Property, pk=self.kwargs['pk'], user=self.request.user)
+        context['documents'] = self.get_queryset()
+        context['active_item'] = 'documents'
+        return context
+
+    def form_valid(self, form):
+        form.instance.property = get_object_or_404(Property, pk=self.kwargs['pk'], user=self.request.user)
+        messages.success(self.request, _("Documento enviado com sucesso!"))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('properties:document_list', kwargs={'pk': self.kwargs['pk']})
+
+class PropertyDocumentDeleteView(LoginRequiredMixin, DeleteView):
+    model = PropertyDocument
+
+    def get_queryset(self):
+        return PropertyDocument.objects.filter(property__user=self.request.user)
+
+    def get_success_url(self):
+        messages.success(self.request, _("Documento excluído com sucesso!"))
+        return reverse_lazy('properties:document_list', kwargs={'pk': self.object.property.pk})
 
 class ServiceProviderPublicView(View):
     def get(self, request, token):
@@ -982,9 +1015,9 @@ class PropertyReportsView(LoginRequiredMixin, DetailView):
                 costs_by_name[name]['total'] += pc.amount
                 monthly_costs_total[key] = monthly_costs_total.get(key, Decimal(0)) + pc.amount
 
-        # 5.5 Fetch Finished Maintenances for Reports
+        # 5.5 Fetch In Progress / Finished Maintenances for Reports
         from maintenance.models import Maintenance
-        maintenances_rep = Maintenance.objects.filter(property=self.object, status='finished')
+        maintenances_rep = Maintenance.objects.filter(property=self.object, status__in=['in_progress', 'finished'])
         maint_category_name = _("Manutenções")
         for m in maintenances_rep:
             dt = m.execution_end_date or m.updated_at

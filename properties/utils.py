@@ -66,11 +66,11 @@ def get_property_stats(prop, month=None, year=None):
         )
     ).exclude(frequency='per_booking').aggregate(total=Sum('amount'))['total'] or 0
     
-    # 2.5 Debits: Finished Maintenances in this month
+    # 2.5 Debits: Finished or In Progress Maintenances in this month
     # Using a Q object to check both execution_end_date and updated_at
     prop_maint_costs = Maintenance.objects.filter(
         property=prop,
-        status='finished'
+        status__in=['in_progress', 'finished']
     ).filter(
         Q(execution_end_date__month=month, execution_end_date__year=year) |
         Q(execution_end_date__isnull=True, updated_at__month=month, updated_at__year=year)
@@ -255,10 +255,10 @@ def get_yearly_stats(user):
             m_gross = hist_sum['g'] or Decimal(0)
             m_costs = hist_sum['c'] or Decimal(0)
 
-            # Maintenance costs for this year
+            # Maintenance costs for this year (Finished or In Progress)
             maint_costs = Maintenance.objects.filter(
                 property=prop,
-                status='finished'
+                status__in=['in_progress', 'finished']
             ).filter(
                 Q(execution_end_date__year=year) |
                 Q(execution_end_date__isnull=True, updated_at__year=year)

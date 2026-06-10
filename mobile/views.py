@@ -482,8 +482,8 @@ def mobile_financeiro(request):
                 (Q(year=selected_year, month=selected_month))
             ).aggregate(total=Sum('amount'))['total'] or Decimal(0)
             
-            # 3. Maintenances
-            maint_m = Maintenance.objects.filter(property=prop, status='finished').filter(
+            # 3. Maintenances (Finished or In Progress)
+            maint_m = Maintenance.objects.filter(property=prop, status__in=['in_progress', 'finished']).filter(
                 Q(execution_end_date__year=selected_year, execution_end_date__month=selected_month) | 
                 Q(execution_end_date__isnull=True, updated_at__year=selected_year, updated_at__month=selected_month)
             ).aggregate(total=Sum('execution_value'))['total'] or Decimal(0)

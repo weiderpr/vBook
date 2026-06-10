@@ -1,0 +1,739 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Unidades do Condomínio" %} - {{ condo.name }}{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+<style>
+    /* Modal Backdrop and Glass Styles */
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-glass {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        animation: slideUp 0.3s ease;
+    }
+
+    .modal-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-title {
+        font-size: 1.3rem;
+        margin: 0;
+        color: var(--text-main);
+    }
+
+    .modal-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.8rem;
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+        overflow-y: auto;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .unit-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary) !important;
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
+    }
+    .empty-msg {
+        animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .unit-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    .owner-info {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 0.75rem;
+        font-size: 0.85rem;
+        margin-top: 0.75rem;
+    }
+    .property-img-placeholder {
+        height: 140px;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        margin-bottom: 0.75rem;
+        color: var(--primary);
+    }
+    .property-img {
+        height: 140px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 0.75rem;
+    }
+
+    /* View Switcher Styles */
+    .view-toggle-group button.active {
+        background: var(--primary) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    }
+    .view-toggle-group button:not(.active):hover {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Table style for units list view */
+    .unit-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .unit-table th {
+        padding: 1rem 1.5rem;
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        background: rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid var(--glass-border);
+    }
+    .unit-table td {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        vertical-align: middle;
+    }
+    .unit-list-row {
+        transition: background-color 0.2s ease;
+    }
+    .unit-list-row:hover {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+    .unit-list-action-btn:hover {
+        border-color: var(--primary) !important;
+        background: var(--primary) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    }
+    .manual-unit {
+        border: 1px dashed var(--text-muted) !important;
+        background: rgba(255, 255, 255, 0.01) !important;
+    }
+    .manual-unit-row {
+        background: rgba(255, 255, 255, 0.015) !important;
+        border-left: 3px dashed var(--text-muted) !important;
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+<ul class="sidebar-menu">
+    <li>
+        <a href="{% url 'admcondominio:dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard" style="margin-right: 10px; vertical-align: middle;"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+            {% trans "Painel da Portaria" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'admcondominio:properties_list' %}" class="{% if request.resolver_match.url_name == 'properties_list' %}active{% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" style="margin-right: 10px; vertical-align: middle;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            {% trans "Unidades" %}
+        </a>
+    </li>
+    <li style="margin-top: auto;">
+        <a href="{% url 'logout' %}" style="color: #ef4444;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out" style="margin-right: 10px; vertical-align: middle;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+            {% trans "Sair" %}
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-mini-header" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+        <h1 style="font-size: 1.8rem; font-weight: 800; margin: 0; color: var(--text-main);">{{ condo.name }}</h1>
+        <p style="color: var(--text-muted); margin: 0.2rem 0 0 0; font-size: 0.9rem;">
+            {% trans "Lista de Unidades do Condomínio" %}
+        </p>
+    </div>
+    
+    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+        <!-- New Manual Property Button -->
+        <button onclick="openCreateModal()" class="btn btn-primary" style="border-radius: 12px !important; padding: 0.65rem 1.15rem !important; display: flex; align-items: center; gap: 8px; font-weight: 700; cursor: pointer; border: none; height: 44px; justify-content: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-circle"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+            {% trans "Cadastrar Unidade" %}
+        </button>
+
+        <!-- View Switcher Toggle Button Group -->
+        <div class="view-toggle-group" style="display: flex; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); border-radius: 12px; padding: 3px;">
+            <button id="btn-view-card" class="active" onclick="setViewMode('card')" title="{% trans 'Visualização em Cards' %}" style="background: transparent; border: none; padding: 0.5rem; border-radius: 9px; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            </button>
+            <button id="btn-view-list" onclick="setViewMode('list')" title="{% trans 'Visualização em Lista' %}" style="background: transparent; border: none; padding: 0.5rem; border-radius: 9px; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+        <script>
+            (function() {
+                try {
+                    const mode = localStorage.getItem('properties_view_mode') || 'card';
+                    if (mode === 'list') {
+                        document.getElementById('btn-view-card').classList.remove('active');
+                        document.getElementById('btn-view-list').classList.add('active');
+                    }
+                } catch (e) {
+                    console.error('Storage access error', e);
+                }
+            })();
+        </script>
+
+        <!-- Real-time Search Input -->
+        <div class="search-wrapper" style="position: relative;">
+            <input type="text" id="search-input" placeholder="{% trans 'Pesquisar por unidade, bloco, proprietário...' %}" style="width: 350px; padding: 0.75rem 1rem; border-radius: 14px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: 'Outfit', sans-serif; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--glass-border)'">
+        </div>
+    </div>
+</div>
+
+{% if properties %}
+    <!-- Cards View -->
+    <div class="unit-grid" id="unit-grid">
+        {% for property in properties %}
+            <div class="unit-card glass-card {% if not property.user %}manual-unit{% endif %}" data-search="{{ property.display_name|lower }} {{ property.display_complement|lower }} {{ property.display_owner_name|lower }} {{ property.user.email|default:''|lower }} {{ property.portaria_custom.telefone_proprietario|default:''|lower }}" style="padding: 1.25rem; display: flex; flex-direction: column; transition: all 0.2s ease; border: 1px solid var(--glass-border); position: relative;">
+                
+                {% if not property.user %}
+                    <span style="position: absolute; top: 1rem; left: 1rem; background: rgba(245, 158, 11, 0.12); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; z-index: 10;">
+                        {% trans "Cadastro Manual" %}
+                    </span>
+                {% endif %}
+
+                <button onclick="openCustomizeModal('{{ property.id }}', '{{ property.portaria_custom.nome_portaria|default:""|escapejs }}', '{{ property.name|escapejs }}', '{{ property.portaria_custom.bloco|default:""|escapejs }}', '{{ property.portaria_custom.nome_proprietario|default:""|escapejs }}', '{{ property.user.full_name|default:""|escapejs }}', '{{ property.portaria_custom.telefone_proprietario|default:""|escapejs }}')" 
+                        title="{% trans 'Organizar nomes para a portaria' %}"
+                        style="position: absolute; top: 2rem; right: 2rem; z-index: 10; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: all 0.2s ease; padding: 0;"
+                        onmouseover="this.style.background='var(--primary)'; this.style.borderColor='var(--primary)';"
+                        onmouseout="this.style.background='rgba(0, 0, 0, 0.45)'; this.style.borderColor='var(--glass-border)';">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-edit-3"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                </button>
+
+                {% if property.image %}
+                    <img src="{{ property.image.url }}" alt="{{ property.display_name }}" class="property-img">
+                {% else %}
+                    <div class="property-img-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                {% endif %}
+                
+                <div style="font-weight: 800; font-size: 1.1rem; color: var(--text-main); margin-bottom: 0.25rem;">
+                    {{ property.display_name }}
+                </div>
+                
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 6px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    {% trans "Apto/Complemento:" %} <strong style="color: var(--primary);">{{ property.display_complement|default:"N/A" }}</strong>
+                </div>
+
+                {% if property.description %}
+                    <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin: 0 0 0.75rem 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.8em;">
+                        {{ property.description }}
+                    </p>
+                {% else %}
+                    <p style="font-size: 0.8rem; color: var(--text-muted); font-style: italic; line-height: 1.4; margin: 0 0 0.75rem 0; height: 2.8em;">
+                        {% trans "Sem descrição disponível." %}
+                    </p>
+                {% endif %}
+
+                <div class="owner-info" style="margin-bottom: 1rem;">
+                    <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 0.25rem;">
+                        {% trans "Proprietário" %}
+                    </div>
+                    <div style="font-weight: 700; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {{ property.display_owner_name }}
+                    </div>
+                    {% if property.portaria_custom.telefone_proprietario %}
+                    <div style="font-size: 0.75rem; margin-top: 0.25rem;">
+                        <a href="https://wa.me/55{{ property.portaria_custom.telefone_proprietario|cut:' '|cut:'('|cut:')'|cut:'-' }}" target="_blank" rel="noopener noreferrer" style="color: #25d366; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.003C6.477 2.003 2 6.481 2 12.003c0 1.868.527 3.611 1.427 5.103L2.03 21.999l5.039-1.33A9.94 9.94 0 0 0 12 22c5.522 0 10-4.477 10-9.997 0-5.522-4.478-10-10-10zm0 1.8a8.2 8.2 0 1 1 0 16.4 8.2 8.2 0 0 1 0-16.4z"/></svg>
+                            {{ property.portaria_custom.telefone_proprietario }}
+                        </a>
+                    </div>
+                    {% endif %}
+                    {% if property.user %}
+                        <div style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 0.1rem;">
+                            {{ property.user.email }}
+                        </div>
+                    {% else %}
+                        <div style="font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-top: 0.1rem;">
+                            {% trans "Sem conta no sistema" %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- List View -->
+    <div class="glass-card" id="unit-list-container" style="display: none; border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; box-shadow: var(--glass-shadow); max-width: 100% !important; padding: 0 !important;">
+        <div style="overflow-x: auto;">
+            <table class="unit-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Unidade" %}</th>
+                        <th>{% trans "Apto/Complemento" %}</th>
+                        <th>{% trans "Proprietário" %}</th>
+                        <th>{% trans "E-mail" %}</th>
+                        <th style="text-align: right; width: 80px;">{% trans "Ações" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for property in properties %}
+                    <tr class="unit-list-row {% if not property.user %}manual-unit-row{% endif %}" data-search="{{ property.display_name|lower }} {{ property.display_complement|lower }} {{ property.display_owner_name|lower }} {{ property.user.email|default:''|lower }} {{ property.portaria_custom.telefone_proprietario|default:''|lower }}">
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 40px; height: 40px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.05); position: relative; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0;">
+                                    {% if property.image %}
+                                        <img src="{{ property.image.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    {% else %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                    {% endif %}
+                                </div>
+                                <div style="min-width: 0;">
+                                    <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ property.display_name }}</div>
+                                    {% if property.description %}
+                                        <div style="font-size: 0.75rem; color: var(--text-muted); max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ property.description }}">{{ property.description }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <strong style="color: var(--primary); font-size: 0.9rem;">{{ property.display_complement|default:"N/A" }}</strong>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; font-size: 0.9rem; color: var(--text-main);">{{ property.display_owner_name }}</div>
+                            {% if property.portaria_custom.telefone_proprietario %}
+                                <div style="font-size: 0.75rem; margin-top: 0.15rem;">
+                                    <a href="https://wa.me/55{{ property.portaria_custom.telefone_proprietario|cut:' '|cut:'('|cut:')'|cut:'-' }}" target="_blank" rel="noopener noreferrer" style="color: #25d366; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 3px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2.003C6.477 2.003 2 6.481 2 12.003c0 1.868.527 3.611 1.427 5.103L2.03 21.999l5.039-1.33A9.94 9.94 0 0 0 12 22c5.522 0 10-4.477 10-9.997 0-5.522-4.478-10-10-10zm0 1.8a8.2 8.2 0 1 1 0 16.4 8.2 8.2 0 0 1 0-16.4z"/></svg>
+                                        {{ property.portaria_custom.telefone_proprietario }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if property.user %}
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">{{ property.user.email }}</div>
+                            {% else %}
+                                <span style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 6px;">
+                                    {% trans "Cadastro Manual" %}
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td style="text-align: right;">
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button onclick="openCustomizeModal('{{ property.id }}', '{{ property.portaria_custom.nome_portaria|default:""|escapejs }}', '{{ property.name|escapejs }}', '{{ property.portaria_custom.bloco|default:""|escapejs }}', '{{ property.portaria_custom.nome_proprietario|default:""|escapejs }}', '{{ property.user.full_name|default:""|escapejs }}', '{{ property.portaria_custom.telefone_proprietario|default:""|escapejs }}')" 
+                                        title="{% trans 'Organizar nomes para a portaria' %}"
+                                        class="unit-list-action-btn"
+                                        style="width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.03); display: flex; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; transition: all 0.2s ease; padding: 0;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-edit-3"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        (function() {
+            try {
+                const mode = localStorage.getItem('properties_view_mode') || 'card';
+                const grid = document.getElementById('unit-grid');
+                const list = document.getElementById('unit-list-container');
+                if (mode === 'list') {
+                    if (grid) grid.style.display = 'none';
+                    if (list) list.style.display = 'block';
+                }
+            } catch (e) {
+                console.error('Storage layout sync error', e);
+            }
+        })();
+    </script>
+{% else %}
+    <div class="glass-card" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; border: 1px dashed var(--glass-border);">
+        <div style="color: var(--text-muted); margin-bottom: 1rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 style="margin: 0 0 0.5rem 0; font-weight: 700; color: var(--text-main);">{% trans "Nenhuma unidade cadastrada" %}</h3>
+        <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">
+            {% trans "Não há unidades vinculadas a este condomínio." %}
+        </p>
+    </div>
+{% endif %}
+
+<!-- Customize Modal -->
+<div id="customizeModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-glass" style="max-width: 500px;">
+        <div class="modal-header">
+            <h2 class="modal-title">{% trans "Organizar Portaria" %}</h2>
+            <button type="button" class="modal-close" onclick="closeCustomizeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="customize-form" onsubmit="submitCustomization(event)">
+                <input type="hidden" id="customize-property-id">
+                
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="input-nome-portaria" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Nome da Portaria" %}
+                    </label>
+                    <input type="text" id="input-nome-portaria" class="form-control" placeholder="{% trans 'Ex: Apto 101, Casa 02...' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                    <small style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.25rem; display: block;">
+                        {% trans "Nome alternativo simplificado para busca e identificação rápida." %}
+                    </small>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="input-bloco" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Bloco (Opcional)" %}
+                    </label>
+                    <input type="text" id="input-bloco" class="form-control" placeholder="{% trans 'Ex: Bloco B, Torre Norte...' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="input-nome-proprietario" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Nome do Proprietário (Opcional)" %}
+                    </label>
+                    <input type="text" id="input-nome-proprietario" class="form-control" placeholder="{% trans 'Ex: João Silva...' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.75rem;">
+                    <label for="input-telefone-proprietario" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Telefone do Proprietário (Opcional)" %}
+                    </label>
+                    <input type="text" id="input-telefone-proprietario" class="form-control phone-input" inputmode="numeric" placeholder="{% trans '(11) 99999-9999' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline" onclick="closeCustomizeModal()" style="border-radius: 10px !important; font-weight: 700; padding: 0.6rem 1.2rem !important; cursor: pointer; background: transparent; border-color: var(--glass-border); color: var(--text-main);">
+                        {% trans "Cancelar" %}
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="border-radius: 10px !important; font-weight: 700; padding: 0.6rem 1.2rem !important; cursor: pointer;">
+                        {% trans "Salvar" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Create Modal -->
+<div id="createModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-glass" style="max-width: 500px;">
+        <div class="modal-header">
+            <h2 class="modal-title">{% trans "Cadastrar Nova Unidade" %}</h2>
+            <button type="button" class="modal-close" onclick="closeCreateModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="create-property-form" onsubmit="submitCreateProperty(event)">
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="create-name" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Nome da Unidade *" %}
+                    </label>
+                    <input type="text" id="create-name" required class="form-control" placeholder="{% trans 'Ex: Apto 101, Casa 02...' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="create-bloco" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Bloco (Opcional)" %}
+                    </label>
+                    <input type="text" id="create-bloco" class="form-control" placeholder="{% trans 'Ex: Bloco A, Torre Norte...' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="create-owner" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Nome do Proprietário (Opcional)" %}
+                    </label>
+                    <input type="text" id="create-owner" class="form-control" placeholder="{% trans 'Ex: João Silva...' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.75rem;">
+                    <label for="create-phone" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Telefone do Proprietário (Opcional)" %}
+                    </label>
+                    <input type="text" id="create-phone" class="form-control phone-input" inputmode="numeric" placeholder="{% trans '(11) 99999-9999' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline" onclick="closeCreateModal()" style="border-radius: 10px !important; font-weight: 700; padding: 0.6rem 1.2rem !important; cursor: pointer; background: transparent; border-color: var(--glass-border); color: var(--text-main);">
+                        {% trans "Cancelar" %}
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="border-radius: 10px !important; font-weight: 700; padding: 0.6rem 1.2rem !important; cursor: pointer;">
+                        {% trans "Cadastrar" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    /**
+     * Formats a phone input value as Brazilian mobile format: (99) 99999-9999
+     * Strips all non-numeric characters then applies the mask progressively.
+     */
+    function applyPhoneMask(input) {
+        let v = input.value.replace(/\D/g, '').substring(0, 11);
+        let masked = '';
+        if (v.length > 0) masked = '(' + v.substring(0, 2);
+        if (v.length >= 3) masked += ') ' + v.substring(2, 7);
+        if (v.length >= 8) masked += '-' + v.substring(7, 11);
+        input.value = masked;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.phone-input').forEach(function(el) {
+            el.addEventListener('input', function() { applyPhoneMask(this); });
+        });
+    });
+
+    function openCustomizeModal(propertyId, nomePortaria, defaultName, bloco, nomeProprietario, defaultOwner, telefoneProprietario) {
+        document.getElementById('customize-property-id').value = propertyId;
+        document.getElementById('input-nome-portaria').value = nomePortaria || defaultName || '';
+        document.getElementById('input-bloco').value = bloco || '';
+        document.getElementById('input-nome-proprietario').value = nomeProprietario || defaultOwner || '';
+        document.getElementById('input-telefone-proprietario').value = telefoneProprietario || '';
+        
+        const modal = document.getElementById('customizeModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCustomizeModal() {
+        const modal = document.getElementById('customizeModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function openCreateModal() {
+        const form = document.getElementById('create-property-form');
+        if (form) form.reset();
+        const modal = document.getElementById('createModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCreateModal() {
+        const modal = document.getElementById('createModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close on outside click
+    window.addEventListener('click', function(event) {
+        const customModal = document.getElementById('customizeModal');
+        const createModal = document.getElementById('createModal');
+        if (event.target == customModal) {
+            closeCustomizeModal();
+        }
+        if (event.target == createModal) {
+            closeCreateModal();
+        }
+    });
+
+    function submitCustomization(event) {
+        event.preventDefault();
+        const propertyId = document.getElementById('customize-property-id').value;
+        const nomePortaria = document.getElementById('input-nome-portaria').value;
+        const bloco = document.getElementById('input-bloco').value;
+        const nomeProprietario = document.getElementById('input-nome-proprietario').value;
+        const telefoneProprietario = document.getElementById('input-telefone-proprietario').value;
+        
+        const saveBtn = event.target.querySelector('button[type="submit"]');
+        saveBtn.disabled = true;
+        const originalText = saveBtn.textContent;
+        saveBtn.textContent = '{% trans "Salvando..." %}';
+
+        fetch(`/book/admCondominio/unidades/${propertyId}/customizar/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                nome_portaria: nomePortaria,
+                bloco: bloco,
+                nome_proprietario: nomeProprietario,
+                telefone_proprietario: telefoneProprietario
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('HTTP error');
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, 'success');
+                closeCustomizeModal();
+                // Refresh to reload list references
+                setTimeout(() => {
+                    window.location.reload();
+                }, 800);
+            } else {
+                showToast(data.message || '{% trans "Erro ao salvar" %}', 'error');
+                saveBtn.disabled = false;
+                saveBtn.textContent = originalText;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('{% trans "Erro de conexão ao salvar" %}', 'error');
+            saveBtn.disabled = false;
+            saveBtn.textContent = originalText;
+        });
+    }
+
+    function submitCreateProperty(event) {
+        event.preventDefault();
+        const name = document.getElementById('create-name').value;
+        const bloco = document.getElementById('create-bloco').value;
+        const owner = document.getElementById('create-owner').value;
+        const phone = document.getElementById('create-phone').value;
+        
+        const saveBtn = event.target.querySelector('button[type="submit"]');
+        saveBtn.disabled = true;
+        const originalText = saveBtn.textContent;
+        saveBtn.textContent = '{% trans "Cadastrando..." %}';
+
+        fetch(`/book/admCondominio/unidades/cadastrar/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                name: name,
+                bloco: bloco,
+                nome_proprietario: owner,
+                telefone_proprietario: phone
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('HTTP error');
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, 'success');
+                closeCreateModal();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 800);
+            } else {
+                showToast(data.message || '{% trans "Erro ao cadastrar" %}', 'error');
+                saveBtn.disabled = false;
+                saveBtn.textContent = originalText;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('{% trans "Erro de conexão ao cadastrar" %}', 'error');
+            saveBtn.disabled = false;
+            saveBtn.textContent = originalText;
+        });
+    }
+
+    function setViewMode(mode) {
+        const grid = document.getElementById('unit-grid');
+        const list = document.getElementById('unit-list-container');
+        const btnCard = document.getElementById('btn-view-card');
+        const btnList = document.getElementById('btn-view-list');
+        
+        if (mode === 'list') {
+            if (grid) grid.style.display = 'none';
+            if (list) list.style.display = 'block';
+            if (btnCard) btnCard.classList.remove('active');
+            if (btnList) btnList.classList.add('active');
+        } else {
+            if (grid) grid.style.display = 'grid';
+            if (list) list.style.display = 'none';
+            if (btnCard) btnCard.classList.add('active');
+            if (btnList) btnList.classList.remove('active');
+        }
+        localStorage.setItem('properties_view_mode', mode);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize view mode from localStorage
+        const savedMode = localStorage.getItem('properties_view_mode') || 'card';
+        setViewMode(savedMode);
+
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const q = e.target.value.toLowerCase().trim();
+                
+                // Filter Card View elements
+                const cards = document.querySelectorAll('.unit-card');
+                cards.forEach(card => {
+                    const text = card.getAttribute('data-search') || '';
+                    if (text.includes(q)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Filter List View elements
+                const rows = document.querySelectorAll('.unit-list-row');
+                rows.forEach(row => {
+                    const text = row.getAttribute('data-search') || '';
+                    if (text.includes(q)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

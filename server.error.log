@@ -14048,3 +14048,1365 @@ See README for more details:
 https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
 
   import google.generativeai as genai
+[2026-05-06 14:19:20 -0300] [1334926] [CRITICAL] WORKER TIMEOUT (pid:1334929)
+[2026-05-06 14:19:21 -0300] [1334926] [ERROR] Worker (pid:1334929) was sent SIGKILL! Perhaps out of memory?
+[2026-05-06 14:19:21 -0300] [1334926] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-06 14:19:21 -0300] [1339402] [INFO] Booting worker with pid: 1339402
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 14:21:16 -0300] [1339757] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 14:21:16 -0300] [1339757] [INFO] Listening at: http://127.0.0.1:8000 (1339757)
+[2026-05-06 14:21:16 -0300] [1339757] [INFO] Using worker: sync
+[2026-05-06 14:21:16 -0300] [1339759] [INFO] Booting worker with pid: 1339759
+[2026-05-06 14:21:16 -0300] [1339760] [INFO] Booting worker with pid: 1339760
+[2026-05-06 14:21:16 -0300] [1339761] [INFO] Booting worker with pid: 1339761
+[2026-05-06 14:21:16 -0300] [1339757] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 14:27:07 -0300] [1340634] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 14:27:07 -0300] [1340634] [INFO] Listening at: http://127.0.0.1:8000 (1340634)
+[2026-05-06 14:27:07 -0300] [1340634] [INFO] Using worker: sync
+[2026-05-06 14:27:07 -0300] [1340636] [INFO] Booting worker with pid: 1340636
+[2026-05-06 14:27:07 -0300] [1340637] [INFO] Booting worker with pid: 1340637
+[2026-05-06 14:27:07 -0300] [1340638] [INFO] Booting worker with pid: 1340638
+[2026-05-06 14:27:07 -0300] [1340634] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 14:30:40 -0300] [1341155] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 14:30:40 -0300] [1341155] [INFO] Listening at: http://127.0.0.1:8000 (1341155)
+[2026-05-06 14:30:40 -0300] [1341155] [INFO] Using worker: sync
+[2026-05-06 14:30:40 -0300] [1341157] [INFO] Booting worker with pid: 1341157
+[2026-05-06 14:30:40 -0300] [1341158] [INFO] Booting worker with pid: 1341158
+[2026-05-06 14:30:40 -0300] [1341159] [INFO] Booting worker with pid: 1341159
+[2026-05-06 14:30:41 -0300] [1341155] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 14:34:39 -0300] [1341741] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 14:34:39 -0300] [1341741] [INFO] Listening at: http://127.0.0.1:8000 (1341741)
+[2026-05-06 14:34:39 -0300] [1341741] [INFO] Using worker: sync
+[2026-05-06 14:34:39 -0300] [1341743] [INFO] Booting worker with pid: 1341743
+[2026-05-06 14:34:39 -0300] [1341744] [INFO] Booting worker with pid: 1341744
+[2026-05-06 14:34:40 -0300] [1341745] [INFO] Booting worker with pid: 1341745
+[2026-05-06 14:34:40 -0300] [1341741] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 14:39:01 -0300] [1341741] [CRITICAL] WORKER TIMEOUT (pid:1341744)
+[2026-05-06 14:39:02 -0300] [1341741] [ERROR] Worker (pid:1341744) was sent SIGKILL! Perhaps out of memory?
+[2026-05-06 14:39:02 -0300] [1341741] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-06 14:39:02 -0300] [1342431] [INFO] Booting worker with pid: 1342431
+[2026-05-06 14:40:46 -0300] [1341741] [CRITICAL] WORKER TIMEOUT (pid:1341745)
+[2026-05-06 14:40:48 -0300] [1341741] [ERROR] Worker (pid:1341745) was sent SIGKILL! Perhaps out of memory?
+[2026-05-06 14:40:48 -0300] [1342637] [INFO] Booting worker with pid: 1342637
+[2026-05-06 14:40:48 -0300] [1341741] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-06 14:45:08 -0300] [1343394] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 14:45:08 -0300] [1343394] [INFO] Listening at: http://127.0.0.1:8000 (1343394)
+[2026-05-06 14:45:08 -0300] [1343394] [INFO] Using worker: sync
+[2026-05-06 14:45:08 -0300] [1343396] [INFO] Booting worker with pid: 1343396
+[2026-05-06 14:45:08 -0300] [1343397] [INFO] Booting worker with pid: 1343397
+[2026-05-06 14:45:08 -0300] [1343398] [INFO] Booting worker with pid: 1343398
+[2026-05-06 14:45:08 -0300] [1343394] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 14:45:57 -0300] [1343564] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 14:45:57 -0300] [1343564] [INFO] Listening at: http://127.0.0.1:8000 (1343564)
+[2026-05-06 14:45:57 -0300] [1343564] [INFO] Using worker: sync
+[2026-05-06 14:45:57 -0300] [1343566] [INFO] Booting worker with pid: 1343566
+[2026-05-06 14:45:57 -0300] [1343567] [INFO] Booting worker with pid: 1343567
+[2026-05-06 14:45:57 -0300] [1343568] [INFO] Booting worker with pid: 1343568
+[2026-05-06 14:45:57 -0300] [1343564] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Internal Server Error: /book/propriedades/2/documentos/
+Traceback (most recent call last):
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/contrib/auth/mixins.py", line 74, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/generic/base.py", line 145, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 182, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 150, in post
+    if form.is_valid():
+       ^^^^^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/forms.py", line 206, in is_valid
+    return self.is_bound and not self.errors
+                                 ^^^^^^^^^^^
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/forms.py", line 201, in errors
+    self.full_clean()
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/forms.py", line 337, in full_clean
+    self._clean_fields()
+  File "/root/verticebook/.venv/lib/python3.12/site-packages/django/forms/forms.py", line 347, in _clean_fields
+    value = getattr(self, "clean_%s" % name)()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/verticebook/properties/forms.py", line 226, in clean_file
+    extension = os.path.splitext(file.name)[1].lower()
+                ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'
+[2026-05-06 14:47:38 -0300] [1343838] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 14:47:38 -0300] [1343838] [INFO] Listening at: http://127.0.0.1:8000 (1343838)
+[2026-05-06 14:47:38 -0300] [1343838] [INFO] Using worker: sync
+[2026-05-06 14:47:38 -0300] [1343840] [INFO] Booting worker with pid: 1343840
+[2026-05-06 14:47:38 -0300] [1343841] [INFO] Booting worker with pid: 1343841
+[2026-05-06 14:47:38 -0300] [1343842] [INFO] Booting worker with pid: 1343842
+[2026-05-06 14:47:38 -0300] [1343838] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-06 14:51:08 -0300] [1344334] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 14:51:08 -0300] [1344334] [INFO] Listening at: http://127.0.0.1:8000 (1344334)
+[2026-05-06 14:51:08 -0300] [1344334] [INFO] Using worker: sync
+[2026-05-06 14:51:08 -0300] [1344336] [INFO] Booting worker with pid: 1344336
+[2026-05-06 14:51:08 -0300] [1344337] [INFO] Booting worker with pid: 1344337
+[2026-05-06 14:51:08 -0300] [1344338] [INFO] Booting worker with pid: 1344338
+[2026-05-06 14:51:08 -0300] [1344334] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+[2026-05-06 22:12:02 -0300] [1396284] [INFO] Starting gunicorn 25.3.0
+[2026-05-06 22:12:02 -0300] [1396284] [INFO] Listening at: http://127.0.0.1:8000 (1396284)
+[2026-05-06 22:12:02 -0300] [1396284] [INFO] Using worker: sync
+[2026-05-06 22:12:02 -0300] [1396286] [INFO] Booting worker with pid: 1396286
+[2026-05-06 22:12:02 -0300] [1396287] [INFO] Booting worker with pid: 1396287
+[2026-05-06 22:12:02 -0300] [1396288] [INFO] Booting worker with pid: 1396288
+[2026-05-06 22:12:02 -0300] [1396284] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-08 11:33:51 -0300] [20682] [INFO] Starting gunicorn 25.3.0
+[2026-05-08 11:33:51 -0300] [20682] [INFO] Listening at: http://127.0.0.1:8000 (20682)
+[2026-05-08 11:33:51 -0300] [20682] [INFO] Using worker: sync
+[2026-05-08 11:33:51 -0300] [20684] [INFO] Booting worker with pid: 20684
+[2026-05-08 11:33:51 -0300] [20685] [INFO] Booting worker with pid: 20685
+[2026-05-08 11:33:51 -0300] [20686] [INFO] Booting worker with pid: 20686
+[2026-05-08 11:33:51 -0300] [20682] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-09 14:14:14 -0300] [20682] [INFO] Handling signal: term
+[2026-05-09 14:14:14 -0300] [20686] [INFO] Worker exiting (pid: 20686)
+[2026-05-09 14:14:14 -0300] [20685] [INFO] Worker exiting (pid: 20685)
+[2026-05-09 14:14:15 -0300] [20682] [INFO] Worker (pid:20685) was sent SIGTERM!
+[2026-05-09 14:14:15 -0300] [20682] [INFO] Worker (pid:20686) was sent SIGTERM!
+[2026-05-09 14:14:14 -0300] [20684] [INFO] Worker exiting (pid: 20684)
+[2026-05-09 14:14:21 -0300] [20682] [INFO] Shutting down: Master
+[2026-05-09 15:47:48 -0300] [139398] [INFO] Starting gunicorn 25.3.0
+[2026-05-09 15:47:48 -0300] [139398] [INFO] Listening at: http://127.0.0.1:8000 (139398)
+[2026-05-09 15:47:48 -0300] [139398] [INFO] Using worker: sync
+[2026-05-09 15:47:48 -0300] [139400] [INFO] Booting worker with pid: 139400
+[2026-05-09 15:47:48 -0300] [139401] [INFO] Booting worker with pid: 139401
+[2026-05-09 15:47:48 -0300] [139402] [INFO] Booting worker with pid: 139402
+[2026-05-09 15:47:49 -0300] [139398] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-09 16:40:38 -0300] [139401] [INFO] Worker exiting (pid: 139401)
+[2026-05-09 16:40:38 -0300] [139398] [INFO] Handling signal: term
+[2026-05-09 16:40:38 -0300] [139400] [INFO] Worker exiting (pid: 139400)
+[2026-05-09 16:40:38 -0300] [139402] [INFO] Worker exiting (pid: 139402)
+[2026-05-09 16:40:38 -0300] [139398] [INFO] Worker (pid:139401) was sent SIGTERM!
+[2026-05-09 16:40:39 -0300] [139398] [INFO] Worker (pid:139400) was sent SIGTERM!
+[2026-05-09 16:40:42 -0300] [139398] [INFO] Shutting down: Master
+[2026-05-10 11:10:52 -0300] [202805] [INFO] Starting gunicorn 25.3.0
+[2026-05-10 11:10:52 -0300] [202805] [INFO] Listening at: http://127.0.0.1:8000 (202805)
+[2026-05-10 11:10:52 -0300] [202805] [INFO] Using worker: sync
+[2026-05-10 11:10:52 -0300] [202807] [INFO] Booting worker with pid: 202807
+[2026-05-10 11:10:52 -0300] [202808] [INFO] Booting worker with pid: 202808
+[2026-05-10 11:10:52 -0300] [202809] [INFO] Booting worker with pid: 202809
+[2026-05-10 11:10:52 -0300] [202805] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Not Found: /book/book/landing/
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-10 14:23:39 -0300] [202805] [CRITICAL] WORKER TIMEOUT (pid:202807)
+[2026-05-10 14:23:41 -0300] [202805] [ERROR] Worker (pid:202807) was sent SIGKILL! Perhaps out of memory?
+[2026-05-10 14:23:42 -0300] [214089] [INFO] Booting worker with pid: 214089
+[2026-05-10 14:23:42 -0300] [202805] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-10 14:25:18 -0300] [202805] [CRITICAL] WORKER TIMEOUT (pid:202808)
+[2026-05-10 14:25:18 -0300] [202808] [INFO] Worker exiting (pid: 202808)
+[2026-05-10 14:25:20 -0300] [202805] [ERROR] Worker (pid:202808) was sent SIGKILL! Perhaps out of memory?
+[2026-05-10 14:25:20 -0300] [214207] [INFO] Booting worker with pid: 214207
+[2026-05-10 14:25:20 -0300] [202805] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-10 15:43:33 -0300] [11702] [INFO] Starting gunicorn 25.3.0
+[2026-05-10 15:43:33 -0300] [11702] [INFO] Listening at: http://127.0.0.1:8000 (11702)
+[2026-05-10 15:43:33 -0300] [11702] [INFO] Using worker: sync
+[2026-05-10 15:43:33 -0300] [11704] [INFO] Booting worker with pid: 11704
+[2026-05-10 15:43:33 -0300] [11705] [INFO] Booting worker with pid: 11705
+[2026-05-10 15:43:33 -0300] [11706] [INFO] Booting worker with pid: 11706
+[2026-05-10 15:43:33 -0300] [11702] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Not Found: /book/book/landing/
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Not Found: /book/landing/
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Not Found: /book/manifest.json
+Not Found: /book/manifest.json
+Not Found: /book/manifest.json
+[2026-05-12 14:03:52 -0300] [11702] [INFO] Handling signal: term
+[2026-05-12 14:03:52 -0300] [11704] [INFO] Worker exiting (pid: 11704)
+[2026-05-12 14:03:52 -0300] [11705] [INFO] Worker exiting (pid: 11705)
+[2026-05-12 14:03:52 -0300] [11706] [INFO] Worker exiting (pid: 11706)
+[2026-05-12 14:03:53 -0300] [11702] [INFO] Worker (pid:11704) was sent SIGTERM!
+[2026-05-12 14:03:53 -0300] [11702] [INFO] Worker (pid:11705) was sent SIGTERM!
+[2026-05-12 14:03:53 -0300] [11702] [INFO] Worker (pid:11706) was sent SIGTERM!
+[2026-05-12 14:03:53 -0300] [11702] [INFO] Shutting down: Master
+[2026-05-12 14:22:29 -0300] [130736] [INFO] Starting gunicorn 25.3.0
+[2026-05-12 14:22:29 -0300] [130736] [INFO] Listening at: http://127.0.0.1:8000 (130736)
+[2026-05-12 14:22:29 -0300] [130736] [INFO] Using worker: sync
+[2026-05-12 14:22:29 -0300] [130738] [INFO] Booting worker with pid: 130738
+[2026-05-12 14:22:29 -0300] [130739] [INFO] Booting worker with pid: 130739
+[2026-05-12 14:22:29 -0300] [130740] [INFO] Booting worker with pid: 130740
+[2026-05-12 14:22:29 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Erro Web Push (esperado se expirar): WebPushException: Push failed: 410 Gone
+Response body:push subscription has unsubscribed or expired.
+, Response push subscription has unsubscribed or expired.
+
+Forbidden (CSRF cookie not set.): /book/checkin/8ad31fd0-8190-49d4-a557-d006211cd817/
+[2026-05-15 09:44:03 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 09:44:03 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 09:44:03 -0300] [392408] [INFO] Booting worker with pid: 392408
+[2026-05-15 09:44:04 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 09:44:06 -0300] [392431] [INFO] Booting worker with pid: 392431
+[2026-05-15 09:44:06 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 09:44:08 -0300] [392435] [INFO] Booting worker with pid: 392435
+[2026-05-15 09:44:08 -0300] [130736] [WARNING] Worker (pid:130738) was sent SIGHUP!
+[2026-05-15 09:44:08 -0300] [130736] [WARNING] Worker (pid:130739) was sent SIGHUP!
+[2026-05-15 09:44:08 -0300] [130736] [WARNING] Worker (pid:130740) was sent SIGHUP!
+[2026-05-15 09:44:08 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-15 10:19:32 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 10:19:32 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 10:19:32 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 10:19:32 -0300] [396669] [INFO] Booting worker with pid: 396669
+[2026-05-15 10:19:34 -0300] [396687] [INFO] Booting worker with pid: 396687
+[2026-05-15 10:19:34 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 10:19:34 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 10:19:34 -0300] [130736] [WARNING] Worker (pid:392408) was sent SIGHUP!
+[2026-05-15 10:19:34 -0300] [130736] [WARNING] Worker (pid:392431) was sent SIGHUP!
+[2026-05-15 10:19:34 -0300] [396689] [INFO] Booting worker with pid: 396689
+[2026-05-15 10:19:34 -0300] [130736] [WARNING] Worker (pid:392435) was sent SIGHUP!
+[2026-05-15 10:34:26 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 10:34:26 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 10:34:26 -0300] [398239] [INFO] Booting worker with pid: 398239
+[2026-05-15 10:34:26 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 10:34:28 -0300] [398254] [INFO] Booting worker with pid: 398254
+[2026-05-15 10:34:28 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 10:34:28 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 10:34:28 -0300] [130736] [WARNING] Worker (pid:396669) was sent SIGHUP!
+[2026-05-15 10:34:28 -0300] [130736] [WARNING] Worker (pid:396687) was sent SIGHUP!
+[2026-05-15 10:34:28 -0300] [130736] [WARNING] Worker (pid:396689) was sent SIGHUP!
+[2026-05-15 10:34:28 -0300] [398256] [INFO] Booting worker with pid: 398256
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-15 11:14:31 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:14:31 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:14:31 -0300] [402774] [INFO] Booting worker with pid: 402774
+[2026-05-15 11:14:31 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:14:31 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:14:31 -0300] [402776] [INFO] Booting worker with pid: 402776
+[2026-05-15 11:14:33 -0300] [402796] [INFO] Booting worker with pid: 402796
+[2026-05-15 11:14:33 -0300] [130736] [WARNING] Worker (pid:398239) was sent SIGHUP!
+[2026-05-15 11:14:33 -0300] [130736] [WARNING] Worker (pid:398254) was sent SIGHUP!
+[2026-05-15 11:14:33 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:14:33 -0300] [130736] [WARNING] Worker (pid:398256) was sent SIGHUP!
+[2026-05-15 11:20:44 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:20:44 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:20:44 -0300] [403405] [INFO] Booting worker with pid: 403405
+[2026-05-15 11:20:44 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:20:46 -0300] [403429] [INFO] Booting worker with pid: 403429
+[2026-05-15 11:20:46 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:20:48 -0300] [130736] [WARNING] Worker (pid:402774) was sent SIGHUP!
+[2026-05-15 11:20:48 -0300] [130736] [WARNING] Worker (pid:402776) was sent SIGHUP!
+[2026-05-15 11:20:48 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:20:48 -0300] [403434] [INFO] Booting worker with pid: 403434
+[2026-05-15 11:20:48 -0300] [130736] [WARNING] Worker (pid:402796) was sent SIGHUP!
+[2026-05-15 11:23:49 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:23:49 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:23:49 -0300] [403742] [INFO] Booting worker with pid: 403742
+[2026-05-15 11:23:49 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:23:51 -0300] [403767] [INFO] Booting worker with pid: 403767
+[2026-05-15 11:23:51 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:23:53 -0300] [130736] [WARNING] Worker (pid:403405) was sent SIGHUP!
+[2026-05-15 11:23:53 -0300] [403769] [INFO] Booting worker with pid: 403769
+[2026-05-15 11:23:53 -0300] [130736] [WARNING] Worker (pid:403429) was sent SIGHUP!
+[2026-05-15 11:23:53 -0300] [130736] [WARNING] Worker (pid:403434) was sent SIGHUP!
+[2026-05-15 11:23:53 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:26:38 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:26:38 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:26:38 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:26:38 -0300] [404057] [INFO] Booting worker with pid: 404057
+[2026-05-15 11:26:40 -0300] [404078] [INFO] Booting worker with pid: 404078
+[2026-05-15 11:26:40 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:26:42 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:26:42 -0300] [130736] [WARNING] Worker (pid:403742) was sent SIGHUP!
+[2026-05-15 11:26:42 -0300] [130736] [WARNING] Worker (pid:403767) was sent SIGHUP!
+[2026-05-15 11:26:42 -0300] [130736] [WARNING] Worker (pid:403769) was sent SIGHUP!
+[2026-05-15 11:26:42 -0300] [404084] [INFO] Booting worker with pid: 404084
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF cookie not set.): /book/checkin/8ad31fd0-8190-49d4-a557-d006211cd817/
+[2026-05-15 11:31:07 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:31:07 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:31:07 -0300] [404525] [INFO] Booting worker with pid: 404525
+[2026-05-15 11:31:07 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:31:09 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:31:09 -0300] [404545] [INFO] Booting worker with pid: 404545
+[2026-05-15 11:31:09 -0300] [404547] [INFO] Booting worker with pid: 404547
+[2026-05-15 11:31:09 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:31:09 -0300] [130736] [WARNING] Worker (pid:404057) was sent SIGHUP!
+[2026-05-15 11:31:09 -0300] [130736] [WARNING] Worker (pid:404078) was sent SIGHUP!
+[2026-05-15 11:31:09 -0300] [130736] [WARNING] Worker (pid:404084) was sent SIGHUP!
+[2026-05-15 11:33:10 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:33:10 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:33:11 -0300] [404761] [INFO] Booting worker with pid: 404761
+[2026-05-15 11:33:11 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:33:13 -0300] [404786] [INFO] Booting worker with pid: 404786
+[2026-05-15 11:33:13 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:33:15 -0300] [130736] [WARNING] Worker (pid:404525) was sent SIGHUP!
+[2026-05-15 11:33:15 -0300] [404792] [INFO] Booting worker with pid: 404792
+[2026-05-15 11:33:15 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:33:15 -0300] [130736] [WARNING] Worker (pid:404545) was sent SIGHUP!
+[2026-05-15 11:33:15 -0300] [130736] [WARNING] Worker (pid:404547) was sent SIGHUP!
+[2026-05-15 11:36:26 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:36:26 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:36:26 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:36:26 -0300] [405117] [INFO] Booting worker with pid: 405117
+[2026-05-15 11:36:28 -0300] [405143] [INFO] Booting worker with pid: 405143
+[2026-05-15 11:36:28 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:36:30 -0300] [405148] [INFO] Booting worker with pid: 405148
+[2026-05-15 11:36:30 -0300] [130736] [WARNING] Worker (pid:404761) was sent SIGHUP!
+[2026-05-15 11:36:30 -0300] [130736] [WARNING] Worker (pid:404786) was sent SIGHUP!
+[2026-05-15 11:36:30 -0300] [130736] [WARNING] Worker (pid:404792) was sent SIGHUP!
+[2026-05-15 11:36:30 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:39:15 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:39:15 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:39:16 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:39:16 -0300] [405478] [INFO] Booting worker with pid: 405478
+[2026-05-15 11:39:18 -0300] [405500] [INFO] Booting worker with pid: 405500
+[2026-05-15 11:39:18 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:39:20 -0300] [405505] [INFO] Booting worker with pid: 405505
+[2026-05-15 11:39:20 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:39:20 -0300] [130736] [WARNING] Worker (pid:405117) was sent SIGHUP!
+[2026-05-15 11:39:20 -0300] [130736] [WARNING] Worker (pid:405143) was sent SIGHUP!
+[2026-05-15 11:39:20 -0300] [130736] [WARNING] Worker (pid:405148) was sent SIGHUP!
+[2026-05-15 11:41:24 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:41:24 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:41:24 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:41:24 -0300] [405732] [INFO] Booting worker with pid: 405732
+[2026-05-15 11:41:26 -0300] [405752] [INFO] Booting worker with pid: 405752
+[2026-05-15 11:41:26 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:41:28 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:41:28 -0300] [130736] [WARNING] Worker (pid:405478) was sent SIGHUP!
+[2026-05-15 11:41:28 -0300] [130736] [WARNING] Worker (pid:405500) was sent SIGHUP!
+[2026-05-15 11:41:28 -0300] [405761] [INFO] Booting worker with pid: 405761
+[2026-05-15 11:41:28 -0300] [130736] [WARNING] Worker (pid:405505) was sent SIGHUP!
+[2026-05-15 11:43:15 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:43:15 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:43:15 -0300] [405945] [INFO] Booting worker with pid: 405945
+[2026-05-15 11:43:15 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:43:15 -0300] [405947] [INFO] Booting worker with pid: 405947
+[2026-05-15 11:43:15 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:43:17 -0300] [405966] [INFO] Booting worker with pid: 405966
+[2026-05-15 11:43:17 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:43:17 -0300] [130736] [WARNING] Worker (pid:405732) was sent SIGHUP!
+[2026-05-15 11:43:17 -0300] [130736] [WARNING] Worker (pid:405752) was sent SIGHUP!
+[2026-05-15 11:43:17 -0300] [130736] [WARNING] Worker (pid:405761) was sent SIGHUP!
+[2026-05-15 11:43:45 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:43:45 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:43:46 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:43:46 -0300] [406039] [INFO] Booting worker with pid: 406039
+[2026-05-15 11:43:48 -0300] [406060] [INFO] Booting worker with pid: 406060
+[2026-05-15 11:43:48 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:43:48 -0300] [406062] [INFO] Booting worker with pid: 406062
+[2026-05-15 11:43:48 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:43:48 -0300] [130736] [WARNING] Worker (pid:405945) was sent SIGHUP!
+[2026-05-15 11:43:48 -0300] [130736] [WARNING] Worker (pid:405947) was sent SIGHUP!
+[2026-05-15 11:43:48 -0300] [130736] [WARNING] Worker (pid:405966) was sent SIGHUP!
+[2026-05-15 11:48:23 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 11:48:23 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 11:48:23 -0300] [406509] [INFO] Booting worker with pid: 406509
+[2026-05-15 11:48:23 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:48:25 -0300] [406534] [INFO] Booting worker with pid: 406534
+[2026-05-15 11:48:25 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:48:25 -0300] [406536] [INFO] Booting worker with pid: 406536
+[2026-05-15 11:48:25 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 11:48:25 -0300] [130736] [WARNING] Worker (pid:406039) was sent SIGHUP!
+[2026-05-15 11:48:25 -0300] [130736] [WARNING] Worker (pid:406060) was sent SIGHUP!
+[2026-05-15 11:48:25 -0300] [130736] [WARNING] Worker (pid:406062) was sent SIGHUP!
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-15 13:40:15 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 13:40:15 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 13:40:16 -0300] [417058] [INFO] Booting worker with pid: 417058
+[2026-05-15 13:40:16 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 13:40:18 -0300] [417083] [INFO] Booting worker with pid: 417083
+[2026-05-15 13:40:18 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 13:40:20 -0300] [130736] [WARNING] Worker (pid:406509) was sent SIGHUP!
+[2026-05-15 13:40:20 -0300] [417087] [INFO] Booting worker with pid: 417087
+[2026-05-15 13:40:20 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 13:40:20 -0300] [130736] [WARNING] Worker (pid:406534) was sent SIGHUP!
+[2026-05-15 13:40:20 -0300] [130736] [WARNING] Worker (pid:406536) was sent SIGHUP!
+[2026-05-15 14:05:16 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:05:16 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:05:17 -0300] [419483] [INFO] Booting worker with pid: 419483
+[2026-05-15 14:05:17 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:05:19 -0300] [419505] [INFO] Booting worker with pid: 419505
+[2026-05-15 14:05:19 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:05:21 -0300] [130736] [WARNING] Worker (pid:417058) was sent SIGHUP!
+[2026-05-15 14:05:21 -0300] [130736] [WARNING] Worker (pid:417083) was sent SIGHUP!
+[2026-05-15 14:05:21 -0300] [130736] [WARNING] Worker (pid:417087) was sent SIGHUP!
+[2026-05-15 14:05:21 -0300] [419512] [INFO] Booting worker with pid: 419512
+[2026-05-15 14:05:21 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:09:42 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:09:42 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:09:42 -0300] [419982] [INFO] Booting worker with pid: 419982
+[2026-05-15 14:09:42 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:09:44 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:09:44 -0300] [420007] [INFO] Booting worker with pid: 420007
+[2026-05-15 14:09:44 -0300] [420009] [INFO] Booting worker with pid: 420009
+[2026-05-15 14:09:44 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:09:44 -0300] [130736] [WARNING] Worker (pid:419483) was sent SIGHUP!
+[2026-05-15 14:09:44 -0300] [130736] [WARNING] Worker (pid:419505) was sent SIGHUP!
+[2026-05-15 14:09:44 -0300] [130736] [WARNING] Worker (pid:419512) was sent SIGHUP!
+[2026-05-15 14:14:56 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:14:56 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:14:56 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:14:56 -0300] [420498] [INFO] Booting worker with pid: 420498
+[2026-05-15 14:14:56 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:14:56 -0300] [420500] [INFO] Booting worker with pid: 420500
+[2026-05-15 14:14:58 -0300] [130736] [WARNING] Worker (pid:419982) was sent SIGHUP!
+[2026-05-15 14:14:58 -0300] [130736] [WARNING] Worker (pid:420007) was sent SIGHUP!
+[2026-05-15 14:14:58 -0300] [130736] [WARNING] Worker (pid:420009) was sent SIGHUP!
+[2026-05-15 14:14:58 -0300] [420526] [INFO] Booting worker with pid: 420526
+[2026-05-15 14:14:58 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:19:45 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:19:45 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:19:45 -0300] [420987] [INFO] Booting worker with pid: 420987
+[2026-05-15 14:19:45 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:19:47 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:19:47 -0300] [421009] [INFO] Booting worker with pid: 421009
+[2026-05-15 14:19:47 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:19:47 -0300] [130736] [WARNING] Worker (pid:420498) was sent SIGHUP!
+[2026-05-15 14:19:47 -0300] [130736] [WARNING] Worker (pid:420500) was sent SIGHUP!
+[2026-05-15 14:19:47 -0300] [421011] [INFO] Booting worker with pid: 421011
+[2026-05-15 14:19:47 -0300] [130736] [WARNING] Worker (pid:420526) was sent SIGHUP!
+[2026-05-15 14:24:44 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:24:44 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:24:44 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:24:44 -0300] [421487] [INFO] Booting worker with pid: 421487
+[2026-05-15 14:24:46 -0300] [421509] [INFO] Booting worker with pid: 421509
+[2026-05-15 14:24:46 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:24:48 -0300] [421514] [INFO] Booting worker with pid: 421514
+[2026-05-15 14:24:48 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:24:48 -0300] [130736] [WARNING] Worker (pid:420987) was sent SIGHUP!
+[2026-05-15 14:24:48 -0300] [130736] [WARNING] Worker (pid:421009) was sent SIGHUP!
+[2026-05-15 14:24:48 -0300] [130736] [WARNING] Worker (pid:421011) was sent SIGHUP!
+[2026-05-15 14:27:24 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:27:24 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:27:24 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:27:24 -0300] [421778] [INFO] Booting worker with pid: 421778
+[2026-05-15 14:27:26 -0300] [421800] [INFO] Booting worker with pid: 421800
+[2026-05-15 14:27:26 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:27:28 -0300] [130736] [WARNING] Worker (pid:421487) was sent SIGHUP!
+[2026-05-15 14:27:28 -0300] [130736] [WARNING] Worker (pid:421509) was sent SIGHUP!
+[2026-05-15 14:27:28 -0300] [421807] [INFO] Booting worker with pid: 421807
+[2026-05-15 14:27:28 -0300] [130736] [WARNING] Worker (pid:421514) was sent SIGHUP!
+[2026-05-15 14:27:28 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:28:56 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:28:56 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:28:57 -0300] [421972] [INFO] Booting worker with pid: 421972
+[2026-05-15 14:28:57 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:28:57 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:28:57 -0300] [421974] [INFO] Booting worker with pid: 421974
+[2026-05-15 14:28:59 -0300] [130736] [WARNING] Worker (pid:421778) was sent SIGHUP!
+[2026-05-15 14:28:59 -0300] [130736] [WARNING] Worker (pid:421800) was sent SIGHUP!
+[2026-05-15 14:28:59 -0300] [130736] [WARNING] Worker (pid:421807) was sent SIGHUP!
+[2026-05-15 14:28:59 -0300] [421995] [INFO] Booting worker with pid: 421995
+[2026-05-15 14:28:59 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:30:22 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:30:22 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:30:22 -0300] [422151] [INFO] Booting worker with pid: 422151
+[2026-05-15 14:30:22 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:30:24 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:30:24 -0300] [422173] [INFO] Booting worker with pid: 422173
+[2026-05-15 14:30:24 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:30:24 -0300] [130736] [WARNING] Worker (pid:421972) was sent SIGHUP!
+[2026-05-15 14:30:24 -0300] [422175] [INFO] Booting worker with pid: 422175
+[2026-05-15 14:30:24 -0300] [130736] [WARNING] Worker (pid:421974) was sent SIGHUP!
+[2026-05-15 14:30:24 -0300] [130736] [WARNING] Worker (pid:421995) was sent SIGHUP!
+[2026-05-15 14:32:00 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:32:00 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:32:00 -0300] [422345] [INFO] Booting worker with pid: 422345
+[2026-05-15 14:32:00 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:32:02 -0300] [422371] [INFO] Booting worker with pid: 422371
+[2026-05-15 14:32:02 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:32:04 -0300] [130736] [WARNING] Worker (pid:422151) was sent SIGHUP!
+[2026-05-15 14:32:04 -0300] [130736] [WARNING] Worker (pid:422173) was sent SIGHUP!
+[2026-05-15 14:32:04 -0300] [130736] [WARNING] Worker (pid:422175) was sent SIGHUP!
+[2026-05-15 14:32:04 -0300] [422376] [INFO] Booting worker with pid: 422376
+[2026-05-15 14:32:04 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:34:12 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:34:12 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:34:12 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:34:12 -0300] [422618] [INFO] Booting worker with pid: 422618
+[2026-05-15 14:34:14 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:34:14 -0300] [422640] [INFO] Booting worker with pid: 422640
+[2026-05-15 14:34:16 -0300] [422647] [INFO] Booting worker with pid: 422647
+[2026-05-15 14:34:16 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:34:16 -0300] [130736] [WARNING] Worker (pid:422345) was sent SIGHUP!
+[2026-05-15 14:34:16 -0300] [130736] [WARNING] Worker (pid:422371) was sent SIGHUP!
+[2026-05-15 14:34:16 -0300] [130736] [WARNING] Worker (pid:422376) was sent SIGHUP!
+[2026-05-15 14:37:14 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:37:14 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:37:15 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:37:15 -0300] [422946] [INFO] Booting worker with pid: 422946
+[2026-05-15 14:37:17 -0300] [422969] [INFO] Booting worker with pid: 422969
+[2026-05-15 14:37:17 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:37:17 -0300] [130736] [WARNING] Worker (pid:422618) was sent SIGHUP!
+[2026-05-15 14:37:17 -0300] [130736] [WARNING] Worker (pid:422640) was sent SIGHUP!
+[2026-05-15 14:37:17 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:37:17 -0300] [422971] [INFO] Booting worker with pid: 422971
+[2026-05-15 14:37:17 -0300] [130736] [WARNING] Worker (pid:422647) was sent SIGHUP!
+[2026-05-15 14:41:41 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:41:41 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:41:41 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:41:41 -0300] [423566] [INFO] Booting worker with pid: 423566
+[2026-05-15 14:41:43 -0300] [423581] [INFO] Booting worker with pid: 423581
+[2026-05-15 14:41:43 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:41:45 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:41:45 -0300] [130736] [WARNING] Worker (pid:422946) was sent SIGHUP!
+[2026-05-15 14:41:45 -0300] [130736] [WARNING] Worker (pid:422969) was sent SIGHUP!
+[2026-05-15 14:41:45 -0300] [423595] [INFO] Booting worker with pid: 423595
+[2026-05-15 14:41:45 -0300] [130736] [WARNING] Worker (pid:422971) was sent SIGHUP!
+[2026-05-15 14:45:27 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-15 14:45:27 -0300] [130736] [INFO] Hang up: Master
+[2026-05-15 14:45:28 -0300] [423950] [INFO] Booting worker with pid: 423950
+[2026-05-15 14:45:28 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:45:30 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-15 14:45:30 -0300] [423969] [INFO] Booting worker with pid: 423969
+[2026-05-15 14:45:30 -0300] [130736] [WARNING] Worker (pid:423566) was sent SIGHUP!
+[2026-05-15 14:45:30 -0300] [130736] [WARNING] Worker (pid:423581) was sent SIGHUP!
+[2026-05-15 14:45:30 -0300] [423974] [INFO] Booting worker with pid: 423974
+[2026-05-15 14:45:30 -0300] [130736] [WARNING] Worker (pid:423595) was sent SIGHUP!
+[2026-05-15 14:45:30 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-16 07:57:31 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-16 07:57:31 -0300] [130736] [INFO] Hang up: Master
+[2026-05-16 07:57:31 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-16 07:57:31 -0300] [449542] [INFO] Booting worker with pid: 449542
+[2026-05-16 07:57:33 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-16 07:57:33 -0300] [449563] [INFO] Booting worker with pid: 449563
+[2026-05-16 07:57:35 -0300] [130736] [WARNING] Worker (pid:423950) was sent SIGHUP!
+[2026-05-16 07:57:36 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-16 07:57:36 -0300] [130736] [WARNING] Worker (pid:423969) was sent SIGHUP!
+[2026-05-16 07:57:36 -0300] [130736] [WARNING] Worker (pid:423974) was sent SIGHUP!
+[2026-05-16 07:57:36 -0300] [449567] [INFO] Booting worker with pid: 449567
+[2026-05-16 07:58:08 -0300] [130736] [INFO] Handling signal: hup
+[2026-05-16 07:58:08 -0300] [130736] [INFO] Hang up: Master
+[2026-05-16 07:58:08 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-16 07:58:08 -0300] [449678] [INFO] Booting worker with pid: 449678
+[2026-05-16 07:58:08 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-16 07:58:08 -0300] [449680] [INFO] Booting worker with pid: 449680
+[2026-05-16 07:58:10 -0300] [130736] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-16 07:58:10 -0300] [449696] [INFO] Booting worker with pid: 449696
+[2026-05-16 07:58:10 -0300] [130736] [WARNING] Worker (pid:449542) was sent SIGHUP!
+[2026-05-16 07:58:10 -0300] [130736] [WARNING] Worker (pid:449563) was sent SIGHUP!
+[2026-05-16 07:58:10 -0300] [130736] [WARNING] Worker (pid:449567) was sent SIGHUP!
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+Forbidden (CSRF token from POST incorrect.): /book/accounts/login/
+[2026-05-21 10:12:03 -0300] [130736] [INFO] Handling signal: term
+[2026-05-21 10:12:03 -0300] [449696] [INFO] Worker exiting (pid: 449696)
+[2026-05-21 10:12:03 -0300] [449680] [INFO] Worker exiting (pid: 449680)
+[2026-05-21 10:12:03 -0300] [449678] [INFO] Worker exiting (pid: 449678)
+[2026-05-21 10:12:13 -0300] [130736] [INFO] Shutting down: Master
+[2026-05-22 10:11:32 -0300] [973929] [INFO] Starting gunicorn 25.3.0
+[2026-05-22 10:11:32 -0300] [973929] [INFO] Listening at: http://127.0.0.1:8000 (973929)
+[2026-05-22 10:11:32 -0300] [973929] [INFO] Using worker: sync
+[2026-05-22 10:11:32 -0300] [973932] [INFO] Booting worker with pid: 973932
+[2026-05-22 10:11:32 -0300] [973933] [INFO] Booting worker with pid: 973933
+[2026-05-22 10:11:33 -0300] [973936] [INFO] Booting worker with pid: 973936
+[2026-05-22 10:11:33 -0300] [973929] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-23 15:01:02 -0300] [8843] [INFO] Starting gunicorn 25.3.0
+[2026-05-23 15:01:02 -0300] [8843] [INFO] Listening at: http://127.0.0.1:8000 (8843)
+[2026-05-23 15:01:02 -0300] [8843] [INFO] Using worker: sync
+[2026-05-23 15:01:02 -0300] [8845] [INFO] Booting worker with pid: 8845
+[2026-05-23 15:01:02 -0300] [8848] [INFO] Booting worker with pid: 8848
+[2026-05-23 15:01:02 -0300] [8851] [INFO] Booting worker with pid: 8851
+[2026-05-23 15:01:03 -0300] [8843] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-23 15:04:11 -0300] [8843] [CRITICAL] WORKER TIMEOUT (pid:8848)
+[2026-05-23 15:04:13 -0300] [8843] [ERROR] Worker (pid:8848) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 15:04:13 -0300] [9558] [INFO] Booting worker with pid: 9558
+[2026-05-23 15:04:13 -0300] [8843] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-23 15:04:50 -0300] [8843] [CRITICAL] WORKER TIMEOUT (pid:8845)
+[2026-05-23 15:04:53 -0300] [8843] [CRITICAL] WORKER TIMEOUT (pid:8851)
+[2026-05-23 15:04:54 -0300] [8843] [ERROR] Worker (pid:8845) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 15:04:54 -0300] [9654] [INFO] Booting worker with pid: 9654
+[2026-05-23 15:04:54 -0300] [8843] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-23 15:04:54 -0300] [8843] [ERROR] Worker (pid:8851) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 15:04:54 -0300] [9656] [INFO] Booting worker with pid: 9656
+[2026-05-23 15:04:54 -0300] [8843] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+[2026-05-23 15:18:59 -0300] [5684] [INFO] Starting gunicorn 25.3.0
+[2026-05-23 15:18:59 -0300] [5684] [INFO] Listening at: http://127.0.0.1:8000 (5684)
+[2026-05-23 15:18:59 -0300] [5684] [INFO] Using worker: sync
+[2026-05-23 15:18:59 -0300] [5686] [INFO] Booting worker with pid: 5686
+[2026-05-23 15:18:59 -0300] [5687] [INFO] Booting worker with pid: 5687
+[2026-05-23 15:18:59 -0300] [5688] [INFO] Booting worker with pid: 5688
+[2026-05-23 15:19:00 -0300] [5684] [INFO] Control socket listening at /run/user/0/gunicorn.ctl
+/root/verticebook/ajuda/views.py:3: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+[2026-05-23 15:21:00 -0300] [6416] [INFO] Starting gunicorn 25.3.0
+[2026-05-23 15:21:00 -0300] [6416] [INFO] Listening at: http://127.0.0.1:8000 (6416)
+[2026-05-23 15:21:00 -0300] [6416] [INFO] Using worker: sync
+[2026-05-23 15:21:00 -0300] [6427] [INFO] Booting worker with pid: 6427
+[2026-05-23 15:21:00 -0300] [6429] [INFO] Booting worker with pid: 6429
+[2026-05-23 15:21:00 -0300] [6432] [INFO] Booting worker with pid: 6432
+[2026-05-23 15:21:00 -0300] [6416] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-23 18:27:37 -0300] [6416] [CRITICAL] WORKER TIMEOUT (pid:6432)
+[2026-05-23 18:27:39 -0300] [6416] [ERROR] Worker (pid:6432) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 18:27:39 -0300] [41362] [INFO] Booting worker with pid: 41362
+[2026-05-23 18:27:39 -0300] [6416] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-23 18:28:29 -0300] [6416] [CRITICAL] WORKER TIMEOUT (pid:6429)
+[2026-05-23 18:28:31 -0300] [6416] [CRITICAL] WORKER TIMEOUT (pid:6427)
+[2026-05-23 18:28:32 -0300] [6416] [CRITICAL] WORKER TIMEOUT (pid:41362)
+[2026-05-23 18:28:32 -0300] [6416] [ERROR] Worker (pid:6429) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 18:28:32 -0300] [41410] [INFO] Booting worker with pid: 41410
+[2026-05-23 18:28:32 -0300] [6416] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-23 18:28:32 -0300] [6416] [ERROR] Worker (pid:41362) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 18:28:32 -0300] [6416] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-23 18:28:32 -0300] [41412] [INFO] Booting worker with pid: 41412
+[2026-05-23 18:28:32 -0300] [6416] [ERROR] Worker (pid:6427) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 18:28:32 -0300] [41414] [INFO] Booting worker with pid: 41414
+[2026-05-23 18:28:32 -0300] [6416] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-23 18:29:48 -0300] [6416] [CRITICAL] WORKER TIMEOUT (pid:41410)
+[2026-05-23 18:29:50 -0300] [6416] [CRITICAL] WORKER TIMEOUT (pid:41412)
+[2026-05-23 18:29:57 -0300] [6416] [CRITICAL] WORKER TIMEOUT (pid:41414)
+[2026-05-23 18:30:40 -0300] [6416] [ERROR] Worker (pid:41410) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 18:30:41 -0300] [41538] [INFO] Booting worker with pid: 41538
+[2026-05-23 18:30:41 -0300] [6416] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-23 18:30:41 -0300] [6416] [ERROR] Worker (pid:41412) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 18:30:41 -0300] [6416] [ERROR] Worker (pid:41414) was sent SIGKILL! Perhaps out of memory?
+[2026-05-23 18:30:41 -0300] [41540] [INFO] Booting worker with pid: 41540
+[2026-05-23 18:30:41 -0300] [6416] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-23 18:30:41 -0300] [41543] [INFO] Booting worker with pid: 41543
+[2026-05-23 18:30:41 -0300] [6416] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-23 18:33:58 -0300] [676] [INFO] Starting gunicorn 25.3.0
+[2026-05-23 18:33:58 -0300] [676] [INFO] Listening at: http://127.0.0.1:8000 (676)
+[2026-05-23 18:33:58 -0300] [676] [INFO] Using worker: sync
+[2026-05-23 18:33:58 -0300] [802] [INFO] Booting worker with pid: 802
+[2026-05-23 18:33:58 -0300] [807] [INFO] Booting worker with pid: 807
+[2026-05-23 18:33:58 -0300] [816] [INFO] Booting worker with pid: 816
+[2026-05-23 18:33:59 -0300] [676] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-24 03:16:28 -0300] [676] [CRITICAL] WORKER TIMEOUT (pid:807)
+[2026-05-24 03:16:28 -0300] [676] [CRITICAL] WORKER TIMEOUT (pid:816)
+[2026-05-24 03:16:28 -0300] [816] [INFO] Worker exiting (pid: 816)
+[2026-05-24 03:16:28 -0300] [807] [INFO] Worker exiting (pid: 807)
+[2026-05-24 03:16:29 -0300] [676] [ERROR] Worker (pid:807) was sent SIGKILL! Perhaps out of memory?
+[2026-05-24 03:16:29 -0300] [676] [ERROR] Worker (pid:816) was sent SIGKILL! Perhaps out of memory?
+[2026-05-24 03:16:29 -0300] [29394] [INFO] Booting worker with pid: 29394
+[2026-05-24 03:16:29 -0300] [676] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-24 03:16:29 -0300] [29396] [INFO] Booting worker with pid: 29396
+[2026-05-24 03:16:29 -0300] [676] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-24 09:54:44 -0300] [677] [INFO] Starting gunicorn 25.3.0
+[2026-05-24 09:54:44 -0300] [677] [INFO] Listening at: http://127.0.0.1:8000 (677)
+[2026-05-24 09:54:44 -0300] [677] [INFO] Using worker: sync
+[2026-05-24 09:54:44 -0300] [794] [INFO] Booting worker with pid: 794
+[2026-05-24 09:54:45 -0300] [802] [INFO] Booting worker with pid: 802
+[2026-05-24 09:54:45 -0300] [816] [INFO] Booting worker with pid: 816
+[2026-05-24 09:54:46 -0300] [677] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-24 21:19:31 -0300] [673] [INFO] Starting gunicorn 25.3.0
+[2026-05-24 21:19:31 -0300] [673] [INFO] Listening at: http://127.0.0.1:8000 (673)
+[2026-05-24 21:19:31 -0300] [673] [INFO] Using worker: sync
+[2026-05-24 21:19:31 -0300] [792] [INFO] Booting worker with pid: 792
+[2026-05-24 21:19:31 -0300] [798] [INFO] Booting worker with pid: 798
+[2026-05-24 21:19:31 -0300] [806] [INFO] Booting worker with pid: 806
+[2026-05-24 21:19:32 -0300] [673] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-24 21:36:05 -0300] [674] [INFO] Starting gunicorn 25.3.0
+[2026-05-24 21:36:05 -0300] [674] [INFO] Listening at: http://127.0.0.1:8000 (674)
+[2026-05-24 21:36:05 -0300] [674] [INFO] Using worker: sync
+[2026-05-24 21:36:05 -0300] [791] [INFO] Booting worker with pid: 791
+[2026-05-24 21:36:05 -0300] [799] [INFO] Booting worker with pid: 799
+[2026-05-24 21:36:05 -0300] [813] [INFO] Booting worker with pid: 813
+[2026-05-24 21:36:06 -0300] [674] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-24 21:38:53 -0300] [675] [INFO] Starting gunicorn 25.3.0
+[2026-05-24 21:38:53 -0300] [675] [INFO] Listening at: http://127.0.0.1:8000 (675)
+[2026-05-24 21:38:53 -0300] [675] [INFO] Using worker: sync
+[2026-05-24 21:38:54 -0300] [796] [INFO] Booting worker with pid: 796
+[2026-05-24 21:38:54 -0300] [803] [INFO] Booting worker with pid: 803
+[2026-05-24 21:38:54 -0300] [810] [INFO] Booting worker with pid: 810
+[2026-05-24 21:38:55 -0300] [675] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-26 19:06:26 -0300] [676] [INFO] Starting gunicorn 25.3.0
+[2026-05-26 19:06:26 -0300] [676] [INFO] Listening at: http://127.0.0.1:8000 (676)
+[2026-05-26 19:06:26 -0300] [676] [INFO] Using worker: sync
+[2026-05-26 19:06:26 -0300] [805] [INFO] Booting worker with pid: 805
+[2026-05-26 19:06:26 -0300] [812] [INFO] Booting worker with pid: 812
+[2026-05-26 19:06:26 -0300] [820] [INFO] Booting worker with pid: 820
+[2026-05-26 19:06:27 -0300] [676] [ERROR] Control server error: [Errno 2] No such file or directory: '/root/.gunicorn/gunicorn.ctl'
+[2026-05-29 12:06:28 -0300] [676] [CRITICAL] WORKER TIMEOUT (pid:805)
+[2026-05-29 12:11:40 -0300] [676] [CRITICAL] WORKER TIMEOUT (pid:812)
+[2026-05-29 12:16:42 -0300] [676] [CRITICAL] WORKER TIMEOUT (pid:820)
+[2026-05-29 12:16:46 -0300] [676] [ERROR] Worker (pid:805) was sent SIGKILL! Perhaps out of memory?
+[2026-05-29 12:16:46 -0300] [676] [ERROR] Worker (pid:812) was sent SIGKILL! Perhaps out of memory?
+[2026-05-29 12:16:48 -0300] [301778] [INFO] Booting worker with pid: 301778
+[2026-05-29 12:16:51 -0300] [301796] [INFO] Booting worker with pid: 301796
+[2026-05-29 12:16:52 -0300] [676] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-29 12:16:52 -0300] [676] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-29 12:16:44 -0300] [820] [INFO] Worker exiting (pid: 820)
+[2026-05-29 12:17:11 -0300] [676] [ERROR] Worker (pid:820) exited with code 1.
+[2026-05-29 12:17:11 -0300] [301865] [INFO] Booting worker with pid: 301865
+[2026-05-29 12:17:11 -0300] [676] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-05-29 16:37:27 -0300] [675] [INFO] Starting gunicorn 25.3.0
+[2026-05-29 16:37:27 -0300] [675] [INFO] Listening at: http://127.0.0.1:8000 (675)
+[2026-05-29 16:37:27 -0300] [675] [INFO] Using worker: sync
+[2026-05-29 16:37:28 -0300] [794] [INFO] Booting worker with pid: 794
+[2026-05-29 16:37:28 -0300] [800] [INFO] Booting worker with pid: 800
+[2026-05-29 16:37:28 -0300] [807] [INFO] Booting worker with pid: 807
+[2026-05-29 16:37:29 -0300] [675] [ERROR] Control server error: [Errno 2] No such file or directory: '/root/.gunicorn/gunicorn.ctl'
+[2026-06-02 21:58:24 -0300] [678] [INFO] Starting gunicorn 25.3.0
+[2026-06-02 21:58:24 -0300] [678] [INFO] Listening at: http://127.0.0.1:8000 (678)
+[2026-06-02 21:58:24 -0300] [678] [INFO] Using worker: sync
+[2026-06-02 21:58:24 -0300] [798] [INFO] Booting worker with pid: 798
+[2026-06-02 21:58:24 -0300] [805] [INFO] Booting worker with pid: 805
+[2026-06-02 21:58:25 -0300] [816] [INFO] Booting worker with pid: 816
+[2026-06-02 21:58:25 -0300] [678] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-03 07:00:07 -0300] [678] [INFO] Handling signal: term
+[2026-06-03 07:00:07 -0300] [816] [INFO] Worker exiting (pid: 816)
+[2026-06-03 07:00:07 -0300] [805] [INFO] Worker exiting (pid: 805)
+[2026-06-03 07:00:07 -0300] [798] [INFO] Worker exiting (pid: 798)
+[2026-06-03 07:00:20 -0300] [678] [INFO] Shutting down: Master
+[2026-06-03 07:00:20 -0300] [14574] [INFO] Starting gunicorn 25.3.0
+[2026-06-03 07:00:20 -0300] [14574] [INFO] Listening at: http://127.0.0.1:8000 (14574)
+[2026-06-03 07:00:20 -0300] [14574] [INFO] Using worker: sync
+[2026-06-03 07:00:20 -0300] [14592] [INFO] Booting worker with pid: 14592
+[2026-06-03 07:00:20 -0300] [14593] [INFO] Booting worker with pid: 14593
+[2026-06-03 07:00:20 -0300] [14594] [INFO] Booting worker with pid: 14594
+[2026-06-03 07:00:20 -0300] [14574] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-04 06:13:56 -0300] [14574] [INFO] Handling signal: term
+[2026-06-04 06:13:56 -0300] [14594] [INFO] Worker exiting (pid: 14594)
+[2026-06-04 06:13:56 -0300] [14593] [INFO] Worker exiting (pid: 14593)
+[2026-06-04 06:13:56 -0300] [14592] [INFO] Worker exiting (pid: 14592)
+[2026-06-04 06:14:04 -0300] [14574] [INFO] Shutting down: Master
+[2026-06-04 06:14:04 -0300] [59657] [INFO] Starting gunicorn 25.3.0
+[2026-06-04 06:14:04 -0300] [59657] [INFO] Listening at: http://127.0.0.1:8000 (59657)
+[2026-06-04 06:14:04 -0300] [59657] [INFO] Using worker: sync
+[2026-06-04 06:14:04 -0300] [59675] [INFO] Booting worker with pid: 59675
+[2026-06-04 06:14:04 -0300] [59676] [INFO] Booting worker with pid: 59676
+[2026-06-04 06:14:04 -0300] [59677] [INFO] Booting worker with pid: 59677
+[2026-06-04 06:14:05 -0300] [59657] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 10:49:08 -0300] [59676] [INFO] Worker exiting (pid: 59676)
+[2026-06-08 10:49:08 -0300] [59675] [INFO] Worker exiting (pid: 59675)
+[2026-06-08 10:49:08 -0300] [59677] [INFO] Worker exiting (pid: 59677)
+[2026-06-08 10:49:08 -0300] [59657] [INFO] Handling signal: term
+[2026-06-08 10:49:08 -0300] [59657] [INFO] Worker (pid:59675) was sent SIGTERM!
+[2026-06-08 10:49:08 -0300] [59657] [INFO] Worker (pid:59676) was sent SIGTERM!
+[2026-06-08 10:49:08 -0300] [59657] [INFO] Worker (pid:59677) was sent SIGTERM!
+[2026-06-08 10:49:08 -0300] [59657] [INFO] Shutting down: Master
+[2026-06-08 10:49:09 -0300] [111708] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 10:49:09 -0300] [111708] [INFO] Listening at: http://127.0.0.1:8000 (111708)
+[2026-06-08 10:49:09 -0300] [111708] [INFO] Using worker: sync
+[2026-06-08 10:49:09 -0300] [111717] [INFO] Booting worker with pid: 111717
+[2026-06-08 10:49:09 -0300] [111718] [INFO] Booting worker with pid: 111718
+[2026-06-08 10:49:09 -0300] [111720] [INFO] Booting worker with pid: 111720
+[2026-06-08 10:49:09 -0300] [111708] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 11:14:47 -0300] [111720] [INFO] Worker exiting (pid: 111720)
+[2026-06-08 11:14:47 -0300] [111718] [INFO] Worker exiting (pid: 111718)
+[2026-06-08 11:14:47 -0300] [111708] [INFO] Handling signal: term
+[2026-06-08 11:14:47 -0300] [111717] [INFO] Worker exiting (pid: 111717)
+[2026-06-08 11:14:47 -0300] [111708] [INFO] Worker (pid:111718) was sent SIGTERM!
+[2026-06-08 11:14:47 -0300] [111708] [INFO] Worker (pid:111720) was sent SIGTERM!
+[2026-06-08 11:14:48 -0300] [111708] [INFO] Shutting down: Master
+[2026-06-08 11:14:48 -0300] [116482] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 11:14:48 -0300] [116482] [INFO] Listening at: http://127.0.0.1:8000 (116482)
+[2026-06-08 11:14:48 -0300] [116482] [INFO] Using worker: sync
+[2026-06-08 11:14:48 -0300] [116487] [INFO] Booting worker with pid: 116487
+[2026-06-08 11:14:48 -0300] [116489] [INFO] Booting worker with pid: 116489
+[2026-06-08 11:14:48 -0300] [116490] [INFO] Booting worker with pid: 116490
+[2026-06-08 11:14:48 -0300] [116482] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 11:21:01 -0300] [116482] [INFO] Handling signal: term
+[2026-06-08 11:21:01 -0300] [116490] [INFO] Worker exiting (pid: 116490)
+[2026-06-08 11:21:01 -0300] [116489] [INFO] Worker exiting (pid: 116489)
+[2026-06-08 11:21:01 -0300] [116487] [INFO] Worker exiting (pid: 116487)
+[2026-06-08 11:21:05 -0300] [116482] [INFO] Shutting down: Master
+[2026-06-08 11:21:05 -0300] [117685] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 11:21:05 -0300] [117685] [INFO] Listening at: http://127.0.0.1:8000 (117685)
+[2026-06-08 11:21:05 -0300] [117685] [INFO] Using worker: sync
+[2026-06-08 11:21:05 -0300] [117688] [INFO] Booting worker with pid: 117688
+[2026-06-08 11:21:05 -0300] [117689] [INFO] Booting worker with pid: 117689
+[2026-06-08 11:21:05 -0300] [117690] [INFO] Booting worker with pid: 117690
+[2026-06-08 11:21:05 -0300] [117685] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 11:32:44 -0300] [117685] [INFO] Handling signal: term
+[2026-06-08 11:32:44 -0300] [117688] [INFO] Worker exiting (pid: 117688)
+[2026-06-08 11:32:44 -0300] [117689] [INFO] Worker exiting (pid: 117689)
+[2026-06-08 11:32:44 -0300] [117690] [INFO] Worker exiting (pid: 117690)
+[2026-06-08 11:32:46 -0300] [117685] [INFO] Shutting down: Master
+[2026-06-08 11:32:46 -0300] [119873] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 11:32:46 -0300] [119873] [INFO] Listening at: http://127.0.0.1:8000 (119873)
+[2026-06-08 11:32:46 -0300] [119873] [INFO] Using worker: sync
+[2026-06-08 11:32:46 -0300] [119876] [INFO] Booting worker with pid: 119876
+[2026-06-08 11:32:46 -0300] [119877] [INFO] Booting worker with pid: 119877
+[2026-06-08 11:32:47 -0300] [119880] [INFO] Booting worker with pid: 119880
+[2026-06-08 11:32:47 -0300] [119873] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 13:20:25 -0300] [119876] [INFO] Worker exiting (pid: 119876)
+[2026-06-08 13:20:25 -0300] [119873] [INFO] Handling signal: term
+[2026-06-08 13:20:25 -0300] [119880] [INFO] Worker exiting (pid: 119880)
+[2026-06-08 13:20:25 -0300] [119877] [INFO] Worker exiting (pid: 119877)
+[2026-06-08 13:20:25 -0300] [119873] [INFO] Worker (pid:119876) was sent SIGTERM!
+[2026-06-08 13:20:25 -0300] [119873] [INFO] Worker (pid:119880) was sent SIGTERM!
+[2026-06-08 13:20:27 -0300] [119873] [INFO] Shutting down: Master
+[2026-06-08 13:20:28 -0300] [138942] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 13:20:28 -0300] [138942] [INFO] Listening at: http://127.0.0.1:8000 (138942)
+[2026-06-08 13:20:28 -0300] [138942] [INFO] Using worker: sync
+[2026-06-08 13:20:28 -0300] [138944] [INFO] Booting worker with pid: 138944
+[2026-06-08 13:20:28 -0300] [138945] [INFO] Booting worker with pid: 138945
+[2026-06-08 13:20:28 -0300] [138946] [INFO] Booting worker with pid: 138946
+[2026-06-08 13:20:28 -0300] [138942] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 13:24:52 -0300] [138944] [INFO] Worker exiting (pid: 138944)
+[2026-06-08 13:24:52 -0300] [138942] [INFO] Handling signal: term
+[2026-06-08 13:24:52 -0300] [138946] [INFO] Worker exiting (pid: 138946)
+[2026-06-08 13:24:52 -0300] [138945] [INFO] Worker exiting (pid: 138945)
+[2026-06-08 13:24:52 -0300] [138942] [INFO] Worker (pid:138944) was sent SIGTERM!
+[2026-06-08 13:24:54 -0300] [138942] [INFO] Shutting down: Master
+[2026-06-08 13:24:54 -0300] [139826] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 13:24:54 -0300] [139826] [INFO] Listening at: http://127.0.0.1:8000 (139826)
+[2026-06-08 13:24:54 -0300] [139826] [INFO] Using worker: sync
+[2026-06-08 13:24:54 -0300] [139828] [INFO] Booting worker with pid: 139828
+[2026-06-08 13:24:54 -0300] [139829] [INFO] Booting worker with pid: 139829
+[2026-06-08 13:24:54 -0300] [139831] [INFO] Booting worker with pid: 139831
+[2026-06-08 13:24:54 -0300] [139826] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 14:01:22 -0300] [139826] [INFO] Handling signal: hup
+[2026-06-08 14:01:22 -0300] [139826] [INFO] Hang up: Master
+[2026-06-08 14:01:22 -0300] [146978] [INFO] Booting worker with pid: 146978
+[2026-06-08 14:01:22 -0300] [139826] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 14:01:22 -0300] [146980] [INFO] Booting worker with pid: 146980
+[2026-06-08 14:01:22 -0300] [139826] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 14:01:22 -0300] [139828] [INFO] Worker exiting (pid: 139828)
+[2026-06-08 14:01:22 -0300] [139826] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 14:01:22 -0300] [139829] [INFO] Worker exiting (pid: 139829)
+[2026-06-08 14:01:22 -0300] [139831] [INFO] Worker exiting (pid: 139831)
+[2026-06-08 14:01:22 -0300] [146982] [INFO] Booting worker with pid: 146982
+[2026-06-08 14:15:43 -0300] [139826] [INFO] Handling signal: term
+[2026-06-08 14:15:43 -0300] [146982] [INFO] Worker exiting (pid: 146982)
+[2026-06-08 14:15:43 -0300] [146978] [INFO] Worker exiting (pid: 146978)
+[2026-06-08 14:15:43 -0300] [146980] [INFO] Worker exiting (pid: 146980)
+[2026-06-08 14:15:43 -0300] [139826] [INFO] Worker (pid:146982) was sent SIGTERM!
+[2026-06-08 14:15:48 -0300] [139826] [INFO] Shutting down: Master
+[2026-06-08 14:15:49 -0300] [149856] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 14:15:49 -0300] [149856] [INFO] Listening at: http://127.0.0.1:8000 (149856)
+[2026-06-08 14:15:49 -0300] [149856] [INFO] Using worker: sync
+[2026-06-08 14:15:49 -0300] [149868] [INFO] Booting worker with pid: 149868
+[2026-06-08 14:15:49 -0300] [149869] [INFO] Booting worker with pid: 149869
+[2026-06-08 14:15:49 -0300] [149870] [INFO] Booting worker with pid: 149870
+[2026-06-08 14:15:50 -0300] [149856] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 14:44:13 -0300] [149856] [INFO] Handling signal: term
+[2026-06-08 14:44:13 -0300] [149869] [INFO] Worker exiting (pid: 149869)
+[2026-06-08 14:44:13 -0300] [149868] [INFO] Worker exiting (pid: 149868)
+[2026-06-08 14:44:13 -0300] [149870] [INFO] Worker exiting (pid: 149870)
+[2026-06-08 14:44:13 -0300] [149856] [INFO] Worker (pid:149868) was sent SIGTERM!
+[2026-06-08 14:44:13 -0300] [149856] [INFO] Worker (pid:149870) was sent SIGTERM!
+[2026-06-08 14:44:13 -0300] [149856] [INFO] Worker (pid:149869) was sent SIGTERM!
+[2026-06-08 14:44:13 -0300] [149856] [INFO] Shutting down: Master
+[2026-06-08 14:44:13 -0300] [155264] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 14:44:13 -0300] [155264] [INFO] Listening at: http://127.0.0.1:8000 (155264)
+[2026-06-08 14:44:13 -0300] [155264] [INFO] Using worker: sync
+[2026-06-08 14:44:13 -0300] [155270] [INFO] Booting worker with pid: 155270
+[2026-06-08 14:44:13 -0300] [155271] [INFO] Booting worker with pid: 155271
+[2026-06-08 14:44:13 -0300] [155272] [INFO] Booting worker with pid: 155272
+[2026-06-08 14:44:13 -0300] [155264] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 14:46:05 -0300] [155264] [INFO] Handling signal: term
+[2026-06-08 14:46:05 -0300] [155270] [INFO] Worker exiting (pid: 155270)
+[2026-06-08 14:46:05 -0300] [155272] [INFO] Worker exiting (pid: 155272)
+[2026-06-08 14:46:05 -0300] [155271] [INFO] Worker exiting (pid: 155271)
+[2026-06-08 14:46:05 -0300] [155264] [INFO] Worker (pid:155270) was sent SIGTERM!
+[2026-06-08 14:46:05 -0300] [155264] [INFO] Worker (pid:155271) was sent SIGTERM!
+[2026-06-08 14:46:05 -0300] [155264] [INFO] Worker (pid:155272) was sent SIGTERM!
+[2026-06-08 14:46:05 -0300] [155264] [INFO] Shutting down: Master
+[2026-06-08 14:46:05 -0300] [155706] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 14:46:05 -0300] [155706] [INFO] Listening at: http://127.0.0.1:8000 (155706)
+[2026-06-08 14:46:05 -0300] [155706] [INFO] Using worker: sync
+[2026-06-08 14:46:05 -0300] [155717] [INFO] Booting worker with pid: 155717
+[2026-06-08 14:46:05 -0300] [155718] [INFO] Booting worker with pid: 155718
+[2026-06-08 14:46:05 -0300] [155719] [INFO] Booting worker with pid: 155719
+[2026-06-08 14:46:06 -0300] [155706] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-08 14:52:58 -0300] [155706] [INFO] Handling signal: term
+[2026-06-08 14:52:58 -0300] [155717] [INFO] Worker exiting (pid: 155717)
+[2026-06-08 14:52:58 -0300] [155718] [INFO] Worker exiting (pid: 155718)
+[2026-06-08 14:52:58 -0300] [155719] [INFO] Worker exiting (pid: 155719)
+[2026-06-08 14:53:02 -0300] [155706] [INFO] Shutting down: Master
+[2026-06-08 14:53:03 -0300] [157407] [INFO] Starting gunicorn 25.3.0
+[2026-06-08 14:53:03 -0300] [157407] [INFO] Listening at: http://127.0.0.1:8000 (157407)
+[2026-06-08 14:53:03 -0300] [157407] [INFO] Using worker: sync
+[2026-06-08 14:53:03 -0300] [157409] [INFO] Booting worker with pid: 157409
+[2026-06-08 14:53:03 -0300] [157410] [INFO] Booting worker with pid: 157410
+[2026-06-08 14:53:03 -0300] [157411] [INFO] Booting worker with pid: 157411
+[2026-06-08 14:53:03 -0300] [157407] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-09 21:37:36 -0300] [676] [INFO] Starting gunicorn 25.3.0
+[2026-06-09 21:37:36 -0300] [676] [INFO] Listening at: http://127.0.0.1:8000 (676)
+[2026-06-09 21:37:36 -0300] [676] [INFO] Using worker: sync
+[2026-06-09 21:37:36 -0300] [802] [INFO] Booting worker with pid: 802
+[2026-06-09 21:37:36 -0300] [814] [INFO] Booting worker with pid: 814
+[2026-06-09 21:37:36 -0300] [823] [INFO] Booting worker with pid: 823
+[2026-06-09 21:37:37 -0300] [676] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-10 20:38:20 -0300] [823] [INFO] Worker exiting (pid: 823)
+[2026-06-10 20:38:20 -0300] [802] [INFO] Worker exiting (pid: 802)
+[2026-06-10 20:38:20 -0300] [814] [INFO] Worker exiting (pid: 814)
+[2026-06-10 20:38:20 -0300] [676] [INFO] Handling signal: term
+[2026-06-10 20:38:21 -0300] [676] [INFO] Worker (pid:802) was sent SIGTERM!
+[2026-06-10 20:38:21 -0300] [676] [INFO] Worker (pid:814) was sent SIGTERM!
+[2026-06-10 20:38:21 -0300] [676] [INFO] Worker (pid:823) was sent SIGTERM!
+[2026-06-10 20:38:21 -0300] [676] [INFO] Shutting down: Master
+[2026-06-10 20:38:21 -0300] [52290] [INFO] Starting gunicorn 25.3.0
+[2026-06-10 20:38:21 -0300] [52290] [INFO] Listening at: http://127.0.0.1:8000 (52290)
+[2026-06-10 20:38:21 -0300] [52290] [INFO] Using worker: sync
+[2026-06-10 20:38:21 -0300] [52292] [INFO] Booting worker with pid: 52292
+[2026-06-10 20:38:21 -0300] [52293] [INFO] Booting worker with pid: 52293
+[2026-06-10 20:38:21 -0300] [52295] [INFO] Booting worker with pid: 52295
+[2026-06-10 20:38:22 -0300] [52290] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl

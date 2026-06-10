@@ -10,6 +10,10 @@ import json
 def landing_view(request):
     # Se já estiver logado, redireciona para o dashboard apropriado
     if request.user.is_authenticated:
+        if request.user.user_type == 'staff':
+            if is_mobile(request):
+                return redirect('mobilecondominio:dashboard')
+            return redirect('admcondominio:dashboard')
         if is_mobile(request):
             return redirect('mobile:home')
         return redirect('dashboard')
@@ -22,6 +26,10 @@ def landing_view(request):
 
 @login_required
 def dashboard_view(request):
+    if request.user.user_type == 'staff':
+        if is_mobile(request):
+            return redirect('mobilecondominio:dashboard')
+        return redirect('admcondominio:dashboard')
     if is_mobile(request):
         return redirect('mobile:home')
     from properties.utils import get_yearly_stats, get_operational_stats
@@ -63,3 +71,6 @@ def service_worker(request):
     with open(sw_path, 'rb') as f:
         content = f.read()
     return HttpResponse(content, content_type='application/javascript')
+
+def csrf_failure(request, reason=""):
+    return render(request, '403_csrf.html', {'reason': reason}, status=403)

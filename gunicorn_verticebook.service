@@ -1,0 +1,19 @@
+[Unit]
+Description=gunicorn daemon for VerticeBook
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/root/verticebook
+EnvironmentFile=/root/verticebook/.env
+ExecStart=/root/verticebook/.venv/bin/gunicorn \
+          --access-logfile /root/verticebook/server.log \
+          --error-logfile /root/verticebook/server.error.log \
+          --workers 3 \
+          --bind 127.0.0.1:8000 \
+          verticebook.wsgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

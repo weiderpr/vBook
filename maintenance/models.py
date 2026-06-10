@@ -2,6 +2,60 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from properties.models import Property, ServiceProvider, Service
+import re
+
+def get_or_create_provider_globally(user, name, phone):
+    """
+    Looks up a service provider:
+    1. For the current user, matching the phone number (digits only) or name.
+    2. Globally across all users, matching phone or name, then clones its details for the current user.
+    3. Otherwise, creates a brand new provider.
+    """
+    cleaned_input_phone = re.sub(r'\D', '', phone or '')
+    
+    # 1. Look in user's own providers
+    user_providers = ServiceProvider.objects.filter(user=user)
+    if cleaned_input_phone:
+        for p in user_providers:
+            if re.sub(r'\D', '', p.phone or '') == cleaned_input_phone:
+                return p
+                
+    p_by_name = user_providers.filter(name__iexact=name).first()
+    if p_by_name:
+        return p_by_name
+        
+    # 2. Look globally for cloning details
+    all_providers = ServiceProvider.objects.all()
+    global_p = None
+    if cleaned_input_phone:
+        for p in all_providers:
+            if re.sub(r'\D', '', p.phone or '') == cleaned_input_phone:
+                global_p = p
+                break
+                
+    if not global_p:
+        global_p = all_providers.filter(name__iexact=name).first()
+        
+    if global_p:
+        # Clone details
+        new_provider = ServiceProvider.objects.create(
+            user=user,
+            name=name,
+            phone=phone or global_p.phone,
+            cpf=global_p.cpf,
+            photo=global_p.photo
+        )
+        if global_p.services.exists():
+            new_provider.services.set(global_p.services.all())
+        return new_provider
+        
+    # 3. Create fresh provider
+    return ServiceProvider.objects.create(
+        user=user,
+        name=name,
+        phone=phone or ''
+    )
+
 
 class Maintenance(models.Model):
     STATUS_CHOICES = [
@@ -61,6 +115,22 @@ class Maintenance(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.property.name}"
+
+    def save(self, *args, **kwargs):
+        # Auto-link or update provider when status is in_progress or finished and provider_name is set
+        if self.status in ['in_progress', 'finished'] and self.provider_name:
+            if not self.provider or self.provider.name != self.provider_name or (self.provider_phone and self.provider.phone != self.provider_phone):
+                provider = get_or_create_provider_globally(
+                    user=self.property.user,
+                    name=self.provider_name,
+                    phone=self.provider_phone
+                )
+                self.provider = provider
+            elif self.provider_phone and self.provider.phone != self.provider_phone:
+                # If provider is linked but phone number changed, update provider phone
+                self.provider.phone = self.provider_phone
+                self.provider.save(update_fields=['phone'])
+        super().save(*args, **kwargs)
 
 class Budget(models.Model):
     maintenance = models.ForeignKey(Maintenance, on_delete=models.CASCADE, related_name='budgets')

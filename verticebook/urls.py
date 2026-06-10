@@ -17,6 +17,7 @@ urlpatterns = [
     path('administrador/', include('administration.urls', namespace='administration')),
     path('mobile/', include('mobile.urls')),
     path('mobilecondominio/', include('mobilecondominio.urls')),
+    path('admCondominio/', include('admcondominio.urls', namespace='admcondominio')),
     path('manutencoes/', include('maintenance.urls')),
     path('sw.js', service_worker, name='service_worker'),
 ]

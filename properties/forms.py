@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+import os
 from .models import Property, PropertyCost
 
 class CustomClearableFileInput(forms.ClearableFileInput):
@@ -188,7 +189,7 @@ class PropertyAuthorizationForm(forms.ModelForm):
             'authorization_template': forms.HiddenInput(),
         }
 
-from .models import Service, ServiceProvider
+from .models import Property, PropertyCost, Service, ServiceProvider, PropertyDocument
 
 
 class ServiceProviderForm(forms.ModelForm):
@@ -208,3 +209,47 @@ class ServiceProviderForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Services are now global, no need to filter by user
         self.fields['services'].queryset = Service.objects.all()
+
+class PropertyDocumentForm(forms.ModelForm):
+    class Meta:
+        model = PropertyDocument
+        fields = ['name', 'document_date', 'description', 'file']
+        widgets = {
+            'document_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'description': forms.Textarea(attrs={'rows': 2, 'placeholder': _("Opcional: Detalhes sobre este documento")}),
+            'name': forms.TextInput(attrs={'placeholder': _("Ex: Escritura, Contrato de Compra e Venda")}),
+            'file': forms.FileInput(attrs={'accept': 'application/pdf,image/*'}),
+        }
+
+    def clean_file(self):
+        file = self.cleaned_data.get('file')
+        if file:
+            extension = os.path.splitext(file.name)[1].lower()
+            size_mb = file.size / 1024 / 1024
+            
+            if extension in ['.jpg', '.jpeg', '.png', '.webp']:
+                if size_mb > 2:
+                    raise forms.ValidationError(_("Imagens não podem ser maiores que 2MB (elas serão compactadas automaticamente)."))
+            elif extension == '.pdf':
+                if size_mb > 10:
+                    raise forms.ValidationError(_("Arquivos PDF não podem ser maiores que 10MB."))
+            else:
+                if size_mb > 5:
+                    raise forms.ValidationError(_("O arquivo não pode ser maior que 5MB."))
+        return file
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            current_classes = field.widget.attrs.get('class', '')
+            field.widget.attrs.update({'class': f'{current_classes} form-control'.strip()})
+        
+        # Ensure description follows the same pattern without breaking colors
+        self.fields['description'].widget.attrs.update({
+            'rows': 3,
+            'placeholder': _("Opcional: Detalhes sobre este documento"),
+            'maxlength': '500'
+        })
+        self.fields['name'].widget.attrs.update({
+            'maxlength': '255'
+        })

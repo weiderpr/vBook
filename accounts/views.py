@@ -11,7 +11,9 @@ from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm
 from reservations.services.evolution_api import EvolutionService
 from administration.models import Plan
 from core.utils import is_mobile
+from django.views.decorators.cache import never_cache
 
+@never_cache
 def register_view(request):
     plan_id = request.GET.get('plan')
     if request.method == 'POST':
@@ -103,6 +105,7 @@ def profile_view(request):
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils import translation
 
+@never_cache
 @ensure_csrf_cookie
 def login_view(request):
     next_url = request.GET.get('next')
@@ -132,7 +135,9 @@ def login_view(request):
                     return redirect('profile')
                 
             if getattr(user, 'user_type', '') == 'staff':
-                return redirect('mobilecondominio:dashboard')
+                if is_mobile(request):
+                    return redirect('mobilecondominio:dashboard')
+                return redirect('admcondominio:dashboard')
                 
             # Se não tiver next_url mas for mobile, vai para home mobile
             if is_mobile(request):

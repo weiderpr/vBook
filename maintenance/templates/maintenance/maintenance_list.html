@@ -675,6 +675,81 @@
         }
     }
 
+    async function approveBudget(budgetPk, maintenancePk) {
+        if (!confirm("{% trans 'Aprovar este orçamento e iniciar a execução da manutenção?' %}")) return;
+        try {
+            const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: new URLSearchParams({ 'action': 'approve_budget', 'budget_id': budgetPk })
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || "Erro ao aprovar orçamento");
+            }
+            
+            hasChanged = true;
+            openWizardModal(maintenancePk, data.new_step);
+            if (typeof showToast === 'function') {
+                showToast("{% trans 'Orçamento aprovado e execução iniciada!' %}", "success");
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    async function saveExecutionProgress(maintenancePk) {
+        const execForm = document.getElementById('executionForm');
+        if (execForm && !execForm.checkValidity()) {
+            execForm.reportValidity();
+            return;
+        }
+
+        const btn = document.getElementById('saveExecBtn');
+        const originalHtml = btn ? btn.innerHTML : '';
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = `<div class="spinner" style="width: 14px; height: 14px;"></div>`;
+        }
+
+        try {
+            const formData = new FormData(execForm);
+            formData.append('action', 'save_execution');
+
+            const url = "{% url 'maintenance:wizard' property.pk 0 %}".replace('0', maintenancePk);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || "Erro ao salvar progresso");
+            }
+            
+            hasChanged = true;
+            if (typeof showToast === 'function') {
+                showToast(data.message || "{% trans 'Progresso salvo!' %}", "success");
+            }
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
+        }
+    }
+
     // Budget & Execution Functions
     function maskPhone(input) {
         let value = input.value.replace(/\D/g, "");

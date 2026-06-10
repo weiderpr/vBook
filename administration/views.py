@@ -74,6 +74,17 @@ class UserDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView):
 class UserPlanDetailAjaxView(LoginRequiredMixin, AdminRequiredMixin, View):
     def get(self, request, pk):
         user = get_object_or_404(CustomUser, pk=pk)
+        
+        # Obter todos os planos ativos para preenchimento de dropdowns
+        plans = Plan.objects.filter(is_active=True).order_by('base_value')
+        plans_data = [
+            {
+                'id': p.id,
+                'description': f"{p.description} ({p.get_periodicity_display()} - R$ {p.base_value})",
+                'duration_days': p.duration_days,
+            } for p in plans
+        ]
+        
         try:
             subscription = Subscription.objects.get(user=user)
             payments = [
@@ -85,7 +96,9 @@ class UserPlanDetailAjaxView(LoginRequiredMixin, AdminRequiredMixin, View):
                 } for p in subscription.payments.all()
             ]
             data = {
+                'has_subscription': True,
                 'plan_description': subscription.plan.description,
+                'plan_id': subscription.plan.id,
                 'status_display': subscription.get_status_display(),
                 'status': subscription.status,
                 'start_date': subscription.start_date.strftime('%d/%m/%Y') if subscription.start_date else '-',
@@ -94,10 +107,17 @@ class UserPlanDetailAjaxView(LoginRequiredMixin, AdminRequiredMixin, View):
                 'base_value': f"R$ {subscription.plan.base_value}",
                 'update_url': f"/book/administrador/usuarios/{user.pk}/alterar-vencimento/",
                 'periodicity': subscription.plan.get_periodicity_display(),
-                'payments': payments
+                'payments': payments,
+                'plans': plans_data,
+                'assign_url': f"/book/administrador/usuarios/{user.pk}/atribuir-plano/",
             }
         except Subscription.DoesNotExist:
-            data = {'error': _("Este usuário ainda não possui um plano assinado.")}
+            data = {
+                'has_subscription': False,
+                'error': _("Este usuário ainda não possui um plano assinado."),
+                'plans': plans_data,
+                'assign_url': f"/book/administrador/usuarios/{user.pk}/atribuir-plano/",
+            }
         return JsonResponse(data)
 
 class UserPlanRemoveView(LoginRequiredMixin, AdminRequiredMixin, View):
@@ -132,6 +152,46 @@ class UserPlanUpdateDateView(LoginRequiredMixin, AdminRequiredMixin, View):
                 messages.success(request, _("Vencimento do plano de %s alterado com sucesso para %s.") % (user.full_name, new_date_str))
             except ValueError:
                 messages.error(request, _("Data inválida."))
+        return redirect('administration:user_list')
+
+class UserPlanAssignView(LoginRequiredMixin, AdminRequiredMixin, View):
+    def post(self, request, pk):
+        user = get_object_or_404(CustomUser, pk=pk)
+        plan_id = request.POST.get('plan_id')
+        end_date_str = request.POST.get('end_date')
+        
+        if not plan_id or not end_date_str:
+            messages.error(request, _("Todos os campos são obrigatórios."))
+            return redirect('administration:user_list')
+            
+        plan = get_object_or_404(Plan, id=plan_id, is_active=True)
+        
+        try:
+            from django.utils import timezone
+            naive_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+            aware_date = timezone.make_aware(naive_date)
+            
+            # Determinar o status com base no vencimento
+            status = 'active' if aware_date > timezone.now() else 'expired'
+            
+            subscription, created = Subscription.objects.update_or_create(
+                user=user,
+                defaults={
+                    'plan': plan,
+                    'status': status,
+                    'start_date': timezone.now(),
+                    'end_date': aware_date
+                }
+            )
+            
+            if created:
+                messages.success(request, _("Plano '%s' atribuído com sucesso para %s.") % (plan.description, user.full_name))
+            else:
+                messages.success(request, _("Plano de %s alterado com sucesso para '%s'.") % (user.full_name, plan.description))
+                
+        except ValueError:
+            messages.error(request, _("Data inválida."))
+            
         return redirect('administration:user_list')
 
 # CRUD Categorias de Serviço

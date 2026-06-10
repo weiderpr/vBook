@@ -2,16 +2,22 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 import uuid
+import os
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 class Property(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
         related_name='properties',
         verbose_name=_("Proprietário")
     )
     name = models.CharField(max_length=255, verbose_name=_("Nome da propriedade"))
-    description = models.TextField(verbose_name=_("Descrição da propriedade"))
+    description = models.TextField(blank=True, null=True, verbose_name=_("Descrição da propriedade"))
     condo_phone = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Telefone do Condomínio"))
     condo = models.ForeignKey(
         'administration.Condo', 
@@ -23,17 +29,19 @@ class Property(models.Model):
     )
     
     # Address structured fields
-    address_street = models.CharField(max_length=255, verbose_name=_("Rua"))
-    address_number = models.CharField(max_length=20, verbose_name=_("Número"))
+    address_street = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Rua"))
+    address_number = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Número"))
     address_neighborhood = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Bairro"))
     address_complement = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Complemento"))
-    address_city = models.CharField(max_length=100, verbose_name=_("Cidade"))
-    address_state = models.CharField(max_length=100, verbose_name=_("Estado"))
+    address_city = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Cidade"))
+    address_state = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Estado"))
     
-    acquisition_date = models.DateField(verbose_name=_("Data da aquisição"))
+    acquisition_date = models.DateField(blank=True, null=True, verbose_name=_("Data da aquisição"))
     acquisition_value = models.DecimalField(
         max_digits=12, 
         decimal_places=2, 
+        blank=True,
+        null=True,
         verbose_name=_("Valor da aquisição")
     )
     image = models.ImageField(
@@ -62,6 +70,39 @@ class Property(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def display_name(self):
+        try:
+            if hasattr(self, 'portaria_custom') and self.portaria_custom and self.portaria_custom.nome_portaria:
+                return self.portaria_custom.nome_portaria
+        except Exception:
+            pass
+        return self.name
+
+    @property
+    def display_complement(self):
+        try:
+            if hasattr(self, 'portaria_custom') and self.portaria_custom:
+                parts = []
+                if self.address_complement:
+                    parts.append(self.address_complement)
+                if self.portaria_custom.bloco:
+                    parts.append(self.portaria_custom.bloco)
+                if parts:
+                    return " - ".join(parts)
+        except Exception:
+            pass
+        return self.address_complement or ""
+
+    @property
+    def display_owner_name(self):
+        try:
+            if hasattr(self, 'portaria_custom') and self.portaria_custom and self.portaria_custom.nome_proprietario:
+                return self.portaria_custom.nome_proprietario
+        except Exception:
+            pass
+        return self.user.full_name if self.user else ""
+
     class Meta:
         verbose_name = _("Propriedade")
         verbose_name_plural = _("Propriedades")
@@ -69,6 +110,47 @@ class Property(models.Model):
 
     def __str__(self):
         return self.name
+
+class PortariaCustomProperty(models.Model):
+    property = models.OneToOneField(
+        Property,
+        on_delete=models.CASCADE,
+        related_name='portaria_custom',
+        verbose_name=_("Propriedade")
+    )
+    nome_portaria = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name=_("Nome da Portaria")
+    )
+    bloco = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        verbose_name=_("Bloco")
+    )
+    nome_proprietario = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name=_("Nome do Proprietário (Portaria)")
+    )
+    telefone_proprietario = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        verbose_name=_("Telefone do Proprietário")
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Customização da Portaria")
+        verbose_name_plural = _("Customizações da Portaria")
+
+    def __str__(self):
+        return f"Portaria Custom - {self.property.name}"
 
 class PropertyCost(models.Model):
     FREQUENCY_CHOICES = [
@@ -263,10 +345,10 @@ class ServiceProvider(models.Model):
             is_completed=True
         ).aggregate(total=Sum('value'))['total'] or 0
         
-        # Debits: Finished Maintenances
+        # Debits: Finished or In Progress Maintenances
         maint_debits = Maintenance.objects.filter(
             provider=self, 
-            status='finished'
+            status__in=['in_progress', 'finished']
         ).aggregate(total=Sum('execution_value'))['total'] or 0
         
         # Debits: Monthly/Fixed Property Costs (Excluding per_booking to avoid double counting)
@@ -308,3 +390,58 @@ class ProviderPayment(models.Model):
 
     def __str__(self):
         return f"Pagamento: R$ {self.value} para {self.provider.name} em {self.date}"
+
+class PropertyDocument(models.Model):
+    property = models.ForeignKey(
+        Property, 
+        on_delete=models.CASCADE, 
+        related_name='documents',
+        verbose_name=_("Propriedade")
+    )
+    name = models.CharField(max_length=255, verbose_name=_("Nome do Documento"))
+    document_date = models.DateField(verbose_name=_("Data do Documento"))
+    description = models.TextField(blank=True, null=True, verbose_name=_("Descrição"))
+    file = models.FileField(
+        upload_to='property_documents/',
+        verbose_name=_("Arquivo")
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Documento da Propriedade")
+        verbose_name_plural = _("Documentos da Propriedade")
+        ordering = ['-document_date', '-created_at']
+
+    def __str__(self):
+        return f"{self.name} - {self.property.name}"
+
+    def save(self, *args, **kwargs):
+        if self.file:
+            extension = os.path.splitext(self.file.name)[1].lower()
+            if extension in ['.jpg', '.jpeg', '.png', '.webp']:
+                try:
+                    img = Image.open(self.file)
+                    
+                    # Convert to RGB if necessary
+                    if img.mode in ("RGBA", "P"):
+                        img = img.convert("RGB")
+                    
+                    # Resize if too large
+                    max_size = 1920
+                    if img.width > max_size or img.height > max_size:
+                        img.thumbnail((max_size, max_size), Image.LANCZOS)
+                    
+                    # Compress
+                    output = BytesIO()
+                    img.save(output, format='JPEG', quality=70, optimize=True)
+                    output.seek(0)
+                    
+                    # Update filename to .jpg
+                    name_without_ext = os.path.splitext(os.path.basename(self.file.name))[0]
+                    new_name = f"{name_without_ext}.jpg"
+                    self.file.save(new_name, ContentFile(output.read()), save=False)
+                except Exception as e:
+                    print(f"Error compressing image: {e}")
+        
+        super().save(*args, **kwargs)
