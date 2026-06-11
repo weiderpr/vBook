@@ -307,6 +307,12 @@
                         </div>
                     {% endif %}
                 </div>
+                {% if not property.user %}
+                <button class="btn btn-primary" onclick="openManualCheckinModal('{{ property.id }}', '{{ property.display_name|escapejs }}')" style="width: 100%; border-radius: 10px !important; margin-top: auto; font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1rem !important; cursor: pointer; border: none; height: 38px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                    {% trans "Check-in Manual" %}
+                </button>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -368,7 +374,16 @@
                             {% endif %}
                         </td>
                         <td style="text-align: right;">
-                            <div style="display: flex; justify-content: flex-end;">
+                            <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                                {% if not property.user %}
+                                <button onclick="openManualCheckinModal('{{ property.id }}', '{{ property.display_name|escapejs }}')" 
+                                        title="{% trans 'Check-in Manual' %}"
+                                        class="unit-list-action-btn"
+                                        style="height: 34px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; padding: 0 12px; font-weight: 700; font-size: 0.8rem; gap: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                                    {% trans "Check-in" %}
+                                </button>
+                                {% endif %}
                                 <button onclick="openCustomizeModal('{{ property.id }}', '{{ property.portaria_custom.nome_portaria|default:""|escapejs }}', '{{ property.name|escapejs }}', '{{ property.portaria_custom.bloco|default:""|escapejs }}', '{{ property.portaria_custom.nome_proprietario|default:""|escapejs }}', '{{ property.user.full_name|default:""|escapejs }}', '{{ property.portaria_custom.telefone_proprietario|default:""|escapejs }}')" 
                                         title="{% trans 'Organizar nomes para a portaria' %}"
                                         class="unit-list-action-btn"
@@ -735,5 +750,273 @@
             });
         }
     });
+</script>
+
+<!-- Manual Check-in Modal -->
+<div id="manualCheckinModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-glass" style="max-width: 600px; width: 95%;">
+        <div class="modal-header">
+            <h2 class="modal-title">{% trans "Realizar Check-in Manual" %} - <span id="manual-checkin-unit-name"></span></h2>
+            <button type="button" class="modal-close" onclick="closeManualCheckinModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="manual-checkin-form" onsubmit="submitManualCheckin(event)">
+                <input type="hidden" id="manual-checkin-property-id">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label for="manual-checkin-date" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                            {% trans "Data de Check-in *" %}
+                        </label>
+                        <input type="date" id="manual-checkin-date" required class="form-control" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="manual-checkout-date" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                            {% trans "Data de Check-out *" %}
+                        </label>
+                        <input type="date" id="manual-checkout-date" required class="form-control" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="manual-responsible-name" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                        {% trans "Nome do Responsável *" %}
+                    </label>
+                    <input type="text" id="manual-responsible-name" required class="form-control" placeholder="{% trans 'Nome completo do responsável pela reserva' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                    <div class="form-group">
+                        <label for="manual-responsible-cpf" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                            {% trans "CPF *" %}
+                        </label>
+                        <input type="text" id="manual-responsible-cpf" required class="form-control cpf-input" placeholder="000.000.000-00" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="manual-responsible-rg" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                            {% trans "RG *" %}
+                        </label>
+                        <input type="text" id="manual-responsible-rg" required class="form-control" placeholder="{% trans 'RG' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label for="manual-car-model" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                            {% trans "Modelo do Veículo" %}
+                        </label>
+                        <input type="text" id="manual-car-model" class="form-control" placeholder="{% trans 'Ex: Corolla Prata' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="manual-car-plate" style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 0.5rem;">
+                            {% trans "Placa do Veículo" %}
+                        </label>
+                        <input type="text" id="manual-car-plate" class="form-control" placeholder="{% trans 'Ex: ABC1D23' %}" style="width: 100%; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg-card); color: var(--text-main); font-family: inherit; font-size: 0.9rem;">
+                    </div>
+                </div>
+
+                <!-- Guests Section -->
+                <div style="border-top: 1px solid var(--glass-border); padding-top: 1.25rem; margin-bottom: 1.75rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: var(--text-main);">{% trans "Acompanhantes / Outros Hóspedes" %}</h4>
+                        <button type="button" onclick="addGuestRow()" class="btn btn-outline" style="border-radius: 8px !important; font-size: 0.75rem; padding: 0.4rem 0.8rem !important; display: flex; align-items: center; gap: 4px; font-weight: 700; border-color: var(--primary); color: var(--primary); background: transparent; cursor: pointer;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            {% trans "Adicionar Hóspede" %}
+                        </button>
+                    </div>
+                    <div id="guests-container" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 150px; overflow-y: auto; padding-right: 5px;">
+                        <!-- Guest rows will be added dynamically -->
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-outline" onclick="closeManualCheckinModal()" style="border-radius: 10px !important; font-weight: 700; padding: 0.6rem 1.2rem !important; cursor: pointer; background: transparent; border-color: var(--glass-border); color: var(--text-main);">
+                        {% trans "Cancelar" %}
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="border-radius: 10px !important; font-weight: 700; padding: 0.6rem 1.2rem !important; cursor: pointer;">
+                        {% trans "Confirmar Check-in" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let guestCount = 0;
+
+    function addGuestRow() {
+        const container = document.getElementById('guests-container');
+        const rowId = `guest-row-${guestCount++}`;
+        
+        const row = document.createElement('div');
+        row.id = rowId;
+        row.style.display = 'flex';
+        row.style.gap = '0.75rem';
+        row.style.alignItems = 'center';
+        
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.placeholder = '{% trans "Nome Completo" %}';
+        nameInput.required = true;
+        nameInput.className = 'form-control guest-name';
+        nameInput.style.flex = '2';
+        nameInput.style.padding = '0.6rem 0.8rem';
+        nameInput.style.borderRadius = '8px';
+        nameInput.style.border = '1px solid var(--glass-border)';
+        nameInput.style.background = 'var(--bg-card)';
+        nameInput.style.color = 'var(--text-main)';
+        nameInput.style.fontSize = '0.85rem';
+        
+        const docInput = document.createElement('input');
+        docInput.type = 'text';
+        docInput.placeholder = '{% trans "Documento" %}';
+        docInput.required = true;
+        docInput.className = 'form-control guest-document';
+        docInput.style.flex = '1';
+        docInput.style.padding = '0.6rem 0.8rem';
+        docInput.style.borderRadius = '8px';
+        docInput.style.border = '1px solid var(--glass-border)';
+        docInput.style.background = 'var(--bg-card)';
+        docInput.style.color = 'var(--text-main)';
+        docInput.style.fontSize = '0.85rem';
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.onclick = function() { row.remove(); };
+        removeBtn.style.background = 'none';
+        removeBtn.style.border = 'none';
+        removeBtn.style.color = '#ef4444';
+        removeBtn.style.cursor = 'pointer';
+        removeBtn.style.padding = '5px';
+        removeBtn.style.display = 'flex';
+        removeBtn.style.alignItems = 'center';
+        removeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>';
+        
+        row.appendChild(nameInput);
+        row.appendChild(docInput);
+        row.appendChild(removeBtn);
+        container.appendChild(row);
+    }
+
+    function openManualCheckinModal(propertyId, propertyName) {
+        document.getElementById('manual-checkin-property-id').value = propertyId;
+        document.getElementById('manual-checkin-unit-name').textContent = propertyName;
+        
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('manual-checkin-date').value = today;
+        document.getElementById('manual-checkout-date').value = '';
+        document.getElementById('manual-responsible-name').value = '';
+        document.getElementById('manual-responsible-cpf').value = '';
+        document.getElementById('manual-responsible-rg').value = '';
+        document.getElementById('manual-car-model').value = '';
+        document.getElementById('manual-car-plate').value = '';
+        
+        document.getElementById('guests-container').replaceChildren();
+        
+        const modal = document.getElementById('manualCheckinModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeManualCheckinModal() {
+        const modal = document.getElementById('manualCheckinModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function applyCPFMask(input) {
+        let v = input.value.replace(/\D/g, '').substring(0, 11);
+        let masked = '';
+        if (v.length > 0) masked = v.substring(0, 3);
+        if (v.length >= 4) masked += '.' + v.substring(3, 6);
+        if (v.length >= 7) masked += '.' + v.substring(6, 9);
+        if (v.length >= 10) masked += '-' + v.substring(9, 11);
+        input.value = masked;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const cpfInput = document.getElementById('manual-responsible-cpf');
+        if (cpfInput) {
+            cpfInput.addEventListener('input', function() { applyCPFMask(this); });
+        }
+        
+        window.addEventListener('click', function(event) {
+            const manualModal = document.getElementById('manualCheckinModal');
+            if (event.target == manualModal) {
+                closeManualCheckinModal();
+            }
+        });
+    });
+
+    function submitManualCheckin(event) {
+        event.preventDefault();
+        const propertyId = document.getElementById('manual-checkin-property-id').value;
+        const checkinDate = document.getElementById('manual-checkin-date').value;
+        const checkoutDate = document.getElementById('manual-checkout-date').value;
+        const responsibleName = document.getElementById('manual-responsible-name').value;
+        const responsibleCpf = document.getElementById('manual-responsible-cpf').value;
+        const responsibleRg = document.getElementById('manual-responsible-rg').value;
+        const carModel = document.getElementById('manual-car-model').value;
+        const carPlate = document.getElementById('manual-car-plate').value;
+        
+        const guests = [];
+        const container = document.getElementById('guests-container');
+        const rows = container.children;
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const name = row.querySelector('.guest-name').value.trim();
+            const doc = row.querySelector('.guest-document').value.trim();
+            if (name && doc) {
+                guests.push({ name: name, document: doc });
+            }
+        }
+        
+        const saveBtn = event.target.querySelector('button[type="submit"]');
+        saveBtn.disabled = true;
+        const originalText = saveBtn.textContent;
+        saveBtn.textContent = '{% trans "Confirmando..." %}';
+
+        fetch(`/book/admCondominio/unidades/${propertyId}/checkin-manual/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                checkin_date: checkinDate,
+                checkout_date: checkoutDate,
+                responsible_name: responsibleName,
+                responsible_cpf: responsibleCpf,
+                responsible_rg: responsibleRg,
+                car_model: carModel,
+                car_plate: carPlate,
+                guests: guests
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('HTTP error');
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                showToast(data.message, 'success');
+                closeManualCheckinModal();
+                setTimeout(() => {
+                    window.location.href = "{% url 'admcondominio:dashboard' %}";
+                }, 800);
+            } else {
+                showToast(data.message || '{% trans "Erro ao realizar check-in" %}', 'error');
+                saveBtn.disabled = false;
+                saveBtn.textContent = originalText;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('{% trans "Erro de conexão ao realizar check-in" %}', 'error');
+            saveBtn.disabled = false;
+            saveBtn.textContent = originalText;
+        });
+    }
 </script>
 {% endblock %}

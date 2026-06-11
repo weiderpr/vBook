@@ -217,6 +217,9 @@ MEDIA_ROOT = '/var/www/verticebook/media'
 EVOLUTION_API_URL = 'http://localhost:8010'
 AUTHENTICATION_API_KEY = 'vbook_secret_key_2026'
 
+# Vértice Drive Settings
+VERTICE_DRIVE_API_KEY = os.getenv('VERTICE_DRIVE_API_KEY', 'app_Hr4aCzy0Az2GJJl8xIuNfn35HqkV9CpF')
+
 # Web Push Settings
 VAPID_PUBLIC_KEY_PATH = os.path.join(BASE_DIR, 'public_key.pem')
 VAPID_PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'private_key.pem')

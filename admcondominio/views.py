@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from reservations.models import Reservation, GateRelease
 from properties.models import Property, PortariaCustomProperty
+from .models import PortariaCheckinManual, PortariaCheckinManualGuest
 import datetime
 import json
 import logging
@@ -37,11 +38,11 @@ class DashboardView(StaffRequiredMixin, TemplateView):
         context['condo'] = condo
         
         # 1. Check-ins para hoje
-        checkins_today = Reservation.objects.filter(
+        checkins_today = list(Reservation.objects.filter(
             property__condo=condo,
             start_date=today,
             is_cancelled=False
-        ).select_related('property', 'property__portaria_custom', 'client').prefetch_related('gate_releases__user').order_by('checkin_time', 'property__address_complement')
+        ).select_related('property', 'property__portaria_custom', 'client').prefetch_related('gate_releases__user'))
         
         current_time = timezone.now()
         today_date = timezone.localtime(current_time).date()
@@ -54,32 +55,94 @@ class DashboardView(StaffRequiredMixin, TemplateView):
                     if entry_date == today_date:
                         can_undo = True
             res.can_undo_checkin = can_undo
+            res.is_manual = False
             
-        context['checkins_today'] = checkins_today
+        manual_checkins_today = PortariaCheckinManual.objects.filter(
+            property__condo=condo,
+            checkin_date=today
+        ).select_related('property', 'property__portaria_custom')
+        for mc in manual_checkins_today:
+            mc.client_name = mc.responsible_name
+            mc.client_phone = ""
+            mc.is_manual = True
+            mc.can_undo_checkin = mc.checkin_completed and not mc.checkout_completed and timezone.localtime(mc.created_at).date() == today_date
+            mc.checkin_time = None
+            mc.start_date = mc.checkin_date
+            mc.end_date = mc.checkout_date
+
+        all_checkins_today = checkins_today + list(manual_checkins_today)
+        all_checkins_today.sort(key=lambda x: (
+            x.checkin_time or datetime.time(14, 0) if hasattr(x, 'checkin_time') and x.checkin_time else datetime.time(14, 0),
+            x.property.display_complement or ""
+        ))
+        context['checkins_today'] = all_checkins_today
         
         # 2. Check-outs para hoje
-        checkouts_today = Reservation.objects.filter(
+        checkouts_today = list(Reservation.objects.filter(
             property__condo=condo,
             end_date=today,
             is_cancelled=False
-        ).select_related('property', 'property__portaria_custom', 'client').order_by('checkout_time', 'property__address_complement')
-        context['checkouts_today'] = checkouts_today
+        ).select_related('property', 'property__portaria_custom', 'client'))
+        for r in checkouts_today:
+            r.is_manual = False
+
+        manual_checkouts_today = PortariaCheckinManual.objects.filter(
+            property__condo=condo,
+            checkout_date=today
+        ).select_related('property', 'property__portaria_custom')
+        for mc in manual_checkouts_today:
+            mc.client_name = mc.responsible_name
+            mc.client_phone = ""
+            mc.is_manual = True
+            mc.checkout_time = None
+            mc.start_date = mc.checkin_date
+            mc.end_date = mc.checkout_date
+            
+        all_checkouts_today = checkouts_today + list(manual_checkouts_today)
+        all_checkouts_today.sort(key=lambda x: (
+            x.checkout_time or datetime.time(11, 0) if hasattr(x, 'checkout_time') and x.checkout_time else datetime.time(11, 0),
+            x.property.display_complement or ""
+        ))
+        context['checkouts_today'] = all_checkouts_today
         
         # 3. Apartamentos ocupados hoje (estadia ativa, check-in feito e check-out pendente)
-        occupied_apartments = Reservation.objects.filter(
+        occupied_apartments = list(Reservation.objects.filter(
             property__condo=condo,
             start_date__lte=today,
             end_date__gte=today,
             checkin_completed=True,
             checkout_completed=False,
             is_cancelled=False
-        ).select_related('property', 'property__portaria_custom', 'client').prefetch_related('client__complement').order_by('property__address_complement')
-        context['occupied_apartments'] = occupied_apartments
+        ).select_related('property', 'property__portaria_custom', 'client').prefetch_related('client__complement'))
+        for r in occupied_apartments:
+            r.is_manual = False
+
+        manual_occupied = PortariaCheckinManual.objects.filter(
+            property__condo=condo,
+            checkin_date__lte=today,
+            checkout_date__gte=today,
+            checkin_completed=True,
+            checkout_completed=False
+        ).select_related('property', 'property__portaria_custom')
+        for mc in manual_occupied:
+            mc.client_name = mc.responsible_name
+            mc.client_phone = ""
+            mc.is_manual = True
+            mc.start_date = mc.checkin_date
+            mc.end_date = mc.checkout_date
+
+        all_occupied = occupied_apartments + list(manual_occupied)
+        all_occupied.sort(key=lambda x: x.property.display_complement or "")
+        context['occupied_apartments'] = all_occupied
         
         # Contadores rápidos
-        context['count_checkins_pending'] = checkins_today.filter(checkin_completed=False).count()
-        context['count_checkouts_pending'] = checkouts_today.filter(checkout_completed=False).count()
-        context['count_occupied'] = occupied_apartments.count()
+        count_checkins_pending = sum(1 for r in all_checkins_today if not r.checkin_completed)
+        count_checkouts_pending = sum(1 for r in all_checkouts_today if not r.checkout_completed)
+        count_occupied = len(all_occupied)
+        
+        context['count_checkins_pending'] = count_checkins_pending
+        context['count_checkouts_pending'] = count_checkouts_pending
+        context['count_occupied'] = count_occupied
         
         # Logs de liberação recentes (últimos 10)
         context['recent_releases'] = GateRelease.objects.filter(
@@ -87,6 +150,7 @@ class DashboardView(StaffRequiredMixin, TemplateView):
         ).select_related('reservation', 'reservation__property', 'user').order_by('-released_at')[:10]
         
         return context
+
 
 class GateReleaseEntryView(StaffRequiredMixin, View):
     def post(self, request, pk):
@@ -404,3 +468,180 @@ class PropertiesListView(StaffRequiredMixin, TemplateView):
         context['condo'] = condo
         context['properties'] = Property.objects.filter(condo=condo).select_related('user', 'portaria_custom').order_by('address_complement', 'name')
         return context
+
+
+class PropertyManualCheckinView(StaffRequiredMixin, View):
+    def post(self, request, pk):
+        property_obj = get_object_or_404(Property, pk=pk)
+        
+        if not getattr(request.user, 'is_admin', False):
+            if property_obj.condo != request.user.condo:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Erro: Esta propriedade não pertence ao seu condomínio.")
+                }, status=403)
+                
+        if property_obj.user is not None:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Erro: Esta propriedade possui proprietário cadastrado e não aceita check-in manual.")
+            }, status=400)
+            
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Dados inválidos.")
+            }, status=400)
+            
+        checkin_date_str = data.get('checkin_date', '').strip()
+        checkout_date_str = data.get('checkout_date', '').strip()
+        responsible_name = data.get('responsible_name', '').strip()
+        responsible_cpf = data.get('responsible_cpf', '').strip()
+        responsible_rg = data.get('responsible_rg', '').strip()
+        car_model = data.get('car_model', '').strip()
+        car_plate = data.get('car_plate', '').strip()
+        guests_list = data.get('guests', [])
+        
+        if not (checkin_date_str and checkout_date_str and responsible_name and responsible_cpf and responsible_rg):
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Todos os campos obrigatórios (*) devem ser preenchidos.")
+            }, status=400)
+            
+        try:
+            checkin_date = datetime.datetime.strptime(checkin_date_str, '%Y-%m-%d').date()
+            checkout_date = datetime.datetime.strptime(checkout_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Formato de data inválido.")
+            }, status=400)
+            
+        if checkout_date < checkin_date:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("A data de checkout não pode ser menor que a data de checkin.")
+            }, status=400)
+            
+        checkin_obj = PortariaCheckinManual.objects.create(
+            property=property_obj,
+            checkin_date=checkin_date,
+            checkout_date=checkout_date,
+            responsible_name=responsible_name,
+            responsible_cpf=responsible_cpf,
+            responsible_rg=responsible_rg,
+            car_model=car_model if car_model else None,
+            car_plate=car_plate if car_plate else None,
+            checkin_completed=True,
+            checkout_completed=False
+        )
+        
+        for guest_data in guests_list:
+            g_name = guest_data.get('name', '').strip()
+            g_doc = guest_data.get('document', '').strip()
+            if g_name and g_doc:
+                PortariaCheckinManualGuest.objects.create(
+                    checkin_manual=checkin_obj,
+                    name=g_name,
+                    document=g_doc
+                )
+                
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Check-in manual registrado com sucesso!")
+        })
+
+
+class ManualCheckinDetailsJsonView(StaffRequiredMixin, View):
+    def get(self, request, pk):
+        checkin_obj = get_object_or_404(PortariaCheckinManual, pk=pk)
+        
+        if not getattr(request.user, 'is_admin', False):
+            if checkin_obj.property.condo != request.user.condo:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Erro: Esta propriedade não pertence ao seu condomínio.")
+                }, status=403)
+                
+        guests = list(checkin_obj.guests.values('name', 'document'))
+        
+        data = {
+            'id': checkin_obj.pk,
+            'client_name': checkin_obj.responsible_name,
+            'client_phone': "",
+            'property_name': checkin_obj.property.display_name,
+            'property_complement': checkin_obj.property.display_complement or "",
+            'start_date': checkin_obj.checkin_date.strftime('%d/%m/%Y'),
+            'end_date': checkin_obj.checkout_date.strftime('%d/%m/%Y'),
+            'checkin_completed': checkin_obj.checkin_completed,
+            'checkout_completed': checkin_obj.checkout_completed,
+            'car_model': checkin_obj.car_model or "",
+            'car_plate': checkin_obj.car_plate or "",
+            'cpf': checkin_obj.responsible_cpf,
+            'rg': checkin_obj.responsible_rg,
+            'companions': [{'name': g['name'], 'rg': g['document']} for g in guests],
+            'releases': [],
+            'is_cancelled': False,
+            'is_manual': True
+        }
+        
+        return JsonResponse({'status': 'success', 'data': data})
+
+
+class ManualCheckinExitView(StaffRequiredMixin, View):
+    def post(self, request, pk):
+        checkin_obj = get_object_or_404(PortariaCheckinManual, pk=pk)
+        
+        if not getattr(request.user, 'is_admin', False):
+            if checkin_obj.property.condo != request.user.condo:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Erro: Esta propriedade não pertence ao seu condomínio.")
+                }, status=403)
+                
+        checkin_obj.checkout_completed = True
+        checkin_obj.save(update_fields=['checkout_completed'])
+        
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Check-out manual realizado com sucesso para %s!") % checkin_obj.responsible_name,
+            'reservation_id': checkin_obj.pk
+        })
+
+
+class ManualCheckinUndoView(StaffRequiredMixin, View):
+    def post(self, request, pk):
+        checkin_obj = get_object_or_404(PortariaCheckinManual, pk=pk)
+        
+        if not getattr(request.user, 'is_admin', False):
+            if checkin_obj.property.condo != request.user.condo:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Erro: Esta propriedade não pertence ao seu condomínio.")
+                }, status=403)
+                
+        if checkin_obj.checkout_completed:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Erro: Não é possível desfazer o check-in pois o check-out já foi realizado.")
+            }, status=400)
+            
+        logger.info(
+            "AUDITORIA: Usuário %s (ID: %s) desfez o check-in MANUAL %s (Responsável: %s, Condomínio: %s, Unidade: %s). O registro de check-in manual foi excluído.",
+            request.user.username,
+            request.user.pk,
+            checkin_obj.pk,
+            checkin_obj.responsible_name,
+            checkin_obj.property.condo.name,
+            checkin_obj.property.display_complement or checkin_obj.property.name
+        )
+        
+        checkin_obj.delete()
+        
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Check-in manual desfeito com sucesso!")
+        })
+

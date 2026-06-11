@@ -1,6 +1,8 @@
 import calendar
 from datetime import timedelta, date
 from decimal import Decimal
+import requests
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseForbidden, JsonResponse
 from django.urls import reverse_lazy, reverse
@@ -110,6 +112,50 @@ class PropertyDashboardView(LoginRequiredMixin, DetailView):
         
         context['idle_days'] = total_days - len(reserved_nights)
         
+        return context
+
+
+class PropertyDriveView(LoginRequiredMixin, DetailView):
+    model = Property
+    template_name = 'properties/property_drive.html'
+    context_object_name = 'property'
+
+    def get_queryset(self):
+        return Property.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_item'] = 'drive'
+        
+        property_obj = self.object
+        owner_name = property_obj.display_owner_name or (property_obj.user.full_name if property_obj.user else "Proprietário")
+        workspace_name = f"{owner_name} - {property_obj.name}"
+        workspace_key = f"vertice_book_{property_obj.id}"
+        
+        api_key = getattr(settings, 'VERTICE_DRIVE_API_KEY', 'app_Hr4aCzy0Az2GJJl8xIuNfn35HqkV9CpF')
+        url = "https://drive.verticesistemas.tech/api/embed/token"
+        headers = {
+            "X-API-Key": api_key
+        }
+        data = {
+            "workspace_key": workspace_key,
+            "workspace_name": workspace_name
+        }
+        
+        embed_url = None
+        error_msg = None
+        try:
+            response = requests.post(url, headers=headers, data=data, timeout=10)
+            if response.status_code == 200:
+                resp_json = response.json()
+                embed_url = resp_json.get('url')
+            else:
+                error_msg = f"Erro da API do Vértice Drive: Código {response.status_code}"
+        except Exception as e:
+            error_msg = f"Não foi possível conectar ao Vértice Drive: {str(e)}"
+            
+        context['embed_url'] = embed_url
+        context['error_msg'] = error_msg
         return context
 
 

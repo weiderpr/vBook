@@ -1,0 +1,67 @@
+{% extends 'dashboard_layout.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans "Editor de textos" %} - {{ property.name }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Customizing .dashboard-main specifically for this full-screen view */
+    .dashboard-main {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+        padding-bottom: 1rem !important;
+        padding-top: 5.5rem !important;
+    }
+
+    .property-panel-content {
+        padding-top: 0;
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 7rem);
+    }
+    
+    .drive-iframe-container {
+        flex: 1;
+        width: 100%;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-top: 0.5rem;
+        position: relative;
+        box-shadow: var(--glass-shadow);
+    }
+    
+    .drive-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: transparent;
+    }
+</style>
+{{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with property=property active_item='drive' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-panel-content">
+    {% if embed_url %}
+        <div class="drive-iframe-container">
+            <iframe src="{{ embed_url }}" class="drive-iframe" frameborder="0" allowfullscreen></iframe>
+        </div>
+    {% else %}
+        <div class="glass-card" style="text-align: center; padding: 4rem 2rem; border: 1px dashed var(--glass-border); margin-top: 0;">
+            <div style="color: #ef4444; margin-bottom: 1rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+            </div>
+            <h3 style="margin: 0 0 0.5rem 0; font-weight: 700; color: var(--text-main);">{% trans "Erro ao carregar o Vértice Drive" %}</h3>
+            <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">
+                {{ error_msg|default:_("Não foi possível carregar a aplicação no momento. Por favor, tente novamente mais tarde.") }}
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

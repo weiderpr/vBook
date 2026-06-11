@@ -21,6 +21,7 @@ urlpatterns = [
     path('<int:pk>/relatorios/', views.PropertyReportsView.as_view(), name='reports'),
     path('<int:pk>/documentos/', views.PropertyDocumentListView.as_view(), name='document_list'),
     path('documentos/<int:pk>/excluir/', views.PropertyDocumentDeleteView.as_view(), name='document_delete'),
+    path('<int:pk>/drive/', views.PropertyDriveView.as_view(), name='drive'),
     
     # Prestadores de Serviço (Globais)
     path('prestadores/', views.ServiceProviderListView.as_view(), name='provider_list'),
