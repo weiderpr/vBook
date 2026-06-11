@@ -15472,3 +15472,196 @@ https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/READM
 [2026-06-11 06:11:26 -0300] [85180] [INFO] Booting worker with pid: 85180
 [2026-06-11 06:11:27 -0300] [85183] [INFO] Booting worker with pid: 85183
 [2026-06-11 06:11:27 -0300] [85168] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 07:43:35 -0300] [85168] [INFO] Handling signal: term
+[2026-06-11 07:43:35 -0300] [85183] [INFO] Worker exiting (pid: 85183)
+[2026-06-11 07:43:35 -0300] [85180] [INFO] Worker exiting (pid: 85180)
+[2026-06-11 07:43:35 -0300] [85178] [INFO] Worker exiting (pid: 85178)
+[2026-06-11 07:43:35 -0300] [85168] [INFO] Worker (pid:85178) was sent SIGTERM!
+[2026-06-11 07:43:35 -0300] [85168] [INFO] Worker (pid:85180) was sent SIGTERM!
+[2026-06-11 07:43:35 -0300] [85168] [INFO] Worker (pid:85183) was sent SIGTERM!
+[2026-06-11 07:43:35 -0300] [85168] [INFO] Shutting down: Master
+[2026-06-11 07:43:35 -0300] [89589] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 07:43:35 -0300] [89589] [INFO] Listening at: http://127.0.0.1:8000 (89589)
+[2026-06-11 07:43:35 -0300] [89589] [INFO] Using worker: sync
+[2026-06-11 07:43:35 -0300] [89591] [INFO] Booting worker with pid: 89591
+[2026-06-11 07:43:35 -0300] [89592] [INFO] Booting worker with pid: 89592
+[2026-06-11 07:43:35 -0300] [89593] [INFO] Booting worker with pid: 89593
+[2026-06-11 07:43:36 -0300] [89589] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 07:46:35 -0300] [89589] [INFO] Handling signal: term
+[2026-06-11 07:46:35 -0300] [89591] [INFO] Worker exiting (pid: 89591)
+[2026-06-11 07:46:35 -0300] [89592] [INFO] Worker exiting (pid: 89592)
+[2026-06-11 07:46:35 -0300] [89593] [INFO] Worker exiting (pid: 89593)
+[2026-06-11 07:46:38 -0300] [89589] [INFO] Shutting down: Master
+[2026-06-11 07:46:38 -0300] [90052] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 07:46:38 -0300] [90052] [INFO] Listening at: http://127.0.0.1:8000 (90052)
+[2026-06-11 07:46:38 -0300] [90052] [INFO] Using worker: sync
+[2026-06-11 07:46:38 -0300] [90056] [INFO] Booting worker with pid: 90056
+[2026-06-11 07:46:38 -0300] [90057] [INFO] Booting worker with pid: 90057
+[2026-06-11 07:46:38 -0300] [90058] [INFO] Booting worker with pid: 90058
+[2026-06-11 07:46:38 -0300] [90052] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 07:50:34 -0300] [90052] [INFO] Handling signal: term
+[2026-06-11 07:50:34 -0300] [90056] [INFO] Worker exiting (pid: 90056)
+[2026-06-11 07:50:34 -0300] [90057] [INFO] Worker exiting (pid: 90057)
+[2026-06-11 07:50:34 -0300] [90058] [INFO] Worker exiting (pid: 90058)
+[2026-06-11 07:50:36 -0300] [90052] [INFO] Shutting down: Master
+[2026-06-11 07:50:37 -0300] [90547] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 07:50:37 -0300] [90547] [INFO] Listening at: http://127.0.0.1:8000 (90547)
+[2026-06-11 07:50:37 -0300] [90547] [INFO] Using worker: sync
+[2026-06-11 07:50:37 -0300] [90549] [INFO] Booting worker with pid: 90549
+[2026-06-11 07:50:37 -0300] [90550] [INFO] Booting worker with pid: 90550
+[2026-06-11 07:50:37 -0300] [90551] [INFO] Booting worker with pid: 90551
+[2026-06-11 07:50:37 -0300] [90547] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 07:56:22 -0300] [90547] [INFO] Handling signal: term
+[2026-06-11 07:56:22 -0300] [90549] [INFO] Worker exiting (pid: 90549)
+[2026-06-11 07:56:22 -0300] [90550] [INFO] Worker exiting (pid: 90550)
+[2026-06-11 07:56:22 -0300] [90551] [INFO] Worker exiting (pid: 90551)
+[2026-06-11 07:56:27 -0300] [90547] [INFO] Shutting down: Master
+[2026-06-11 07:56:27 -0300] [91246] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 07:56:27 -0300] [91246] [INFO] Listening at: http://127.0.0.1:8000 (91246)
+[2026-06-11 07:56:27 -0300] [91246] [INFO] Using worker: sync
+[2026-06-11 07:56:27 -0300] [91249] [INFO] Booting worker with pid: 91249
+[2026-06-11 07:56:27 -0300] [91250] [INFO] Booting worker with pid: 91250
+[2026-06-11 07:56:27 -0300] [91251] [INFO] Booting worker with pid: 91251
+[2026-06-11 07:56:28 -0300] [91246] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 08:04:58 -0300] [91246] [INFO] Handling signal: term
+[2026-06-11 08:04:58 -0300] [91250] [INFO] Worker exiting (pid: 91250)
+[2026-06-11 08:04:58 -0300] [91251] [INFO] Worker exiting (pid: 91251)
+[2026-06-11 08:04:58 -0300] [91249] [INFO] Worker exiting (pid: 91249)
+[2026-06-11 08:04:58 -0300] [91246] [INFO] Worker (pid:91250) was sent SIGTERM!
+[2026-06-11 08:05:00 -0300] [91246] [INFO] Shutting down: Master
+[2026-06-11 08:05:00 -0300] [92109] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 08:05:00 -0300] [92109] [INFO] Listening at: http://127.0.0.1:8000 (92109)
+[2026-06-11 08:05:00 -0300] [92109] [INFO] Using worker: sync
+[2026-06-11 08:05:00 -0300] [92112] [INFO] Booting worker with pid: 92112
+[2026-06-11 08:05:00 -0300] [92113] [INFO] Booting worker with pid: 92113
+[2026-06-11 08:05:00 -0300] [92114] [INFO] Booting worker with pid: 92114
+[2026-06-11 08:05:00 -0300] [92109] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 08:09:15 -0300] [92109] [INFO] Handling signal: term
+[2026-06-11 08:09:15 -0300] [92113] [INFO] Worker exiting (pid: 92113)
+[2026-06-11 08:09:15 -0300] [92114] [INFO] Worker exiting (pid: 92114)
+[2026-06-11 08:09:15 -0300] [92112] [INFO] Worker exiting (pid: 92112)
+[2026-06-11 08:09:16 -0300] [92109] [INFO] Worker (pid:92113) was sent SIGTERM!
+[2026-06-11 08:09:16 -0300] [92109] [INFO] Shutting down: Master
+[2026-06-11 08:09:17 -0300] [92623] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 08:09:17 -0300] [92623] [INFO] Listening at: http://127.0.0.1:8000 (92623)
+[2026-06-11 08:09:17 -0300] [92623] [INFO] Using worker: sync
+[2026-06-11 08:09:17 -0300] [92634] [INFO] Booting worker with pid: 92634
+[2026-06-11 08:09:17 -0300] [92635] [INFO] Booting worker with pid: 92635
+[2026-06-11 08:09:17 -0300] [92636] [INFO] Booting worker with pid: 92636
+[2026-06-11 08:09:17 -0300] [92623] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 08:10:18 -0300] [92623] [INFO] Handling signal: term
+[2026-06-11 08:10:18 -0300] [92634] [INFO] Worker exiting (pid: 92634)
+[2026-06-11 08:10:18 -0300] [92635] [INFO] Worker exiting (pid: 92635)
+[2026-06-11 08:10:18 -0300] [92636] [INFO] Worker exiting (pid: 92636)
+[2026-06-11 08:10:19 -0300] [92623] [INFO] Shutting down: Master
+[2026-06-11 08:10:19 -0300] [92793] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 08:10:19 -0300] [92793] [INFO] Listening at: http://127.0.0.1:8000 (92793)
+[2026-06-11 08:10:19 -0300] [92793] [INFO] Using worker: sync
+[2026-06-11 08:10:19 -0300] [92800] [INFO] Booting worker with pid: 92800
+[2026-06-11 08:10:19 -0300] [92801] [INFO] Booting worker with pid: 92801
+[2026-06-11 08:10:19 -0300] [92805] [INFO] Booting worker with pid: 92805
+[2026-06-11 08:10:19 -0300] [92793] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 08:15:05 -0300] [92793] [INFO] Handling signal: term
+[2026-06-11 08:15:05 -0300] [92801] [INFO] Worker exiting (pid: 92801)
+[2026-06-11 08:15:05 -0300] [92805] [INFO] Worker exiting (pid: 92805)
+[2026-06-11 08:15:05 -0300] [92800] [INFO] Worker exiting (pid: 92800)
+[2026-06-11 08:15:05 -0300] [92793] [INFO] Worker (pid:92801) was sent SIGTERM!
+[2026-06-11 08:15:05 -0300] [92793] [INFO] Worker (pid:92805) was sent SIGTERM!
+[2026-06-11 08:15:06 -0300] [92793] [INFO] Shutting down: Master
+[2026-06-11 08:15:06 -0300] [93399] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 08:15:06 -0300] [93399] [INFO] Listening at: http://127.0.0.1:8000 (93399)
+[2026-06-11 08:15:06 -0300] [93399] [INFO] Using worker: sync
+[2026-06-11 08:15:06 -0300] [93401] [INFO] Booting worker with pid: 93401
+[2026-06-11 08:15:07 -0300] [93402] [INFO] Booting worker with pid: 93402
+[2026-06-11 08:15:07 -0300] [93403] [INFO] Booting worker with pid: 93403
+[2026-06-11 08:15:07 -0300] [93399] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 08:20:19 -0300] [93399] [INFO] Handling signal: term
+[2026-06-11 08:20:19 -0300] [93403] [INFO] Worker exiting (pid: 93403)
+[2026-06-11 08:20:19 -0300] [93402] [INFO] Worker exiting (pid: 93402)
+[2026-06-11 08:20:19 -0300] [93401] [INFO] Worker exiting (pid: 93401)
+[2026-06-11 08:20:21 -0300] [93399] [INFO] Shutting down: Master
+[2026-06-11 08:20:21 -0300] [94068] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 08:20:21 -0300] [94068] [INFO] Listening at: http://127.0.0.1:8000 (94068)
+[2026-06-11 08:20:21 -0300] [94068] [INFO] Using worker: sync
+[2026-06-11 08:20:21 -0300] [94070] [INFO] Booting worker with pid: 94070
+[2026-06-11 08:20:21 -0300] [94071] [INFO] Booting worker with pid: 94071
+[2026-06-11 08:20:21 -0300] [94072] [INFO] Booting worker with pid: 94072
+[2026-06-11 08:20:22 -0300] [94068] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 08:30:07 -0300] [94068] [INFO] Handling signal: term
+[2026-06-11 08:30:07 -0300] [94070] [INFO] Worker exiting (pid: 94070)
+[2026-06-11 08:30:07 -0300] [94071] [INFO] Worker exiting (pid: 94071)
+[2026-06-11 08:30:07 -0300] [94072] [INFO] Worker exiting (pid: 94072)
+[2026-06-11 08:30:07 -0300] [94068] [INFO] Worker (pid:94070) was sent SIGTERM!
+[2026-06-11 08:30:07 -0300] [94068] [INFO] Worker (pid:94071) was sent SIGTERM!
+[2026-06-11 08:30:07 -0300] [94068] [INFO] Worker (pid:94072) was sent SIGTERM!
+[2026-06-11 08:30:07 -0300] [94068] [INFO] Shutting down: Master
+[2026-06-11 08:30:08 -0300] [95268] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 08:30:08 -0300] [95268] [INFO] Listening at: http://127.0.0.1:8000 (95268)
+[2026-06-11 08:30:08 -0300] [95268] [INFO] Using worker: sync
+[2026-06-11 08:30:08 -0300] [95270] [INFO] Booting worker with pid: 95270
+[2026-06-11 08:30:08 -0300] [95271] [INFO] Booting worker with pid: 95271
+[2026-06-11 08:30:08 -0300] [95272] [INFO] Booting worker with pid: 95272
+[2026-06-11 08:30:08 -0300] [95268] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 08:32:19 -0300] [95268] [INFO] Handling signal: term
+[2026-06-11 08:32:19 -0300] [95271] [INFO] Worker exiting (pid: 95271)
+[2026-06-11 08:32:19 -0300] [95270] [INFO] Worker exiting (pid: 95270)
+[2026-06-11 08:32:19 -0300] [95268] [INFO] Worker (pid:95271) was sent SIGTERM!
+[2026-06-11 08:32:19 -0300] [95272] [INFO] Worker exiting (pid: 95272)
+[2026-06-11 08:32:21 -0300] [95268] [INFO] Shutting down: Master
+[2026-06-11 08:32:21 -0300] [95542] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 08:32:21 -0300] [95542] [INFO] Listening at: http://127.0.0.1:8000 (95542)
+[2026-06-11 08:32:21 -0300] [95542] [INFO] Using worker: sync
+[2026-06-11 08:32:21 -0300] [95544] [INFO] Booting worker with pid: 95544
+[2026-06-11 08:32:21 -0300] [95546] [INFO] Booting worker with pid: 95546
+[2026-06-11 08:32:21 -0300] [95549] [INFO] Booting worker with pid: 95549
+[2026-06-11 08:32:21 -0300] [95542] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 10:10:15 -0300] [95542] [INFO] Handling signal: term
+[2026-06-11 10:10:15 -0300] [95549] [INFO] Worker exiting (pid: 95549)
+[2026-06-11 10:10:15 -0300] [95544] [INFO] Worker exiting (pid: 95544)
+[2026-06-11 10:10:15 -0300] [95546] [INFO] Worker exiting (pid: 95546)
+[2026-06-11 10:10:18 -0300] [95542] [INFO] Shutting down: Master
+[2026-06-11 10:10:18 -0300] [104187] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 10:10:18 -0300] [104187] [INFO] Listening at: http://127.0.0.1:8000 (104187)
+[2026-06-11 10:10:18 -0300] [104187] [INFO] Using worker: sync
+[2026-06-11 10:10:18 -0300] [104189] [INFO] Booting worker with pid: 104189
+[2026-06-11 10:10:18 -0300] [104190] [INFO] Booting worker with pid: 104190
+[2026-06-11 10:10:18 -0300] [104191] [INFO] Booting worker with pid: 104191
+[2026-06-11 10:10:19 -0300] [104187] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 10:42:45 -0300] [104187] [INFO] Handling signal: term
+[2026-06-11 10:42:45 -0300] [104190] [INFO] Worker exiting (pid: 104190)
+[2026-06-11 10:42:45 -0300] [104189] [INFO] Worker exiting (pid: 104189)
+[2026-06-11 10:42:45 -0300] [104191] [INFO] Worker exiting (pid: 104191)
+[2026-06-11 10:42:47 -0300] [104187] [INFO] Shutting down: Master
+[2026-06-11 10:42:48 -0300] [107210] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 10:42:48 -0300] [107210] [INFO] Listening at: http://127.0.0.1:8000 (107210)
+[2026-06-11 10:42:48 -0300] [107210] [INFO] Using worker: sync
+[2026-06-11 10:42:48 -0300] [107213] [INFO] Booting worker with pid: 107213
+[2026-06-11 10:42:48 -0300] [107214] [INFO] Booting worker with pid: 107214
+[2026-06-11 10:42:48 -0300] [107215] [INFO] Booting worker with pid: 107215
+[2026-06-11 10:42:48 -0300] [107210] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 11:01:54 -0300] [107210] [INFO] Handling signal: term
+[2026-06-11 11:01:54 -0300] [107214] [INFO] Worker exiting (pid: 107214)
+[2026-06-11 11:01:54 -0300] [107215] [INFO] Worker exiting (pid: 107215)
+[2026-06-11 11:01:54 -0300] [107213] [INFO] Worker exiting (pid: 107213)
+[2026-06-11 11:01:56 -0300] [107210] [INFO] Shutting down: Master
+[2026-06-11 11:01:56 -0300] [109131] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 11:01:56 -0300] [109131] [INFO] Listening at: http://127.0.0.1:8000 (109131)
+[2026-06-11 11:01:56 -0300] [109131] [INFO] Using worker: sync
+[2026-06-11 11:01:56 -0300] [109133] [INFO] Booting worker with pid: 109133
+[2026-06-11 11:01:57 -0300] [109134] [INFO] Booting worker with pid: 109134
+[2026-06-11 11:01:57 -0300] [109135] [INFO] Booting worker with pid: 109135
+[2026-06-11 11:01:57 -0300] [109131] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-11 11:05:31 -0300] [109131] [INFO] Handling signal: term
+[2026-06-11 11:05:31 -0300] [109133] [INFO] Worker exiting (pid: 109133)
+[2026-06-11 11:05:31 -0300] [109135] [INFO] Worker exiting (pid: 109135)
+[2026-06-11 11:05:31 -0300] [109134] [INFO] Worker exiting (pid: 109134)
+[2026-06-11 11:05:32 -0300] [109131] [INFO] Worker (pid:109133) was sent SIGTERM!
+[2026-06-11 11:05:32 -0300] [109131] [INFO] Worker (pid:109134) was sent SIGTERM!
+[2026-06-11 11:05:32 -0300] [109131] [INFO] Shutting down: Master
+[2026-06-11 11:05:32 -0300] [109542] [INFO] Starting gunicorn 25.3.0
+[2026-06-11 11:05:32 -0300] [109542] [INFO] Listening at: http://127.0.0.1:8000 (109542)
+[2026-06-11 11:05:32 -0300] [109542] [INFO] Using worker: sync
+[2026-06-11 11:05:32 -0300] [109545] [INFO] Booting worker with pid: 109545
+[2026-06-11 11:05:33 -0300] [109546] [INFO] Booting worker with pid: 109546
+[2026-06-11 11:05:33 -0300] [109547] [INFO] Booting worker with pid: 109547
+[2026-06-11 11:05:33 -0300] [109542] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl

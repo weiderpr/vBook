@@ -290,7 +290,17 @@ class ServiceProvider(models.Model):
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
         related_name='service_providers', 
-        verbose_name=_("Usuário")
+        verbose_name=_("Usuário"),
+        null=True,
+        blank=True
+    )
+    condo = models.ForeignKey(
+        'administration.Condo',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='manual_service_providers',
+        verbose_name=_("Condomínio")
     )
     name = models.CharField(max_length=255, verbose_name=_("Nome Completo"))
     cpf = models.CharField(max_length=14, blank=True, null=True, verbose_name=_("CPF"))

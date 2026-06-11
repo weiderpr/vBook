@@ -1,6 +1,7 @@
 import builtins
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from properties.models import Property
 
 class PortariaCheckinManual(models.Model):
@@ -67,3 +68,68 @@ class PortariaCheckinManualGuest(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.checkin_manual}"
+
+
+class ServiceProviderAccessLog(models.Model):
+    condo = models.ForeignKey(
+        'administration.Condo',
+        on_delete=models.CASCADE,
+        related_name='provider_access_logs',
+        verbose_name=_("Condomínio")
+    )
+    provider = models.ForeignKey(
+        'properties.ServiceProvider',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='access_logs',
+        verbose_name=_("Prestador")
+    )
+    
+    # Denormalized fields for audit trail
+    provider_name = models.CharField(max_length=255, verbose_name=_("Nome do Prestador"))
+    provider_cpf = models.CharField(max_length=14, blank=True, null=True, verbose_name=_("CPF do Prestador"))
+    provider_phone = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Telefone do Prestador"))
+    
+    checkin_time = models.DateTimeField(verbose_name=_("Hora de Entrada"))
+    checkout_time = models.DateTimeField(verbose_name=_("Hora de Saída"), null=True, blank=True)
+    
+    reason = models.CharField(max_length=255, verbose_name=_("Motivo do Acesso"))
+    properties = models.ManyToManyField(
+        'properties.Property',
+        blank=True,
+        related_name='provider_access_logs',
+        verbose_name=_("Unidades Visitadas")
+    )
+    
+    car_model = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Modelo do Veículo"))
+    car_plate = models.CharField(max_length=10, blank=True, null=True, verbose_name=_("Placa do Veículo"))
+    
+    operator_entry = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='provider_entries',
+        verbose_name=_("Operador de Entrada")
+    )
+    operator_exit = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='provider_exits',
+        verbose_name=_("Operador de Saída")
+    )
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'portaria_prestador_acesso'
+        verbose_name = _("Acesso de Prestador")
+        verbose_name_plural = _("Acessos de Prestadores")
+        ordering = ['-checkin_time']
+
+    def __str__(self):
+        return f"{self.provider_name} - {self.condo.name} ({self.checkin_time})"

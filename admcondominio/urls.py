@@ -16,4 +16,14 @@ urlpatterns = [
     path('checkin-manual/<int:pk>/detalhes/', views.ManualCheckinDetailsJsonView.as_view(), name='manual_checkin_details'),
     path('checkin-manual/<int:pk>/registrar-saida/', views.ManualCheckinExitView.as_view(), name='manual_checkin_exit'),
     path('checkin-manual/<int:pk>/desfazer-checkin/', views.ManualCheckinUndoView.as_view(), name='manual_checkin_undo'),
+    path('historico/', views.HistoryListView.as_view(), name='history_list'),
+    path('arquivos-portaria/', views.PortariaDriveView.as_view(), name='portaria_drive'),
+    
+    # Prestadores
+    path('prestadores/', views.ProvidersListView.as_view(), name='provider_list'),
+    path('prestadores/cadastrar/', views.ProviderCreateView.as_view(), name='provider_create'),
+    path('prestadores/checkin/', views.ProviderCheckinView.as_view(), name='provider_checkin'),
+    path('prestadores/checkout/<int:pk>/', views.ProviderCheckoutView.as_view(), name='provider_checkout'),
+    path('prestadores/buscar/', views.ProviderSearchAPIView.as_view(), name='provider_search'),
+    path('prestadores/acesso/<int:pk>/detalhes/', views.ProviderAccessDetailsJsonView.as_view(), name='provider_access_details'),
 ]

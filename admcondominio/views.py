@@ -1,12 +1,13 @@
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import JsonResponse
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from reservations.models import Reservation, GateRelease
-from properties.models import Property, PortariaCustomProperty
-from .models import PortariaCheckinManual, PortariaCheckinManualGuest
+from properties.models import Property, PortariaCustomProperty, ServiceProvider, Service
+from .models import PortariaCheckinManual, PortariaCheckinManualGuest, ServiceProviderAccessLog
 import datetime
 import json
 import logging
@@ -79,16 +80,16 @@ class DashboardView(StaffRequiredMixin, TemplateView):
         
         # 2. Check-outs para hoje
         checkouts_today = list(Reservation.objects.filter(
+            Q(end_date=today) | Q(checkout_completed=True, gate_releases__release_type='exit', gate_releases__released_at__date=today),
             property__condo=condo,
-            end_date=today,
             is_cancelled=False
-        ).select_related('property', 'property__portaria_custom', 'client'))
+        ).distinct().select_related('property', 'property__portaria_custom', 'client'))
         for r in checkouts_today:
             r.is_manual = False
 
         manual_checkouts_today = PortariaCheckinManual.objects.filter(
-            property__condo=condo,
-            checkout_date=today
+            Q(checkout_date=today) | Q(checkout_completed=True, updated_at__date=today),
+            property__condo=condo
         ).select_related('property', 'property__portaria_custom')
         for mc in manual_checkouts_today:
             mc.client_name = mc.responsible_name
@@ -143,6 +144,15 @@ class DashboardView(StaffRequiredMixin, TemplateView):
         context['count_checkins_pending'] = count_checkins_pending
         context['count_checkouts_pending'] = count_checkouts_pending
         context['count_occupied'] = count_occupied
+        
+        # 4. Prestadores de Serviço ativos no condomínio hoje (checkout_time é nulo)
+        active_providers = ServiceProviderAccessLog.objects.filter(
+            condo=condo,
+            checkout_time__isnull=True
+        ).select_related('provider').prefetch_related('properties')
+        
+        context['active_providers'] = active_providers
+        context['count_active_providers'] = active_providers.count()
         
         # Logs de liberação recentes (últimos 10)
         context['recent_releases'] = GateRelease.objects.filter(
@@ -466,7 +476,35 @@ class PropertiesListView(StaffRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         condo = self.request.user.condo
         context['condo'] = condo
-        context['properties'] = Property.objects.filter(condo=condo).select_related('user', 'portaria_custom').order_by('address_complement', 'name')
+        
+        today = timezone.localtime(timezone.now()).date()
+        
+        # Obter IDs de propriedades ocupadas por reserva ativa hoje
+        occupied_property_ids = set(Reservation.objects.filter(
+            property__condo=condo,
+            start_date__lte=today,
+            end_date__gte=today,
+            checkin_completed=True,
+            checkout_completed=False,
+            is_cancelled=False
+        ).values_list('property_id', flat=True))
+        
+        # Obter IDs de propriedades ocupadas por check-in manual ativo hoje
+        manual_occupied_property_ids = set(PortariaCheckinManual.objects.filter(
+            property__condo=condo,
+            checkin_date__lte=today,
+            checkout_date__gte=today,
+            checkin_completed=True,
+            checkout_completed=False
+        ).values_list('property_id', flat=True))
+        
+        all_occupied_ids = occupied_property_ids.union(manual_occupied_property_ids)
+        
+        properties = list(Property.objects.filter(condo=condo).select_related('user', 'portaria_custom').order_by('address_complement', 'name'))
+        for prop in properties:
+            prop.is_occupied = prop.id in all_occupied_ids
+            
+        context['properties'] = properties
         return context
 
 
@@ -644,4 +682,553 @@ class ManualCheckinUndoView(StaffRequiredMixin, View):
             'status': 'success',
             'message': _("Check-in manual desfeito com sucesso!")
         })
+
+
+class HistoryListView(StaffRequiredMixin, TemplateView):
+    template_name = 'admcondominio/history.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        condo = self.request.user.condo
+        context['condo'] = condo
+
+        # Query release actions (registered properties)
+        releases = GateRelease.objects.filter(
+            reservation__property__condo=condo
+        ).select_related('reservation', 'reservation__property', 'user')
+
+        # Query manual checkins
+        manuals = PortariaCheckinManual.objects.filter(
+            property__condo=condo
+        ).select_related('property')
+
+        # Query provider access logs
+        provider_logs = ServiceProviderAccessLog.objects.filter(
+            condo=condo
+        ).select_related('operator_entry', 'operator_exit').prefetch_related('properties')
+
+        # Combine actions
+        actions = []
+        for r in releases:
+            actions.append({
+                'timestamp': r.released_at,
+                'action_type': 'checkin' if r.release_type == 'entry' else 'checkout',
+                'is_manual': False,
+                'guest_name': r.reservation.client_name,
+                'property_name': r.reservation.property.display_name,
+                'property_complement': r.reservation.property.display_complement,
+                'operator': r.user.full_name if r.user else _("Sistema"),
+                'details': {
+                    'phone': r.reservation.client_phone,
+                    'start_date': r.reservation.start_date,
+                    'end_date': r.reservation.end_date,
+                }
+            })
+
+        for m in manuals:
+            # Check-in Manual is created with checkin_completed=True
+            actions.append({
+                'timestamp': m.created_at,
+                'action_type': 'checkin',
+                'is_manual': True,
+                'guest_name': m.responsible_name,
+                'property_name': m.property.display_name,
+                'property_complement': m.property.display_complement,
+                'operator': _("Portaria (Manual)"),
+                'details': {
+                    'phone': "",
+                    'start_date': m.checkin_date,
+                    'end_date': m.checkout_date,
+                    'cpf': m.responsible_cpf,
+                    'rg': m.responsible_rg,
+                }
+            })
+
+            # Check-out Manual is completed when checkout_completed is True
+            if m.checkout_completed:
+                actions.append({
+                    'timestamp': m.updated_at,
+                    'action_type': 'checkout',
+                    'is_manual': True,
+                    'guest_name': m.responsible_name,
+                    'property_name': m.property.display_name,
+                    'property_complement': m.property.display_complement,
+                    'operator': _("Portaria (Manual)"),
+                    'details': {
+                        'phone': "",
+                        'start_date': m.checkin_date,
+                        'end_date': m.checkout_date,
+                        'cpf': m.responsible_cpf,
+                        'rg': m.responsible_rg,
+                    }
+                })
+
+        for pl in provider_logs:
+            # Check-in Event
+            props_list = list(pl.properties.all())
+            prop_names = ", ".join([p.display_name for p in props_list]) if props_list else _("Área Comum")
+            prop_complements = ", ".join([p.display_complement for p in props_list if p.display_complement]) if props_list else ""
+            
+            actions.append({
+                'timestamp': pl.checkin_time,
+                'action_type': 'checkin',
+                'is_manual': False,
+                'is_provider': True,
+                'guest_name': pl.provider_name,
+                'property_name': prop_names,
+                'property_complement': prop_complements,
+                'operator': pl.operator_entry.full_name if pl.operator_entry else _("Portaria"),
+                'details': {
+                    'phone': pl.provider_phone or "",
+                    'cpf': pl.provider_cpf or "",
+                    'reason': pl.reason,
+                    'car_model': pl.car_model or "",
+                    'car_plate': pl.car_plate or "",
+                }
+            })
+            
+            # Check-out Event (if completed)
+            if pl.checkout_time:
+                actions.append({
+                    'timestamp': pl.checkout_time,
+                    'action_type': 'checkout',
+                    'is_manual': False,
+                    'is_provider': True,
+                    'guest_name': pl.provider_name,
+                    'property_name': prop_names,
+                    'property_complement': prop_complements,
+                    'operator': pl.operator_exit.full_name if pl.operator_exit else _("Portaria"),
+                    'details': {
+                        'phone': pl.provider_phone or "",
+                        'cpf': pl.provider_cpf or "",
+                        'reason': pl.reason,
+                        'car_model': pl.car_model or "",
+                        'car_plate': pl.car_plate or "",
+                    }
+                })
+
+        # Sort actions by timestamp DESC (most recent first)
+        actions.sort(key=lambda x: x['timestamp'], reverse=True)
+
+        # Apply search filter if query exists
+        q = self.request.GET.get('q', '').strip().lower()
+        if q:
+            filtered_actions = []
+            for act in actions:
+                search_text = (
+                    f"{act['guest_name']} "
+                    f"{act['property_name'] or ''} "
+                    f"{act['property_complement'] or ''} "
+                    f"{act['operator'] or ''}"
+                ).lower()
+                if q in search_text:
+                    filtered_actions.append(act)
+            actions = filtered_actions
+
+        # Pagination
+        from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+        paginator = Paginator(actions, 25)  # 25 actions per page
+        page = self.request.GET.get('page')
+        try:
+            paginated_actions = paginator.page(page)
+        except PageNotAnInteger:
+            paginated_actions = paginator.page(1)
+        except EmptyPage:
+            paginated_actions = paginator.page(paginator.num_pages)
+
+        context['actions'] = paginated_actions
+        context['search_query'] = q
+        return context
+
+
+class PortariaDriveView(StaffRequiredMixin, TemplateView):
+    template_name = 'admcondominio/drive.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        condo = self.request.user.condo
+        context['condo'] = condo
+        context['active_item'] = 'portaria_drive'
+        
+        if condo:
+            workspace_name = f"Portaria {condo.name}"
+            workspace_key = f"vertice_book_portaria_{condo.id}"
+            
+            import requests
+            from django.conf import settings
+            
+            api_key = getattr(settings, 'VERTICE_DRIVE_API_KEY', 'app_Hr4aCzy0Az2GJJl8xIuNfn35HqkV9CpF')
+            url = "https://drive.verticesistemas.tech/api/embed/token"
+            headers = {
+                "X-API-Key": api_key
+            }
+            data = {
+                "workspace_key": workspace_key,
+                "workspace_name": workspace_name
+            }
+            
+            embed_url = None
+            error_msg = None
+            try:
+                response = requests.post(url, headers=headers, data=data, timeout=10)
+                if response.status_code == 200:
+                    resp_json = response.json()
+                    embed_url = resp_json.get('url')
+                else:
+                    error_msg = f"Erro da API do Vértice Drive: Código {response.status_code}"
+            except Exception as e:
+                error_msg = f"Não foi possível conectar ao Vértice Drive: {str(e)}"
+        else:
+            embed_url = None
+            error_msg = "Nenhum condomínio associado a este usuário."
+            
+        context['embed_url'] = embed_url
+        context['error_msg'] = error_msg
+        return context
+
+
+class ProvidersListView(StaffRequiredMixin, TemplateView):
+    template_name = 'admcondominio/providers.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        condo = self.request.user.condo
+        context['condo'] = condo
+        context['active_item'] = 'providers'
+
+        # Get all properties for this condo
+        properties = Property.objects.filter(condo=condo).order_by('address_complement', 'name')
+        context['properties'] = properties
+
+        # Get all services for categorizing
+        context['services'] = Service.objects.all()
+
+        # Get system users with properties in this condo
+        owner_ids = Property.objects.filter(condo=condo, user__isnull=False).values_list('user_id', flat=True).distinct()
+        
+        # Query active providers from owners & manual registrations
+        owner_providers = ServiceProvider.objects.filter(user_id__in=owner_ids, is_active=True).prefetch_related('services')
+        manual_providers = ServiceProvider.objects.filter(condo=condo, is_active=True).prefetch_related('services')
+        
+        all_providers = list(owner_providers) + list(manual_providers)
+
+        # Unify by CPF or Phone
+        grouped = {}
+        for p in all_providers:
+            key = None
+            if p.cpf:
+                key = ('cpf', p.cpf.strip().replace('.', '').replace('-', '').replace('/', ''))
+            elif p.phone:
+                key = ('phone', p.phone.strip())
+                
+            if not key:
+                continue
+
+            if key not in grouped:
+                origins = []
+                properties_served = []
+                
+                if p.condo == condo:
+                    origins.append(_("Portaria (Avulso)"))
+                if p.user_id:
+                    user_props = Property.objects.filter(condo=condo, user_id=p.user_id)
+                    for prop in user_props:
+                        properties_served.append(prop)
+                        origins.append(f"{_('Proprietário')}: {prop.display_name} ({prop.display_complement or prop.name})")
+
+                grouped[key] = {
+                    'id': p.id,
+                    'name': p.name,
+                    'cpf': p.cpf,
+                    'phone': p.phone,
+                    'photo': p.photo.url if p.photo else None,
+                    'services': list(p.services.all()),
+                    'properties_served': properties_served,
+                    'origins': list(set(origins)),
+                    'is_inside': False,
+                    'active_log_id': None,
+                    'raw_provider': p
+                }
+            else:
+                gp = grouped[key]
+                if p.condo == condo:
+                    if _("Portaria (Avulso)") not in gp['origins']:
+                        gp['origins'].append(_("Portaria (Avulso)"))
+                if p.user_id:
+                    user_props = Property.objects.filter(condo=condo, user_id=p.user_id)
+                    for prop in user_props:
+                        if prop not in gp['properties_served']:
+                            gp['properties_served'].append(prop)
+                        origin_str = f"{_('Proprietário')}: {prop.display_name} ({prop.display_complement or prop.name})"
+                        if origin_str not in gp['origins']:
+                            gp['origins'].append(origin_str)
+                # Merge services
+                for s in p.services.all():
+                    if s not in gp['services']:
+                        gp['services'].append(s)
+                # Keep photo if new one is present
+                if not gp['photo'] and p.photo:
+                    gp['photo'] = p.photo.url
+
+        # Check who is inside currently
+        active_logs = ServiceProviderAccessLog.objects.filter(condo=condo, checkout_time__isnull=True)
+        active_by_key = {}
+        for log in active_logs:
+            log_key = None
+            if log.provider_cpf:
+                log_key = ('cpf', log.provider_cpf.strip().replace('.', '').replace('-', '').replace('/', ''))
+            elif log.provider_phone:
+                log_key = ('phone', log.provider_phone.strip())
+            if log_key:
+                active_by_key[log_key] = log
+
+        for key, gp in grouped.items():
+            if key in active_by_key:
+                gp['is_inside'] = True
+                gp['active_log_id'] = active_by_key[key].id
+
+        # Sort grouped by name
+        sorted_providers = sorted(grouped.values(), key=lambda x: x['name'].lower())
+        context['providers'] = sorted_providers
+        context['active_providers'] = [p for p in sorted_providers if p['is_inside']]
+        
+        return context
+
+
+class ProviderCreateView(StaffRequiredMixin, View):
+    def post(self, request):
+        name = request.POST.get('name', '').strip()
+        cpf = request.POST.get('cpf', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        services_ids = request.POST.getlist('services')
+        photo = request.FILES.get('photo')
+
+        if not name or not cpf:
+            return JsonResponse({'status': 'error', 'message': _("Nome e CPF são obrigatórios.")}, status=400)
+
+        condo = request.user.condo
+        cpf_clean = cpf.replace('.', '').replace('-', '').replace('/', '')
+
+        # Check if already exists manually for this condo
+        if ServiceProvider.objects.filter(condo=condo, cpf=cpf).exists():
+            return JsonResponse({'status': 'error', 'message': _("Já existe um prestador cadastrado com este CPF na portaria.")}, status=400)
+
+        # Create
+        provider = ServiceProvider.objects.create(
+            name=name,
+            cpf=cpf,
+            phone=phone,
+            condo=condo,
+            user=None
+        )
+        if photo:
+            provider.photo = photo
+            provider.save()
+
+        if services_ids:
+            provider.services.set(Service.objects.filter(id__in=services_ids))
+
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Prestador cadastrado com sucesso!"),
+            'provider': {
+                'id': provider.id,
+                'name': provider.name,
+                'cpf': provider.cpf,
+                'phone': provider.phone,
+                'photo_url': provider.photo.url if provider.photo else None
+            }
+        })
+
+
+class ProviderCheckinView(StaffRequiredMixin, View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            # Fallback to standard POST (for multipart/form-data checks)
+            data = request.POST
+
+        provider_id = data.get('provider_id')
+        reason = data.get('reason', '').strip()
+        property_ids = data.get('properties', [])
+        car_model = data.get('car_model', '').strip()
+        car_plate = data.get('car_plate', '').strip()
+
+        if not provider_id or not reason:
+            return JsonResponse({'status': 'error', 'message': _("Prestador e Motivo do acesso são obrigatórios.")}, status=400)
+
+        condo = request.user.condo
+        provider = get_object_or_404(ServiceProvider, pk=provider_id)
+
+        # Check if already inside (by CPF or Phone)
+        q_filter = Q(condo=condo, checkout_time__isnull=True)
+        if provider.cpf:
+            q_filter &= Q(provider_cpf=provider.cpf)
+        else:
+            q_filter &= Q(provider_phone=provider.phone)
+
+        if ServiceProviderAccessLog.objects.filter(q_filter).exists():
+            return JsonResponse({'status': 'error', 'message': _("Este prestador já possui um acesso de entrada ativo no condomínio.")}, status=400)
+
+        # Save Entry Log
+        log = ServiceProviderAccessLog.objects.create(
+            condo=condo,
+            provider=provider,
+            provider_name=provider.name,
+            provider_cpf=provider.cpf,
+            provider_phone=provider.phone,
+            checkin_time=timezone.now(),
+            reason=reason,
+            car_model=car_model or None,
+            car_plate=car_plate or None,
+            operator_entry=request.user
+        )
+
+        if property_ids:
+            log.properties.set(Property.objects.filter(id__in=property_ids, condo=condo))
+
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Entrada do prestador %s registrada com sucesso!") % provider.name
+        })
+
+
+class ProviderCheckoutView(StaffRequiredMixin, View):
+    def post(self, request, pk):
+        condo = request.user.condo
+        log = get_object_or_404(ServiceProviderAccessLog, pk=pk, condo=condo)
+
+        if log.checkout_time:
+            return JsonResponse({'status': 'error', 'message': _("Este acesso já possui saída registrada.")}, status=400)
+
+        log.checkout_time = timezone.now()
+        log.operator_exit = request.user
+        log.save()
+
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Saída do prestador %s registrada com sucesso!") % log.provider_name
+        })
+
+
+class ProviderSearchAPIView(StaffRequiredMixin, View):
+    def get(self, request):
+        q = request.GET.get('q', '').strip().lower()
+        condo = request.user.condo
+
+        # Get system users with properties in this condo
+        owner_ids = Property.objects.filter(condo=condo, user__isnull=False).values_list('user_id', flat=True).distinct()
+        
+        # Query active providers from owners & manual registrations
+        owner_providers = ServiceProvider.objects.filter(
+            Q(name__icontains=q) | Q(cpf__icontains=q),
+            user_id__in=owner_ids,
+            is_active=True
+        ).prefetch_related('services')
+        
+        manual_providers = ServiceProvider.objects.filter(
+            Q(name__icontains=q) | Q(cpf__icontains=q),
+            condo=condo,
+            is_active=True
+        ).prefetch_related('services')
+
+        all_providers = list(owner_providers) + list(manual_providers)
+
+        # Unify by CPF or Phone
+        grouped = {}
+        for p in all_providers:
+            key = None
+            if p.cpf:
+                key = ('cpf', p.cpf.strip().replace('.', '').replace('-', '').replace('/', ''))
+            elif p.phone:
+                key = ('phone', p.phone.strip())
+            if not key:
+                continue
+
+            if key not in grouped:
+                origins = []
+                properties_served = []
+                if p.condo == condo:
+                    origins.append(_("Portaria (Avulso)"))
+                if p.user_id:
+                    user_props = Property.objects.filter(condo=condo, user_id=p.user_id)
+                    for prop in user_props:
+                        properties_served.append(prop.id)
+                        origins.append(f"{prop.display_name} ({prop.display_complement or prop.name})")
+
+                grouped[key] = {
+                    'id': p.id,
+                    'name': p.name,
+                    'cpf': p.cpf,
+                    'phone': p.phone,
+                    'photo': p.photo.url if p.photo else None,
+                    'services': [s.name for s in p.services.all()],
+                    'properties_served': properties_served,
+                    'origins': list(set(origins)),
+                    'is_inside': False,
+                    'active_log_id': None
+                }
+            else:
+                gp = grouped[key]
+                if p.condo == condo:
+                    if _("Portaria (Avulso)") not in gp['origins']:
+                        gp['origins'].append(_("Portaria (Avulso)"))
+                if p.user_id:
+                    user_props = Property.objects.filter(condo=condo, user_id=p.user_id)
+                    for prop in user_props:
+                        if prop.id not in gp['properties_served']:
+                            gp['properties_served'].append(prop.id)
+                        origin_str = f"{prop.display_name} ({prop.display_complement or prop.name})"
+                        if origin_str not in gp['origins']:
+                            gp['origins'].append(origin_str)
+                # Keep photo if new one is present
+                if not gp['photo'] and p.photo:
+                    gp['photo'] = p.photo.url
+
+        # Tag who is currently inside
+        active_logs = ServiceProviderAccessLog.objects.filter(condo=condo, checkout_time__isnull=True)
+        active_by_key = {}
+        for log in active_logs:
+            log_key = None
+            if log.provider_cpf:
+                log_key = ('cpf', log.provider_cpf.strip().replace('.', '').replace('-', '').replace('/', ''))
+            elif log.provider_phone:
+                log_key = ('phone', log.provider_phone.strip())
+            if log_key:
+                active_by_key[log_key] = log
+
+        for key, gp in grouped.items():
+            if key in active_by_key:
+                gp['is_inside'] = True
+                gp['active_log_id'] = active_by_key[key].id
+
+        return JsonResponse(list(grouped.values()), safe=False)
+
+
+class ProviderAccessDetailsJsonView(StaffRequiredMixin, View):
+    def get(self, request, pk):
+        condo = request.user.condo
+        log = get_object_or_404(ServiceProviderAccessLog, pk=pk, condo=condo)
+        
+        properties = list(log.properties.values('name', 'address_complement'))
+        
+        data = {
+            'id': log.pk,
+            'provider_name': log.provider_name,
+            'provider_cpf': log.provider_cpf or "",
+            'provider_phone': log.provider_phone or "",
+            'checkin_time': timezone.localtime(log.checkin_time).strftime('%d/%m/%Y %H:%M'),
+            'checkout_time': timezone.localtime(log.checkout_time).strftime('%d/%m/%Y %H:%M') if log.checkout_time else "",
+            'reason': log.reason,
+            'car_model': log.car_model or "",
+            'car_plate': log.car_plate or "",
+            'operator_entry': log.operator_entry.full_name if log.operator_entry else _("Sistema"),
+            'operator_exit': log.operator_exit.full_name if log.operator_exit else "",
+            'properties': properties
+        }
+        
+        return JsonResponse({'status': 'success', 'data': data})
+
+
 

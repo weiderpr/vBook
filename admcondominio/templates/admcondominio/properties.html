@@ -98,11 +98,14 @@
         height: 140px;
         background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         border-radius: 12px;
         margin-bottom: 0.75rem;
         color: var(--primary);
+        padding: 1rem;
+        text-align: center;
     }
     .property-img {
         height: 140px;
@@ -155,13 +158,20 @@
         color: white !important;
         box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
     }
-    .manual-unit {
-        border: 1px dashed var(--text-muted) !important;
-        background: rgba(255, 255, 255, 0.01) !important;
+    .occupied-unit {
+        border-color: rgba(239, 68, 68, 0.25) !important;
+        background: rgba(239, 68, 68, 0.02) !important;
     }
-    .manual-unit-row {
-        background: rgba(255, 255, 255, 0.015) !important;
-        border-left: 3px dashed var(--text-muted) !important;
+    .occupied-unit:hover {
+        border-color: #ef4444 !important;
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.15);
+    }
+    .occupied-unit-row {
+        background: rgba(239, 68, 68, 0.015) !important;
+        border-left: 3px solid #ef4444 !important;
+    }
+    .occupied-unit-row:hover {
+        background-color: rgba(239, 68, 68, 0.03) !important;
     }
 </style>
 {% endblock %}
@@ -178,6 +188,24 @@
         <a href="{% url 'admcondominio:properties_list' %}" class="{% if request.resolver_match.url_name == 'properties_list' %}active{% endif %}">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" style="margin-right: 10px; vertical-align: middle;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             {% trans "Unidades" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'admcondominio:history_list' %}" class="{% if request.resolver_match.url_name == 'history_list' %}active{% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history" style="margin-right: 10px; vertical-align: middle;"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+            {% trans "Histórico" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'admcondominio:portaria_drive' %}" class="{% if request.resolver_match.url_name == 'portaria_drive' %}active{% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder" style="margin-right: 10px; vertical-align: middle;"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+            {% trans "Arquivos da portaria" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'admcondominio:provider_list' %}" class="{% if request.resolver_match.url_name == 'provider_list' %}active{% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase" style="margin-right: 10px; vertical-align: middle;"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
+            {% trans "Prestadores" %}
         </a>
     </li>
     <li style="margin-top: auto;">
@@ -239,11 +267,17 @@
     <!-- Cards View -->
     <div class="unit-grid" id="unit-grid">
         {% for property in properties %}
-            <div class="unit-card glass-card {% if not property.user %}manual-unit{% endif %}" data-search="{{ property.display_name|lower }} {{ property.display_complement|lower }} {{ property.display_owner_name|lower }} {{ property.user.email|default:''|lower }} {{ property.portaria_custom.telefone_proprietario|default:''|lower }}" style="padding: 1.25rem; display: flex; flex-direction: column; transition: all 0.2s ease; border: 1px solid var(--glass-border); position: relative;">
+            <div class="unit-card glass-card {% if not property.user %}manual-unit{% endif %} {% if property.is_occupied %}occupied-unit{% endif %}" data-search="{{ property.display_name|lower }} {{ property.display_complement|lower }} {{ property.display_owner_name|lower }} {{ property.user.email|default:''|lower }} {{ property.portaria_custom.telefone_proprietario|default:''|lower }}" style="padding: 1.25rem; display: flex; flex-direction: column; transition: all 0.2s ease; border: 1px solid var(--glass-border); position: relative;">
                 
                 {% if not property.user %}
                     <span style="position: absolute; top: 1rem; left: 1rem; background: rgba(245, 158, 11, 0.12); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; z-index: 10;">
                         {% trans "Cadastro Manual" %}
+                    </span>
+                {% endif %}
+
+                {% if property.is_occupied %}
+                    <span style="position: absolute; top: 1rem; left: {% if not property.user %}8.5rem{% else %}1rem{% endif %}; background: rgba(239, 68, 68, 0.12); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.25); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; z-index: 10;">
+                        {% trans "Ocupada" %}
                     </span>
                 {% endif %}
 
@@ -255,11 +289,20 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-edit-3"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
                 </button>
 
+                {% if not property.user %}
+                <button {% if property.is_occupied %}disabled title="{% trans 'Unidade já ocupada' %}" style="position: absolute; top: 2rem; right: calc(2rem + 42px); z-index: 10; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center; color: var(--text-muted); opacity: 0.5; cursor: not-allowed; padding: 0;"{% else %}onclick="openManualCheckinModal('{{ property.id }}', '{{ property.display_name|escapejs }}')" title="{% trans 'Fazer checkin manual' %}" style="position: absolute; top: 2rem; right: calc(2rem + 42px); z-index: 10; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: all 0.2s ease; padding: 0;" onmouseover="this.style.background='var(--primary)'; this.style.borderColor='var(--primary)';" onmouseout="this.style.background='rgba(0, 0, 0, 0.45)'; this.style.borderColor='var(--glass-border)';"{% endif %}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                </button>
+                {% endif %}
+
                 {% if property.image %}
                     <img src="{{ property.image.url }}" alt="{{ property.display_name }}" class="property-img">
                 {% else %}
                     <div class="property-img-placeholder">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); margin-bottom: 0.25rem; word-break: break-all; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2;">
+                            {{ property.display_name }}
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home" style="opacity: 0.4;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                     </div>
                 {% endif %}
                 
@@ -282,7 +325,7 @@
                     </p>
                 {% endif %}
 
-                <div class="owner-info" style="margin-bottom: 1rem;">
+                <div class="owner-info" style="margin-top: auto;">
                     <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 0.25rem;">
                         {% trans "Proprietário" %}
                     </div>
@@ -307,12 +350,6 @@
                         </div>
                     {% endif %}
                 </div>
-                {% if not property.user %}
-                <button class="btn btn-primary" onclick="openManualCheckinModal('{{ property.id }}', '{{ property.display_name|escapejs }}')" style="width: 100%; border-radius: 10px !important; margin-top: auto; font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1rem !important; cursor: pointer; border: none; height: 38px; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
-                    {% trans "Check-in Manual" %}
-                </button>
-                {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -332,7 +369,7 @@
                 </thead>
                 <tbody>
                     {% for property in properties %}
-                    <tr class="unit-list-row {% if not property.user %}manual-unit-row{% endif %}" data-search="{{ property.display_name|lower }} {{ property.display_complement|lower }} {{ property.display_owner_name|lower }} {{ property.user.email|default:''|lower }} {{ property.portaria_custom.telefone_proprietario|default:''|lower }}">
+                    <tr class="unit-list-row {% if not property.user %}manual-unit-row{% endif %} {% if property.is_occupied %}occupied-unit-row{% endif %}" data-search="{{ property.display_name|lower }} {{ property.display_complement|lower }} {{ property.display_owner_name|lower }} {{ property.user.email|default:''|lower }} {{ property.portaria_custom.telefone_proprietario|default:''|lower }}">
                         <td>
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <div style="width: 40px; height: 40px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.05); position: relative; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0;">
@@ -343,7 +380,14 @@
                                     {% endif %}
                                 </div>
                                 <div style="min-width: 0;">
-                                    <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ property.display_name }}</div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ property.display_name }}</div>
+                                        {% if property.is_occupied %}
+                                            <span style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); font-size: 0.65rem; font-weight: 600; padding: 1px 6px; border-radius: 4px; white-space: nowrap;">
+                                                {% trans "Ocupada" %}
+                                            </span>
+                                        {% endif %}
+                                    </div>
                                     {% if property.description %}
                                         <div style="font-size: 0.75rem; color: var(--text-muted); max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ property.description }}">{{ property.description }}</div>
                                     {% endif %}
@@ -376,12 +420,8 @@
                         <td style="text-align: right;">
                             <div style="display: flex; justify-content: flex-end; gap: 8px;">
                                 {% if not property.user %}
-                                <button onclick="openManualCheckinModal('{{ property.id }}', '{{ property.display_name|escapejs }}')" 
-                                        title="{% trans 'Check-in Manual' %}"
-                                        class="unit-list-action-btn"
-                                        style="height: 34px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; padding: 0 12px; font-weight: 700; font-size: 0.8rem; gap: 6px;">
+                                <button {% if property.is_occupied %}disabled title="{% trans 'Unidade já ocupada' %}" style="width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.02); color: var(--text-muted); opacity: 0.4; cursor: not-allowed; display: flex; align-items: center; justify-content: center; padding: 0;"{% else %}onclick="openManualCheckinModal('{{ property.id }}', '{{ property.display_name|escapejs }}')" title="{% trans 'Fazer checkin manual' %}" class="unit-list-action-btn" style="width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.03); display: flex; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; transition: all 0.2s ease; padding: 0;"{% endif %}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
-                                    {% trans "Check-in" %}
                                 </button>
                                 {% endif %}
                                 <button onclick="openCustomizeModal('{{ property.id }}', '{{ property.portaria_custom.nome_portaria|default:""|escapejs }}', '{{ property.name|escapejs }}', '{{ property.portaria_custom.bloco|default:""|escapejs }}', '{{ property.portaria_custom.nome_proprietario|default:""|escapejs }}', '{{ property.user.full_name|default:""|escapejs }}', '{{ property.portaria_custom.telefone_proprietario|default:""|escapejs }}')" 

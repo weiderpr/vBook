@@ -418,6 +418,8 @@ nav a:hover {
     overflow-y: auto;
     margin-right: -1rem; /* Adjust for scrollbar space */
     padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .license-info {
@@ -465,6 +467,9 @@ nav a:hover {
 
 .sidebar-menu {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .sidebar-menu li {
