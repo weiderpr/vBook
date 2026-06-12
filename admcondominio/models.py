@@ -133,3 +133,35 @@ class ServiceProviderAccessLog(models.Model):
 
     def __str__(self):
         return f"{self.provider_name} - {self.condo.name} ({self.checkin_time})"
+
+
+class PortariaCheckinVisitor(models.Model):
+    reservation = models.ForeignKey(
+        'reservations.Reservation',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='visitors',
+        verbose_name=_("Reserva")
+    )
+    checkin_manual = models.ForeignKey(
+        PortariaCheckinManual,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='visitors',
+        verbose_name=_("Check-in Manual")
+    )
+    name = models.CharField(max_length=255, verbose_name=_("Nome Completo"))
+    document = models.CharField(max_length=50, verbose_name=_("Documento"))
+    
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Criado em"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Atualizado em"))
+
+    class Meta:
+        db_table = 'portaria_checkin_visitante'
+        verbose_name = _("Visitante do Check-in")
+        verbose_name_plural = _("Visitantes do Check-in")
+
+    def __str__(self):
+        return f"{self.name} - {self.document}"

@@ -5,9 +5,9 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from reservations.models import Reservation, GateRelease
+from reservations.models import Reservation, GateRelease, Companion
 from properties.models import Property, PortariaCustomProperty, ServiceProvider, Service
-from .models import PortariaCheckinManual, PortariaCheckinManualGuest, ServiceProviderAccessLog
+from .models import PortariaCheckinManual, PortariaCheckinManualGuest, ServiceProviderAccessLog, PortariaCheckinVisitor
 import datetime
 import json
 import logging
@@ -337,7 +337,8 @@ class ReservationDetailsJsonView(StaffRequiredMixin, View):
                 }, status=403)
         
         comp = getattr(reservation.client, 'complement', None) if reservation.client else None
-        companions = list(reservation.companions.values('name', 'rg'))
+        companions = list(reservation.companions.values('id', 'name', 'rg'))
+        visitors = list(reservation.visitors.values('id', 'name', 'document'))
         
         # Obter os logs de portaria ordenados por data de liberação
         releases = []
@@ -364,6 +365,7 @@ class ReservationDetailsJsonView(StaffRequiredMixin, View):
             'cpf': comp.cpf if comp else "",
             'rg': comp.rg if comp else "",
             'companions': companions,
+            'visitors': [{'id': v['id'], 'name': v['name'], 'rg': v['document']} for v in visitors],
             'releases': releases,
             'is_cancelled': reservation.is_cancelled
         }
@@ -603,7 +605,8 @@ class ManualCheckinDetailsJsonView(StaffRequiredMixin, View):
                     'message': _("Erro: Esta propriedade não pertence ao seu condomínio.")
                 }, status=403)
                 
-        guests = list(checkin_obj.guests.values('name', 'document'))
+        guests = list(checkin_obj.guests.values('id', 'name', 'document'))
+        visitors = list(checkin_obj.visitors.values('id', 'name', 'document'))
         
         data = {
             'id': checkin_obj.pk,
@@ -619,13 +622,249 @@ class ManualCheckinDetailsJsonView(StaffRequiredMixin, View):
             'car_plate': checkin_obj.car_plate or "",
             'cpf': checkin_obj.responsible_cpf,
             'rg': checkin_obj.responsible_rg,
-            'companions': [{'name': g['name'], 'rg': g['document']} for g in guests],
+            'companions': [{'id': g['id'], 'name': g['name'], 'rg': g['document']} for g in guests],
+            'visitors': [{'id': v['id'], 'name': v['name'], 'rg': v['document']} for v in visitors],
             'releases': [],
             'is_cancelled': False,
             'is_manual': True
         }
         
         return JsonResponse({'status': 'success', 'data': data})
+
+
+class AddVisitorsView(StaffRequiredMixin, View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Dados inválidos.")
+            }, status=400)
+            
+        obj_id = data.get('id')
+        is_manual = data.get('is_manual', False)
+        visitors = data.get('visitors', [])
+        
+        if not obj_id or not isinstance(visitors, list) or not visitors:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("ID do check-in e lista de visitantes são obrigatórios.")
+            }, status=400)
+            
+        # Access control and object retrieval
+        if is_manual:
+            checkin_obj = get_object_or_404(PortariaCheckinManual, pk=obj_id)
+            if not getattr(request.user, 'is_admin', False):
+                if checkin_obj.property.condo != request.user.condo:
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': _("Erro: Este check-in não pertence ao seu condomínio.")
+                    }, status=403)
+        else:
+            reservation = get_object_or_404(Reservation, pk=obj_id)
+            if not getattr(request.user, 'is_admin', False):
+                if reservation.property.condo != request.user.condo:
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': _("Erro: Esta reserva não pertence ao seu condomínio.")
+                    }, status=403)
+                    
+        # Validate visitors input
+        valid_visitors = []
+        for v in visitors:
+            name = v.get('name', '').strip()
+            doc = v.get('document', '').strip()
+            if not name or not doc:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Nome e CPF/RG de todos os visitantes são obrigatórios.")
+                }, status=400)
+            if len(name) > 255:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Nome do visitante não pode exceder 255 caracteres.")
+                }, status=400)
+            
+            doc_limit = 50
+            if len(doc) > doc_limit:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("O documento do visitante não pode exceder %d caracteres.") % doc_limit
+                }, status=400)
+            
+            valid_visitors.append((name, doc))
+            
+        # Save visitors
+        created_count = 0
+        if is_manual:
+            for name, doc in valid_visitors:
+                PortariaCheckinVisitor.objects.create(
+                    checkin_manual=checkin_obj,
+                    name=name,
+                    document=doc
+                )
+                created_count += 1
+        else:
+            for name, doc in valid_visitors:
+                PortariaCheckinVisitor.objects.create(
+                    reservation=reservation,
+                    name=name,
+                    document=doc
+                )
+                created_count += 1
+                
+        return JsonResponse({
+            'status': 'success',
+            'message': _("%d visitante(s) adicionado(s) com sucesso!") % created_count
+        })
+
+
+class AddCompanionsView(StaffRequiredMixin, View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Dados inválidos.")
+            }, status=400)
+            
+        obj_id = data.get('id')
+        is_manual = data.get('is_manual', False)
+        companions = data.get('companions', [])
+        
+        if not obj_id or not isinstance(companions, list) or not companions:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("ID do check-in e lista de acompanhantes são obrigatórios.")
+            }, status=400)
+            
+        # Access control and object retrieval
+        if is_manual:
+            checkin_obj = get_object_or_404(PortariaCheckinManual, pk=obj_id)
+            if not getattr(request.user, 'is_admin', False):
+                if checkin_obj.property.condo != request.user.condo:
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': _("Erro: Este check-in não pertence ao seu condomínio.")
+                    }, status=403)
+        else:
+            reservation = get_object_or_404(Reservation, pk=obj_id)
+            if not getattr(request.user, 'is_admin', False):
+                if reservation.property.condo != request.user.condo:
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': _("Erro: Esta reserva não pertence ao seu condomínio.")
+                    }, status=403)
+                    
+        # Validate companions input
+        valid_companions = []
+        for c in companions:
+            name = c.get('name', '').strip()
+            doc = c.get('document', '').strip()
+            if not name or not doc:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Nome e CPF/RG de todos os acompanhantes são obrigatórios.")
+                }, status=400)
+            if len(name) > 255:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Nome do acompanhante não pode exceder 255 caracteres.")
+                }, status=400)
+            
+            doc_limit = 50 if is_manual else 20
+            if len(doc) > doc_limit:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("O documento do acompanhante não pode exceder %d caracteres.") % doc_limit
+                }, status=400)
+            
+            valid_companions.append((name, doc))
+            
+        # Save companions
+        created_count = 0
+        if is_manual:
+            for name, doc in valid_companions:
+                PortariaCheckinManualGuest.objects.create(
+                    checkin_manual=checkin_obj,
+                    name=name,
+                    document=doc
+                )
+                created_count += 1
+        else:
+            for name, doc in valid_companions:
+                Companion.objects.create(
+                    reservation=reservation,
+                    name=name,
+                    rg=doc
+                )
+                created_count += 1
+                
+        return JsonResponse({
+            'status': 'success',
+            'message': _("%d acompanhante(s) adicionado(s) com sucesso!") % created_count
+        })
+
+
+class DeleteCompanionView(StaffRequiredMixin, View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': _("Dados inválidos.")}, status=400)
+            
+        comp_id = data.get('id')
+        is_manual = data.get('is_manual', False)
+        
+        if not comp_id:
+            return JsonResponse({'status': 'error', 'message': _("ID do acompanhante é obrigatório.")}, status=400)
+            
+        if is_manual:
+            guest = get_object_or_404(PortariaCheckinManualGuest, pk=comp_id)
+            if not getattr(request.user, 'is_admin', False):
+                if guest.checkin_manual.property.condo != request.user.condo:
+                    return JsonResponse({'status': 'error', 'message': _("Acesso negado.")}, status=403)
+            guest.delete()
+        else:
+            companion = get_object_or_404(Companion, pk=comp_id)
+            if not getattr(request.user, 'is_admin', False):
+                if companion.reservation.property.condo != request.user.condo:
+                    return JsonResponse({'status': 'error', 'message': _("Acesso negado.")}, status=403)
+            companion.delete()
+            
+        return JsonResponse({'status': 'success', 'message': _("Acompanhante removido com sucesso!")})
+
+
+class DeleteVisitorView(StaffRequiredMixin, View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': _("Dados inválidos.")}, status=400)
+            
+        visitor_id = data.get('id')
+        
+        if not visitor_id:
+            return JsonResponse({'status': 'error', 'message': _("ID do visitante é obrigatório.")}, status=400)
+            
+        visitor = get_object_or_404(PortariaCheckinVisitor, pk=visitor_id)
+        
+        # Access control
+        if visitor.reservation:
+            condo = visitor.reservation.property.condo
+        elif visitor.checkin_manual:
+            condo = visitor.checkin_manual.property.condo
+        else:
+            return JsonResponse({'status': 'error', 'message': _("Visitante sem associação válida.")}, status=400)
+            
+        if not getattr(request.user, 'is_admin', False):
+            if condo != request.user.condo:
+                return JsonResponse({'status': 'error', 'message': _("Acesso negado.")}, status=403)
+                
+        visitor.delete()
+        return JsonResponse({'status': 'success', 'message': _("Visitante removido com sucesso!")})
 
 
 class ManualCheckinExitView(StaffRequiredMixin, View):

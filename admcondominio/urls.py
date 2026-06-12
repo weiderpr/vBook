@@ -18,6 +18,10 @@ urlpatterns = [
     path('checkin-manual/<int:pk>/desfazer-checkin/', views.ManualCheckinUndoView.as_view(), name='manual_checkin_undo'),
     path('historico/', views.HistoryListView.as_view(), name='history_list'),
     path('arquivos-portaria/', views.PortariaDriveView.as_view(), name='portaria_drive'),
+    path('checkin/adicionar-visitantes/', views.AddVisitorsView.as_view(), name='add_visitors'),
+    path('checkin/adicionar-acompanhantes/', views.AddCompanionsView.as_view(), name='add_companions'),
+    path('checkin/remover-acompanhante/', views.DeleteCompanionView.as_view(), name='delete_companion'),
+    path('checkin/remover-visitante/', views.DeleteVisitorView.as_view(), name='delete_visitor'),
     
     # Prestadores
     path('prestadores/', views.ProvidersListView.as_view(), name='provider_list'),

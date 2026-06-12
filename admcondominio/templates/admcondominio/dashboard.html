@@ -10,6 +10,37 @@
         background: rgba(245, 158, 11, 0.15);
         color: #f59e0b;
     }
+    
+    /* Tooltip styles */
+    .v-tooltip {
+        position: relative;
+        display: inline-block;
+    }
+    .v-tooltip .v-tooltiptext {
+        visibility: hidden;
+        width: 160px;
+        background-color: var(--bg-card);
+        color: var(--text-main);
+        text-align: center;
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 6px 8px;
+        position: absolute;
+        z-index: 2005;
+        bottom: 125%;
+        right: 0;
+        opacity: 0;
+        transition: opacity 0.2s;
+        font-size: 0.75rem;
+        pointer-events: none;
+        box-shadow: var(--glass-shadow);
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+    }
+    .v-tooltip:hover .v-tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
     .badge-success {
         background: rgba(34, 197, 94, 0.15);
         color: #22c55e;
@@ -29,6 +60,119 @@
     @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
+    }
+
+    /* Grid system responsive */
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .columns-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    
+    @media (min-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 1rem !important;
+        }
+        .columns-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 1rem !important;
+        }
+        
+        /* Compact typography & spacing on desktop */
+        .stat-card {
+            padding: 1.15rem !important;
+        }
+        .stat-card h3 {
+            font-size: 0.75rem !important;
+            margin-bottom: 0.25rem !important;
+        }
+        .stat-card .value {
+            font-size: 1.8rem !important;
+        }
+        
+        .column-card {
+            padding: 1.15rem !important;
+        }
+        .column-card h2 {
+            font-size: 1.1rem !important;
+            margin-bottom: 1.25rem !important;
+        }
+        
+        /* Inner Cards (res-card) compact styling */
+        .res-card {
+            padding: 0.8rem 0.9rem !important;
+            border-radius: 12px !important;
+        }
+        /* Client/Apto Name */
+        .res-card div[style*="font-weight: 700"] {
+            font-size: 0.85rem !important;
+        }
+        /* Sub-info (Apto/Complemento, Hóspede) */
+        .res-card div[style*="font-size: 0.8rem"] {
+            font-size: 0.75rem !important;
+        }
+        /* Badge */
+        .res-card .badge {
+            font-size: 0.6rem !important;
+            padding: 0.2rem 0.45rem !important;
+        }
+        /* Time / Clock */
+        .res-card div[style*="font-size: 0.75rem"] {
+            font-size: 0.7rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        /* Vehicle info box */
+        .res-card div[style*="margin-top: 0.6rem"] {
+            margin-top: 0.4rem !important;
+            padding: 0.4rem 0.6rem !important;
+            font-size: 0.7rem !important;
+        }
+        /* Dates footer */
+        .res-card div[style*="font-size: 0.7rem"] {
+            font-size: 0.65rem !important;
+            margin-top: 0.5rem !important;
+        }
+        /* Actions Button */
+        .res-card button.btn {
+            font-size: 0.75rem !important;
+            padding: 0.35rem 0.75rem !important;
+            border-radius: 8px !important;
+        }
+    }
+    
+    /* Discreet action icon buttons */
+    .action-icon-btn {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.02);
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .action-icon-btn:hover {
+        background: rgba(99, 102, 241, 0.1);
+        border-color: rgba(99, 102, 241, 0.3);
+        color: var(--primary);
+        transform: scale(1.08);
+    }
+    .action-icon-btn-danger:hover {
+        background: rgba(239, 68, 68, 0.1) !important;
+        border-color: rgba(239, 68, 68, 0.3) !important;
+        color: #ef4444 !important;
+    }
+    .action-icon-btn-warning:hover {
+        background: rgba(245, 158, 11, 0.1) !important;
+        border-color: rgba(245, 158, 11, 0.3) !important;
+        color: #f59e0b !important;
     }
 </style>
 {% endblock %}
@@ -90,7 +234,7 @@
 </div>
 
 <!-- Quick Stats Summary -->
-<div class="stats-grid" style="margin-bottom: 2.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
+<div class="stats-grid" style="margin-bottom: 2.5rem; display: grid; gap: 1.5rem;">
     <div class="stat-card" style="border: 1px solid var(--glass-border); background: var(--bg-card); padding: 1.5rem; border-radius: 20px; text-align: center; box-shadow: var(--glass-shadow);">
         <h3 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 700; letter-spacing: 0.5px;">{% trans "Check-ins Hoje" %}</h3>
         <div id="stat-checkins-count" class="value" style="font-size: 2.2rem; font-weight: 800; color: var(--primary);">{{ count_checkins_pending }}</div>
@@ -110,7 +254,7 @@
 </div>
 
 <!-- Main Grid Columns -->
-<div class="columns-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; align-items: start;">
+<div class="columns-grid" style="display: grid; gap: 1.5rem; align-items: start;">
     
     <!-- Column 1: Check-ins de Hoje -->
     <div class="column-card glass-card" style="padding: 1.5rem; max-width: 100%;">
@@ -123,31 +267,34 @@
             {% for res in checkins_today %}
                 <div class="res-card" data-id="{{ res.pk }}" data-manual="{{ res.is_manual|yesno:'true,false' }}" data-search="{{ res.client_name|lower }} {{ res.property.display_complement|lower }}" style="padding: 1.1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 16px; cursor: pointer; transition: all 0.2s ease; position: relative;" onclick="openDetails(this)">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 8px;">
-                        <div>
-                            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">{{ res.client_name }}</div>
-                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">
+                        <div style="min-width: 0; flex: 1;">
+                            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main); text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ res.client_name }}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
                                 {% trans "Apto/Complemento:" %} <strong style="color: var(--primary);">{{ res.property.display_complement|default:"N/A" }}</strong>
                             </div>
                         </div>
-                        <span id="badge-checkin-{{ res.pk }}" class="badge {% if res.checkin_completed %}badge-success{% else %}badge-warning{% endif %}" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; white-space: nowrap;">
-                            {% if res.checkin_completed %}{% trans "Realizado" %}{% else %}{% trans "Pendente" %}{% endif %}
-                        </span>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                            <span id="badge-checkin-{{ res.pk }}" class="badge {% if res.checkin_completed %}badge-success{% else %}badge-warning{% endif %}" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; white-space: nowrap;">
+                                {% if res.checkin_completed %}{% trans "Realizado" %}{% else %}{% trans "Pendente" %}{% endif %}
+                            </span>
+                            <div id="btn-checkin-wrapper-{{ res.pk }}" class="v-tooltip" onclick="event.stopPropagation();">
+                                {% if not res.checkin_completed %}
+                                    <button id="btn-checkin-action-{{ res.pk }}" class="action-icon-btn" data-id="{{ res.pk }}" data-manual="{{ res.is_manual|yesno:'true,false' }}" onclick="releaseEntry(this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                                    </button>
+                                    <span class="v-tooltiptext">{% trans "Liberar Entrada" %}</span>
+                                {% elif res.can_undo_checkin %}
+                                    <button id="btn-undo-checkin-action-{{ res.pk }}" class="action-icon-btn action-icon-btn-danger" data-id="{{ res.pk }}" data-manual="{{ res.is_manual|yesno:'true,false' }}" onclick="confirmUndoCheckin(this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+                                    </button>
+                                    <span class="v-tooltiptext">{% trans "Desfazer Check-in" %}</span>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 0.75rem;">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                         {{ res.checkin_time|default:"14:00" }}
-                    </div>
-                    
-                    <div id="btn-checkin-wrapper-{{ res.pk }}" class="action-btn-wrapper" onclick="event.stopPropagation();">
-                        {% if not res.checkin_completed %}
-                            <button id="btn-checkin-action-{{ res.pk }}" class="btn btn-primary" data-id="{{ res.pk }}" data-manual="{{ res.is_manual|yesno:'true,false' }}" onclick="releaseEntry(this)" style="width: 100%; font-size: 0.8rem; padding: 0.45rem 1rem !important; border-radius: 10px !important; font-weight: 700;">
-                                {% trans "Liberar Entrada" %}
-                            </button>
-                        {% elif res.can_undo_checkin %}
-                            <button id="btn-undo-checkin-action-{{ res.pk }}" class="btn btn-outline" data-id="{{ res.pk }}" data-manual="{{ res.is_manual|yesno:'true,false' }}" onclick="confirmUndoCheckin(this)" style="width: 100%; font-size: 0.8rem; padding: 0.45rem 1rem !important; border-radius: 10px !important; font-weight: 700; border-color: rgba(239, 68, 68, 0.2); color: #ef4444; background: transparent;">
-                                {% trans "Desfazer Check-in" %}
-                            </button>
-                        {% endif %}
                     </div>
                 </div>
             {% empty %}
@@ -166,27 +313,29 @@
             {% for res in checkouts_today %}
                 <div class="res-card" data-id="{{ res.pk }}" data-manual="{{ res.is_manual|yesno:'true,false' }}" data-search="{{ res.client_name|lower }} {{ res.property.display_complement|lower }}" style="padding: 1.1rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 16px; cursor: pointer; transition: all 0.2s ease;" onclick="openDetails(this)">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 8px;">
-                        <div>
-                            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">{{ res.client_name }}</div>
-                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">
+                        <div style="min-width: 0; flex: 1;">
+                            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main); text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ res.client_name }}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
                                 {% trans "Apto/Complemento:" %} <strong style="color: var(--secondary);">{{ res.property.display_complement|default:"N/A" }}</strong>
                             </div>
                         </div>
-                        <span id="badge-checkout-{{ res.pk }}" class="badge {% if res.checkout_completed %}badge-danger-badge{% else %}badge-warning{% endif %}" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; white-space: nowrap;">
-                            {% if res.checkout_completed %}{% trans "Concluído" %}{% else %}{% trans "Pendente" %}{% endif %}
-                        </span>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                            <span id="badge-checkout-{{ res.pk }}" class="badge {% if res.checkout_completed %}badge-danger-badge{% else %}badge-warning{% endif %}" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; white-space: nowrap;">
+                                {% if res.checkout_completed %}{% trans "Concluído" %}{% else %}{% trans "Pendente" %}{% endif %}
+                            </span>
+                            <div id="btn-checkout-wrapper-{{ res.pk }}" class="v-tooltip" onclick="event.stopPropagation();">
+                                {% if not res.checkout_completed and res.checkin_completed %}
+                                    <button id="btn-checkout-action-{{ res.pk }}" class="action-icon-btn action-icon-btn-danger" data-id="{{ res.pk }}" data-manual="{{ res.is_manual|yesno:'true,false' }}" onclick="openCheckoutModal(this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                                    </button>
+                                    <span class="v-tooltiptext">{% trans "Registrar Saída" %}</span>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 0.75rem;">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                         {{ res.checkout_time|default:"11:00" }}
-                    </div>
-                    
-                    <div id="btn-checkout-wrapper-{{ res.pk }}" class="action-btn-wrapper" onclick="event.stopPropagation();">
-                        {% if not res.checkout_completed and res.checkin_completed %}
-                            <button id="btn-checkout-action-{{ res.pk }}" class="btn btn-outline" data-id="{{ res.pk }}" data-manual="{{ res.is_manual|yesno:'true,false' }}" onclick="openCheckoutModal(this)" style="width: 100%; font-size: 0.8rem; padding: 0.45rem 1rem !important; border-radius: 10px !important; font-weight: 700; border-color: rgba(239, 68, 68, 0.4); color: #ef4444; background: transparent;">
-                                {% trans "Registrar Saída" %}
-                            </button>
-                        {% endif %}
                     </div>
                 </div>
             {% empty %}
@@ -211,20 +360,21 @@
                                 {% trans "Hóspede:" %} <strong>{{ res.client_name }}</strong>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
                             <span class="badge" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; background: rgba(16, 185, 129, 0.15); color: #10b981; white-space: nowrap;">
                                 {% trans "Dentro" %}
                             </span>
-                            <button onclick="event.stopPropagation(); openCheckoutModal(this, true)" 
-                                    data-id="{{ res.pk }}" 
-                                    data-manual="{{ res.is_manual|yesno:'true,false' }}" 
-                                    data-end="{{ res.end_date|date:'d/m/Y' }}"
-                                    title="{% trans 'Checkout Antecipado' %}"
-                                    style="border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.2s ease; padding: 0; box-sizing: border-box;"
-                                    onmouseover="this.style.background='rgba(239, 68, 68, 0.1)'; this.style.borderColor='rgba(239, 68, 68, 0.3)'; this.style.color='#ef4444';"
-                                    onmouseout="this.style.background='rgba(255, 255, 255, 0.02)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'; this.style.color='var(--text-muted)';">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                            </button>
+                            <div class="v-tooltip" onclick="event.stopPropagation();">
+                                <button id="btn-checkout-action-{{ res.pk }}" 
+                                        class="action-icon-btn action-icon-btn-danger"
+                                        data-id="{{ res.pk }}" 
+                                        data-manual="{{ res.is_manual|yesno:'true,false' }}" 
+                                        data-end="{{ res.end_date|date:'d/m/Y' }}"
+                                        onclick="openCheckoutModal(this, true)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                                </button>
+                                <span class="v-tooltiptext">{% trans "Checkout Antecipado" %}</span>
+                            </div>
                         </div>
                     </div>
                     
@@ -274,9 +424,17 @@
                                 </strong>
                             </div>
                         </div>
-                        <span class="badge" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; background: rgba(245, 158, 11, 0.15); color: #f59e0b; white-space: nowrap; flex-shrink: 0;">
-                            {{ pl.checkin_time|date:"H:i" }}
-                        </span>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                            <span class="badge" style="font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 100px; font-weight: 700; text-transform: uppercase; background: rgba(245, 158, 11, 0.15); color: #f59e0b; white-space: nowrap;">
+                                {{ pl.checkin_time|date:"H:i" }}
+                            </span>
+                            <div class="v-tooltip" onclick="event.stopPropagation();">
+                                <button onclick="checkoutActiveProvider('{{ pl.pk }}')" class="action-icon-btn action-icon-btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                                </button>
+                                <span class="v-tooltiptext">{% trans "Registrar Saída" %}</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Motivo do acesso -->
@@ -286,7 +444,7 @@
 
                     <!-- Veículo se cadastrado -->
                     {% if pl.car_model or pl.car_plate %}
-                    <div style="padding: 0.5rem 0.75rem; background: rgba(255, 255, 255, 0.03); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.75rem; display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem;">
+                    <div style="padding: 0.5rem 0.75rem; background: rgba(255, 255, 255, 0.03); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.75rem; display: flex; align-items: center; gap: 8px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 17h6"/><path d="M5 12h14"/></svg>
                         <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             {% if pl.car_model %}{{ pl.car_model }}{% endif %}
@@ -295,12 +453,6 @@
                         </span>
                     </div>
                     {% endif %}
-
-                    <div onclick="event.stopPropagation();" style="margin-top: auto;">
-                        <button onclick="checkoutActiveProvider('{{ pl.pk }}')" class="btn btn-outline" style="width: 100%; font-size: 0.8rem; padding: 0.45rem 1rem !important; border-radius: 10px !important; font-weight: 700; border-color: rgba(239, 68, 68, 0.4); color: #ef4444; background: transparent; cursor: pointer; transition: all 0.2s;">
-                            {% trans "Registrar Saída" %}
-                        </button>
-                    </div>
                 </div>
             {% empty %}
                 <p class="empty-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0; font-size: 0.9rem;">{% trans "Nenhum prestador no condomínio." %}</p>
@@ -583,15 +735,76 @@
                 companionsSection.style.borderRadius = '16px';
                 companionsSection.style.padding = '1.25rem';
                 
+                const compHeader = document.createElement('div');
+                compHeader.style.display = 'flex';
+                compHeader.style.justifyContent = 'space-between';
+                compHeader.style.alignItems = 'center';
+                compHeader.style.marginBottom = '0.75rem';
+                
                 const compTitle = document.createElement('h3');
                 compTitle.style.fontSize = '0.75rem';
                 compTitle.style.color = 'var(--text-muted)';
                 compTitle.style.textTransform = 'uppercase';
                 compTitle.style.fontWeight = '700';
                 compTitle.style.letterSpacing = '0.5px';
-                compTitle.style.marginBottom = '0.75rem';
+                compTitle.style.margin = '0';
                 compTitle.textContent = `{% trans "Acompanhantes" %} (${res.companions.length})`;
-                companionsSection.appendChild(compTitle);
+                compHeader.appendChild(compTitle);
+                
+                const isOccupied = res.checkin_completed && !res.checkout_completed && !res.is_cancelled;
+                
+                const compFormDiv = document.createElement('div');
+                compFormDiv.style.display = 'none';
+                compFormDiv.style.marginTop = '1rem';
+                compFormDiv.style.paddingTop = '1rem';
+                compFormDiv.style.borderTop = '1px solid rgba(255,255,255,0.05)';
+                
+                if (isOccupied) {
+                    const addCompBtnContainer = document.createElement('div');
+                    addCompBtnContainer.className = 'v-tooltip';
+                    
+                    const addCompBtn = document.createElement('button');
+                    addCompBtn.type = 'button';
+                    addCompBtn.style.background = 'none';
+                    addCompBtn.style.border = 'none';
+                    addCompBtn.style.color = 'var(--text-muted)';
+                    addCompBtn.style.cursor = 'pointer';
+                    addCompBtn.style.padding = '4px';
+                    addCompBtn.style.borderRadius = '50%';
+                    addCompBtn.style.display = 'flex';
+                    addCompBtn.style.alignItems = 'center';
+                    addCompBtn.style.justifyContent = 'center';
+                    addCompBtn.style.transition = 'all 0.2s';
+                    addCompBtn.onmouseover = () => {
+                        addCompBtn.style.color = 'var(--primary)';
+                        addCompBtn.style.background = 'rgba(255,255,255,0.05)';
+                    };
+                    addCompBtn.onmouseout = () => {
+                        addCompBtn.style.color = 'var(--text-muted)';
+                        addCompBtn.style.background = 'none';
+                    };
+                    
+                    const plusSvgDoc = new DOMParser().parseFromString(
+                        `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`,
+                        'image/svg+xml'
+                    );
+                    addCompBtn.appendChild(plusSvgDoc.documentElement);
+                    
+                    const tooltip = document.createElement('span');
+                    tooltip.className = 'v-tooltiptext';
+                    tooltip.textContent = '{% trans "Adicionar Acompanhante" %}';
+                    
+                    addCompBtnContainer.appendChild(addCompBtn);
+                    addCompBtnContainer.appendChild(tooltip);
+                    compHeader.appendChild(addCompBtnContainer);
+                    
+                    addCompBtn.onclick = () => {
+                        addCompBtnContainer.style.display = 'none';
+                        compFormDiv.style.display = 'block';
+                    };
+                }
+                
+                companionsSection.appendChild(compHeader);
                 
                 if (res.companions.length > 0) {
                     const compList = document.createElement('div');
@@ -603,9 +816,14 @@
                         const cItem = document.createElement('div');
                         cItem.style.display = 'flex';
                         cItem.style.justifyContent = 'space-between';
+                        cItem.style.alignItems = 'center';
                         cItem.style.fontSize = '0.85rem';
                         cItem.style.padding = '0.4rem 0';
                         cItem.style.borderBottom = '1px solid rgba(255,255,255,0.03)';
+                        
+                        const cLeft = document.createElement('div');
+                        cLeft.style.display = 'flex';
+                        cLeft.style.flexDirection = 'column';
                         
                         const cName = document.createElement('span');
                         cName.style.fontWeight = '600';
@@ -614,10 +832,87 @@
                         
                         const cRg = document.createElement('span');
                         cRg.style.color = 'var(--text-muted)';
+                        cRg.style.fontSize = '0.75rem';
+                        cRg.style.marginTop = '0.15rem';
                         cRg.textContent = c.rg ? `RG: ${c.rg}` : 'RG: ---';
                         
-                        cItem.appendChild(cName);
-                        cItem.appendChild(cRg);
+                        cLeft.appendChild(cName);
+                        cLeft.appendChild(cRg);
+                        cItem.appendChild(cLeft);
+                        
+                        if (isOccupied) {
+                            const delBtnContainer = document.createElement('div');
+                            delBtnContainer.className = 'v-tooltip';
+                            
+                            const delBtn = document.createElement('button');
+                            delBtn.type = 'button';
+                            delBtn.style.background = 'none';
+                            delBtn.style.border = 'none';
+                            delBtn.style.color = 'var(--text-muted)';
+                            delBtn.style.cursor = 'pointer';
+                            delBtn.style.padding = '4px';
+                            delBtn.style.borderRadius = '50%';
+                            delBtn.style.display = 'flex';
+                            delBtn.style.alignItems = 'center';
+                            delBtn.style.justifyContent = 'center';
+                            delBtn.style.transition = 'all 0.2s';
+                            delBtn.onmouseover = () => {
+                                delBtn.style.color = '#ef4444';
+                                delBtn.style.background = 'rgba(239,68,68,0.05)';
+                            };
+                            delBtn.onmouseout = () => {
+                                delBtn.style.color = 'var(--text-muted)';
+                                delBtn.style.background = 'none';
+                            };
+                            
+                            const trashSvgDoc = new DOMParser().parseFromString(
+                                `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`,
+                                'image/svg+xml'
+                            );
+                            delBtn.appendChild(trashSvgDoc.documentElement);
+                            
+                            const delTooltip = document.createElement('span');
+                            delTooltip.className = 'v-tooltiptext';
+                            delTooltip.textContent = '{% trans "Remover Acompanhante" %}';
+                            
+                            delBtnContainer.appendChild(delBtn);
+                            delBtnContainer.appendChild(delTooltip);
+                            cItem.appendChild(delBtnContainer);
+                            
+                            delBtn.onclick = () => {
+                                delBtn.disabled = true;
+                                fetch('/book/admCondominio/checkin/remover-acompanhante/', {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRFToken': '{{ csrf_token }}',
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        id: c.id,
+                                        is_manual: isManual
+                                    })
+                                })
+                                .then(response => {
+                                    if (!response.ok) throw new Error('HTTP error');
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    if (data.status === 'success') {
+                                        showToast(data.message, 'success');
+                                        openDetails(reservationId, isManual);
+                                    } else {
+                                        showToast(data.message || '{% trans "Erro ao remover acompanhante" %}', 'error');
+                                        delBtn.disabled = false;
+                                    }
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                    showToast('{% trans "Erro de rede ao remover acompanhante" %}', 'error');
+                                    delBtn.disabled = false;
+                                });
+                            };
+                        }
+                        
                         compList.appendChild(cItem);
                     });
                     companionsSection.appendChild(compList);
@@ -630,7 +925,660 @@
                     noComp.textContent = '{% trans "Nenhum acompanhante cadastrado." %}';
                     companionsSection.appendChild(noComp);
                 }
+                
+                if (isOccupied) {
+                    const compFormTitle = document.createElement('h4');
+                    compFormTitle.style.fontSize = '0.8rem';
+                    compFormTitle.style.fontWeight = '700';
+                    compFormTitle.style.color = 'var(--text-main)';
+                    compFormTitle.style.marginBottom = '0.75rem';
+                    compFormTitle.textContent = '{% trans "Cadastrar Acompanhantes" %}';
+                    compFormDiv.appendChild(compFormTitle);
+
+                    const compRowsContainer = document.createElement('div');
+                    compRowsContainer.style.display = 'flex';
+                    compRowsContainer.style.flexDirection = 'column';
+                    compRowsContainer.style.gap = '0.75rem';
+                    compFormDiv.appendChild(compRowsContainer);
+
+                    const addCompRow = () => {
+                        const row = document.createElement('div');
+                        row.style.display = 'flex';
+                        row.style.flexDirection = 'column';
+                        row.style.gap = '0.5rem';
+                        row.style.padding = '0.75rem';
+                        row.style.background = 'rgba(255,255,255,0.01)';
+                        row.style.border = '1px solid rgba(255,255,255,0.03)';
+                        row.style.borderRadius = '10px';
+                        row.style.position = 'relative';
+
+                        const rowHeader = document.createElement('div');
+                        rowHeader.style.display = 'flex';
+                        rowHeader.style.justifyContent = 'space-between';
+                        rowHeader.style.alignItems = 'center';
+                        rowHeader.style.marginBottom = '0.25rem';
+                        
+                        const rowNum = document.createElement('span');
+                        rowNum.style.fontSize = '0.7rem';
+                        rowNum.style.color = 'var(--text-muted)';
+                        rowNum.style.fontWeight = '600';
+                        rowNum.textContent = `{% trans "Acompanhante" %} #${compRowsContainer.children.length + 1}`;
+                        rowHeader.appendChild(rowNum);
+
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.type = 'button';
+                        deleteBtn.style.background = 'none';
+                        deleteBtn.style.border = 'none';
+                        deleteBtn.style.color = '#ef4444';
+                        deleteBtn.style.cursor = 'pointer';
+                        deleteBtn.style.fontSize = '0.75rem';
+                        deleteBtn.style.padding = '2px';
+                        deleteBtn.style.display = compRowsContainer.children.length > 0 ? 'block' : 'none';
+                        
+                        const trashSvgDoc = new DOMParser().parseFromString(
+                            `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`,
+                            'image/svg+xml'
+                        );
+                        deleteBtn.appendChild(trashSvgDoc.documentElement);
+                        
+                        deleteBtn.onclick = () => {
+                            row.remove();
+                            Array.from(compRowsContainer.children).forEach((child, index) => {
+                                child.querySelector('span').textContent = `{% trans "Acompanhante" %} #${index + 1}`;
+                                const del = child.querySelector('button');
+                                if (del) del.style.display = index > 0 ? 'block' : 'none';
+                            });
+                        };
+                        rowHeader.appendChild(deleteBtn);
+                        row.appendChild(rowHeader);
+
+                        const nameInput = document.createElement('input');
+                        nameInput.type = 'text';
+                        nameInput.placeholder = '{% trans "Nome Completo" %} *';
+                        nameInput.required = true;
+                        nameInput.className = 'companion-name-input';
+                        nameInput.style.width = '100%';
+                        nameInput.style.padding = '0.5rem 0.75rem';
+                        nameInput.style.borderRadius = '8px';
+                        nameInput.style.border = '1px solid var(--glass-border)';
+                        nameInput.style.background = 'var(--bg-card)';
+                        nameInput.style.color = 'var(--text-main)';
+                        nameInput.style.fontSize = '0.85rem';
+                        row.appendChild(nameInput);
+
+                        const docInput = document.createElement('input');
+                        docInput.type = 'text';
+                        docInput.placeholder = '{% trans "CPF ou RG" %} *';
+                        docInput.required = true;
+                        docInput.className = 'companion-doc-input';
+                        docInput.style.width = '100%';
+                        docInput.style.padding = '0.5rem 0.75rem';
+                        docInput.style.borderRadius = '8px';
+                        docInput.style.border = '1px solid var(--glass-border)';
+                        docInput.style.background = 'var(--bg-card)';
+                        docInput.style.color = 'var(--text-main)';
+                        docInput.style.fontSize = '0.85rem';
+                        row.appendChild(docInput);
+
+                        compRowsContainer.appendChild(row);
+                        
+                        if (compRowsContainer.children.length > 1) {
+                            Array.from(compRowsContainer.children).forEach(child => {
+                                const del = child.querySelector('button');
+                                if (del) del.style.display = 'block';
+                            });
+                        }
+                    };
+
+                    addCompRow();
+
+                    const compAddMoreBtn = document.createElement('button');
+                    compAddMoreBtn.type = 'button';
+                    compAddMoreBtn.style.background = 'none';
+                    compAddMoreBtn.style.border = 'none';
+                    compAddMoreBtn.style.color = 'var(--primary)';
+                    compAddMoreBtn.style.cursor = 'pointer';
+                    compAddMoreBtn.style.fontSize = '0.75rem';
+                    compAddMoreBtn.style.fontWeight = '700';
+                    compAddMoreBtn.style.marginTop = '0.5rem';
+                    compAddMoreBtn.style.alignSelf = 'flex-start';
+                    compAddMoreBtn.style.display = 'flex';
+                    compAddMoreBtn.style.alignItems = 'center';
+                    compAddMoreBtn.style.gap = '4px';
+                    
+                    const plusSvgDoc = new DOMParser().parseFromString(
+                        `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`,
+                        'image/svg+xml'
+                    );
+                    compAddMoreBtn.appendChild(plusSvgDoc.documentElement);
+                    
+                    const compBtnTextSpan = document.createElement('span');
+                    compBtnTextSpan.textContent = '{% trans "Adicionar outro acompanhante" %}';
+                    compAddMoreBtn.appendChild(compBtnTextSpan);
+                    
+                    compAddMoreBtn.onclick = addCompRow;
+                    compFormDiv.appendChild(compAddMoreBtn);
+
+                    const compActionContainer = document.createElement('div');
+                    compActionContainer.style.display = 'flex';
+                    compActionContainer.style.gap = '0.5rem';
+                    compActionContainer.style.marginTop = '1rem';
+
+                    const compCancelBtn = document.createElement('button');
+                    compCancelBtn.type = 'button';
+                    compCancelBtn.className = 'btn btn-outline';
+                    compCancelBtn.style.flex = '1';
+                    compCancelBtn.style.fontSize = '0.75rem';
+                    compCancelBtn.style.padding = '0.45rem 1rem';
+                    compCancelBtn.style.borderRadius = '8px';
+                    compCancelBtn.style.fontWeight = '700';
+                    compCancelBtn.textContent = '{% trans "Cancelar" %}';
+                    compCancelBtn.onclick = () => {
+                        compFormDiv.style.display = 'none';
+                        const addBtnCont = compHeader.querySelector('.v-tooltip');
+                        if (addBtnCont) addBtnCont.style.display = 'block';
+                        compRowsContainer.replaceChildren();
+                        addCompRow();
+                    };
+                    compActionContainer.appendChild(compCancelBtn);
+
+                    const compSaveBtn = document.createElement('button');
+                    compSaveBtn.type = 'button';
+                    compSaveBtn.className = 'btn btn-primary';
+                    compSaveBtn.style.flex = '1';
+                    compSaveBtn.style.fontSize = '0.75rem';
+                    compSaveBtn.style.padding = '0.45rem 1rem';
+                    compSaveBtn.style.borderRadius = '8px';
+                    compSaveBtn.style.fontWeight = '700';
+                    compSaveBtn.textContent = '{% trans "Salvar" %}';
+                    compSaveBtn.onclick = () => {
+                        const companionRows = compRowsContainer.children;
+                        const companions = [];
+                        let hasEmpty = false;
+
+                        for (let i = 0; i < companionRows.length; i++) {
+                            const name = companionRows[i].querySelector('.companion-name-input').value.trim();
+                            const doc = companionRows[i].querySelector('.companion-doc-input').value.trim();
+                            if (!name || !doc) {
+                                hasEmpty = true;
+                                break;
+                            }
+                            companions.push({ name, document: doc });
+                        }
+
+                        if (hasEmpty) {
+                            showToast('{% trans "Por favor, preencha todos os campos obrigatórios." %}', 'error');
+                            return;
+                        }
+
+                        compSaveBtn.disabled = true;
+                        compSaveBtn.textContent = '{% trans "Salvando..." %}';
+
+                        fetch('/book/admCondominio/checkin/adicionar-acompanhantes/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                id: res.id,
+                                is_manual: isManual,
+                                companions: companions
+                            })
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('HTTP error');
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.status === 'success') {
+                                showToast(data.message, 'success');
+                                openDetails(reservationId, isManual);
+                            } else {
+                                showToast(data.message || '{% trans "Erro ao adicionar acompanhantes" %}', 'error');
+                                compSaveBtn.disabled = false;
+                                compSaveBtn.textContent = '{% trans "Salvar" %}';
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            showToast('{% trans "Erro de rede ao adicionar acompanhantes" %}', 'error');
+                            compSaveBtn.disabled = false;
+                            compSaveBtn.textContent = '{% trans "Salvar" %}';
+                        });
+                    };
+                    compActionContainer.appendChild(compSaveBtn);
+
+                    compFormDiv.appendChild(compActionContainer);
+                    companionsSection.appendChild(compFormDiv);
+                }
+                
                 body.appendChild(companionsSection);
+
+                // 3.5. Visitantes Section
+                const visitorsSection = document.createElement('div');
+                visitorsSection.style.background = 'rgba(255, 255, 255, 0.02)';
+                visitorsSection.style.border = '1px solid var(--glass-border)';
+                visitorsSection.style.borderRadius = '16px';
+                visitorsSection.style.padding = '1.25rem';
+                
+                const visitorsHeader = document.createElement('div');
+                visitorsHeader.style.display = 'flex';
+                visitorsHeader.style.justifyContent = 'space-between';
+                visitorsHeader.style.alignItems = 'center';
+                visitorsHeader.style.marginBottom = '0.75rem';
+                
+                const visitorsTitle = document.createElement('h3');
+                visitorsTitle.style.fontSize = '0.75rem';
+                visitorsTitle.style.color = 'var(--text-muted)';
+                visitorsTitle.style.textTransform = 'uppercase';
+                visitorsTitle.style.fontWeight = '700';
+                visitorsTitle.style.letterSpacing = '0.5px';
+                visitorsTitle.style.margin = '0';
+                const numVisitors = res.visitors ? res.visitors.length : 0;
+                visitorsTitle.textContent = `{% trans "Visitantes" %} (${numVisitors})`;
+                visitorsHeader.appendChild(visitorsTitle);
+                
+                const visitorsFormDiv = document.createElement('div');
+                visitorsFormDiv.style.display = 'none';
+                visitorsFormDiv.style.marginTop = '1rem';
+                visitorsFormDiv.style.paddingTop = '1rem';
+                visitorsFormDiv.style.borderTop = '1px solid rgba(255,255,255,0.05)';
+                
+                if (isOccupied) {
+                    const addVisitorBtnContainer = document.createElement('div');
+                    addVisitorBtnContainer.className = 'v-tooltip';
+                    
+                    const addVisitorBtn = document.createElement('button');
+                    addVisitorBtn.type = 'button';
+                    addVisitorBtn.style.background = 'none';
+                    addVisitorBtn.style.border = 'none';
+                    addVisitorBtn.style.color = 'var(--text-muted)';
+                    addVisitorBtn.style.cursor = 'pointer';
+                    addVisitorBtn.style.padding = '4px';
+                    addVisitorBtn.style.borderRadius = '50%';
+                    addVisitorBtn.style.display = 'flex';
+                    addVisitorBtn.style.alignItems = 'center';
+                    addVisitorBtn.style.justifyContent = 'center';
+                    addVisitorBtn.style.transition = 'all 0.2s';
+                    addVisitorBtn.onmouseover = () => {
+                        addVisitorBtn.style.color = 'var(--primary)';
+                        addVisitorBtn.style.background = 'rgba(255,255,255,0.05)';
+                    };
+                    addVisitorBtn.onmouseout = () => {
+                        addVisitorBtn.style.color = 'var(--text-muted)';
+                        addVisitorBtn.style.background = 'none';
+                    };
+                    
+                    const plusSvgDoc = new DOMParser().parseFromString(
+                        `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`,
+                        'image/svg+xml'
+                    );
+                    addVisitorBtn.appendChild(plusSvgDoc.documentElement);
+                    
+                    const tooltip = document.createElement('span');
+                    tooltip.className = 'v-tooltiptext';
+                    tooltip.textContent = '{% trans "Adicionar Visitante" %}';
+                    
+                    addVisitorBtnContainer.appendChild(addVisitorBtn);
+                    addVisitorBtnContainer.appendChild(tooltip);
+                    visitorsHeader.appendChild(addVisitorBtnContainer);
+                    
+                    addVisitorBtn.onclick = () => {
+                        addVisitorBtnContainer.style.display = 'none';
+                        visitorsFormDiv.style.display = 'block';
+                    };
+                }
+                
+                visitorsSection.appendChild(visitorsHeader);
+                
+                if (res.visitors && res.visitors.length > 0) {
+                    const visitorsList = document.createElement('div');
+                    visitorsList.style.display = 'flex';
+                    visitorsList.style.flexDirection = 'column';
+                    visitorsList.style.gap = '0.5rem';
+                    
+                    res.visitors.forEach(v => {
+                        const vItem = document.createElement('div');
+                        vItem.style.display = 'flex';
+                        vItem.style.justifyContent = 'space-between';
+                        vItem.style.alignItems = 'center';
+                        vItem.style.fontSize = '0.85rem';
+                        vItem.style.padding = '0.4rem 0';
+                        vItem.style.borderBottom = '1px solid rgba(255,255,255,0.03)';
+                        
+                        const vLeft = document.createElement('div');
+                        vLeft.style.display = 'flex';
+                        vLeft.style.flexDirection = 'column';
+                        
+                        const vName = document.createElement('span');
+                        vName.style.fontWeight = '600';
+                        vName.style.color = 'var(--text-main)';
+                        vName.textContent = v.name;
+                        
+                        const vRg = document.createElement('span');
+                        vRg.style.color = 'var(--text-muted)';
+                        vRg.style.fontSize = '0.75rem';
+                        vRg.style.marginTop = '0.15rem';
+                        vRg.textContent = v.rg ? `RG/CPF: ${v.rg}` : 'RG/CPF: ---';
+                        
+                        vLeft.appendChild(vName);
+                        vLeft.appendChild(vRg);
+                        vItem.appendChild(vLeft);
+                        
+                        if (isOccupied) {
+                            const delBtnContainer = document.createElement('div');
+                            delBtnContainer.className = 'v-tooltip';
+                            
+                            const delBtn = document.createElement('button');
+                            delBtn.type = 'button';
+                            delBtn.style.background = 'none';
+                            delBtn.style.border = 'none';
+                            delBtn.style.color = 'var(--text-muted)';
+                            delBtn.style.cursor = 'pointer';
+                            delBtn.style.padding = '4px';
+                            delBtn.style.borderRadius = '50%';
+                            delBtn.style.display = 'flex';
+                            delBtn.style.alignItems = 'center';
+                            delBtn.style.justifyContent = 'center';
+                            delBtn.style.transition = 'all 0.2s';
+                            delBtn.onmouseover = () => {
+                                delBtn.style.color = '#ef4444';
+                                delBtn.style.background = 'rgba(239,68,68,0.05)';
+                            };
+                            delBtn.onmouseout = () => {
+                                delBtn.style.color = 'var(--text-muted)';
+                                delBtn.style.background = 'none';
+                            };
+                            
+                            const trashSvgDoc = new DOMParser().parseFromString(
+                                `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`,
+                                'image/svg+xml'
+                            );
+                            delBtn.appendChild(trashSvgDoc.documentElement);
+                            
+                            const delTooltip = document.createElement('span');
+                            delTooltip.className = 'v-tooltiptext';
+                            delTooltip.textContent = '{% trans "Remover Visitante" %}';
+                            
+                            delBtnContainer.appendChild(delBtn);
+                            delBtnContainer.appendChild(delTooltip);
+                            vItem.appendChild(delBtnContainer);
+                            
+                            delBtn.onclick = () => {
+                                delBtn.disabled = true;
+                                fetch('/book/admCondominio/checkin/remover-visitante/', {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRFToken': '{{ csrf_token }}',
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        id: v.id
+                                    })
+                                })
+                                .then(response => {
+                                    if (!response.ok) throw new Error('HTTP error');
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    if (data.status === 'success') {
+                                        showToast(data.message, 'success');
+                                        openDetails(reservationId, isManual);
+                                    } else {
+                                        showToast(data.message || '{% trans "Erro ao remover visitante" %}', 'error');
+                                        delBtn.disabled = false;
+                                    }
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                    showToast('{% trans "Erro de rede ao remover visitante" %}', 'error');
+                                    delBtn.disabled = false;
+                                });
+                            };
+                        }
+                        
+                        visitorsList.appendChild(vItem);
+                    });
+                    visitorsSection.appendChild(visitorsList);
+                } else {
+                    const noVisitors = document.createElement('p');
+                    noVisitors.style.fontSize = '0.8rem';
+                    noVisitors.style.color = 'var(--text-muted)';
+                    noVisitors.style.textAlign = 'center';
+                    noVisitors.style.margin = '0.5rem 0 0 0';
+                    noVisitors.textContent = '{% trans "Nenhum visitante cadastrado." %}';
+                    visitorsSection.appendChild(noVisitors);
+                }
+
+                if (isOccupied) {
+                    const formTitle = document.createElement('h4');
+                    formTitle.style.fontSize = '0.8rem';
+                    formTitle.style.fontWeight = '700';
+                    formTitle.style.color = 'var(--text-main)';
+                    formTitle.style.marginBottom = '0.75rem';
+                    formTitle.textContent = '{% trans "Cadastrar Visitantes" %}';
+                    visitorsFormDiv.appendChild(formTitle);
+
+                    const rowsContainer = document.createElement('div');
+                    rowsContainer.style.display = 'flex';
+                    rowsContainer.style.flexDirection = 'column';
+                    rowsContainer.style.gap = '0.75rem';
+                    visitorsFormDiv.appendChild(rowsContainer);
+
+                    const addVisitorRow = () => {
+                        const row = document.createElement('div');
+                        row.style.display = 'flex';
+                        row.style.flexDirection = 'column';
+                        row.style.gap = '0.5rem';
+                        row.style.padding = '0.75rem';
+                        row.style.background = 'rgba(255,255,255,0.01)';
+                        row.style.border = '1px solid rgba(255,255,255,0.03)';
+                        row.style.borderRadius = '10px';
+                        row.style.position = 'relative';
+
+                        const rowHeader = document.createElement('div');
+                        rowHeader.style.display = 'flex';
+                        rowHeader.style.justifyContent = 'space-between';
+                        rowHeader.style.alignItems = 'center';
+                        rowHeader.style.marginBottom = '0.25rem';
+                        
+                        const rowNum = document.createElement('span');
+                        rowNum.style.fontSize = '0.7rem';
+                        rowNum.style.color = 'var(--text-muted)';
+                        rowNum.style.fontWeight = '600';
+                        rowNum.textContent = `{% trans "Visitante" %} #${rowsContainer.children.length + 1}`;
+                        rowHeader.appendChild(rowNum);
+
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.type = 'button';
+                        deleteBtn.style.background = 'none';
+                        deleteBtn.style.border = 'none';
+                        deleteBtn.style.color = '#ef4444';
+                        deleteBtn.style.cursor = 'pointer';
+                        deleteBtn.style.fontSize = '0.75rem';
+                        deleteBtn.style.padding = '2px';
+                        deleteBtn.style.display = rowsContainer.children.length > 0 ? 'block' : 'none';
+                        
+                        const trashSvgDoc = new DOMParser().parseFromString(
+                            `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`,
+                            'image/svg+xml'
+                        );
+                        deleteBtn.appendChild(trashSvgDoc.documentElement);
+                        
+                        deleteBtn.onclick = () => {
+                            row.remove();
+                            Array.from(rowsContainer.children).forEach((child, index) => {
+                                child.querySelector('span').textContent = `{% trans "Visitante" %} #${index + 1}`;
+                                const del = child.querySelector('button');
+                                if (del) del.style.display = index > 0 ? 'block' : 'none';
+                            });
+                        };
+                        rowHeader.appendChild(deleteBtn);
+                        row.appendChild(rowHeader);
+
+                        const nameInput = document.createElement('input');
+                        nameInput.type = 'text';
+                        nameInput.placeholder = '{% trans "Nome Completo" %} *';
+                        nameInput.required = true;
+                        nameInput.className = 'visitor-name-input';
+                        nameInput.style.width = '100%';
+                        nameInput.style.padding = '0.5rem 0.75rem';
+                        nameInput.style.borderRadius = '8px';
+                        nameInput.style.border = '1px solid var(--glass-border)';
+                        nameInput.style.background = 'var(--bg-card)';
+                        nameInput.style.color = 'var(--text-main)';
+                        nameInput.style.fontSize = '0.85rem';
+                        row.appendChild(nameInput);
+
+                        const docInput = document.createElement('input');
+                        docInput.type = 'text';
+                        docInput.placeholder = '{% trans "CPF ou RG" %} *';
+                        docInput.required = true;
+                        docInput.className = 'visitor-doc-input';
+                        docInput.style.width = '100%';
+                        docInput.style.padding = '0.5rem 0.75rem';
+                        docInput.style.borderRadius = '8px';
+                        docInput.style.border = '1px solid var(--glass-border)';
+                        docInput.style.background = 'var(--bg-card)';
+                        docInput.style.color = 'var(--text-main)';
+                        docInput.style.fontSize = '0.85rem';
+                        row.appendChild(docInput);
+
+                        rowsContainer.appendChild(row);
+                        
+                        if (rowsContainer.children.length > 1) {
+                            Array.from(rowsContainer.children).forEach(child => {
+                                const del = child.querySelector('button');
+                                if (del) del.style.display = 'block';
+                            });
+                        }
+                    };
+
+                    addVisitorRow();
+
+                    const addMoreBtn = document.createElement('button');
+                    addMoreBtn.type = 'button';
+                    addMoreBtn.style.background = 'none';
+                    addMoreBtn.style.border = 'none';
+                    addMoreBtn.style.color = 'var(--primary)';
+                    addMoreBtn.style.cursor = 'pointer';
+                    addMoreBtn.style.fontSize = '0.75rem';
+                    addMoreBtn.style.fontWeight = '700';
+                    addMoreBtn.style.marginTop = '0.5rem';
+                    addMoreBtn.style.alignSelf = 'flex-start';
+                    addMoreBtn.style.display = 'flex';
+                    addMoreBtn.style.alignItems = 'center';
+                    addMoreBtn.style.gap = '4px';
+                    
+                    const plusSvgDoc = new DOMParser().parseFromString(
+                        `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`,
+                        'image/svg+xml'
+                    );
+                    addMoreBtn.appendChild(plusSvgDoc.documentElement);
+                    
+                    const btnTextSpan = document.createElement('span');
+                    btnTextSpan.textContent = '{% trans "Adicionar outro visitante" %}';
+                    addMoreBtn.appendChild(btnTextSpan);
+                    
+                    addMoreBtn.onclick = addVisitorRow;
+                    visitorsFormDiv.appendChild(addMoreBtn);
+
+                    const actionContainer = document.createElement('div');
+                    actionContainer.style.display = 'flex';
+                    actionContainer.style.gap = '0.5rem';
+                    actionContainer.style.marginTop = '1rem';
+
+                    const cancelBtn = document.createElement('button');
+                    cancelBtn.type = 'button';
+                    cancelBtn.className = 'btn btn-outline';
+                    cancelBtn.style.flex = '1';
+                    cancelBtn.style.fontSize = '0.75rem';
+                    cancelBtn.style.padding = '0.45rem 1rem';
+                    cancelBtn.style.borderRadius = '8px';
+                    cancelBtn.style.fontWeight = '700';
+                    cancelBtn.textContent = '{% trans "Cancelar" %}';
+                    cancelBtn.onclick = () => {
+                        visitorsFormDiv.style.display = 'none';
+                        const addBtnCont = visitorsHeader.querySelector('.v-tooltip');
+                        if (addBtnCont) addBtnCont.style.display = 'block';
+                        rowsContainer.replaceChildren();
+                        addVisitorRow();
+                    };
+                    actionContainer.appendChild(cancelBtn);
+
+                    const saveBtn = document.createElement('button');
+                    saveBtn.type = 'button';
+                    saveBtn.className = 'btn btn-primary';
+                    saveBtn.style.flex = '1';
+                    saveBtn.style.fontSize = '0.75rem';
+                    saveBtn.style.padding = '0.45rem 1rem';
+                    saveBtn.style.borderRadius = '8px';
+                    saveBtn.style.fontWeight = '700';
+                    saveBtn.textContent = '{% trans "Salvar" %}';
+                    saveBtn.onclick = () => {
+                        const visitorRows = rowsContainer.children;
+                        const visitors = [];
+                        let hasEmpty = false;
+
+                        for (let i = 0; i < visitorRows.length; i++) {
+                            const name = visitorRows[i].querySelector('.visitor-name-input').value.trim();
+                            const doc = visitorRows[i].querySelector('.visitor-doc-input').value.trim();
+                            if (!name || !doc) {
+                                hasEmpty = true;
+                                break;
+                            }
+                            visitors.push({ name, document: doc });
+                        }
+
+                        if (hasEmpty) {
+                            showToast('{% trans "Por favor, preencha todos os campos obrigatórios." %}', 'error');
+                            return;
+                        }
+
+                        saveBtn.disabled = true;
+                        saveBtn.textContent = '{% trans "Salvando..." %}';
+
+                        fetch('/book/admCondominio/checkin/adicionar-visitantes/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                id: res.id,
+                                is_manual: isManual,
+                                visitors: visitors
+                            })
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('HTTP error');
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.status === 'success') {
+                                showToast(data.message, 'success');
+                                openDetails(reservationId, isManual);
+                            } else {
+                                showToast(data.message || '{% trans "Erro ao adicionar visitantes" %}', 'error');
+                                saveBtn.disabled = false;
+                                saveBtn.textContent = '{% trans "Salvar" %}';
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            showToast('{% trans "Erro de rede ao adicionar visitantes" %}', 'error');
+                            saveBtn.disabled = false;
+                            saveBtn.textContent = '{% trans "Salvar" %}';
+                        });
+                    };
+                    actionContainer.appendChild(saveBtn);
+
+                    visitorsFormDiv.appendChild(actionContainer);
+                    visitorsSection.appendChild(visitorsFormDiv);
+                }
+
+                body.appendChild(visitorsSection);
                 
                 // 4. Histórico de Portaria Section
                 const histSection = document.createElement('div');
@@ -707,8 +1655,8 @@
         if (!btn) return;
         
         btn.disabled = true;
-        const originalText = btn.textContent;
-        btn.textContent = '{% trans "Liberando..." %}';
+        btn.style.opacity = '0.5';
+        btn.style.pointerEvents = 'none';
 
         const fetchUrl = isManual ? `/book/admCondominio/unidades/${reservationId}/checkin-manual/` : `/book/admCondominio/reserva/${reservationId}/liberar-entrada/`;
         fetch(fetchUrl, {
@@ -739,20 +1687,18 @@
                     btnWrapper.replaceChildren(); // Safe clear
                     const undoBtn = document.createElement('button');
                     undoBtn.id = `btn-undo-checkin-action-${reservationId}`;
-                    undoBtn.className = 'btn btn-outline';
-                    undoBtn.style.width = '100%';
-                    undoBtn.style.fontSize = '0.8rem';
-                    undoBtn.style.padding = '0.45rem 1rem !important';
-                    undoBtn.style.borderRadius = '10px !important';
-                    undoBtn.style.fontWeight = '700';
-                    undoBtn.style.borderColor = 'rgba(239, 68, 68, 0.2)';
-                    undoBtn.style.color = '#ef4444';
-                    undoBtn.style.background = 'transparent';
-                    undoBtn.textContent = '{% trans "Desfazer Check-in" %}';
+                    undoBtn.className = 'action-icon-btn action-icon-btn-danger';
+                    undoBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>';
                     undoBtn.setAttribute('data-id', reservationId);
                     undoBtn.setAttribute('data-manual', isManual ? 'true' : 'false');
                     undoBtn.onclick = function() { confirmUndoCheckin(this); };
+                    
+                    const tooltipSpan = document.createElement('span');
+                    tooltipSpan.className = 'v-tooltiptext';
+                    tooltipSpan.textContent = '{% trans "Desfazer Check-in" %}';
+                    
                     btnWrapper.appendChild(undoBtn);
+                    btnWrapper.appendChild(tooltipSpan);
                 }
                 
                 // Add to occupied column dynamically
@@ -770,14 +1716,16 @@
             } else {
                 showToast(data.message || '{% trans "Erro ao liberar acesso" %}', 'error');
                 btn.disabled = false;
-                btn.textContent = originalText;
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
             }
         })
         .catch(err => {
             console.error(err);
             showToast('{% trans "Erro de conexão ao liberar acesso" %}', 'error');
             btn.disabled = false;
-            btn.textContent = originalText;
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'auto';
         });
     }
 
@@ -786,7 +1734,8 @@
         const actionBtn = document.getElementById(`btn-checkout-action-${reservationId}`);
         if (actionBtn) {
             actionBtn.disabled = true;
-            actionBtn.textContent = '{% trans "Processando..." %}';
+            actionBtn.style.opacity = '0.5';
+            actionBtn.style.pointerEvents = 'none';
         }
 
         const fetchUrl = isManual ? `/book/admCondominio/checkin-manual/${reservationId}/registrar-saida/` : `/book/admCondominio/reserva/${reservationId}/registrar-saida/`;
@@ -955,7 +1904,8 @@
                 showToast(data.message || '{% trans "Erro ao registrar checkout" %}', 'error');
                 if (actionBtn) {
                     actionBtn.disabled = false;
-                    actionBtn.textContent = '{% trans "Registrar Saída" %}';
+                    actionBtn.style.opacity = '1';
+                    actionBtn.style.pointerEvents = 'auto';
                 }
             }
             if (confirmBtn) {
@@ -968,7 +1918,8 @@
             showToast('{% trans "Erro de conexão ao registrar checkout" %}', 'error');
             if (actionBtn) {
                 actionBtn.disabled = false;
-                actionBtn.textContent = '{% trans "Registrar Saída" %}';
+                actionBtn.style.opacity = '1';
+                actionBtn.style.pointerEvents = 'auto';
             }
             if (confirmBtn) {
                 confirmBtn.disabled = false;
@@ -1075,41 +2026,30 @@
         badge.textContent = '{% trans "Dentro" %}';
         badgeWrapper.appendChild(badge);
 
+        const tooltipContainer = document.createElement('div');
+        tooltipContainer.className = 'v-tooltip';
+        tooltipContainer.style.display = 'inline-block';
+        tooltipContainer.onclick = (e) => e.stopPropagation();
+
         const earlyBtn = document.createElement('button');
-        earlyBtn.title = '{% trans "Checkout Antecipado" %}';
-        earlyBtn.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-        earlyBtn.style.background = 'rgba(255, 255, 255, 0.02)';
-        earlyBtn.style.width = '24px';
-        earlyBtn.style.height = '24px';
-        earlyBtn.style.borderRadius = '50%';
-        earlyBtn.style.cursor = 'pointer';
-        earlyBtn.style.color = 'var(--text-muted)';
-        earlyBtn.style.display = 'flex';
-        earlyBtn.style.alignItems = 'center';
-        earlyBtn.style.justifyContent = 'center';
-        earlyBtn.style.transition = 'all 0.2s ease';
-        earlyBtn.style.padding = '0';
-        earlyBtn.style.boxSizing = 'border-box';
+        earlyBtn.id = `btn-checkout-action-${res.id}`;
+        earlyBtn.className = 'action-icon-btn action-icon-btn-danger';
         earlyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>';
         earlyBtn.setAttribute('data-id', res.id);
         earlyBtn.setAttribute('data-manual', res.is_manual ? 'true' : 'false');
         earlyBtn.setAttribute('data-end', res.end_date);
-
-        earlyBtn.addEventListener('mouseover', () => {
-            earlyBtn.style.background = 'rgba(239, 68, 68, 0.1)';
-            earlyBtn.style.borderColor = 'rgba(239, 68, 68, 0.3)';
-            earlyBtn.style.color = '#ef4444';
-        });
-        earlyBtn.addEventListener('mouseout', () => {
-            earlyBtn.style.background = 'rgba(255, 255, 255, 0.02)';
-            earlyBtn.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-            earlyBtn.style.color = 'var(--text-muted)';
-        });
         earlyBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             openCheckoutModal(earlyBtn, true);
         });
-        badgeWrapper.appendChild(earlyBtn);
+
+        const tooltipSpan = document.createElement('span');
+        tooltipSpan.className = 'v-tooltiptext';
+        tooltipSpan.textContent = '{% trans "Checkout Antecipado" %}';
+
+        tooltipContainer.appendChild(earlyBtn);
+        tooltipContainer.appendChild(tooltipSpan);
+        badgeWrapper.appendChild(tooltipContainer);
         
         headerRow.appendChild(titleCol);
         headerRow.appendChild(badgeWrapper);
@@ -1246,15 +2186,18 @@
                         btnWrapper.replaceChildren(); // Safe clear
                         const releaseBtn = document.createElement('button');
                         releaseBtn.id = `btn-checkin-action-${undoReservationId}`;
-                        releaseBtn.className = 'btn btn-primary';
-                        releaseBtn.style.width = '100%';
-                        releaseBtn.style.fontSize = '0.8rem';
-                        releaseBtn.style.padding = '0.45rem 1rem !important';
-                        releaseBtn.style.borderRadius = '10px !important';
-                        releaseBtn.style.fontWeight = '700';
-                        releaseBtn.textContent = '{% trans "Liberar Entrada" %}';
-                        releaseBtn.onclick = function() { releaseEntry(undoReservationId); };
+                        releaseBtn.className = 'action-icon-btn';
+                        releaseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>';
+                        releaseBtn.setAttribute('data-id', undoReservationId);
+                        releaseBtn.setAttribute('data-manual', undoIsManual ? 'true' : 'false');
+                        releaseBtn.onclick = function() { releaseEntry(this); };
+                        
+                        const tooltipSpan = document.createElement('span');
+                        tooltipSpan.className = 'v-tooltiptext';
+                        tooltipSpan.textContent = '{% trans "Liberar Entrada" %}';
+                        
                         btnWrapper.appendChild(releaseBtn);
+                        btnWrapper.appendChild(tooltipSpan);
                     }
                     
                     // Remove from occupied list
