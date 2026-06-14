@@ -28,6 +28,15 @@ urlpatterns = [
     path('especificacoes/<int:pk>/editar/', views.PropertySpecificationUpdateView.as_view(), name='specification_update'),
     path('especificacoes/<int:pk>/excluir/', views.PropertySpecificationDeleteView.as_view(), name='specification_delete'),
 
+    # Checklists
+    path('<int:pk>/checklists/', views.PropertyChecklistListView.as_view(), name='checklist_list'),
+    path('checklists/<int:pk>/editar/', views.PropertyChecklistUpdateView.as_view(), name='checklist_update'),
+    path('checklists/<int:pk>/excluir/', views.PropertyChecklistDeleteView.as_view(), name='checklist_delete'),
+    path('checklists/<int:checklist_pk>/itens/novo/', views.PropertyChecklistItemCreateView.as_view(), name='checklist_item_create'),
+    path('checklists/itens/<int:pk>/editar/', views.PropertyChecklistItemUpdateView.as_view(), name='checklist_item_update'),
+    path('checklists/itens/<int:pk>/excluir/', views.PropertyChecklistItemDeleteView.as_view(), name='checklist_item_delete'),
+
+
     
     # Prestadores de Serviço (Globais)
     path('prestadores/', views.ServiceProviderListView.as_view(), name='provider_list'),

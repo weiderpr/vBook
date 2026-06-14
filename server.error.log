@@ -16957,3 +16957,15 @@ django.core.exceptions.FieldError: Unknown field(s) (specification) specified fo
 [2026-06-14 11:15:26 -0300] [20841] [INFO] Booting worker with pid: 20841
 [2026-06-14 11:15:26 -0300] [20842] [INFO] Booting worker with pid: 20842
 [2026-06-14 11:15:26 -0300] [20838] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 11:59:03 -0300] [20838] [INFO] Handling signal: term
+[2026-06-14 11:59:03 -0300] [20841] [INFO] Worker exiting (pid: 20841)
+[2026-06-14 11:59:03 -0300] [20840] [INFO] Worker exiting (pid: 20840)
+[2026-06-14 11:59:03 -0300] [20842] [INFO] Worker exiting (pid: 20842)
+[2026-06-14 11:59:05 -0300] [20838] [INFO] Shutting down: Master
+[2026-06-14 11:59:06 -0300] [26725] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 11:59:06 -0300] [26725] [INFO] Listening at: http://127.0.0.1:8000 (26725)
+[2026-06-14 11:59:06 -0300] [26725] [INFO] Using worker: sync
+[2026-06-14 11:59:06 -0300] [26728] [INFO] Booting worker with pid: 26728
+[2026-06-14 11:59:06 -0300] [26729] [INFO] Booting worker with pid: 26729
+[2026-06-14 11:59:06 -0300] [26730] [INFO] Booting worker with pid: 26730
+[2026-06-14 11:59:06 -0300] [26725] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl

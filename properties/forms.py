@@ -307,3 +307,27 @@ class PropertySpecificationForm(forms.ModelForm):
                 raise forms.ValidationError(_("Valor inválido."))
         return value
 
+
+from .models import PropertyChecklist, PropertyChecklistItem
+
+class PropertyChecklistForm(forms.ModelForm):
+    class Meta:
+        model = PropertyChecklist
+        fields = ['description', 'status']
+        widgets = {
+            'description': forms.TextInput(attrs={'placeholder': _("Ex: Conferência de Entrada"), 'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+class PropertyChecklistItemForm(forms.ModelForm):
+    class Meta:
+        model = PropertyChecklistItem
+        fields = ['description', 'default_quantity', 'default_status', 'evaluation_type']
+        widgets = {
+            'description': forms.TextInput(attrs={'placeholder': _("Ex: Toalhas de Banho"), 'class': 'form-control'}),
+            'default_quantity': forms.NumberInput(attrs={'min': 0, 'class': 'form-control'}),
+            'default_status': forms.Select(attrs={'class': 'form-select'}),
+            'evaluation_type': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+

@@ -1455,3 +1455,131 @@ class PropertySpecificationDeleteView(LoginRequiredMixin, DeleteView):
         messages.success(self.request, _("Especificação excluída com sucesso!"))
         return reverse_lazy('properties:specification_list', kwargs={'pk': self.object.property.pk})
 
+
+from .models import PropertyChecklist, PropertyChecklistItem
+from .forms import PropertyChecklistForm, PropertyChecklistItemForm
+
+class PropertyChecklistListView(LoginRequiredMixin, CreateView):
+    model = PropertyChecklist
+    form_class = PropertyChecklistForm
+    template_name = 'properties/property_checklist_list.html'
+
+    def get_queryset(self):
+        return PropertyChecklist.objects.filter(
+            property_id=self.kwargs['pk'],
+            property__user=self.request.user
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = get_object_or_404(Property, pk=self.kwargs['pk'], user=self.request.user)
+        context['checklists'] = self.get_queryset()
+        context['active_item'] = 'checklists'
+        return context
+
+    def form_valid(self, form):
+        prop = get_object_or_404(Property, pk=self.kwargs['pk'], user=self.request.user)
+        form.instance.property = prop
+        response = super().form_valid(form)
+        messages.success(self.request, _("Checklist cadastrado com sucesso!"))
+        return response
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{form.fields[field].label if field in form.fields else field}: {error}")
+        return redirect('properties:checklist_list', pk=self.kwargs['pk'])
+
+    def get_success_url(self):
+        return reverse_lazy('properties:checklist_update', kwargs={'pk': self.object.pk})
+
+
+class PropertyChecklistUpdateView(LoginRequiredMixin, UpdateView):
+    model = PropertyChecklist
+    form_class = PropertyChecklistForm
+    template_name = 'properties/property_checklist_form.html'
+
+    def get_queryset(self):
+        return PropertyChecklist.objects.filter(property__user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = self.object.property
+        context['items'] = self.object.items.all()
+        context['item_form'] = PropertyChecklistItemForm()
+        context['active_item'] = 'checklists'
+        return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, _("Checklist atualizado com sucesso!"))
+        return response
+
+    def get_success_url(self):
+        return reverse_lazy('properties:checklist_list', kwargs={'pk': self.object.property.pk})
+
+
+class PropertyChecklistDeleteView(LoginRequiredMixin, DeleteView):
+    model = PropertyChecklist
+
+    def get_queryset(self):
+        return PropertyChecklist.objects.filter(property__user=self.request.user)
+
+    def get_success_url(self):
+        messages.success(self.request, _("Checklist excluído com sucesso!"))
+        return reverse_lazy('properties:checklist_list', kwargs={'pk': self.object.property.pk})
+
+
+class PropertyChecklistItemCreateView(LoginRequiredMixin, CreateView):
+    model = PropertyChecklistItem
+    form_class = PropertyChecklistItemForm
+
+    def form_valid(self, form):
+        checklist = get_object_or_404(PropertyChecklist, pk=self.kwargs['checklist_pk'], property__user=self.request.user)
+        form.instance.checklist = checklist
+        form.save()
+        messages.success(self.request, _("Item adicionado com sucesso!"))
+        return redirect('properties:checklist_update', pk=checklist.pk)
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{form.fields[field].label if field in form.fields else field}: {error}")
+        return redirect('properties:checklist_update', pk=self.kwargs['checklist_pk'])
+
+
+class PropertyChecklistItemUpdateView(LoginRequiredMixin, UpdateView):
+    model = PropertyChecklistItem
+    form_class = PropertyChecklistItemForm
+    template_name = 'properties/property_checklist_item_form.html'
+
+    def get_queryset(self):
+        return PropertyChecklistItem.objects.filter(checklist__property__user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = self.object.checklist.property
+        context['checklist'] = self.object.checklist
+        context['active_item'] = 'checklists'
+        return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, _("Item do checklist atualizado com sucesso!"))
+        return response
+
+    def get_success_url(self):
+        return reverse_lazy('properties:checklist_update', kwargs={'pk': self.object.checklist.pk})
+
+
+class PropertyChecklistItemDeleteView(LoginRequiredMixin, DeleteView):
+    model = PropertyChecklistItem
+
+    def get_queryset(self):
+        return PropertyChecklistItem.objects.filter(checklist__property__user=self.request.user)
+
+    def get_success_url(self):
+        messages.success(self.request, _("Item excluído com sucesso!"))
+        return reverse_lazy('properties:checklist_update', kwargs={'pk': self.object.checklist.pk})
+
+

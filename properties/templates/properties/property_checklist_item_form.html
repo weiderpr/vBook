@@ -1,0 +1,116 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static humanize l10n %}
+
+{% block title %}{% trans "Editar Item do Checklist" %} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 576px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .form-control, .form-select {
+        height: 44px !important;
+        border-radius: 10px !important;
+        font-size: 0.9rem !important;
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--glass-border);
+        padding: 10px 14px;
+        color: var(--text-main) !important;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background: rgba(255,255,255,0.1);
+        border-color: var(--primary);
+        outline: none;
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with property=property active_item='dashboard' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-panel-content" style="padding-top: 0.5rem;">
+    <div class="property-mini-header" style="margin-bottom: 1.2rem;">
+        <h1 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+            {% trans "Editar Item do Checklist" %}
+        </h1>
+    </div>
+
+    <div class="glass-card" style="max-width: 800px; padding: 1.5rem 2.5rem;">
+        <form method="post" id="itemForm">
+            {% csrf_token %}
+            
+            <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.description.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="{{ form.default_quantity.id_for_label }}">{{ form.default_quantity.label }}</label>
+                        {{ form.default_quantity }}
+                        {% if form.default_quantity.errors %}
+                            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.default_quantity.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.default_status.id_for_label }}">{{ form.default_status.label }}</label>
+                        {{ form.default_status }}
+                        {% if form.default_status.errors %}
+                            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.default_status.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.evaluation_type.id_for_label }}">{{ form.evaluation_type.label }}</label>
+                    {{ form.evaluation_type }}
+                    {% if form.evaluation_type.errors %}
+                        <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.evaluation_type.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
+                <a href="{% url 'properties:checklist_update' checklist.pk %}" class="btn btn-outline" style="padding: 0 2rem; height: 42px; display: flex; align-items: center;">
+                    {% trans "Cancelar" %}
+                </a>
+                <button type="submit" class="btn btn-primary" style="padding: 0 3rem; height: 42px; background: linear-gradient(135deg, var(--primary), #a855f7);">
+                    {% trans "Salvar Item" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

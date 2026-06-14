@@ -550,3 +550,80 @@ class PropertySpecificationPhoto(models.Model):
 
         super().save(*args, **kwargs)
 
+
+class PropertyChecklist(models.Model):
+    STATUS_CHOICES = [
+        ('active', _('Ativo')),
+        ('inactive', _('Inativo')),
+    ]
+
+    property = models.ForeignKey(
+        Property,
+        on_delete=models.CASCADE,
+        related_name='checklists',
+        verbose_name=_("Propriedade")
+    )
+    description = models.CharField(max_length=255, verbose_name=_("Descrição"))
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='active',
+        verbose_name=_("Status")
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Checklist da Propriedade")
+        verbose_name_plural = _("Checklists da Propriedade")
+        ordering = ['description']
+
+    def __str__(self):
+        return f"{self.description} - {self.property.name}"
+
+
+class PropertyChecklistItem(models.Model):
+    STATUS_CHOICES = [
+        ('bad', _('Ruim')),
+        ('regular', _('Regular')),
+        ('good', _('Bom')),
+    ]
+
+    EVALUATION_CHOICES = [
+        ('quantity', _('Apenas Quantidade')),
+        ('quality', _('Apenas Qualidade')),
+        ('both', _('Quantidade e Qualidade')),
+    ]
+
+    checklist = models.ForeignKey(
+        PropertyChecklist,
+        on_delete=models.CASCADE,
+        related_name='items',
+        verbose_name=_("Checklist")
+    )
+    description = models.CharField(max_length=255, verbose_name=_("Descrição"))
+    default_quantity = models.IntegerField(default=1, verbose_name=_("Quantidade Padrão"))
+    default_status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='good',
+        verbose_name=_("Estado Padrão")
+    )
+    evaluation_type = models.CharField(
+        max_length=20,
+        choices=EVALUATION_CHOICES,
+        default='both',
+        verbose_name=_("Tipo de Avaliação")
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Item do Checklist")
+        verbose_name_plural = _("Itens do Checklist")
+        ordering = ['description']
+
+    def __str__(self):
+        return f"{self.description} ({self.checklist.description})"
+
+
