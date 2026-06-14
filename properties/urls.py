@@ -23,6 +23,12 @@ urlpatterns = [
     path('documentos/<int:pk>/excluir/', views.PropertyDocumentDeleteView.as_view(), name='document_delete'),
     path('<int:pk>/drive/', views.PropertyDriveView.as_view(), name='drive'),
     
+    # Especificações
+    path('<int:pk>/especificacoes/', views.PropertySpecificationListView.as_view(), name='specification_list'),
+    path('especificacoes/<int:pk>/editar/', views.PropertySpecificationUpdateView.as_view(), name='specification_update'),
+    path('especificacoes/<int:pk>/excluir/', views.PropertySpecificationDeleteView.as_view(), name='specification_delete'),
+
+    
     # Prestadores de Serviço (Globais)
     path('prestadores/', views.ServiceProviderListView.as_view(), name='provider_list'),
     path('prestadores/novo/', views.ServiceProviderCreateView.as_view(), name='provider_create'),

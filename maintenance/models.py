@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from properties.models import Property, ServiceProvider, Service
+from properties.models import Property, ServiceProvider, Service, PropertySpecification
 import re
 
 def get_or_create_provider_globally(user, name, phone):
@@ -88,6 +88,15 @@ class Maintenance(models.Model):
         related_name='maintenances',
         verbose_name=_("Categorias de Serviço")
     )
+    specification = models.ForeignKey(
+        PropertySpecification,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='maintenances',
+        verbose_name=_("Equipamento / Especificação")
+    )
+    
     
     # Execution details
     provider_name = models.CharField(max_length=255, verbose_name=_("Prestador Final"), blank=True, null=True)

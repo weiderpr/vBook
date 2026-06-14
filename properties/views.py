@@ -1338,3 +1338,120 @@ class GlobalReportsView(LoginRequiredMixin, View):
         context['global_totals_months'] = global_totals
         context['global_grand_total'] = global_grand_total
         context['months_range'] = months_range
+
+
+from .models import PropertySpecification, PropertySpecificationPhoto
+from .forms import PropertySpecificationForm
+
+class PropertySpecificationListView(LoginRequiredMixin, CreateView):
+    model = PropertySpecification
+    form_class = PropertySpecificationForm
+    template_name = 'properties/property_specification_list.html'
+
+    def get_queryset(self):
+        return PropertySpecification.objects.filter(
+            property_id=self.kwargs['pk'],
+            property__user=self.request.user
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = get_object_or_404(Property, pk=self.kwargs['pk'], user=self.request.user)
+        context['specifications'] = self.get_queryset().prefetch_related('photos')
+        context['active_item'] = 'specifications'
+        return context
+
+    def form_valid(self, form):
+        prop = get_object_or_404(Property, pk=self.kwargs['pk'], user=self.request.user)
+        
+        # Check files count
+        photos = self.request.FILES.getlist('photos')
+        if len(photos) > 5:
+            form.add_error(None, _("Você pode enviar no máximo 5 fotos."))
+            return self.form_invalid(form)
+
+        form.instance.property = prop
+        response = super().form_valid(form)
+
+        # Save photos
+        for photo in photos:
+            PropertySpecificationPhoto.objects.create(
+                specification=self.object,
+                image=photo
+            )
+        
+        messages.success(self.request, _("Especificação adicionada com sucesso!"))
+        return response
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{form.fields[field].label if field in form.fields else field}: {error}")
+        return redirect('properties:specification_list', pk=self.kwargs['pk'])
+
+    def get_success_url(self):
+        return reverse_lazy('properties:specification_list', kwargs={'pk': self.kwargs['pk']})
+
+
+class PropertySpecificationUpdateView(LoginRequiredMixin, UpdateView):
+    model = PropertySpecification
+    form_class = PropertySpecificationForm
+    template_name = 'properties/property_specification_form.html'
+
+    def get_queryset(self):
+        return PropertySpecification.objects.filter(property__user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = self.object.property
+        context['active_item'] = 'specifications'
+        return context
+
+    def form_valid(self, form):
+        # 1. Delete selected photos
+        delete_photo_ids = self.request.POST.getlist('delete_photos')
+        if delete_photo_ids:
+            PropertySpecificationPhoto.objects.filter(
+                id__in=delete_photo_ids,
+                specification=self.object
+            ).delete()
+
+        # 2. Check total files count
+        new_photos = self.request.FILES.getlist('photos')
+        current_count = self.object.photos.count()
+        if current_count + len(new_photos) > 5:
+            form.add_error(None, _("Uma especificação não pode ter mais de 5 fotos no total."))
+            return self.form_invalid(form)
+
+        response = super().form_valid(form)
+
+        # 3. Add new photos
+        for photo in new_photos:
+            PropertySpecificationPhoto.objects.create(
+                specification=self.object,
+                image=photo
+            )
+
+        messages.success(self.request, _("Especificação atualizada com sucesso!"))
+        return response
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{form.fields[field].label if field in form.fields else field}: {error}")
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_success_url(self):
+        return reverse_lazy('properties:specification_list', kwargs={'pk': self.object.property.pk})
+
+
+class PropertySpecificationDeleteView(LoginRequiredMixin, DeleteView):
+    model = PropertySpecification
+
+    def get_queryset(self):
+        return PropertySpecification.objects.filter(property__user=self.request.user)
+
+    def get_success_url(self):
+        messages.success(self.request, _("Especificação excluída com sucesso!"))
+        return reverse_lazy('properties:specification_list', kwargs={'pk': self.object.property.pk})
+

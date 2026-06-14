@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-11 22:34-0300\n"
+"POT-Creation-Date: 2026-06-14 11:15-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,7 +120,7 @@ msgstr ""
 #: admcondominio/templates/admcondominio/dashboard.html:1128
 #: admcondominio/templates/admcondominio/dashboard.html:1553
 #: admcondominio/templates/admcondominio/properties.html:901
-#: maintenance/models.py:137 properties/models.py:305
+#: maintenance/models.py:146 properties/models.py:305
 #: properties/templates/properties/service_provider_form.html:32
 #: properties/templates/properties/service_provider_public.html:589
 #: reservations/models.py:11
@@ -157,7 +157,7 @@ msgstr ""
 #: admcondominio/templates/admcondominio/history.html:195
 #: admcondominio/templates/admcondominio/history.html:307
 #: admcondominio/templates/admcondominio/providers.html:537
-#: maintenance/models.py:210
+#: maintenance/models.py:219
 #: maintenance/templates/maintenance/includes/budget_list.html:11
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:247
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:365
@@ -564,13 +564,14 @@ msgstr ""
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:253
 #: maintenance/templates/maintenance/maintenance_confirm_delete.html:26
 #: maintenance/templates/maintenance/maintenance_dashboard.html:1138
-#: maintenance/templates/maintenance/maintenance_form.html:171
+#: maintenance/templates/maintenance/maintenance_form.html:272
 #: mobile/templates/mobile/reservation_detail.html:322
 #: properties/templates/properties/property_confirm_delete.html:26
 #: properties/templates/properties/property_document_list.html:365
 #: properties/templates/properties/property_form.html:422
 #: properties/templates/properties/property_form.html:426
 #: properties/templates/properties/property_settings.html:807
+#: properties/templates/properties/property_specification_list.html:440
 #: properties/templates/properties/service_provider_public.html:856
 #: properties/templates/properties/serviceprovider_confirm_delete.html:26
 #: reservations/templates/reservations/reservation_confirm_delete.html:27
@@ -639,7 +640,7 @@ msgstr ""
 #: admcondominio/templates/admcondominio/dashboard.html:805
 #: admcondominio/templates/admcondominio/dashboard.html:2528
 #: admcondominio/templates/admcondominio/providers.html:681
-#: maintenance/models.py:138
+#: maintenance/models.py:147
 #: maintenance/templates/maintenance/includes/budget_list.html:12
 #: maintenance/templates/maintenance/includes/execution_modal_content.html:42
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:135
@@ -682,6 +683,7 @@ msgid "Veículo Autorizado"
 msgstr ""
 
 #: admcondominio/templates/admcondominio/dashboard.html:855
+#: properties/models.py:469
 #: reservations/templates/reservations/includes/guest_detail_modal_content.html:63
 msgid "Modelo"
 msgstr ""
@@ -763,6 +765,8 @@ msgstr "Nome do cliente"
 #: admcondominio/templates/admcondominio/properties.html:516
 #: administration/templates/administration/users/user_list.html:240
 #: properties/templates/properties/property_instructions_form.html:107
+#: properties/templates/properties/property_specification_form.html:217
+#: properties/templates/properties/property_specification_list.html:441
 #: properties/templates/properties/service_provider_form.html:87
 #, fuzzy
 #| msgid "Salvar Reserva"
@@ -1224,6 +1228,8 @@ msgstr "Alterar Senha"
 #: mobile/templates/mobile/reservation_detail.html:331
 #: properties/templates/properties/property_document_list.html:326
 #: properties/templates/properties/property_list.html:386
+#: properties/templates/properties/property_specification_form.html:193
+#: properties/templates/properties/property_specification_list.html:335
 #: reservations/templates/reservations/reservation_list_v2.html:459
 msgid "Excluir"
 msgstr "Excluir"
@@ -2168,7 +2174,7 @@ msgid "Valor base"
 msgstr "Valor total"
 
 #: administration/forms.py:92 properties/forms.py:76 properties/forms.py:136
-#: reservations/forms.py:43
+#: properties/forms.py:307 reservations/forms.py:43
 msgid "Valor inválido."
 msgstr ""
 
@@ -2262,7 +2268,7 @@ msgstr ""
 #: maintenance/templates/maintenance/maintenance_wizard.html:185
 #: mobile/templates/mobile/reservation_detail.html:376
 #: mobile/templates/mobile/reservation_detail.html:420 properties/models.py:233
-#: properties/models.py:413
+#: properties/models.py:413 properties/models.py:467
 #: properties/templates/properties/property_reports.html:240
 #: properties/templates/properties/service_provider_list.html:281
 #: reservations/models.py:241 reservations/models.py:304
@@ -2421,7 +2427,7 @@ msgstr ""
 #: administration/templates/administration/chat_interactions/chat_interaction_list.html:30
 #: administration/templates/administration/condos/includes/user_table.html:6
 #: administration/templates/administration/users/user_list.html:23
-#: maintenance/models.py:217 properties/models.py:293 properties/models.py:384
+#: maintenance/models.py:226 properties/models.py:293 properties/models.py:384
 #: subscriptions/models.py:19
 #, fuzzy
 #| msgid "Proprietário"
@@ -2694,6 +2700,7 @@ msgstr ""
 #: maintenance/templates/maintenance/maintenance_list.html:479
 #: mobile/templates/mobile/reservation_detail.html:190
 #: properties/templates/properties/property_form.html:261
+#: properties/templates/properties/property_specification_list.html:330
 #: reservations/templates/reservations/reservation_list_v2.html:446
 msgid "Editar"
 msgstr "Editar"
@@ -2755,7 +2762,7 @@ msgstr ""
 #: administration/templates/administration/services/service_list.html:4
 #: administration/templates/administration/services/service_list.html:9
 #: maintenance/models.py:89
-#: maintenance/templates/maintenance/maintenance_form.html:150
+#: maintenance/templates/maintenance/maintenance_form.html:251
 msgid "Categorias de Serviço"
 msgstr ""
 
@@ -3094,6 +3101,7 @@ msgstr "Data inicial"
 
 #: administration/templates/administration/users/user_list.html:289
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:426
+#: properties/templates/properties/property_specification_form.html:214
 #: properties/templates/properties/service_provider_form.html:84
 #: properties/templates/properties/service_provider_public.html:875
 msgid "Voltar"
@@ -3514,12 +3522,19 @@ msgstr ""
 msgid "Desculpe, algo deu errado no assistente. Vamos voltar ao chat normal."
 msgstr ""
 
+#: maintenance/forms.py:23 maintenance/forms.py:29
+#: maintenance/templates/maintenance/maintenance_form.html:213
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "Sem especificação / Equipamento geral"
+msgstr "Nenhuma propriedade encontrada"
+
 #: maintenance/models.py:62
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:20
 msgid "Aberta"
 msgstr ""
 
-#: maintenance/models.py:63 maintenance/models.py:146
+#: maintenance/models.py:63 maintenance/models.py:155
 msgid "Orçamento"
 msgstr ""
 
@@ -3547,7 +3562,7 @@ msgstr "Cancelar"
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:50
 #: maintenance/templates/maintenance/maintenance_wizard.html:171
 #: properties/models.py:107 properties/models.py:119 properties/models.py:187
-#: properties/models.py:257 properties/models.py:409
+#: properties/models.py:257 properties/models.py:409 properties/models.py:465
 #: properties/templates/properties/global_reports.html:250
 #: properties/templates/properties/global_reports.html:328
 #: reservations/models.py:73
@@ -3568,50 +3583,57 @@ msgstr ""
 msgid "Data de Fim"
 msgstr ""
 
-#: maintenance/models.py:93
+#: maintenance/models.py:97
+#: maintenance/templates/maintenance/maintenance_form.html:206
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Equipamento / Especificação"
+msgstr "Data da aquisição"
+
+#: maintenance/models.py:102
 msgid "Prestador Final"
 msgstr ""
 
-#: maintenance/models.py:94
+#: maintenance/models.py:103
 #, fuzzy
 #| msgid "Telefone"
 msgid "Telefone Prestador"
 msgstr "Telefone"
 
-#: maintenance/models.py:101 properties/models.py:231
+#: maintenance/models.py:110 properties/models.py:231
 msgid "Prestador Associado"
 msgstr ""
 
-#: maintenance/models.py:103
+#: maintenance/models.py:112
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:391
 #, fuzzy
 #| msgid "Valor total"
 msgid "Valor Final"
 msgstr "Valor total"
 
-#: maintenance/models.py:104
+#: maintenance/models.py:113
 msgid "Data Início Execução"
 msgstr ""
 
-#: maintenance/models.py:105
+#: maintenance/models.py:114
 #, fuzzy
 #| msgid "Data da aquisição"
 msgid "Data Fim Execução"
 msgstr "Data da aquisição"
 
-#: maintenance/models.py:107
+#: maintenance/models.py:116
 #: maintenance/templates/maintenance/maintenance_list.html:434
 msgid "Arquivado"
 msgstr ""
 
-#: maintenance/models.py:112 maintenance/models.py:202
+#: maintenance/models.py:121 maintenance/models.py:211
 #: maintenance/templates/maintenance/maintenance_list.html:420
 #: properties/templates/properties/property_settings.html:508
 #: properties/views.py:775
 msgid "Manutenção"
 msgstr ""
 
-#: maintenance/models.py:113
+#: maintenance/models.py:122
 #: maintenance/templates/maintenance/maintenance_list.html:4
 #: maintenance/templates/maintenance/maintenance_list.html:397
 #: properties/templates/properties/includes/property_sidebar.html:31
@@ -3621,66 +3643,66 @@ msgstr ""
 msgid "Manutenções"
 msgstr "Ações"
 
-#: maintenance/models.py:139
+#: maintenance/models.py:148
 msgid "Valor do Orçamento"
 msgstr ""
 
-#: maintenance/models.py:140
+#: maintenance/models.py:149
 msgid "Previsão Início"
 msgstr ""
 
-#: maintenance/models.py:141
+#: maintenance/models.py:150
 msgid "Previsão Fim"
 msgstr ""
 
-#: maintenance/models.py:142
+#: maintenance/models.py:151
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:158
 #: mobile/templates/mobile/reservation_form.html:195 properties/models.py:392
 #: reservations/models.py:97
 msgid "Observações"
 msgstr "Observações"
 
-#: maintenance/models.py:147
+#: maintenance/models.py:156
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:117
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:168
 #: maintenance/templates/maintenance/maintenance_wizard.html:152
 msgid "Orçamentos"
 msgstr ""
 
-#: maintenance/models.py:194
+#: maintenance/models.py:203
 #, fuzzy
 #| msgid "Data da aquisição"
 msgid "Foto da Manutenção"
 msgstr "Data da aquisição"
 
-#: maintenance/models.py:195
+#: maintenance/models.py:204
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:205
 #, fuzzy
 #| msgid "Data da aquisição"
 msgid "Fotos da Manutenção"
 msgstr "Data da aquisição"
 
-#: maintenance/models.py:212
+#: maintenance/models.py:221
 msgid "Nota (1-5)"
 msgstr ""
 
-#: maintenance/models.py:213
+#: maintenance/models.py:222
 #, fuzzy
 #| msgid "Proprietário"
 msgid "Comentário"
 msgstr "Proprietário"
 
-#: maintenance/models.py:219
+#: maintenance/models.py:228
 #, fuzzy
 #| msgid "Data da aquisição"
 msgid "Data da Avaliação"
 msgstr "Data da aquisição"
 
-#: maintenance/models.py:222
+#: maintenance/models.py:231
 msgid "Avaliação do Prestador"
 msgstr ""
 
-#: maintenance/models.py:223
+#: maintenance/models.py:232
 msgid "Avaliações dos Prestadores"
 msgstr ""
 
@@ -3948,7 +3970,7 @@ msgstr ""
 #: maintenance/templates/maintenance/maintenance_dashboard.html:1062
 #: maintenance/templates/maintenance/maintenance_dashboard.html:1114
 #: maintenance/templates/maintenance/maintenance_form.html:8
-#: maintenance/templates/maintenance/maintenance_form.html:108
+#: maintenance/templates/maintenance/maintenance_form.html:177
 #: maintenance/templates/maintenance/maintenance_list.html:410
 msgid "Nova Manutenção"
 msgstr ""
@@ -4001,19 +4023,31 @@ msgid "Deseja realmente excluir esta foto?"
 msgstr ""
 
 #: maintenance/templates/maintenance/maintenance_form.html:6
-#: maintenance/templates/maintenance/maintenance_form.html:106
+#: maintenance/templates/maintenance/maintenance_form.html:175
 msgid "Editar Manutenção"
 msgstr ""
 
-#: maintenance/templates/maintenance/maintenance_form.html:165
+#: maintenance/templates/maintenance/maintenance_form.html:208
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Pesquisar ou selecionar especificação..."
+msgstr "Data da aquisição"
+
+#: maintenance/templates/maintenance/maintenance_form.html:228
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "Nenhuma especificação encontrada"
+msgstr "Nenhuma propriedade encontrada"
+
+#: maintenance/templates/maintenance/maintenance_form.html:266
 msgid "Selecione as categorias que melhor descrevem esta manutenção."
 msgstr ""
 
-#: maintenance/templates/maintenance/maintenance_form.html:175
+#: maintenance/templates/maintenance/maintenance_form.html:276
 msgid "Atualizar Manutenção"
 msgstr ""
 
-#: maintenance/templates/maintenance/maintenance_form.html:177
+#: maintenance/templates/maintenance/maintenance_form.html:278
 #, fuzzy
 #| msgid "Salvar Reserva"
 msgid "Salvar Manutenção"
@@ -4164,107 +4198,107 @@ msgstr ""
 msgid "Finalizar Manutenção"
 msgstr ""
 
-#: maintenance/views.py:58
+#: maintenance/views.py:63
 #, fuzzy
 #| msgid "Reserva cadastrada com sucesso!"
 msgid "Manutenção cadastrada com sucesso!"
 msgstr "Reserva cadastrada com sucesso!"
 
-#: maintenance/views.py:73
+#: maintenance/views.py:83
 #, fuzzy
 #| msgid "Reserva atualizada com sucesso!"
 msgid "Manutenção atualizada com sucesso!"
 msgstr "Reserva atualizada com sucesso!"
 
-#: maintenance/views.py:87
+#: maintenance/views.py:97
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Manutenção removida com sucesso!"
 msgstr "Reserva removida com sucesso!"
 
-#: maintenance/views.py:95
+#: maintenance/views.py:105
 msgid "arquivada"
 msgstr ""
 
-#: maintenance/views.py:95
+#: maintenance/views.py:105
 msgid "desarquivada"
 msgstr ""
 
-#: maintenance/views.py:169
+#: maintenance/views.py:179
 msgid "Modo somente leitura ativo."
 msgstr ""
 
-#: maintenance/views.py:222
+#: maintenance/views.py:232
 msgid "Por favor, preencha todos os campos de execução para finalizar."
 msgstr ""
 
-#: maintenance/views.py:263
+#: maintenance/views.py:273
 msgid "Dados de execução salvos!"
 msgstr ""
 
-#: maintenance/views.py:352
+#: maintenance/views.py:362
 #, fuzzy
 #| msgid "Perfil atualizado com sucesso!"
 msgid "Manutenção criada com sucesso!"
 msgstr "Perfil atualizado com sucesso!"
 
-#: maintenance/views.py:376
+#: maintenance/views.py:386
 msgid "Status inválido"
 msgstr ""
 
-#: maintenance/views.py:403
+#: maintenance/views.py:413
 #, fuzzy
 #| msgid "Perfil atualizado com sucesso!"
 msgid "Orçamento salvo com sucesso!"
 msgstr "Perfil atualizado com sucesso!"
 
-#: maintenance/views.py:423
+#: maintenance/views.py:433
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Orçamento excluído com sucesso!"
 msgstr "Reserva removida com sucesso!"
 
-#: maintenance/views.py:448
+#: maintenance/views.py:458
 msgid "Limite de 3 fotos atingido."
 msgstr ""
 
-#: maintenance/views.py:462
+#: maintenance/views.py:472
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Foto enviada com sucesso!"
 msgstr "Reserva removida com sucesso!"
 
-#: maintenance/views.py:467
+#: maintenance/views.py:477
 #, fuzzy
 #| msgid "Nenhuma propriedade encontrada"
 msgid "Nenhuma imagem enviada."
 msgstr "Nenhuma propriedade encontrada"
 
-#: maintenance/views.py:482
+#: maintenance/views.py:492
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Foto excluída com sucesso!"
 msgstr "Reserva removida com sucesso!"
 
-#: maintenance/views.py:513
+#: maintenance/views.py:523
 msgid "Prestador não encontrado para esta manutenção."
 msgstr ""
 
-#: maintenance/views.py:516 maintenance/views.py:543
+#: maintenance/views.py:526 maintenance/views.py:553
 msgid "Nota não fornecida."
 msgstr ""
 
-#: maintenance/views.py:530
+#: maintenance/views.py:540
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Avaliação enviada com sucesso!"
 msgstr "Reserva removida com sucesso!"
 
-#: maintenance/views.py:530
+#: maintenance/views.py:540
 msgid "Avaliação atualizada!"
 msgstr ""
 
-#: maintenance/views.py:558
+#: maintenance/views.py:568
 #, fuzzy
 #| msgid "Reserva cadastrada com sucesso!"
 msgid "Avaliação registrada com sucesso!"
@@ -5165,6 +5199,32 @@ msgstr ""
 msgid "O arquivo não pode ser maior que 5MB."
 msgstr ""
 
+#: properties/forms.py:263 properties/models.py:478
+#, fuzzy
+#| msgid "Salvar Reserva"
+msgid "Valor da compra"
+msgstr "Salvar Reserva"
+
+#: properties/forms.py:276
+msgid "Ex: Geladeira Frost Free"
+msgstr ""
+
+#: properties/forms.py:277
+msgid "Ex: Brastemp"
+msgstr ""
+
+#: properties/forms.py:278
+msgid "Ex: BRM44HB"
+msgstr ""
+
+#: properties/forms.py:279
+msgid "Ex: 176x62x69 cm"
+msgstr ""
+
+#: properties/forms.py:280
+msgid "Ex: Magazine Luiza"
+msgstr ""
+
 #: properties/models.py:19
 msgid "Nome da propriedade"
 msgstr "Nome da propriedade"
@@ -5437,6 +5497,64 @@ msgstr "Cadastrar Propriedade"
 msgid "Documentos da Propriedade"
 msgstr "Todas as Propriedades"
 
+#: properties/models.py:468
+msgid "Marca"
+msgstr ""
+
+#: properties/models.py:470
+#: properties/templates/properties/property_specification_list.html:300
+msgid "Dimensões"
+msgstr ""
+
+#: properties/models.py:471
+msgid "Local da compra"
+msgstr ""
+
+#: properties/models.py:472
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Data da compra"
+msgstr "Data da aquisição"
+
+#: properties/models.py:480
+msgid "Link do produto"
+msgstr ""
+
+#: properties/models.py:485
+#, fuzzy
+#| msgid "Descrição da propriedade"
+msgid "Especificação da Propriedade"
+msgstr "Descrição da propriedade"
+
+#: properties/models.py:486
+#: properties/templates/properties/property_specification_list.html:267
+#, fuzzy
+#| msgid "Descrição da propriedade"
+msgid "Especificações da Propriedade"
+msgstr "Descrição da propriedade"
+
+#: properties/models.py:498
+#, fuzzy
+#| msgid "Observações"
+msgid "Especificação"
+msgstr "Observações"
+
+#: properties/models.py:502
+msgid "Imagem"
+msgstr ""
+
+#: properties/models.py:507
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Foto da Especificação"
+msgstr "Data da aquisição"
+
+#: properties/models.py:508
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Fotos da Especificação"
+msgstr "Data da aquisição"
+
 #: properties/templates/properties/global_reports.html:4
 #: properties/templates/properties/global_reports.html:200
 #, fuzzy
@@ -5677,6 +5795,19 @@ msgstr ""
 
 #: properties/templates/properties/property_dashboard.html:343
 msgid "Crie e edite textos e planilhas com dados relativos a essa propriedade"
+msgstr ""
+
+#: properties/templates/properties/property_dashboard.html:350
+#: properties/templates/properties/property_specification_list.html:4
+#, fuzzy
+#| msgid "Visualizações"
+msgid "Especificações"
+msgstr "Visualizações"
+
+#: properties/templates/properties/property_dashboard.html:351
+msgid ""
+"Especificações, marca e modelo de equipamentos em geral, para controle de "
+"manutenções e substituicoes"
 msgstr ""
 
 #: properties/templates/properties/property_document_list.html:267
@@ -6019,6 +6150,88 @@ msgstr ""
 
 #: properties/templates/properties/property_settings.html:1447
 msgid "Erro ao voltar"
+msgstr ""
+
+#: properties/templates/properties/property_specification_form.html:4
+#: properties/templates/properties/property_specification_form.html:108
+msgid "Editar Especificação"
+msgstr ""
+
+#: properties/templates/properties/property_specification_form.html:186
+msgid "Fotos Existentes (Selecione para excluir)"
+msgstr ""
+
+#: properties/templates/properties/property_specification_form.html:202
+msgid "Adicionar Novas Fotos (Total máximo de 5 fotos)"
+msgstr ""
+
+#: properties/templates/properties/property_specification_form.html:261
+msgid "Você atingiu o limite de 5 fotos no total."
+msgstr ""
+
+#: properties/templates/properties/property_specification_form.html:304
+#: properties/templates/properties/property_specification_list.html:559
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "novas fotos selecionadas."
+msgstr "Nenhuma propriedade encontrada"
+
+#: properties/templates/properties/property_specification_list.html:270
+msgid ""
+"Gerencie marca, modelo, dimensões e controle de manutenção de equipamentos e "
+"decorações."
+msgstr ""
+
+#: properties/templates/properties/property_specification_list.html:275
+#: properties/templates/properties/property_specification_list.html:350
+#: properties/templates/properties/property_specification_list.html:358
+msgid "Nova Especificação"
+msgstr ""
+
+#: properties/templates/properties/property_specification_list.html:305
+msgid "Local da Compra"
+msgstr ""
+
+#: properties/templates/properties/property_specification_list.html:311
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Data da Compra"
+msgstr "Data da aquisição"
+
+#: properties/templates/properties/property_specification_list.html:317
+#, fuzzy
+#| msgid "Salvar Reserva"
+msgid "Valor da Compra"
+msgstr "Salvar Reserva"
+
+#: properties/templates/properties/property_specification_list.html:327
+msgid "Ver Produto"
+msgstr ""
+
+#: properties/templates/properties/property_specification_list.html:333
+#, fuzzy
+#| msgid "Tem certeza que deseja excluir a reserva de"
+msgid "Tem certeza que deseja excluir esta especificação?"
+msgstr "Tem certeza que deseja excluir a reserva de"
+
+#: properties/templates/properties/property_specification_list.html:348
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "Nenhuma especificação cadastrada"
+msgstr "Nenhuma propriedade encontrada"
+
+#: properties/templates/properties/property_specification_list.html:349
+#, fuzzy
+#| msgid "Comece cadastrando seu primeiro imóvel para gerenciar."
+msgid "Comece cadastrando os primeiros equipamentos desta propriedade."
+msgstr "Comece cadastrando seu primeiro imóvel para gerenciar."
+
+#: properties/templates/properties/property_specification_list.html:430
+msgid "Fotos do Produto ou Manuais (Máximo 5)"
+msgstr ""
+
+#: properties/templates/properties/property_specification_list.html:520
+msgid "Você só pode selecionar no máximo 5 fotos."
 msgstr ""
 
 #: properties/templates/properties/service_provider_form.html:6
@@ -6478,6 +6691,32 @@ msgstr ""
 #: properties/views.py:1147
 msgid "Dez"
 msgstr ""
+
+#: properties/views.py:1370
+msgid "Você pode enviar no máximo 5 fotos."
+msgstr ""
+
+#: properties/views.py:1383
+#, fuzzy
+#| msgid "Perfil atualizado com sucesso!"
+msgid "Especificação adicionada com sucesso!"
+msgstr "Perfil atualizado com sucesso!"
+
+#: properties/views.py:1423
+msgid "Uma especificação não pode ter mais de 5 fotos no total."
+msgstr ""
+
+#: properties/views.py:1435
+#, fuzzy
+#| msgid "Reserva atualizada com sucesso!"
+msgid "Especificação atualizada com sucesso!"
+msgstr "Reserva atualizada com sucesso!"
+
+#: properties/views.py:1455
+#, fuzzy
+#| msgid "Reserva removida com sucesso!"
+msgid "Especificação excluída com sucesso!"
+msgstr "Reserva removida com sucesso!"
 
 #: reservations/forms.py:7 reservations/models.py:90
 msgid "Valor total"

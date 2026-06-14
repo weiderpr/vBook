@@ -53,6 +53,11 @@ class MaintenanceCreateView(LoginRequiredMixin, PropertyMaintenanceMixin, Create
     form_class = MaintenanceForm
     template_name = 'maintenance/maintenance_form.html'
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['property'] = self.get_property()
+        return kwargs
+
     def form_valid(self, form):
         form.instance.property = self.get_property()
         messages.success(self.request, _("Manutenção cadastrada com sucesso!"))
@@ -68,6 +73,11 @@ class MaintenanceUpdateView(LoginRequiredMixin, PropertyMaintenanceMixin, Update
 
     def get_queryset(self):
         return Maintenance.objects.filter(property__user=self.request.user)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['property'] = self.get_property()
+        return kwargs
 
     def form_valid(self, form):
         messages.success(self.request, _("Manutenção atualizada com sucesso!"))

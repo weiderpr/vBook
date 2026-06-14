@@ -90,6 +90,75 @@
     .service-chip input:checked + .chip-content .check-icon {
         display: block;
     }
+
+    /* Searchable Custom Select styles */
+    .searchable-select-wrapper {
+        position: relative;
+        width: 100%;
+    }
+    .searchable-select-wrapper input {
+        padding-right: 2.5rem; /* Space for the chevron */
+    }
+    .searchable-select-chevron {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        transition: transform 0.3s;
+        color: var(--text-muted);
+        z-index: 2;
+    }
+    .searchable-select-wrapper.active .searchable-select-chevron {
+        transform: translateY(-50%) rotate(180deg);
+    }
+    .searchable-select-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 10px;
+        max-height: 250px;
+        overflow-y: auto;
+        margin-top: 5px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        display: none;
+    }
+    .searchable-select-dropdown.active {
+        display: block;
+    }
+    .searchable-select-item {
+        padding: 0.8rem 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .searchable-select-item:last-child {
+        border-bottom: none;
+    }
+    .searchable-select-item:hover, .searchable-select-item.selected {
+        background-color: var(--primary);
+        color: #fff;
+    }
+    .searchable-select-item:hover .text-muted, .searchable-select-item.selected .text-muted {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+    .searchable-select-item.no-results {
+        color: var(--text-muted);
+        font-style: italic;
+        cursor: default;
+    }
+    .searchable-select-item.no-results:hover {
+        background-color: transparent;
+        color: var(--text-muted);
+    }
 </style>
 {% endblock %}
 
@@ -131,6 +200,38 @@
             <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
             {{ form.description }}
             {% if form.description.errors %}<div class="field-error">{{ form.description.errors.0 }}</div>{% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="specSearchInput">{% trans "Equipamento / Especificação" %}</label>
+            <div class="searchable-select-wrapper" id="specSelectWrapper">
+                <input type="text" id="specSearchInput" placeholder="{% trans 'Pesquisar ou selecionar especificação...' %}" autocomplete="off" class="form-control">
+                <svg class="searchable-select-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                
+                <div class="searchable-select-dropdown" id="specDropdown">
+                    <div class="searchable-select-item spec-option-item" data-id="" data-search-text="" data-display-name="">
+                        {% trans "Sem especificação / Equipamento geral" %}
+                    </div>
+                    {% for spec in form.fields.specification.queryset %}
+                        <div class="searchable-select-item spec-option-item" data-id="{{ spec.id }}" 
+                             data-search-text="{{ spec.description|lower }} {{ spec.brand|lower }} {{ spec.model|lower }}"
+                             data-display-name="{{ spec.description }}{% if spec.brand or spec.model %} ({{ spec.brand }}{% if spec.brand and spec.model %} - {% endif %}{{ spec.model }}){% endif %}">
+                            <div style="font-weight: 600;">{{ spec.description }}</div>
+                            {% if spec.brand or spec.model %}
+                                <div class="text-muted" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+                                    {{ spec.brand }}{% if spec.brand and spec.model %} - {% endif %}{{ spec.model }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="searchable-select-item no-results" style="display: none;">
+                        {% trans "Nenhuma especificação encontrada" %}
+                    </div>
+                </div>
+                
+                <input type="hidden" name="specification" id="id_specification" value="{% if form.instance.specification %}{{ form.instance.specification.id }}{% else %}{{ form.specification.value|default:'' }}{% endif %}">
+            </div>
+            {% if form.specification.errors %}<div class="field-error">{{ form.specification.errors.0 }}</div>{% endif %}
         </div>
 
         <div class="grid-2">
@@ -180,4 +281,122 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const wrapper = document.getElementById('specSelectWrapper');
+        const searchInput = document.getElementById('specSearchInput');
+        const dropdown = document.getElementById('specDropdown');
+        const hiddenInput = document.getElementById('id_specification');
+        
+        if (wrapper && searchInput && dropdown && hiddenInput) {
+            let currentDisplayName = '';
+            
+            // Highlight current option on open
+            function highlightCurrentOption(selectedId) {
+                const options = dropdown.querySelectorAll('.spec-option-item');
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-id') === selectedId) {
+                        opt.classList.add('selected');
+                    } else {
+                        opt.classList.remove('selected');
+                    }
+                });
+            }
+            
+            // Set initial selected value
+            const initialVal = hiddenInput.value;
+            const initialOpt = dropdown.querySelector(`.spec-option-item[data-id="${initialVal}"]`);
+            if (initialOpt) {
+                currentDisplayName = initialOpt.getAttribute('data-display-name');
+                searchInput.value = currentDisplayName;
+                highlightCurrentOption(initialVal);
+            }
+            
+            // Open dropdown on focus/click
+            function openDropdown() {
+                wrapper.classList.add('active');
+                dropdown.classList.add('active');
+                
+                // Show all options initially
+                const options = dropdown.querySelectorAll('.spec-option-item');
+                options.forEach(opt => opt.style.display = 'block');
+                
+                const noResults = dropdown.querySelector('.no-results');
+                if (noResults) noResults.style.display = 'none';
+                
+                highlightCurrentOption(hiddenInput.value);
+            }
+            
+            searchInput.addEventListener('focus', openDropdown);
+            searchInput.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openDropdown();
+            });
+            
+            // Filter options on typing
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                const options = dropdown.querySelectorAll('.spec-option-item');
+                let hasResults = false;
+                
+                options.forEach(opt => {
+                    const id = opt.getAttribute('data-id');
+                    if (id === "") {
+                        // Keep "Sem especificação" option visible only if search query is empty
+                        opt.style.display = query === "" ? 'block' : 'none';
+                        if (query === "") hasResults = true;
+                        return;
+                    }
+                    
+                    const searchText = opt.getAttribute('data-search-text') || '';
+                    if (searchText.includes(query)) {
+                        opt.style.display = 'block';
+                        hasResults = true;
+                    } else {
+                        opt.style.display = 'none';
+                    }
+                });
+                
+                const noResults = dropdown.querySelector('.no-results');
+                if (noResults) {
+                    noResults.style.display = hasResults ? 'none' : 'block';
+                }
+            });
+            
+            // Select item on click
+            dropdown.addEventListener('click', function(e) {
+                const item = e.target.closest('.spec-option-item');
+                if (item) {
+                    const id = item.getAttribute('data-id');
+                    const displayName = item.getAttribute('data-display-name');
+                    
+                    hiddenInput.value = id;
+                    searchInput.value = displayName;
+                    currentDisplayName = displayName;
+                    
+                    closeDropdown();
+                }
+            });
+            
+            function closeDropdown() {
+                wrapper.classList.remove('active');
+                dropdown.classList.remove('active');
+            }
+            
+            // Click outside to close and restore last valid value
+            document.addEventListener('click', function(e) {
+                if (!wrapper.contains(e.target)) {
+                    // If the input was cleared entirely, set it to "Sem especificação"
+                    if (searchInput.value.trim() === '') {
+                        hiddenInput.value = '';
+                        currentDisplayName = '';
+                    }
+                    searchInput.value = currentDisplayName;
+                    closeDropdown();
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}

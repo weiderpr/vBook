@@ -455,3 +455,98 @@ class PropertyDocument(models.Model):
                     print(f"Error compressing image: {e}")
         
         super().save(*args, **kwargs)
+
+
+class PropertySpecification(models.Model):
+    property = models.ForeignKey(
+        Property,
+        on_delete=models.CASCADE,
+        related_name='specifications',
+        verbose_name=_("Propriedade")
+    )
+    description = models.CharField(max_length=255, verbose_name=_("Descrição"))
+    brand = models.CharField(max_length=255, verbose_name=_("Marca"))
+    model = models.CharField(max_length=255, verbose_name=_("Modelo"))
+    dimensions = models.CharField(max_length=255, verbose_name=_("Dimensões"))
+    purchase_location = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Local da compra"))
+    purchase_date = models.DateField(blank=True, null=True, verbose_name=_("Data da compra"))
+    purchase_value = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        verbose_name=_("Valor da compra")
+    )
+    product_link = models.URLField(blank=True, null=True, verbose_name=_("Link do produto"))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Especificação da Propriedade")
+        verbose_name_plural = _("Especificações da Propriedade")
+        ordering = ['description']
+
+    def __str__(self):
+        return f"{self.description} - {self.property.name}"
+
+
+class PropertySpecificationPhoto(models.Model):
+    specification = models.ForeignKey(
+        PropertySpecification,
+        on_delete=models.CASCADE,
+        related_name='photos',
+        verbose_name=_("Especificação")
+    )
+    image = models.ImageField(
+        upload_to='property_specifications/',
+        verbose_name=_("Imagem")
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("Foto da Especificação")
+        verbose_name_plural = _("Fotos da Especificação")
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            try:
+                img = Image.open(self.image)
+                # Convert to RGB if necessary
+                if img.mode in ("RGBA", "P"):
+                    img = img.convert("RGB")
+
+                # Target file size <= 100KB (102400 bytes)
+                quality = 85
+                max_dim = 1200
+
+                while True:
+                    # Resize if too large
+                    if img.width > max_dim or img.height > max_dim:
+                        img_temp = img.copy()
+                        img_temp.thumbnail((max_dim, max_dim), Image.LANCZOS)
+                    else:
+                        img_temp = img
+
+                    output = BytesIO()
+                    img_temp.save(output, format='JPEG', quality=quality, optimize=True)
+                    size = output.tell()
+
+                    # Stop if size is <= 100KB, or quality / dimension is minimized
+                    if size <= 102400 or quality <= 20 or max_dim <= 400:
+                        output.seek(0)
+                        name_without_ext = os.path.splitext(os.path.basename(self.image.name))[0]
+                        new_name = f"{name_without_ext}.jpg"
+                        self.image.save(new_name, ContentFile(output.read()), save=False)
+                        break
+
+                    # Reduce quality or dimension
+                    if quality > 40:
+                        quality -= 10
+                    else:
+                        max_dim -= 200
+                        quality = 60
+            except Exception as e:
+                print(f"Error compressing image: {e}")
+
+        super().save(*args, **kwargs)
+

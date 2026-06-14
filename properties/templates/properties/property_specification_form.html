@@ -1,0 +1,325 @@
+{% extends 'dashboard_layout.html' %}
+{% load i18n static humanize l10n %}
+
+{% block title %}{% trans "Editar Especificação" %} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 576px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .form-control {
+        height: 44px !important;
+        border-radius: 10px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .photo-delete-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+        background: rgba(255, 255, 255, 0.015);
+        padding: 1rem;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .photo-delete-item {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+    }
+
+    .photo-delete-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .photo-delete-item input[type="checkbox"] {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .photo-delete-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(239, 68, 68, 0.4);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        pointer-events: none;
+    }
+
+    .photo-delete-item input[type="checkbox"]:checked ~ .photo-delete-overlay {
+        display: flex;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0/build/vanilla-masker.min.js"></script>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with property=property active_item='specifications' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-panel-content" style="padding-top: 0.5rem;">
+    <div class="property-mini-header" style="margin-bottom: 1.2rem;">
+        <h1 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+            {% trans "Editar Especificação" %}
+        </h1>
+    </div>
+
+    <div class="glass-card" style="max-width: 850px; padding: 1.5rem 2.5rem;">
+        <form method="post" enctype="multipart/form-data" id="specForm">
+            {% csrf_token %}
+            
+            <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.description.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="{{ form.brand.id_for_label }}">{{ form.brand.label }}</label>
+                        {{ form.brand }}
+                        {% if form.brand.errors %}
+                            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.brand.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.model.id_for_label }}">{{ form.model.label }}</label>
+                        {{ form.model }}
+                        {% if form.model.errors %}
+                            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.model.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="{{ form.dimensions.id_for_label }}">{{ form.dimensions.label }}</label>
+                        {{ form.dimensions }}
+                        {% if form.dimensions.errors %}
+                            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.dimensions.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.purchase_location.id_for_label }}">{{ form.purchase_location.label }}</label>
+                        {{ form.purchase_location }}
+                        {% if form.purchase_location.errors %}
+                            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.purchase_location.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="{{ form.purchase_date.id_for_label }}">{{ form.purchase_date.label }}</label>
+                        {{ form.purchase_date }}
+                        {% if form.purchase_date.errors %}
+                            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.purchase_date.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.purchase_value.id_for_label }}">{{ form.purchase_value.label }}</label>
+                        {{ form.purchase_value }}
+                        {% if form.purchase_value.errors %}
+                            <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.purchase_value.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.product_link.id_for_label }}">{{ form.product_link.label }}</label>
+                    {{ form.product_link }}
+                    {% if form.product_link.errors %}
+                        <div style="color: #ef4444; font-size: 0.75rem; margin-top: 6px;">{{ form.product_link.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+
+                {% if object.photos.all %}
+                    <div class="form-group">
+                        <label>{% trans "Fotos Existentes (Selecione para excluir)" %}</label>
+                        <div class="photo-delete-grid">
+                            {% for photo in object.photos.all %}
+                                <div class="photo-delete-item">
+                                    <input type="checkbox" name="delete_photos" value="{{ photo.id }}">
+                                    <img src="{{ photo.image.url }}">
+                                    <div class="photo-delete-overlay">
+                                        {% trans "Excluir" %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label>{% trans "Adicionar Novas Fotos (Total máximo de 5 fotos)" %}</label>
+                    <div id="photosInputContainer">
+                        <div class="photo-input-wrapper" style="margin-bottom: 8px;">
+                            <input type="file" name="photos" accept="image/*" class="form-control photo-file-input">
+                        </div>
+                    </div>
+                    <div id="fileSizeInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);"></div>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
+                <a href="{% url 'properties:specification_list' property.pk %}" class="btn btn-outline" style="padding: 0 2rem; height: 42px; display: flex; align-items: center;">
+                    {% trans "Voltar" %}
+                </a>
+                <button type="submit" class="btn btn-primary" style="padding: 0 3rem; height: 42px; background: linear-gradient(135deg, var(--primary), #a855f7);">
+                    {% trans "Salvar" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const valueInput = document.querySelector('input[name="purchase_value"]');
+        if (valueInput && typeof VMasker !== 'undefined') {
+            VMasker(valueInput).maskMoney({
+                precision: 2,
+                separator: ',',
+                delimiter: '.',
+                unit: 'R$',
+                zeroCents: false
+            });
+        }
+
+        function getExistingPhotosCount() {
+            const checkGrid = document.querySelector('.photo-delete-grid');
+            if (!checkGrid) return 0;
+            const totalExisting = checkGrid.querySelectorAll('.photo-delete-item').length;
+            const toDelete = checkGrid.querySelectorAll('input[type="checkbox"]:checked').length;
+            return totalExisting - toDelete;
+        }
+
+        // JS photo count validation and dynamic inputs
+        const container = document.getElementById('photosInputContainer');
+        if (container) {
+            function updateInputs() {
+                const inputs = container.querySelectorAll('.photo-file-input');
+                let filledCount = 0;
+                inputs.forEach(input => {
+                    if (input.files && input.files.length > 0) {
+                        filledCount++;
+                    }
+                });
+
+                const existingPhotosCount = getExistingPhotosCount();
+                const maxNewPhotos = 5 - existingPhotosCount;
+
+                if (filledCount > maxNewPhotos) {
+                    alert('{% trans "Você atingiu o limite de 5 fotos no total." %}');
+                    // Find and clear the input that was just changed
+                    const changedInputs = Array.from(inputs).filter(input => input.files && input.files.length > 0);
+                    if (changedInputs.length > 0) {
+                        changedInputs[changedInputs.length - 1].value = '';
+                    }
+                    return;
+                }
+
+                // Remove empty wrappers (keep at least one)
+                const allWrappers = container.querySelectorAll('.photo-input-wrapper');
+                allWrappers.forEach(wrapper => {
+                    const input = wrapper.querySelector('.photo-file-input');
+                    if (!input.value && allWrappers.length > 1) {
+                        wrapper.remove();
+                    }
+                });
+
+                // Re-evaluate inputs
+                const currentInputs = container.querySelectorAll('.photo-file-input');
+                const lastInput = currentInputs[currentInputs.length - 1];
+
+                // If last input is filled and we can add more, append wrapper
+                if (lastInput && lastInput.value && currentInputs.length < maxNewPhotos) {
+                    const newWrapper = document.createElement('div');
+                    newWrapper.className = 'photo-input-wrapper';
+                    newWrapper.style.marginBottom = '8px';
+                    newWrapper.innerHTML = `
+                        <input type="file" name="photos" accept="image/*" class="form-control photo-file-input">
+                    `;
+                    container.appendChild(newWrapper);
+                }
+
+                // Update files count info
+                const infoDiv = document.getElementById('fileSizeInfo');
+                if (infoDiv) {
+                    let actualCount = 0;
+                    container.querySelectorAll('.photo-file-input').forEach(input => {
+                        if (input.files && input.files.length > 0) {
+                            actualCount++;
+                        }
+                    });
+                    if (actualCount > 0) {
+                        infoDiv.innerHTML = `<strong>${actualCount}</strong> {% trans "novas fotos selecionadas." %}`;
+                    } else {
+                        infoDiv.innerHTML = '';
+                    }
+                }
+            }
+
+            container.addEventListener('change', function(e) {
+                if (e.target && e.target.classList.contains('photo-file-input')) {
+                    updateInputs();
+                }
+            });
+
+            // Re-trigger update when checkboxes change
+            const deleteCheckboxes = document.querySelectorAll('input[name="delete_photos"]');
+            deleteCheckboxes.forEach(cb => {
+                cb.addEventListener('change', updateInputs);
+            });
+        }
+    });
+</script>
+{% endblock %}

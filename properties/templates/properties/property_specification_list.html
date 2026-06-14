@@ -1,0 +1,569 @@
+{% extends 'dashboard_layout.html' %}
+{% load static i18n humanize l10n %}
+
+{% block title %}{% trans "Especificações" %} - {{ property.name }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .property-panel-content {
+        padding-top: 1rem;
+    }
+    
+    .property-mini-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .spec-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .spec-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .spec-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary);
+        box-shadow: var(--glass-shadow);
+    }
+
+    .spec-header {
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 0.8rem;
+    }
+
+    .spec-title {
+        font-weight: 800;
+        font-size: 1.2rem;
+        color: var(--text-main);
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .spec-subtitle {
+        font-size: 0.85rem;
+        color: var(--primary);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .spec-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .spec-detail-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dashed rgba(255,255,255,0.03);
+        padding-bottom: 4px;
+    }
+
+    .spec-detail-label {
+        color: var(--text-muted);
+        font-weight: 600;
+    }
+
+    .spec-detail-value {
+        color: var(--text-main);
+        font-weight: 700;
+        text-align: right;
+    }
+
+    .spec-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid var(--glass-border);
+    }
+
+    .btn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--glass-border);
+        background: rgba(255,255,255,0.05);
+        color: var(--text-main);
+        transition: all 0.2s;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-icon:hover {
+        background: var(--primary);
+        color: white;
+        border-color: transparent;
+    }
+
+    .btn-delete:hover {
+        background: #f87171;
+    }
+
+    /* Modal Styles */
+    .upload-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        width: 90%;
+        max-width: 600px;
+        padding: 2rem;
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: modalFadeUp 0.3s ease;
+    }
+
+    @keyframes modalFadeUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    @media (max-width: 576px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .modal-content input, 
+    .modal-content textarea {
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        color: var(--text-main) !important;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+    }
+
+    .modal-content input:focus, 
+    .modal-content textarea:focus {
+        background: rgba(255,255,255,0.1);
+        border-color: var(--primary);
+        outline: none;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: rgba(255,255,255,0.02);
+        border-radius: 24px;
+        border: 2px dashed var(--glass-border);
+        margin-top: 2rem;
+    }
+
+    /* Preview Modal Styles */
+    .preview-modal {
+        display: none;
+        position: fixed;
+        z-index: 3000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-modal-header {
+        width: 95%;
+        max-width: 800px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 1rem 0;
+        color: white;
+    }
+
+    .preview-container {
+        width: 95%;
+        height: 80vh;
+        max-width: 800px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 16px;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0/build/vanilla-masker.min.js"></script>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with property=property active_item='specifications' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-panel-content">
+    <div class="property-mini-header">
+        <div>
+            <h1 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+                {% trans "Especificações da Propriedade" %}
+            </h1>
+            <p style="color: var(--text-muted); margin: 2px 0 0; font-size: 0.85rem;">
+                {% trans "Gerencie marca, modelo, dimensões e controle de manutenção de equipamentos e decorações." %}
+            </p>
+        </div>
+        <button onclick="openModal()" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            {% trans "Nova Especificação" %}
+        </button>
+    </div>
+
+    {% if specifications %}
+        <div class="spec-grid animate-fade">
+            {% for spec in specifications %}
+                <div class="spec-card">
+                    <div class="spec-header">
+                        <span class="spec-title" title="{{ spec.description }}">{{ spec.description }}</span>
+                        <span class="spec-subtitle">{{ spec.brand }} - {{ spec.model }}</span>
+                    </div>
+
+                    {% if spec.photos.all %}
+                        <div class="spec-photos-scroll" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 4px;">
+                            {% for photo in spec.photos.all %}
+                                <div class="spec-photo-thumb" style="width: 80px; height: 80px; border-radius: 10px; overflow: hidden; border: 1px solid var(--glass-border); flex-shrink: 0; cursor: pointer;" onclick="previewImage('{{ photo.image.url|escapejs }}')">
+                                    <img src="{{ photo.image.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="spec-details">
+                        <div class="spec-detail-item">
+                            <span class="spec-detail-label">{% trans "Dimensões" %}</span>
+                            <span class="spec-detail-value">{{ spec.dimensions }}</span>
+                        </div>
+                        {% if spec.purchase_location %}
+                            <div class="spec-detail-item">
+                                <span class="spec-detail-label">{% trans "Local da Compra" %}</span>
+                                <span class="spec-detail-value">{{ spec.purchase_location }}</span>
+                            </div>
+                        {% endif %}
+                        {% if spec.purchase_date %}
+                            <div class="spec-detail-item">
+                                <span class="spec-detail-label">{% trans "Data da Compra" %}</span>
+                                <span class="spec-detail-value">{{ spec.purchase_date|date:"d/m/Y" }}</span>
+                            </div>
+                        {% endif %}
+                        {% if spec.purchase_value %}
+                            <div class="spec-detail-item">
+                                <span class="spec-detail-label">{% trans "Valor da Compra" %}</span>
+                                <span class="spec-detail-value">R$ {{ spec.purchase_value|floatformat:2|localize }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="spec-actions">
+                        {% if spec.product_link %}
+                            <a href="{{ spec.product_link }}" target="_blank" class="btn btn-outline" style="font-size: 0.75rem; height: 36px; padding: 0 12px; display: flex; align-items: center; gap: 6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                                {% trans "Ver Produto" %}
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'properties:specification_update' spec.pk %}" class="btn-icon" style="margin-left: auto;" title="{% trans "Editar" %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                        </a>
+                        <form action="{% url 'properties:specification_delete' spec.pk %}" method="post" onsubmit="return confirm('{% trans 'Tem certeza que deseja excluir esta especificação?' %}')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon btn-delete" title="{% trans "Excluir" %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state animate-fade">
+            <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.03); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--text-muted);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line></svg>
+            </div>
+            <h3 style="margin: 0; color: var(--text-main);">{% trans "Nenhuma especificação cadastrada" %}</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 8px 0 1.5rem;">{% trans "Comece cadastrando os primeiros equipamentos desta propriedade." %}</p>
+            <button onclick="openModal()" class="btn btn-primary">{% trans "Nova Especificação" %}</button>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Add Modal -->
+<div id="uploadModal" class="upload-modal">
+    <div class="modal-content">
+        <h2 style="margin: 0 0 1.5rem 0; font-size: 1.4rem; font-weight: 800;">{% trans "Nova Especificação" %}</h2>
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <small style="color: #f87171;">{{ form.description.errors|striptags }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.brand.id_for_label }}">{{ form.brand.label }}</label>
+                    {{ form.brand }}
+                    {% if form.brand.errors %}
+                        <small style="color: #f87171;">{{ form.brand.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.model.id_for_label }}">{{ form.model.label }}</label>
+                    {{ form.model }}
+                    {% if form.model.errors %}
+                        <small style="color: #f87171;">{{ form.model.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.dimensions.id_for_label }}">{{ form.dimensions.label }}</label>
+                    {{ form.dimensions }}
+                    {% if form.dimensions.errors %}
+                        <small style="color: #f87171;">{{ form.dimensions.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.purchase_location.id_for_label }}">{{ form.purchase_location.label }}</label>
+                    {{ form.purchase_location }}
+                    {% if form.purchase_location.errors %}
+                        <small style="color: #f87171;">{{ form.purchase_location.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="{{ form.purchase_date.id_for_label }}">{{ form.purchase_date.label }}</label>
+                    {{ form.purchase_date }}
+                    {% if form.purchase_date.errors %}
+                        <small style="color: #f87171;">{{ form.purchase_date.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.purchase_value.id_for_label }}">{{ form.purchase_value.label }}</label>
+                    {{ form.purchase_value }}
+                    {% if form.purchase_value.errors %}
+                        <small style="color: #f87171;">{{ form.purchase_value.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.product_link.id_for_label }}">{{ form.product_link.label }}</label>
+                {{ form.product_link }}
+                {% if form.product_link.errors %}
+                    <small style="color: #f87171;">{{ form.product_link.errors|striptags }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label>{% trans "Fotos do Produto ou Manuais (Máximo 5)" %}</label>
+                <div id="photosInputContainer">
+                    <div class="photo-input-wrapper" style="margin-bottom: 8px;">
+                        <input type="file" name="photos" accept="image/*" class="form-control photo-file-input">
+                    </div>
+                </div>
+                <div id="fileSizeInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);"></div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="button" onclick="closeModal()" class="btn btn-secondary" style="flex: 1;">{% trans "Cancelar" %}</button>
+                <button type="submit" class="btn btn-primary" style="flex: 1;">{% trans "Salvar" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div id="previewModal" class="preview-modal">
+    <div class="preview-modal-header">
+        <button onclick="closePreview()" class="btn-icon" style="background: rgba(255,255,255,0.1); border: none; color: white;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="preview-container">
+        <img id="previewImg" src="">
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById('uploadModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('uploadModal').style.display = 'none';
+    }
+
+    function previewImage(url) {
+        document.getElementById('previewImg').src = url;
+        document.getElementById('previewModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePreview() {
+        document.getElementById('previewModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on click outside
+    window.onclick = function(event) {
+        let uploadModal = document.getElementById('uploadModal');
+        let previewModal = document.getElementById('previewModal');
+        if (event.target == uploadModal) {
+            closeModal();
+        }
+        if (event.target == previewModal) {
+            closePreview();
+        }
+    }
+
+    // Money masking for purchase_value using vanilla-masker
+    document.addEventListener('DOMContentLoaded', function() {
+        const valueInput = document.querySelector('input[name="purchase_value"]');
+        if (valueInput && typeof VMasker !== 'undefined') {
+            VMasker(valueInput).maskMoney({
+                precision: 2,
+                separator: ',',
+                delimiter: '.',
+                unit: 'R$',
+                zeroCents: false
+            });
+        }
+
+        // JS photo count validation and dynamic inputs
+        const container = document.getElementById('photosInputContainer');
+        if (container) {
+            container.addEventListener('change', function(e) {
+                if (e.target && e.target.classList.contains('photo-file-input')) {
+                    const inputs = container.querySelectorAll('.photo-file-input');
+                    let filledCount = 0;
+                    inputs.forEach(input => {
+                        if (input.files && input.files.length > 0) {
+                            filledCount++;
+                        }
+                    });
+
+                    const maxNewPhotos = 5;
+
+                    if (filledCount > maxNewPhotos) {
+                        alert('{% trans "Você só pode selecionar no máximo 5 fotos." %}');
+                        e.target.value = '';
+                        return;
+                    }
+
+                    // Remove empty inputs (except keep at least one wrapper)
+                    const allWrappers = container.querySelectorAll('.photo-input-wrapper');
+                    allWrappers.forEach(wrapper => {
+                        const input = wrapper.querySelector('.photo-file-input');
+                        if (!input.value && allWrappers.length > 1) {
+                            wrapper.remove();
+                        }
+                    });
+
+                    // Re-evaluate inputs
+                    const currentInputs = container.querySelectorAll('.photo-file-input');
+                    const lastInput = currentInputs[currentInputs.length - 1];
+
+                    // If last input is filled and limit not reached, append new one
+                    if (lastInput && lastInput.value && currentInputs.length < maxNewPhotos) {
+                        const newWrapper = document.createElement('div');
+                        newWrapper.className = 'photo-input-wrapper';
+                        newWrapper.style.marginBottom = '8px';
+                        newWrapper.innerHTML = `
+                            <input type="file" name="photos" accept="image/*" class="form-control photo-file-input">
+                        `;
+                        container.appendChild(newWrapper);
+                    }
+
+                    // Update files count info
+                    const infoDiv = document.getElementById('fileSizeInfo');
+                    if (infoDiv) {
+                        let actualCount = 0;
+                        container.querySelectorAll('.photo-file-input').forEach(input => {
+                            if (input.files && input.files.length > 0) {
+                                actualCount++;
+                            }
+                        });
+                        if (actualCount > 0) {
+                            infoDiv.innerHTML = `<strong>${actualCount}</strong> {% trans "novas fotos selecionadas." %}`;
+                        } else {
+                            infoDiv.innerHTML = '';
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

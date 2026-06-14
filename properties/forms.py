@@ -253,3 +253,57 @@ class PropertyDocumentForm(forms.ModelForm):
         self.fields['name'].widget.attrs.update({
             'maxlength': '255'
         })
+
+
+from .models import PropertySpecification, PropertySpecificationPhoto
+
+class PropertySpecificationForm(forms.ModelForm):
+    purchase_value = forms.CharField(
+        required=False,
+        label=_("Valor da compra"),
+        widget=forms.TextInput(attrs={'placeholder': '0,00', 'class': 'money-mask'})
+    )
+
+    class Meta:
+        model = PropertySpecification
+        fields = [
+            'description', 'brand', 'model', 'dimensions',
+            'purchase_location', 'purchase_date', 'purchase_value', 'product_link'
+        ]
+        widgets = {
+            'purchase_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
+            'product_link': forms.URLInput(attrs={'placeholder': 'https://...', 'class': 'form-control'}),
+            'description': forms.TextInput(attrs={'placeholder': _("Ex: Geladeira Frost Free"), 'class': 'form-control'}),
+            'brand': forms.TextInput(attrs={'placeholder': _("Ex: Brastemp"), 'class': 'form-control'}),
+            'model': forms.TextInput(attrs={'placeholder': _("Ex: BRM44HB"), 'class': 'form-control'}),
+            'dimensions': forms.TextInput(attrs={'placeholder': _("Ex: 176x62x69 cm"), 'class': 'form-control'}),
+            'purchase_location': forms.TextInput(attrs={'placeholder': _("Ex: Magazine Luiza"), 'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            if name != 'purchase_value':
+                current_classes = field.widget.attrs.get('class', '')
+                field.widget.attrs.update({'class': f'{current_classes} form-control'.strip()})
+        
+        # Ensure purchase_value is formatted for initial display
+        if self.instance and self.instance.pk and self.instance.purchase_value:
+            self.initial['purchase_value'] = f"{self.instance.purchase_value:.2f}".replace('.', ',')
+
+    def clean_purchase_value(self):
+        value = self.cleaned_data.get('purchase_value')
+        if not value:
+            return None
+        if isinstance(value, str):
+            import re
+            clean_value = re.sub(r'[^\d.,]', '', value)
+            if ',' in clean_value:
+                clean_value = clean_value.replace('.', '').replace(',', '.')
+            try:
+                from decimal import Decimal
+                return Decimal(clean_value)
+            except (ValueError, ArithmeticError):
+                raise forms.ValidationError(_("Valor inválido."))
+        return value
+
