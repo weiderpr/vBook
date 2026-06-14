@@ -49,6 +49,7 @@ urlpatterns = [
     path('acesso-prestador/<uuid:token>/', views.ServiceProviderPublicView.as_view(), name='provider_public'),
     path('acesso-prestador/<uuid:token>/concluir/<int:cost_id>/', views.ServiceProviderCompleteServiceView.as_view(), name='provider_complete_service'),
     path('acesso-prestador/<uuid:token>/cancelar-conclusao/<int:cost_id>/', views.ServiceProviderCancelCompletionView.as_view(), name='provider_cancel_completion'),
+    path('acesso-prestador/<uuid:token>/checklist/<int:cost_id>/', views.ServiceProviderChecklistView.as_view(), name='provider_checklist'),
     path('calendarios/', GlobalReservationCalendarView.as_view(), name='global_calendar'),
     path('relatorios/', views.GlobalReportsView.as_view(), name='global_reports'),
 ]

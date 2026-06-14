@@ -16993,3 +16993,56 @@ django.core.exceptions.FieldError: Unknown field(s) (specification) specified fo
 [2026-06-14 12:18:59 -0300] [29726] [INFO] Booting worker with pid: 29726
 [2026-06-14 12:18:59 -0300] [29728] [INFO] Booting worker with pid: 29728
 [2026-06-14 12:19:00 -0300] [29721] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 16:18:27 -0300] [29721] [INFO] Handling signal: term
+[2026-06-14 16:18:27 -0300] [29726] [INFO] Worker exiting (pid: 29726)
+[2026-06-14 16:18:27 -0300] [29728] [INFO] Worker exiting (pid: 29728)
+[2026-06-14 16:18:27 -0300] [29724] [INFO] Worker exiting (pid: 29724)
+[2026-06-14 16:18:27 -0300] [29721] [INFO] Worker (pid:29724) was sent SIGTERM!
+[2026-06-14 16:18:27 -0300] [29721] [INFO] Worker (pid:29726) was sent SIGTERM!
+[2026-06-14 16:18:27 -0300] [29721] [INFO] Worker (pid:29728) was sent SIGTERM!
+[2026-06-14 16:18:27 -0300] [29721] [INFO] Shutting down: Master
+[2026-06-14 16:18:28 -0300] [57135] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 16:18:28 -0300] [57135] [INFO] Listening at: http://127.0.0.1:8000 (57135)
+[2026-06-14 16:18:28 -0300] [57135] [INFO] Using worker: sync
+[2026-06-14 16:18:28 -0300] [57138] [INFO] Booting worker with pid: 57138
+[2026-06-14 16:18:28 -0300] [57139] [INFO] Booting worker with pid: 57139
+[2026-06-14 16:18:28 -0300] [57141] [INFO] Booting worker with pid: 57141
+[2026-06-14 16:18:28 -0300] [57135] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 16:23:26 -0300] [57135] [INFO] Handling signal: term
+[2026-06-14 16:23:26 -0300] [57138] [INFO] Worker exiting (pid: 57138)
+[2026-06-14 16:23:26 -0300] [57141] [INFO] Worker exiting (pid: 57141)
+[2026-06-14 16:23:26 -0300] [57139] [INFO] Worker exiting (pid: 57139)
+[2026-06-14 16:23:28 -0300] [57135] [INFO] Shutting down: Master
+[2026-06-14 16:23:28 -0300] [57756] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 16:23:28 -0300] [57756] [INFO] Listening at: http://127.0.0.1:8000 (57756)
+[2026-06-14 16:23:28 -0300] [57756] [INFO] Using worker: sync
+[2026-06-14 16:23:28 -0300] [57758] [INFO] Booting worker with pid: 57758
+[2026-06-14 16:23:28 -0300] [57759] [INFO] Booting worker with pid: 57759
+[2026-06-14 16:23:28 -0300] [57760] [INFO] Booting worker with pid: 57760
+[2026-06-14 16:23:28 -0300] [57756] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 16:27:21 -0300] [57756] [INFO] Handling signal: term
+[2026-06-14 16:27:21 -0300] [57758] [INFO] Worker exiting (pid: 57758)
+[2026-06-14 16:27:21 -0300] [57760] [INFO] Worker exiting (pid: 57760)
+[2026-06-14 16:27:21 -0300] [57759] [INFO] Worker exiting (pid: 57759)
+[2026-06-14 16:27:23 -0300] [57756] [INFO] Shutting down: Master
+[2026-06-14 16:27:23 -0300] [58301] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 16:27:23 -0300] [58301] [INFO] Listening at: http://127.0.0.1:8000 (58301)
+[2026-06-14 16:27:23 -0300] [58301] [INFO] Using worker: sync
+[2026-06-14 16:27:23 -0300] [58303] [INFO] Booting worker with pid: 58303
+[2026-06-14 16:27:23 -0300] [58304] [INFO] Booting worker with pid: 58304
+[2026-06-14 16:27:23 -0300] [58305] [INFO] Booting worker with pid: 58305
+[2026-06-14 16:27:24 -0300] [58301] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 16:33:49 -0300] [58304] [INFO] Worker exiting (pid: 58304)
+[2026-06-14 16:33:49 -0300] [58305] [INFO] Worker exiting (pid: 58305)
+[2026-06-14 16:33:49 -0300] [58301] [INFO] Handling signal: term
+[2026-06-14 16:33:49 -0300] [58303] [INFO] Worker exiting (pid: 58303)
+[2026-06-14 16:33:49 -0300] [58301] [INFO] Worker (pid:58304) was sent SIGTERM!
+[2026-06-14 16:33:49 -0300] [58301] [INFO] Worker (pid:58305) was sent SIGTERM!
+[2026-06-14 16:33:50 -0300] [58301] [INFO] Shutting down: Master
+[2026-06-14 16:33:50 -0300] [59028] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 16:33:50 -0300] [59028] [INFO] Listening at: http://127.0.0.1:8000 (59028)
+[2026-06-14 16:33:50 -0300] [59028] [INFO] Using worker: sync
+[2026-06-14 16:33:50 -0300] [59033] [INFO] Booting worker with pid: 59033
+[2026-06-14 16:33:50 -0300] [59035] [INFO] Booting worker with pid: 59035
+[2026-06-14 16:33:50 -0300] [59036] [INFO] Booting worker with pid: 59036
+[2026-06-14 16:33:50 -0300] [59028] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl

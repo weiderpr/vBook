@@ -954,6 +954,13 @@ class ServiceProviderCompleteServiceView(View):
         provider = get_object_or_404(ServiceProvider, access_token=token)
         cost = get_object_or_404(ReservationCost, pk=cost_id, provider=provider)
         
+        # Verify checklist is completed before completing service
+        if cost.reservation.is_checklist_pending:
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'status': 'error', 'message': _('Checklist obrigatório pendente!')}, status=400)
+            messages.error(request, _("Você deve responder ao checklist antes de concluir o serviço."))
+            return redirect("properties:provider_public", token=token)
+
         cost.is_completed = True
         cost.completed_at = timezone.now()
         cost.save()
@@ -1581,5 +1588,76 @@ class PropertyChecklistItemDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         messages.success(self.request, _("Item excluído com sucesso!"))
         return reverse_lazy('properties:checklist_update', kwargs={'pk': self.object.checklist.pk})
+
+
+class ServiceProviderChecklistView(View):
+    def get(self, request, token, cost_id):
+        provider = get_object_or_404(ServiceProvider, access_token=token)
+        cost = get_object_or_404(ReservationCost, pk=cost_id, provider=provider)
+        checklist = cost.reservation.checklist
+        if not checklist:
+            messages.error(request, _("Não há checklist associado a este serviço."))
+            return redirect("properties:provider_public", token=token)
+        
+        items = checklist.items.all().order_by('id')
+        return render(request, "properties/service_provider_checklist.html", {
+            "provider": provider,
+            "cost": cost,
+            "checklist": checklist,
+            "items": items
+        })
+
+    def post(self, request, token, cost_id):
+        provider = get_object_or_404(ServiceProvider, access_token=token)
+        cost = get_object_or_404(ReservationCost, pk=cost_id, provider=provider)
+        checklist = cost.reservation.checklist
+        if not checklist:
+            messages.error(request, _("Não há checklist associado a este serviço."))
+            return redirect("properties:provider_public", token=token)
+
+        from .models import PropertyChecklistResponse, PropertyChecklistItemResponse
+
+        # Clean/delete existing responses to allow overwrite/resubmit
+        PropertyChecklistResponse.objects.filter(checklist=checklist, reservation=cost.reservation).delete()
+
+        # Create checklist response
+        user = request.user if request.user.is_authenticated else provider.user
+        checklist_response = PropertyChecklistResponse.objects.create(
+            checklist=checklist,
+            reservation=cost.reservation,
+            user=user
+        )
+
+        items = checklist.items.all()
+        for item in items:
+            quantity = None
+            quality = None
+
+            if item.evaluation_type in ('quantity', 'both'):
+                qty_val = request.POST.get(f'quantity_{item.id}')
+                if qty_val:
+                    try:
+                        quantity = int(qty_val)
+                    except ValueError:
+                        quantity = None
+
+            if item.evaluation_type in ('quality', 'both'):
+                quality = request.POST.get(f'quality_{item.id}')
+
+            photo = None
+            if item.photo_required:
+                photo = request.FILES.get(f'photo_{item.id}')
+
+            PropertyChecklistItemResponse.objects.create(
+                response=checklist_response,
+                item=item,
+                quantity=quantity,
+                quality=quality,
+                photo=photo
+            )
+
+        messages.success(request, _("Checklist respondido com sucesso!"))
+        return redirect(reverse('properties:provider_public', kwargs={'token': token}) + '#agenda')
+
 
 

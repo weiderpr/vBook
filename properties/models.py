@@ -615,6 +615,10 @@ class PropertyChecklistItem(models.Model):
         default='both',
         verbose_name=_("Tipo de Avaliação")
     )
+    photo_required = models.BooleanField(
+        default=False,
+        verbose_name=_("Registro fotográfico obrigatório?")
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -625,5 +629,74 @@ class PropertyChecklistItem(models.Model):
 
     def __str__(self):
         return f"{self.description} ({self.checklist.description})"
+
+
+class PropertyChecklistResponse(models.Model):
+    checklist = models.ForeignKey(
+        'PropertyChecklist',
+        on_delete=models.CASCADE,
+        related_name='responses',
+        verbose_name=_("Checklist")
+    )
+    reservation = models.ForeignKey(
+        'reservations.Reservation',
+        on_delete=models.CASCADE,
+        related_name='checklist_responses',
+        verbose_name=_("Reserva")
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='checklist_responses',
+        verbose_name=_("Usuário")
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Data da Resposta"))
+
+    class Meta:
+        verbose_name = _("Resposta do Checklist")
+        verbose_name_plural = _("Respostas dos Checklists")
+        unique_together = ['reservation', 'checklist']
+
+    def __str__(self):
+        return f"Resposta de {self.checklist.description} para Reserva #{self.reservation.id}"
+
+
+class PropertyChecklistItemResponse(models.Model):
+    response = models.ForeignKey(
+        PropertyChecklistResponse,
+        on_delete=models.CASCADE,
+        related_name='item_responses',
+        verbose_name=_("Resposta do Checklist")
+    )
+    item = models.ForeignKey(
+        'PropertyChecklistItem',
+        on_delete=models.CASCADE,
+        related_name='responses',
+        verbose_name=_("Item do Checklist")
+    )
+    quantity = models.IntegerField(null=True, blank=True, verbose_name=_("Quantidade"))
+    quality = models.CharField(
+        max_length=10,
+        choices=PropertyChecklistItem.STATUS_CHOICES,
+        null=True,
+        blank=True,
+        verbose_name=_("Estado/Qualidade")
+    )
+    photo = models.ImageField(
+        upload_to='checklist_responses/',
+        null=True,
+        blank=True,
+        verbose_name=_("Foto / Registro Fotográfico")
+    )
+
+    class Meta:
+        verbose_name = _("Resposta de Item do Checklist")
+        verbose_name_plural = _("Respostas dos Itens do Checklist")
+
+    def __str__(self):
+        return f"{self.item.description}: Qtd={self.quantity}, Qualidade={self.quality}"
+
 
 

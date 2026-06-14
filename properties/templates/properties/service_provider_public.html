@@ -410,6 +410,11 @@
                                 <div style="font-size: 0.7rem; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">{{ cost.reservation.property.name }}</div>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);">{{ cost.reservation.first_name }}</div>
+                                    {% if cost.reservation.is_checklist_pending %}
+                                        <a href="{% url 'properties:provider_checklist' token=provider.access_token cost_id=cost.id %}" title="{% trans 'Checklist pendente' %}" style="display: inline-flex; align-items: center; justify-content: center; color: #fbbf24; background: rgba(245, 158, 11, 0.1); border-radius: 6px; padding: 4px; border: 1px solid rgba(245, 158, 11, 0.2); transition: 0.2s;" onclick="event.stopPropagation();">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: #fbbf24;"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+                                        </a>
+                                    {% endif %}
                                     {% if cost.reservation.property.share_client_phone and cost.reservation.client_phone %}
                                         <a href="https://wa.me/{{ cost.reservation.client_phone|cut:'+'|cut:' '|cut:'-'|cut:'('|cut:')' }}" target="_blank" style="display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: rgba(34, 197, 94, 0.1); border-radius: 6px; color: #22c55e; text-decoration: none; font-size: 0.75rem; font-weight: 700;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -494,10 +499,26 @@
                                     </div>
                                 </div>
 
-                                <button class="btn-complete" onclick="confirmCompletion('{{ cost.id }}', '{{ cost.description }}')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                    {% trans "Marcar como Realizado" %}
-                                </button>
+                                {% if cost.reservation.is_checklist_pending %}
+                                    <div style="background: rgba(245, 158, 11, 0.04); border: 1px dashed rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 12px; margin-top: 1rem; display: flex; flex-direction: column; gap: 6px; align-items: center; text-align: center;">
+                                        <span style="color: #fbbf24; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: #fbbf24;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                                            {% trans "Checklist obrigatório pendente!" %}
+                                        </span>
+                                        <div style="color: var(--text-muted); font-size: 0.75rem; line-height: 1.4;">
+                                            {% trans "Você deve responder ao checklist antes de poder marcar o serviço como concluído." %}
+                                        </div>
+                                        <a href="{% url 'properties:provider_checklist' token=provider.access_token cost_id=cost.id %}" class="btn-complete" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.2); color: #fbbf24; margin-top: 4px; text-decoration: none; width: 100%; text-align: center; justify-content: center; display: inline-flex;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: #fbbf24;"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+                                            {% trans "Responder Checklist" %}
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <button class="btn-complete" onclick="confirmCompletion('{{ cost.id }}', '{{ cost.description }}')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                        {% trans "Marcar como Realizado" %}
+                                    </button>
+                                {% endif %}
                             </div>
                         {% endfor %}
                     </div>

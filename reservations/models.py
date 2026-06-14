@@ -228,6 +228,13 @@ class Reservation(models.Model):
             return 'active'
 
     @_property
+    def is_checklist_pending(self):
+        if not self.checklist:
+            return False
+        from properties.models import PropertyChecklistResponse
+        return not PropertyChecklistResponse.objects.filter(reservation=self, checklist=self.checklist).exists()
+
+    @_property
     def total_paid(self):
         from django.db.models import Sum
         return self.payments.aggregate(total=Sum('value'))['total'] or 0

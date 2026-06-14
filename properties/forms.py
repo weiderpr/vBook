@@ -322,12 +322,13 @@ class PropertyChecklistForm(forms.ModelForm):
 class PropertyChecklistItemForm(forms.ModelForm):
     class Meta:
         model = PropertyChecklistItem
-        fields = ['description', 'default_quantity', 'default_status', 'evaluation_type']
+        fields = ['description', 'default_quantity', 'default_status', 'evaluation_type', 'photo_required']
         widgets = {
             'description': forms.TextInput(attrs={'placeholder': _("Ex: Toalhas de Banho"), 'class': 'form-control'}),
             'default_quantity': forms.NumberInput(attrs={'min': 0, 'class': 'form-control'}),
             'default_status': forms.Select(attrs={'class': 'form-select'}),
             'evaluation_type': forms.Select(attrs={'class': 'form-select'}),
+            'photo_required': forms.CheckboxInput(attrs={'class': 'form-check-input', 'style': 'width: 20px !important; height: 20px !important; flex-shrink: 0; cursor: pointer;'}),
         }
 
 
