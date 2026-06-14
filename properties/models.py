@@ -698,5 +698,17 @@ class PropertyChecklistItemResponse(models.Model):
     def __str__(self):
         return f"{self.item.description}: Qtd={self.quantity}, Qualidade={self.quality}"
 
-
-
+    @property
+    def is_below_default(self):
+        # Quantity comparison
+        if self.item.evaluation_type in ('quantity', 'both'):
+            if self.quantity is not None and self.quantity < self.item.default_quantity:
+                return True
+        # Quality comparison
+        if self.item.evaluation_type in ('quality', 'both'):
+            status_map = {'bad': 1, 'regular': 2, 'good': 3}
+            resp_val = status_map.get(self.quality)
+            def_val = status_map.get(self.item.default_status)
+            if resp_val is not None and def_val is not None and resp_val < def_val:
+                return True
+        return False

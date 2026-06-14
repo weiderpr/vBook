@@ -1,0 +1,172 @@
+{% load i18n l10n %}
+
+<div class="checklist-details-container" style="color: var(--text-main);">
+    {% if error %}
+        <div style="text-align: center; padding: 2rem; color: #ef4444;">
+            <p>{{ error }}</p>
+        </div>
+    {% else %}
+        <!-- Header -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #10b981;"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                {{ checklist.description }}
+            </h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+                <div>
+                    <strong>{% trans "Respondido por:" %}</strong> 
+                    {% if checklist_response.user %}
+                        {{ checklist_response.user.first_name_display|default:checklist_response.user.username }}
+                    {% else %}
+                        {% trans "Prestador" %}
+                    {% endif %}
+                </div>
+                <div>
+                    <strong>{% trans "Data/Hora:" %}</strong> 
+                    {{ checklist_response.created_at|date:"d/m/Y H:i" }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert if items need attention (Shown dynamically via inline script below if any item is substandard) -->
+        <div id="attentionAlert" style="display: none; margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; align-items: center; gap: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <div style="font-size: 0.9rem; color: #f87171; font-weight: 600;">
+                {% trans "Atenção: Alguns itens foram informados fora do padrão e precisam de atenção!" %}
+            </div>
+        </div>
+
+        <!-- Table of Items -->
+        <div>
+            <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem;">
+                {% trans "Itens do Checklist" %}
+            </h4>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid var(--glass-border); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em; color: var(--text-muted);">
+                            <th style="padding: 10px; font-weight: 700;">{% trans "Item" %}</th>
+                            <th style="padding: 10px; font-weight: 700; text-align: center;">{% trans "Esperado (Padrão)" %}</th>
+                            <th style="padding: 10px; font-weight: 700; text-align: center;">{% trans "Registrado" %}</th>
+                            <th style="padding: 10px; font-weight: 700; text-align: center;">{% trans "Foto" %}</th>
+                            <th style="padding: 10px; font-weight: 700; text-align: right;">{% trans "Status" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for resp in item_responses %}
+                        <tr style="border-bottom: 1px solid var(--glass-border); transition: background 0.2s; {% if resp.is_below_default %}background: rgba(239, 68, 68, 0.05);{% endif %}" class="checklist-row">
+                            <td style="padding: 12px 10px;">
+                                <div style="font-weight: 600; color: var(--text-main);">{{ resp.item.description }}</div>
+                                {% if resp.is_below_default %}
+                                    <div style="font-size: 0.75rem; color: #f87171; margin-top: 4px; display: flex; align-items: center; gap: 4px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                        {% if resp.item.evaluation_type == 'quantity' or resp.item.evaluation_type == 'both' %}
+                                            {% if resp.quantity < resp.item.default_quantity %}
+                                                {% trans "Quantidade abaixo do esperado." %}
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if resp.item.evaluation_type == 'quality' or resp.item.evaluation_type == 'both' %}
+                                            {% if resp.quality == 'bad' and resp.item.default_status != 'bad' %}
+                                                {% trans "Estado de conservação ruim." %}
+                                            {% elif resp.quality == 'regular' and resp.item.default_status == 'good' %}
+                                                {% trans "Estado de conservação regular." %}
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            
+                            <!-- Expected/Default -->
+                            <td style="padding: 12px 10px; text-align: center; color: var(--text-muted);">
+                                {% if resp.item.evaluation_type == 'quantity' %}
+                                    Qtd: {{ resp.item.default_quantity }}
+                                {% elif resp.item.evaluation_type == 'quality' %}
+                                    {% if resp.item.default_status == 'good' %}
+                                        <span style="color: #4ade80;">{% trans "Bom" %}</span>
+                                    {% elif resp.item.default_status == 'regular' %}
+                                        <span style="color: #fbbf24;">{% trans "Regular" %}</span>
+                                    {% else %}
+                                        <span style="color: #f87171;">{% trans "Ruim" %}</span>
+                                    {% endif %}
+                                {% else %}
+                                    <div style="font-size: 0.8rem; line-height: 1.2;">
+                                        Qtd: {{ resp.item.default_quantity }}<br>
+                                        {% if resp.item.default_status == 'good' %}
+                                            <span style="color: #4ade80;">{% trans "Bom" %}</span>
+                                        {% elif resp.item.default_status == 'regular' %}
+                                            <span style="color: #fbbf24;">{% trans "Regular" %}</span>
+                                        {% else %}
+                                            <span style="color: #f87171;">{% trans "Ruim" %}</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            
+                            <!-- Answered/Recorded -->
+                            <td style="padding: 12px 10px; text-align: center;">
+                                {% if resp.item.evaluation_type == 'quantity' %}
+                                    <span style="font-weight: 700; {% if resp.is_below_default %}color: #f87171;{% endif %}">
+                                        Qtd: {{ resp.quantity|default:"0" }}
+                                    </span>
+                                {% elif resp.item.evaluation_type == 'quality' %}
+                                    {% if resp.quality == 'good' %}
+                                        <span style="color: #4ade80; font-weight: 600;">{% trans "Bom" %}</span>
+                                    {% elif resp.quality == 'regular' %}
+                                        <span style="color: #fbbf24; font-weight: 600;">{% trans "Regular" %}</span>
+                                    {% elif resp.quality == 'bad' %}
+                                        <span style="color: #f87171; font-weight: 600;">{% trans "Ruim" %}</span>
+                                    {% else %}
+                                        <span style="color: var(--text-muted);">---</span>
+                                    {% endif %}
+                                {% else %}
+                                    <div style="font-size: 0.8rem; line-height: 1.2;">
+                                        <span style="font-weight: 700; {% if resp.is_below_default and resp.quantity < resp.item.default_quantity %}color: #f87171;{% endif %}">
+                                            Qtd: {{ resp.quantity|default:"0" }}
+                                        </span><br>
+                                        {% if resp.quality == 'good' %}
+                                            <span style="color: #4ade80; font-weight: 600;">{% trans "Bom" %}</span>
+                                        {% elif resp.quality == 'regular' %}
+                                            <span style="color: #fbbf24; font-weight: 600;">{% trans "Regular" %}</span>
+                                        {% elif resp.quality == 'bad' %}
+                                            <span style="color: #f87171; font-weight: 600;">{% trans "Ruim" %}</span>
+                                        {% else %}
+                                            <span style="color: var(--text-muted);">---</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </td>
+
+                            <!-- Photo -->
+                            <td style="padding: 12px 10px; text-align: center;">
+                                {% if resp.photo %}
+                                    <a href="javascript:void(0);" onclick="openChecklistImageModal('{{ resp.photo.url }}')" title="{% trans 'Clique para ampliar' %}" style="display: inline-block; border-radius: 8px; overflow: hidden; border: 1px solid var(--glass-border); width: 42px; height: 42px; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'">
+                                        <img src="{{ resp.photo.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </a>
+                                {% else %}
+                                    <span style="color: var(--text-muted); font-size: 0.85rem;">---</span>
+                                {% endif %}
+                            </td>
+
+                            <!-- Status Badge -->
+                            <td style="padding: 12px 10px; text-align: right;">
+                                {% if resp.is_below_default %}
+                                    <span class="status-badge" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); font-size: 0.65rem; padding: 4px 8px; border-radius: 12px; font-weight: 700;">
+                                        {% trans "Atenção" %}
+                                    </span>
+                                    <script>
+                                        document.getElementById("attentionAlert").style.display = "flex";
+                                    </script>
+                                {% else %}
+                                    <span class="status-badge" style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.25); font-size: 0.65rem; padding: 4px 8px; border-radius: 12px; font-weight: 700;">
+                                        {% trans "Conforme" %}
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+</div>

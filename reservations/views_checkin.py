@@ -545,3 +545,37 @@ class ReservationCheckInResetView(LoginRequiredMixin, View):
 
         messages.success(request, _("Dados de check-in excluídos com sucesso. O hóspede já pode preencher novamente."))
         return redirect('reservations:list', property_pk=property_pk)
+
+class ReservationChecklistDetailView(LoginRequiredMixin, View):
+    """
+    Retorna um fragmento HTML com as respostas do checklist da reserva para o modal.
+    """
+    def get(self, request, property_pk, pk):
+        reservation = get_object_or_404(Reservation, pk=pk)
+        
+        # Check ownership
+        if reservation.property.user != request.user:
+            return HttpResponseForbidden("Você não tem permissão para ver estes dados.")
+
+        from properties.models import PropertyChecklistResponse
+        
+        checklist_response = PropertyChecklistResponse.objects.filter(
+            reservation=reservation, 
+            checklist=reservation.checklist
+        ).first()
+        
+        if not checklist_response:
+            return render(request, 'reservations/includes/checklist_detail_modal_content.html', {
+                'error': _("Nenhuma resposta de checklist encontrada para esta reserva.")
+            })
+            
+        item_responses = checklist_response.item_responses.select_related('item').order_by('item__id')
+        
+        context = {
+            'reservation': reservation,
+            'checklist': reservation.checklist,
+            'checklist_response': checklist_response,
+            'item_responses': item_responses,
+        }
+        return render(request, 'reservations/includes/checklist_detail_modal_content.html', context)
+

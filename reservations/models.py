@@ -231,6 +231,14 @@ class Reservation(models.Model):
     def is_checklist_pending(self):
         if not self.checklist:
             return False
+        
+        # Check if pre-fetched to avoid N+1 queries
+        if hasattr(self, '_prefetched_objects_cache') and 'checklist_responses' in self._prefetched_objects_cache:
+            for resp in self.checklist_responses.all():
+                if resp.checklist_id == self.checklist_id:
+                    return False
+            return True
+
         from properties.models import PropertyChecklistResponse
         return not PropertyChecklistResponse.objects.filter(reservation=self, checklist=self.checklist).exists()
 

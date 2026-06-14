@@ -13,6 +13,7 @@ urlpatterns = [
     path('<int:pk>/excluir/', views.ReservationDeleteView.as_view(), name='delete'),
     path('<int:pk>/whatsapp/', views.send_whatsapp_reservation, name='send_whatsapp'),
     path('<int:pk>/dados-hospede/', views_checkin.ReservationGuestDetailView.as_view(), name='guest_detail'),
+    path('<int:pk>/dados-checklist/', views_checkin.ReservationChecklistDetailView.as_view(), name='checklist_detail'),
     path('<int:pk>/autorizacao-html/', views_checkin.ReservationAuthorizationHTMLView.as_view(), name='authorization_html'),
     path('<int:pk>/autorizacao/', views_checkin.ReservationAuthorizationPDFView.as_view(), name='reservation_authorization_pdf'),
     path('<int:pk>/enviar-whatsapp/', views_checkin.ReservationSendAuthorizationWhatsAppView.as_view(), name='reservation_send_whatsapp'),

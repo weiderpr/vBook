@@ -43,7 +43,7 @@ class ReservationListView(LoginRequiredMixin, PropertyContextMixin, ListView):
     context_object_name = 'reservations'
 
     def get_queryset(self):
-        return Reservation.objects.filter(property=self.get_property())
+        return Reservation.objects.filter(property=self.get_property()).select_related('checklist').prefetch_related('checklist_responses')
 
 class ReservationCreateView(LoginRequiredMixin, PropertyContextMixin, CreateView):
     model = Reservation

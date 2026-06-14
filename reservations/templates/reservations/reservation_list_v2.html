@@ -355,10 +355,16 @@
                             <span class="name">
                                 {{ res.client_name }}
                                 {% if res.checklist %}
-                                    <span class="checklist-indicator" title="{% trans 'Checklist:' %} {{ res.checklist.description }}" style="margin-left: 6px; display: inline-flex; align-items: center; color: #10b981; vertical-align: middle;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                                    </span>
-                                {% endif %}
+                                     {% if res.is_checklist_pending %}
+                                         <span class="checklist-indicator pending" title="{% trans 'Checklist:' %} {{ res.checklist.description }} - {% trans 'Pendente' %}" style="margin-left: 6px; display: inline-flex; align-items: center; color: #94a3b8; vertical-align: middle;">
+                                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                                         </span>
+                                     {% else %}
+                                         <span class="checklist-indicator answered" title="{% trans 'Checklist:' %} {{ res.checklist.description }} - {% trans 'Respondido (Clique para ver)' %}" onclick="openChecklistDetail('{{ res.pk }}')" style="margin-left: 6px; display: inline-flex; align-items: center; color: #10b981; vertical-align: middle; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                                         </span>
+                                     {% endif %}
+                                 {% endif %}
                             </span>
                             <span class="phone">{{ res.client_phone }}</span>
                             {% if res.welcome_message_sent %}
@@ -498,6 +504,29 @@
     </div>
 </div>
 
+<div id="checklistDetailModal" class="vbook-modal-overlay">
+    <div class="vbook-modal-content">
+        <button class="modal-close-btn" onclick="closeChecklistModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+        <div id="checklistModalBody">
+            <div style="text-align: center; padding: 3rem;">
+                <div class="spinner" style="border: 4px solid rgba(255,255,255,0.1); border-left-color: #00c6ff; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 1.5rem;"></div>
+                <p style="color: #94a3b8;">{% trans "Carregando dados do checklist..." %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="checklistImageModal" class="vbook-modal-overlay" style="z-index: 100000; background: rgba(15, 23, 42, 0.95);">
+    <button class="modal-close-btn" onclick="event.stopPropagation(); closeChecklistImageModal()" style="top: 2rem; right: 2rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+    </button>
+    <div style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; padding: 2rem;">
+        <img id="checklistImageModalImg" src="" style="max-width: 90%; max-height: 90%; object-fit: contain; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);" onclick="event.stopPropagation();">
+    </div>
+</div>
+
 <style>
     @keyframes spin {
         to { transform: rotate(360deg); }
@@ -553,6 +582,58 @@
     function closeModal() {
         document.getElementById('guestDetailModal').classList.remove('active');
         document.body.classList.remove('modal-open');
+    }
+
+    async function openChecklistDetail(reservationPk) {
+        const modal = document.getElementById('checklistDetailModal');
+        const modalBody = document.getElementById('checklistModalBody');
+        document.body.classList.add('modal-open');
+        modal.classList.add('active');
+        
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 4rem;">
+                <div class="spinner" style="border-width: 4px; border-left-color: #00c6ff; width: 50px; height: 50px;"></div>
+                <p style="color: #94a3b8; margin-top: 1.5rem; font-weight: 500;">{% trans "Carregando dados do checklist..." %}</p>
+            </div>
+        `;
+
+        try {
+            let urlTemplate = "{% url 'reservations:checklist_detail' property.pk 0 %}";
+            const url = urlTemplate.replace('0', reservationPk);
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Falha ao carregar dados');
+            modalBody.innerHTML = await response.text();
+        } catch (error) {
+            console.error(error);
+            modalBody.innerHTML = `<div style="text-align: center; padding: 3rem; color: #ef4444;"><p>{% trans "Erro ao carregar os dados. Tente novamente." %}</p></div>`;
+        }
+    }
+
+    function closeChecklistModal() {
+        document.getElementById('checklistDetailModal').classList.remove('active');
+        if (!document.getElementById('guestDetailModal').classList.contains('active') && !document.getElementById('checklistImageModal').classList.contains('active')) {
+            document.body.classList.remove('modal-open');
+        }
+    }
+
+    function openChecklistImageModal(imgUrl) {
+        const imgModal = document.getElementById('checklistImageModal');
+        const imgElement = document.getElementById('checklistImageModalImg');
+        if (imgModal && imgElement) {
+            imgElement.src = imgUrl;
+            document.body.classList.add('modal-open');
+            imgModal.classList.add('active');
+        }
+    }
+
+    function closeChecklistImageModal() {
+        const imgModal = document.getElementById('checklistImageModal');
+        if (imgModal) {
+            imgModal.classList.remove('active');
+            if (!document.getElementById('guestDetailModal').classList.contains('active') && !document.getElementById('checklistDetailModal').classList.contains('active')) {
+                document.body.classList.remove('modal-open');
+            }
+        }
     }
 
     // Authorization Preview and WhatsApp Logic
@@ -698,13 +779,15 @@
 
     // Generic Close Handlers
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') { closeModal(); closeAuthorizationModal(); }
+        if (e.key === 'Escape') { closeModal(); closeAuthorizationModal(); closeChecklistModal(); closeChecklistImageModal(); }
     });
 
     window.onclick = e => {
         if (e.target.classList.contains('vbook-modal-overlay') || e.target.classList.contains('vbook-auth-modal-overlay')) {
             closeModal();
             closeAuthorizationModal();
+            closeChecklistModal();
+            closeChecklistImageModal();
         }
     };
 </script>
