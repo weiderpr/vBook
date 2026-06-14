@@ -332,3 +332,25 @@ class PropertyChecklistItemForm(forms.ModelForm):
         }
 
 
+from .models import ProviderNonConformity
+
+class ProviderNonConformityForm(forms.ModelForm):
+    class Meta:
+        model = ProviderNonConformity
+        fields = ['provider', 'description', 'photo']
+        widgets = {
+            'provider': forms.Select(attrs={'class': 'form-select'}),
+            'description': forms.Textarea(attrs={'rows': 4, 'placeholder': _("Descreva a inconformidade identificada na propriedade..."), 'class': 'form-control'}),
+            'photo': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*' }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['provider'].queryset = ServiceProvider.objects.filter(user=user, is_active=True)
+            self.fields['provider'].required = False
+            self.fields['provider'].empty_label = _("Selecione o prestador (opcional)...")
+
+
+

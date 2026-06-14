@@ -111,6 +111,7 @@ class PropertyDashboardView(LoginRequiredMixin, DetailView):
                 curr += timedelta(days=1)
         
         context['idle_days'] = total_days - len(reserved_nights)
+        context['unread_nonconformities_count'] = self.object.non_conformities.filter(is_read=False).count()
         
         return context
 
@@ -1751,6 +1752,74 @@ class PropertyChecklistResponseDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         messages.success(self.request, _("Resposta de checklist excluída com sucesso!"))
         return reverse_lazy('properties:checklist_response_list', kwargs={'checklist_pk': self.object.checklist.pk})
+
+
+from .models import ProviderNonConformity
+from .forms import ProviderNonConformityForm
+
+class PropertyNonConformityListView(LoginRequiredMixin, CreateView):
+    model = ProviderNonConformity
+    form_class = ProviderNonConformityForm
+    template_name = 'properties/property_nonconformity_list.html'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_queryset(self):
+        return ProviderNonConformity.objects.filter(
+            property_id=self.kwargs['pk'],
+            property__user=self.request.user
+        ).select_related('provider')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = get_object_or_404(Property, pk=self.kwargs['pk'], user=self.request.user)
+        context['non_conformities'] = self.get_queryset()
+        context['active_item'] = 'dashboard'
+        return context
+
+    def form_valid(self, form):
+        prop = get_object_or_404(Property, pk=self.kwargs['pk'], user=self.request.user)
+        form.instance.property = prop
+        form.instance.is_read = True
+        response = super().form_valid(form)
+        messages.success(self.request, _("Inconformidade registrada com sucesso!"))
+        return response
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{form.fields[field].label if field in form.fields else field}: {error}")
+        return redirect('properties:nonconformity_list', pk=self.kwargs['pk'])
+
+    def get_success_url(self):
+        return reverse_lazy('properties:nonconformity_list', kwargs={'pk': self.kwargs['pk']})
+
+
+class PropertyNonConformityDeleteView(LoginRequiredMixin, DeleteView):
+    model = ProviderNonConformity
+
+    def get_queryset(self):
+        return ProviderNonConformity.objects.filter(property__user=self.request.user)
+
+    def get_success_url(self):
+        messages.success(self.request, _("Inconformidade excluída com sucesso!"))
+        return reverse_lazy('properties:nonconformity_list', kwargs={'pk': self.object.property.pk})
+
+
+class PropertyNonConformityMarkReadView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        nc = get_object_or_404(ProviderNonConformity, pk=pk, property__user=request.user)
+        nc.is_read = True
+        nc.save()
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success'})
+        messages.success(request, _("Inconformidade marcada como lida!"))
+        return redirect('properties:nonconformity_list', pk=nc.property.pk)
+
+
 
 
 

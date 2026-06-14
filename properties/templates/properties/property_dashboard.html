@@ -208,6 +208,24 @@
     .property-panel-content {
         padding-top: 1rem;
     }
+
+    .badge-unread {
+        background-color: #25d366;
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 800;
+        padding: 2px 6px;
+        border-radius: 10px;
+        min-width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
 </style>
 {% endblock %}
 
@@ -357,6 +375,17 @@
             </div>
             <h3>{% trans "Checklist" %}</h3>
             <p>{% trans "cadastro de checklists para serem realizados no apartamento, conferência de itens." %}</p>
+        </a>
+
+        <a href="{% url 'properties:nonconformity_list' property.pk %}" class="panel-action-card" style="position: relative;">
+            {% if unread_nonconformities_count > 0 %}
+                <span class="badge-unread">{{ unread_nonconformities_count }}</span>
+            {% endif %}
+            <div class="icon-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3>{% trans "Inconformidades" %}</h3>
+            <p>{% trans "Relatos de inconformidades para a propriedade, são aspects que precisam ser verificados" %}</p>
         </a>
     </div>
 </div>

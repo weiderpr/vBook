@@ -1,0 +1,546 @@
+{% extends 'dashboard_layout.html' %}
+{% load static i18n humanize l10n %}
+
+{% block title %}{% trans "Inconformidades" %} - {{ property.name }} - VerticeBook{% endblock %}
+
+{% block extra_head %}
+<style>
+    .property-panel-content {
+        padding-top: 1rem;
+    }
+    
+    .property-mini-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nonconformity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .nonconformity-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nonconformity-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary);
+        box-shadow: var(--glass-shadow);
+    }
+
+    .nonconformity-header {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 0.8rem;
+    }
+
+    .provider-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid var(--glass-border);
+        background: rgba(255,255,255,0.03);
+        flex-shrink: 0;
+    }
+
+    .provider-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .provider-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .provider-name {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text-main);
+    }
+
+    .report-date {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    .nonconformity-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .nonconformity-description {
+        font-size: 0.9rem;
+        color: var(--text-main);
+        line-height: 1.5;
+        white-space: pre-wrap;
+    }
+
+    .nonconformity-photo-box {
+        height: 180px;
+        background: rgba(255,255,255,0.02);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .nonconformity-photo-box:hover {
+        border-color: var(--primary);
+        opacity: 0.9;
+    }
+
+    .nonconformity-photo-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .nonconformity-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 0.8rem;
+        border-top: 1px solid var(--glass-border);
+    }
+
+    .btn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--glass-border);
+        background: rgba(255,255,255,0.05);
+        color: var(--text-main);
+        transition: all 0.2s;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-icon:hover {
+        background: var(--primary);
+        color: white;
+        border-color: transparent;
+    }
+
+    .btn-delete:hover {
+        background: #f87171;
+    }
+
+    .btn-read:hover {
+        background: #25d366;
+        color: white;
+        border-color: transparent;
+    }
+
+    .unread-highlight {
+        border-left: 4px solid #25d366 !important;
+    }
+
+    /* Modal Styles */
+    .upload-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: var(--bg-card);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        width: 90%;
+        max-width: 500px;
+        padding: 2rem;
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: modalFadeUp 0.3s ease;
+    }
+
+    @keyframes modalFadeUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .modal-content select,
+    .modal-content textarea,
+    .modal-content input {
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        color: var(--text-main) !important;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+    }
+
+    .modal-content select option {
+        background: #111;
+        color: #fff;
+    }
+
+    .modal-content select:focus,
+    .modal-content textarea:focus,
+    .modal-content input:focus {
+        background: rgba(255,255,255,0.1);
+        border-color: var(--primary);
+        outline: none;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: rgba(255,255,255,0.02);
+        border-radius: 24px;
+        border: 2px dashed var(--glass-border);
+        margin-top: 2rem;
+    }
+
+    /* Preview Modal Styles */
+    .preview-modal {
+        display: none;
+        position: fixed;
+        z-index: 3000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-modal-header {
+        width: 95%;
+        max-width: 800px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 1rem 0;
+        color: white;
+    }
+
+    .preview-container {
+        width: 95%;
+        height: 80vh;
+        max-width: 800px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .preview-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 16px;
+    }
+</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'properties/includes/property_sidebar.html' with property=property active_item='dashboard' %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="property-panel-content">
+    <div class="property-mini-header">
+        <div>
+            <h1 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-main);">
+                {% trans "Relatos de Inconformidades" %}
+            </h1>
+            <p style="color: var(--text-muted); margin: 2px 0 0; font-size: 0.85rem;">
+                {% trans "Relatos de inconformidades para a propriedade, são aspectos que precisam ser verificados" %}
+            </p>
+        </div>
+        <button id="btnOpenModal" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            {% trans "Relatar Inconformidade" %}
+        </button>
+    </div>
+
+    {% if non_conformities %}
+        <div class="nonconformity-grid animate-fade">
+            {% for nc in non_conformities %}
+                <div class="nonconformity-card{% if not nc.is_read %} unread-highlight{% endif %}">
+                    <div class="nonconformity-header">
+                        <div class="provider-avatar">
+                            {% if nc.provider and nc.provider.photo %}
+                                <img src="{{ nc.provider.photo.url }}" alt="{{ nc.provider.name }}">
+                            {% else %}
+                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); color: var(--text-muted);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="provider-info">
+                            <span class="provider-name">{% if nc.provider %}{{ nc.provider.name }}{% else %}{% trans "Proprietário" %}{% endif %}</span>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="report-date">{{ nc.created_at|date:"d/m/Y H:i" }}</span>
+                                {% if not nc.is_read %}
+                                    <span style="font-size: 0.65rem; font-weight: 800; color: #25d366; background: rgba(37,211,102,0.1); padding: 2px 6px; border-radius: 6px; text-transform: uppercase;">
+                                        {% trans "Nova" %}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nonconformity-body">
+                        <p class="nonconformity-description">{{ nc.description }}</p>
+                        
+                        {% if nc.photo %}
+                            <div class="nonconformity-photo-box" data-photo-url="{{ nc.photo.url }}">
+                                <img src="{{ nc.photo.url }}" alt="{% trans 'Foto da Inconformidade' %}" loading="lazy">
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="nonconformity-actions" style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; width: 100%;">
+                        {% if not nc.is_read %}
+                            <form action="{% url 'properties:nonconformity_mark_read' nc.pk %}" method="post" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-icon btn-read" title="{% trans "Marcar como lido" %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                </button>
+                            </form>
+                        {% endif %}
+                        <form action="{% url 'properties:nonconformity_delete' nc.pk %}" method="post" class="delete-nc-form" style="margin: 0;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-icon btn-delete" title="{% trans "Excluir" %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state animate-fade">
+            <div style="width: 64px; height: 64px; background: rgba(255,255,255,0.03); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--text-muted);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3 style="margin: 0; color: var(--text-main);">{% trans "Nenhuma inconformidade registrada" %}</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 8px 0 1.5rem;">{% trans "Nenhum relato de inconformidade foi registrado para esta propriedade." %}</p>
+            <button id="btnOpenModalEmpty" class="btn btn-primary">{% trans "Relatar Inconformidade" %}</button>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal para Nova Inconformidade -->
+<div id="uploadModal" class="upload-modal">
+    <div class="modal-content">
+        <h2 style="margin: 0 0 1.5rem 0; font-size: 1.4rem; font-weight: 800;">{% trans "Nova Inconformidade" %}</h2>
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.provider.id_for_label }}">{{ form.provider.label }}</label>
+                {{ form.provider }}
+                {% if form.provider.errors %}
+                    <small style="color: #f87171;">{{ form.provider.errors|striptags }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <small style="color: #f87171;">{{ form.description.errors|striptags }}</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.photo.id_for_label }}">{{ form.photo.label }}</label>
+                {{ form.photo }}
+                {% if form.photo.errors %}
+                    <small style="color: #f87171;">{{ form.photo.errors|striptags }}</small>
+                {% endif %}
+                <div id="fileSizeInfo" style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);"></div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="button" id="btnCancelModal" class="btn btn-secondary" style="flex: 1;">{% trans "Cancelar" %}</button>
+                <button type="submit" class="btn btn-primary" style="flex: 1;">{% trans "Salvar" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Zoom da Imagem -->
+<div id="previewModal" class="preview-modal">
+    <div class="preview-modal-header">
+        <button id="btnClosePreview" class="btn-icon" style="background: rgba(255,255,255,0.1); border: none; color: white;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="preview-container">
+        <img id="previewImg" src="">
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById('uploadModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('uploadModal').style.display = 'none';
+    }
+
+    function previewImage(url) {
+        document.getElementById('previewImg').src = url;
+        document.getElementById('previewModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePreview() {
+        document.getElementById('previewModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Open modal
+        const btnOpen = document.getElementById('btnOpenModal');
+        if (btnOpen) {
+            btnOpen.addEventListener('click', openModal);
+        }
+        const btnOpenEmpty = document.getElementById('btnOpenModalEmpty');
+        if (btnOpenEmpty) {
+            btnOpenEmpty.addEventListener('click', openModal);
+        }
+
+        // Close modal
+        const btnCancel = document.getElementById('btnCancelModal');
+        if (btnCancel) {
+            btnCancel.addEventListener('click', closeModal);
+        }
+
+        // Close preview
+        const btnClosePrev = document.getElementById('btnClosePreview');
+        if (btnClosePrev) {
+            btnClosePrev.addEventListener('click', closePreview);
+        }
+
+        // Click photo to zoom
+        document.querySelectorAll('.nonconformity-photo-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const url = this.getAttribute('data-photo-url');
+                if (url) {
+                    previewImage(url);
+                }
+            });
+        });
+
+        // Delete confirm
+        document.querySelectorAll('.delete-nc-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                if (!confirm('{% filter escapejs %}{% trans "Tem certeza que deseja excluir este relato de inconformidade?" %}{% endfilter %}')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Fechar ao clicar fora
+        window.addEventListener('click', function(event) {
+            let uploadModal = document.getElementById('uploadModal');
+            let previewModal = document.getElementById('previewModal');
+            if (event.target == uploadModal) {
+                closeModal();
+            }
+            if (event.target == previewModal) {
+                closePreview();
+            }
+        });
+
+        // Validação de tamanho da foto
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput) {
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                const infoDiv = document.getElementById('fileSizeInfo');
+                if (file) {
+                    const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+                    infoDiv.innerHTML = `{% trans "Tamanho selecionado: " %} <strong>${sizeMB} MB</strong>`;
+                    infoDiv.style.color = 'var(--text-muted)';
+                    
+                    if (sizeMB > 2) {
+                        infoDiv.style.color = '#f87171';
+                        infoDiv.innerHTML += ` <br> <small>{% trans "Atenção: O limite máximo para fotos é 2MB." %}</small>`;
+                    }
+                } else {
+                    infoDiv.innerHTML = '';
+                }
+            });
+        }
+
+        const form = document.getElementById('uploadForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const input = this.querySelector('input[type="file"]');
+                if (input && input.files.length > 0) {
+                    const file = input.files[0];
+                    const fileSize = file.size / 1024 / 1024;
+                    if (fileSize > 2) {
+                        alert('{% trans "A foto selecionada é muito grande (máximo de 2MB). Por favor, compacte-a antes de enviar." %}');
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+                return true;
+            });
+        }
+    });
+</script>
+{% endblock %}

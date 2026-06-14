@@ -57,4 +57,9 @@ urlpatterns = [
     path('acesso-prestador/<uuid:token>/checklist/<int:cost_id>/', views.ServiceProviderChecklistView.as_view(), name='provider_checklist'),
     path('calendarios/', GlobalReservationCalendarView.as_view(), name='global_calendar'),
     path('relatorios/', views.GlobalReportsView.as_view(), name='global_reports'),
+    
+    # Inconformidades
+    path('<int:pk>/inconformidades/', views.PropertyNonConformityListView.as_view(), name='nonconformity_list'),
+    path('inconformidades/<int:pk>/excluir/', views.PropertyNonConformityDeleteView.as_view(), name='nonconformity_delete'),
+    path('inconformidades/<int:pk>/ler/', views.PropertyNonConformityMarkReadView.as_view(), name='nonconformity_mark_read'),
 ]

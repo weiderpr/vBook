@@ -18498,3 +18498,51 @@ NameError: name 'PropertyChecklistResponse' is not defined. Did you mean: 'Prope
 [2026-06-14 19:41:39 -0300] [69802] [INFO] Booting worker with pid: 69802
 [2026-06-14 19:41:39 -0300] [69803] [INFO] Booting worker with pid: 69803
 [2026-06-14 19:41:40 -0300] [69794] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 19:58:34 -0300] [69794] [INFO] Handling signal: term
+[2026-06-14 19:58:34 -0300] [69801] [INFO] Worker exiting (pid: 69801)
+[2026-06-14 19:58:34 -0300] [69802] [INFO] Worker exiting (pid: 69802)
+[2026-06-14 19:58:34 -0300] [69803] [INFO] Worker exiting (pid: 69803)
+[2026-06-14 19:58:37 -0300] [69794] [INFO] Shutting down: Master
+[2026-06-14 19:58:37 -0300] [71834] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 19:58:37 -0300] [71834] [INFO] Listening at: http://127.0.0.1:8000 (71834)
+[2026-06-14 19:58:37 -0300] [71834] [INFO] Using worker: sync
+[2026-06-14 19:58:37 -0300] [71837] [INFO] Booting worker with pid: 71837
+[2026-06-14 19:58:37 -0300] [71838] [INFO] Booting worker with pid: 71838
+[2026-06-14 19:58:37 -0300] [71839] [INFO] Booting worker with pid: 71839
+[2026-06-14 19:58:37 -0300] [71834] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 20:04:45 -0300] [71834] [INFO] Handling signal: term
+[2026-06-14 20:04:45 -0300] [71837] [INFO] Worker exiting (pid: 71837)
+[2026-06-14 20:04:45 -0300] [71838] [INFO] Worker exiting (pid: 71838)
+[2026-06-14 20:04:45 -0300] [71839] [INFO] Worker exiting (pid: 71839)
+[2026-06-14 20:04:47 -0300] [71834] [INFO] Shutting down: Master
+[2026-06-14 20:04:48 -0300] [72646] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 20:04:48 -0300] [72646] [INFO] Listening at: http://127.0.0.1:8000 (72646)
+[2026-06-14 20:04:48 -0300] [72646] [INFO] Using worker: sync
+[2026-06-14 20:04:48 -0300] [72648] [INFO] Booting worker with pid: 72648
+[2026-06-14 20:04:48 -0300] [72649] [INFO] Booting worker with pid: 72649
+[2026-06-14 20:04:48 -0300] [72650] [INFO] Booting worker with pid: 72650
+[2026-06-14 20:04:48 -0300] [72646] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 20:07:51 -0300] [72646] [INFO] Handling signal: term
+[2026-06-14 20:07:51 -0300] [72648] [INFO] Worker exiting (pid: 72648)
+[2026-06-14 20:07:51 -0300] [72649] [INFO] Worker exiting (pid: 72649)
+[2026-06-14 20:07:51 -0300] [72650] [INFO] Worker exiting (pid: 72650)
+[2026-06-14 20:07:53 -0300] [72646] [INFO] Shutting down: Master
+[2026-06-14 20:07:53 -0300] [73094] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 20:07:53 -0300] [73094] [INFO] Listening at: http://127.0.0.1:8000 (73094)
+[2026-06-14 20:07:53 -0300] [73094] [INFO] Using worker: sync
+[2026-06-14 20:07:53 -0300] [73096] [INFO] Booting worker with pid: 73096
+[2026-06-14 20:07:53 -0300] [73097] [INFO] Booting worker with pid: 73097
+[2026-06-14 20:07:53 -0300] [73098] [INFO] Booting worker with pid: 73098
+[2026-06-14 20:07:54 -0300] [73094] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 20:13:00 -0300] [73094] [INFO] Handling signal: term
+[2026-06-14 20:13:00 -0300] [73098] [INFO] Worker exiting (pid: 73098)
+[2026-06-14 20:13:00 -0300] [73097] [INFO] Worker exiting (pid: 73097)
+[2026-06-14 20:13:00 -0300] [73096] [INFO] Worker exiting (pid: 73096)
+[2026-06-14 20:13:03 -0300] [73094] [INFO] Shutting down: Master
+[2026-06-14 20:13:03 -0300] [74033] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 20:13:03 -0300] [74033] [INFO] Listening at: http://127.0.0.1:8000 (74033)
+[2026-06-14 20:13:03 -0300] [74033] [INFO] Using worker: sync
+[2026-06-14 20:13:03 -0300] [74036] [INFO] Booting worker with pid: 74036
+[2026-06-14 20:13:03 -0300] [74037] [INFO] Booting worker with pid: 74037
+[2026-06-14 20:13:03 -0300] [74038] [INFO] Booting worker with pid: 74038
+[2026-06-14 20:13:03 -0300] [74033] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl

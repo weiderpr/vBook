@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-14 11:14-0300\n"
+"POT-Creation-Date: 2026-06-14 20:10-0300\n"
 "PO-Revision-Date: 2026-04-18 01:00+0000\n"
 "Last-Translator: Antigravity\n"
 "Language-Team: English\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/views.py:67 properties/views.py:949
+#: accounts/views.py:67 properties/views.py:992
 msgid "Perfil atualizado com sucesso!"
 msgstr "Profile updated successfully!"
 
@@ -87,16 +87,17 @@ msgstr "Basic Information"
 msgid "Placa do Veículo"
 msgstr ""
 
-#: admcondominio/models.py:25 reservations/models.py:115
+#: admcondominio/models.py:25 reservations/models.py:124
 msgid "Check-in Realizado"
 msgstr ""
 
-#: admcondominio/models.py:26 reservations/models.py:120
+#: admcondominio/models.py:26 reservations/models.py:129
 msgid "Check-out Realizado"
 msgstr ""
 
 #: admcondominio/models.py:28 admcondominio/models.py:62
 #: admcondominio/models.py:159 admcondominio/models.py:194
+#: properties/templates/properties/property_checklist_list.html:249
 msgid "Criado em"
 msgstr ""
 
@@ -122,7 +123,7 @@ msgstr ""
 #: admcondominio/templates/admcondominio/properties.html:901
 #: maintenance/models.py:146 properties/models.py:305
 #: properties/templates/properties/service_provider_form.html:32
-#: properties/templates/properties/service_provider_public.html:589
+#: properties/templates/properties/service_provider_public.html:875
 #: reservations/models.py:11
 #: reservations/templates/reservations/checkin_form.html:252
 #: reservations/templates/reservations/checkin_form.html:319
@@ -163,10 +164,11 @@ msgstr ""
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:365
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:390
 #: maintenance/templates/maintenance/maintenance_wizard.html:201
-#: mobile/templates/mobile/reservation_detail.html:384 properties/models.py:173
-#: properties/models.py:379
+#: mobile/templates/mobile/reservation_detail.html:406 properties/models.py:173
+#: properties/models.py:379 properties/models.py:774
 #: properties/templates/properties/service_provider_list.html:159
-#: reservations/models.py:261
+#: reservations/models.py:285
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:21
 #, fuzzy
 #| msgid "Estado"
 msgid "Prestador"
@@ -239,9 +241,9 @@ msgstr "Your state"
 #: admcondominio/models.py:146
 #: admcondominio/templates/admcondominio/history.html:181
 #: admcondominio/templates/admcondominio/history.html:315
-#: properties/views.py:758 reservations/models.py:145
-#: reservations/models.py:239 reservations/models.py:282
-#: reservations/models.py:302 reservations/models.py:327
+#: properties/models.py:645 properties/views.py:759 reservations/models.py:154
+#: reservations/models.py:263 reservations/models.py:306
+#: reservations/models.py:326 reservations/models.py:351
 #, fuzzy
 #| msgid "Reservas"
 msgid "Reserva"
@@ -271,7 +273,8 @@ msgstr "Messages"
 #: administration/models.py:37
 #: administration/templates/administration/users/user_list.html:57
 #: mobilecondominio/templates/mobilecondominio/active_guests.html:129
-#: properties/models.py:313
+#: properties/models.py:313 properties/models.py:556
+#: properties/templates/properties/property_checklist_list.html:234
 msgid "Ativo"
 msgstr ""
 
@@ -375,7 +378,7 @@ msgstr ""
 
 #: admcondominio/templates/admcondominio/dashboard.html:357
 #: properties/templates/properties/service_provider_list.html:273
-#: properties/templates/properties/service_provider_public.html:351
+#: properties/templates/properties/service_provider_public.html:494
 msgid "Histórico"
 msgstr ""
 
@@ -424,8 +427,8 @@ msgstr "Complement"
 #: admcondominio/templates/admcondominio/dashboard.html:409
 #: admcondominio/templates/admcondominio/dashboard.html:1812
 #: mobile/templates/mobile/operacional.html:257
-#: mobile/templates/mobile/reservation_detail.html:235
-#: reservations/models.py:264
+#: mobile/templates/mobile/reservation_detail.html:257
+#: reservations/models.py:288
 msgid "Realizado"
 msgstr ""
 
@@ -433,9 +436,10 @@ msgstr ""
 #: admcondominio/templates/admcondominio/dashboard.html:455
 #: admcondominio/templates/admcondominio/dashboard.html:2311
 #: mobile/templates/mobile/operacional.html:259
-#: mobile/templates/mobile/reservation_detail.html:235
+#: mobile/templates/mobile/reservation_detail.html:257
 #: mobilecondominio/templates/mobilecondominio/daily_reservations.html:128
 #: mobilecondominio/templates/mobilecondominio/daily_reservations.html:134
+#: reservations/templates/reservations/reservation_list_v2.html:359
 #: subscriptions/models.py:9
 msgid "Pendente"
 msgstr ""
@@ -566,25 +570,29 @@ msgstr ""
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:253
 #: maintenance/templates/maintenance/maintenance_confirm_delete.html:26
 #: maintenance/templates/maintenance/maintenance_dashboard.html:1138
-#: maintenance/templates/maintenance/maintenance_form.html:185
-#: mobile/templates/mobile/reservation_detail.html:322
+#: maintenance/templates/maintenance/maintenance_form.html:272
+#: mobile/templates/mobile/reservation_detail.html:344
+#: properties/templates/properties/property_checklist_form.html:326
+#: properties/templates/properties/property_checklist_item_form.html:115
+#: properties/templates/properties/property_checklist_list.html:308
 #: properties/templates/properties/property_confirm_delete.html:26
 #: properties/templates/properties/property_document_list.html:365
 #: properties/templates/properties/property_form.html:422
 #: properties/templates/properties/property_form.html:426
+#: properties/templates/properties/property_nonconformity_list.html:414
 #: properties/templates/properties/property_settings.html:807
 #: properties/templates/properties/property_specification_list.html:440
-#: properties/templates/properties/service_provider_public.html:856
+#: properties/templates/properties/service_provider_public.html:1287
 #: properties/templates/properties/serviceprovider_confirm_delete.html:26
 #: reservations/templates/reservations/reservation_confirm_delete.html:27
-#: reservations/templates/reservations/reservation_form.html:324
+#: reservations/templates/reservations/reservation_form.html:332
 #: templates/accounts/whatsapp_settings.html:149
 msgid "Cancelar"
 msgstr "Cancel"
 
 #: admcondominio/templates/admcondominio/dashboard.html:627
 #: admcondominio/templates/admcondominio/dashboard.html:668
-#: properties/templates/properties/service_provider_public.html:857
+#: properties/templates/properties/service_provider_public.html:1288
 #, fuzzy
 #| msgid "Confirmar Exclusão"
 msgid "Confirmar"
@@ -648,11 +656,11 @@ msgstr ""
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:135
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:248
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:366
-#: mobile/templates/mobile/reservation_form.html:157
+#: mobile/templates/mobile/reservation_form.html:174
 #: mobilecondominio/templates/mobilecondominio/reservation_detail.html:200
 #: properties/models.py:307
 #: properties/templates/properties/service_provider_form.html:57
-#: properties/templates/properties/service_provider_public.html:599
+#: properties/templates/properties/service_provider_public.html:885
 #: reservations/models.py:12 reservations/models.py:86
 msgid "Telefone"
 msgstr "Phone"
@@ -667,16 +675,16 @@ msgstr "Complement"
 #: admcondominio/templates/admcondominio/dashboard.html:809
 #: admcondominio/templates/admcondominio/history.html:160
 #: admcondominio/templates/admcondominio/history.html:280
-#: mobile/templates/mobile/reservation_detail.html:197
-#: mobile/templates/mobile/reservation_form.html:163
+#: mobile/templates/mobile/reservation_detail.html:219
+#: mobile/templates/mobile/reservation_form.html:180
 msgid "Check-in"
 msgstr ""
 
 #: admcondominio/templates/admcondominio/dashboard.html:810
 #: admcondominio/templates/admcondominio/history.html:165
 #: admcondominio/templates/admcondominio/history.html:285
-#: mobile/templates/mobile/reservation_detail.html:202
-#: mobile/templates/mobile/reservation_form.html:174
+#: mobile/templates/mobile/reservation_detail.html:224
+#: mobile/templates/mobile/reservation_form.html:191
 msgid "Check-out"
 msgstr ""
 
@@ -699,7 +707,7 @@ msgstr ""
 
 #: admcondominio/templates/admcondominio/dashboard.html:882
 #: mobilecondominio/templates/mobilecondominio/reservation_detail.html:237
-#: reservations/models.py:292
+#: reservations/models.py:316
 #: reservations/templates/reservations/checkin_form.html:312
 #: reservations/templates/reservations/includes/guest_detail_modal_content.html:77
 msgid "Acompanhantes"
@@ -741,7 +749,7 @@ msgstr "Full Name"
 
 #: admcondominio/templates/admcondominio/dashboard.html:1096
 #: admcondominio/templates/admcondominio/dashboard.html:1118
-#: reservations/models.py:291
+#: reservations/models.py:315
 #: reservations/templates/reservations/checkin_form.html:237
 msgid "Acompanhante"
 msgstr ""
@@ -766,7 +774,9 @@ msgstr "Full Name"
 #: admcondominio/templates/admcondominio/notices.html:724
 #: admcondominio/templates/admcondominio/properties.html:516
 #: administration/templates/administration/users/user_list.html:240
+#: properties/templates/properties/property_checklist_list.html:309
 #: properties/templates/properties/property_instructions_form.html:107
+#: properties/templates/properties/property_nonconformity_list.html:415
 #: properties/templates/properties/property_specification_form.html:217
 #: properties/templates/properties/property_specification_list.html:441
 #: properties/templates/properties/service_provider_form.html:87
@@ -784,8 +794,8 @@ msgstr ""
 #: admcondominio/templates/admcondominio/dashboard.html:1671
 #: admcondominio/templates/admcondominio/notices.html:913
 #: admcondominio/templates/admcondominio/properties.html:649
-#: mobile/templates/mobile/reservation_detail.html:475
-#: mobile/templates/mobile/reservation_detail.html:503
+#: mobile/templates/mobile/reservation_detail.html:497
+#: mobile/templates/mobile/reservation_detail.html:525
 #: properties/templates/properties/property_authorization_form.html:401
 msgid "Salvando..."
 msgstr ""
@@ -946,7 +956,7 @@ msgstr ""
 #: admcondominio/templates/admcondominio/dashboard.html:2530
 #: mobilecondominio/templates/mobilecondominio/daily_reservations.html:140
 #: mobilecondominio/templates/mobilecondominio/reservation_detail.html:223
-#: reservations/models.py:337
+#: reservations/models.py:361
 #, fuzzy
 #| msgid "Entrar"
 msgid "Entrada"
@@ -955,7 +965,7 @@ msgstr "Login"
 #: admcondominio/templates/admcondominio/dashboard.html:2531
 #: mobilecondominio/templates/mobilecondominio/daily_reservations.html:140
 #: mobilecondominio/templates/mobilecondominio/reservation_detail.html:227
-#: reservations/models.py:338
+#: reservations/models.py:362
 msgid "Saída"
 msgstr ""
 
@@ -1060,7 +1070,7 @@ msgstr ""
 
 #: admcondominio/templates/admcondominio/history.html:195
 #: admcondominio/templates/admcondominio/history.html:266
-#: mobile/templates/mobile/reservation_form.html:152
+#: mobile/templates/mobile/reservation_form.html:169
 #: reservations/templates/reservations/reservation_list_v2.html:342
 msgid "Hóspede"
 msgstr "Guest"
@@ -1179,6 +1189,8 @@ msgstr ""
 #: admcondominio/templates/admcondominio/notices.html:424
 #: admcondominio/templates/admcondominio/notices.html:521
 #: administration/templates/administration/users/user_list.html:59
+#: properties/models.py:557
+#: properties/templates/properties/property_checklist_list.html:236
 msgid "Inativo"
 msgstr ""
 
@@ -1227,12 +1239,16 @@ msgstr "Change Password"
 #: administration/templates/administration/users/user_list.html:76
 #: maintenance/templates/maintenance/includes/budget_list.html:36
 #: maintenance/templates/maintenance/maintenance_list.html:482
-#: mobile/templates/mobile/reservation_detail.html:331
+#: mobile/templates/mobile/reservation_detail.html:353
+#: properties/templates/properties/property_checklist_form.html:257
+#: properties/templates/properties/property_checklist_list.html:240
+#: properties/templates/properties/property_checklist_response_list.html:316
 #: properties/templates/properties/property_document_list.html:326
 #: properties/templates/properties/property_list.html:386
+#: properties/templates/properties/property_nonconformity_list.html:361
 #: properties/templates/properties/property_specification_form.html:193
 #: properties/templates/properties/property_specification_list.html:335
-#: reservations/templates/reservations/reservation_list_v2.html:459
+#: reservations/templates/reservations/reservation_list_v2.html:472
 msgid "Excluir"
 msgstr "Delete"
 
@@ -1245,6 +1261,9 @@ msgstr "Delete"
 #: maintenance/models.py:83
 #: maintenance/templates/maintenance/maintenance_list.html:422
 #: mobilecondominio/templates/mobilecondominio/daily_reservations.html:122
+#: properties/models.py:571
+#: properties/templates/properties/property_checklist_response_list.html:267
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:52
 #: reservations/templates/reservations/reservation_list_v2.html:344
 #: subscriptions/models.py:31 subscriptions/models.py:82
 msgid "Status"
@@ -1282,6 +1301,8 @@ msgstr "Create Account"
 #: administration/templates/administration/services/service_list.html:24
 #: administration/templates/administration/users/user_list.html:27
 #: maintenance/templates/maintenance/maintenance_list.html:423
+#: properties/templates/properties/property_checklist_form.html:234
+#: properties/templates/properties/property_checklist_response_list.html:268
 #: properties/templates/properties/property_settings.html:378
 #: properties/templates/properties/property_settings.html:491
 #: properties/templates/properties/service_provider_list.html:163
@@ -1482,6 +1503,7 @@ msgstr ""
 #: admcondominio/templates/admcondominio/providers.html:512
 #: admcondominio/templates/admcondominio/providers.html:590
 #: properties/models.py:17
+#: properties/templates/properties/property_nonconformity_list.html:328
 msgid "Proprietário"
 msgstr "Owner"
 
@@ -1625,7 +1647,7 @@ msgstr ""
 
 #: admcondominio/templates/admcondominio/properties.html:840
 #: reservations/forms_checkin.py:32 reservations/models.py:53
-#: reservations/models.py:285
+#: reservations/models.py:309
 #: reservations/templates/reservations/checkin_form.html:261
 #: reservations/templates/reservations/checkin_form.html:323
 #: reservations/templates/reservations/includes/guest_detail_modal_content.html:19
@@ -1830,7 +1852,7 @@ msgstr ""
 #: admcondominio/templates/admcondominio/providers.html:964
 #: mobilecondominio/templates/mobilecondominio/profile.html:253
 #: mobilecondominio/templates/mobilecondominio/reservation_detail.html:275
-#: reservations/templates/reservations/reservation_list_v2.html:621
+#: reservations/templates/reservations/reservation_list_v2.html:709
 msgid "Processando..."
 msgstr ""
 
@@ -2079,7 +2101,7 @@ msgstr ""
 msgid "Já existe um prestador cadastrado com este CPF na portaria."
 msgstr ""
 
-#: admcondominio/views.py:1274 properties/views.py:690
+#: admcondominio/views.py:1274 properties/views.py:691
 #, fuzzy
 #| msgid "Propriedade cadastrada com sucesso!"
 msgid "Prestador cadastrado com sucesso!"
@@ -2272,13 +2294,15 @@ msgstr ""
 #: administration/models.py:33 maintenance/models.py:76
 #: maintenance/templates/maintenance/maintenance_dashboard.html:1134
 #: maintenance/templates/maintenance/maintenance_wizard.html:185
-#: mobile/templates/mobile/reservation_detail.html:376
-#: mobile/templates/mobile/reservation_detail.html:420 properties/models.py:233
-#: properties/models.py:413 properties/models.py:467
+#: mobile/templates/mobile/reservation_detail.html:398
+#: mobile/templates/mobile/reservation_detail.html:442 properties/models.py:233
+#: properties/models.py:413 properties/models.py:467 properties/models.py:566
+#: properties/models.py:604
+#: properties/templates/properties/property_checklist_form.html:229
 #: properties/templates/properties/property_reports.html:240
 #: properties/templates/properties/service_provider_list.html:281
-#: reservations/models.py:241 reservations/models.py:304
-#: reservations/templates/reservations/reservation_form.html:562
+#: reservations/models.py:265 reservations/models.py:328
+#: reservations/templates/reservations/reservation_form.html:570
 msgid "Descrição"
 msgstr ""
 
@@ -2434,7 +2458,7 @@ msgstr ""
 #: administration/templates/administration/condos/includes/user_table.html:6
 #: administration/templates/administration/users/user_list.html:23
 #: maintenance/models.py:226 properties/models.py:293 properties/models.py:384
-#: subscriptions/models.py:19
+#: properties/models.py:653 subscriptions/models.py:19
 #, fuzzy
 #| msgid "Proprietário"
 msgid "Usuário"
@@ -2485,6 +2509,7 @@ msgid "Pergunta"
 msgstr ""
 
 #: administration/templates/administration/chat_interactions/chat_interaction_list.html:69
+#: properties/templates/properties/property_checklist_response_list.html:311
 msgid "Ver Detalhes"
 msgstr ""
 
@@ -2552,7 +2577,7 @@ msgstr ""
 #: administration/templates/administration/services/service_form.html:53
 #: administration/templates/administration/users/user_form.html:94
 #: properties/templates/properties/property_form.html:431
-#: properties/templates/properties/service_provider_public.html:635
+#: properties/templates/properties/service_provider_public.html:921
 #: templates/accounts/profile.html:93
 msgid "Salvar Alterações"
 msgstr "Save Changes"
@@ -2684,18 +2709,20 @@ msgid "Cidade/UF"
 msgstr "City"
 
 #: administration/templates/administration/condos/condo_list.html:25
-#: mobile/templates/mobile/reservation_detail.html:342
-#: properties/templates/properties/property_dashboard.html:326
+#: mobile/templates/mobile/reservation_detail.html:364
+#: properties/templates/properties/property_dashboard.html:344
 #, fuzzy
 #| msgid "Localização"
 msgid "Autorização"
 msgstr "Location"
 
 #: administration/templates/administration/condos/condo_list.html:45
+#: properties/templates/properties/property_checklist_form.html:246
 msgid "Sim"
 msgstr ""
 
 #: administration/templates/administration/condos/condo_list.html:47
+#: properties/templates/properties/property_checklist_form.html:248
 msgid "Não"
 msgstr ""
 
@@ -2706,10 +2733,12 @@ msgstr ""
 #: administration/templates/administration/users/user_list.html:73
 #: maintenance/templates/maintenance/includes/budget_list.html:33
 #: maintenance/templates/maintenance/maintenance_list.html:479
-#: mobile/templates/mobile/reservation_detail.html:190
+#: mobile/templates/mobile/reservation_detail.html:212
+#: properties/templates/properties/property_checklist_form.html:252
+#: properties/templates/properties/property_checklist_list.html:255
 #: properties/templates/properties/property_form.html:261
 #: properties/templates/properties/property_specification_list.html:330
-#: reservations/templates/reservations/reservation_list_v2.html:446
+#: reservations/templates/reservations/reservation_list_v2.html:459
 msgid "Editar"
 msgstr "Edit"
 
@@ -2770,7 +2799,7 @@ msgstr ""
 #: administration/templates/administration/services/service_list.html:4
 #: administration/templates/administration/services/service_list.html:9
 #: maintenance/models.py:89
-#: maintenance/templates/maintenance/maintenance_form.html:164
+#: maintenance/templates/maintenance/maintenance_form.html:251
 msgid "Categorias de Serviço"
 msgstr ""
 
@@ -2778,7 +2807,7 @@ msgstr ""
 #: mobile/templates/mobile/mobile_home.html:941
 #: properties/templates/properties/includes/property_sidebar.html:19
 #: properties/templates/properties/property_list.html:361
-#: reservations/models.py:146
+#: reservations/models.py:155
 #: reservations/templates/reservations/reservation_list_v2.html:4
 #: reservations/templates/reservations/reservation_list_v2.html:326
 msgid "Reservas"
@@ -3060,7 +3089,7 @@ msgstr ""
 #: properties/templates/properties/property_settings.html:490
 #: properties/templates/properties/service_provider_list.html:262
 #: properties/templates/properties/service_provider_list.html:282
-#: reservations/models.py:245 reservations/models.py:308
+#: reservations/models.py:269 reservations/models.py:332
 #: subscriptions/models.py:87 templates/accounts/profile.html:32
 #, fuzzy
 #| msgid "Valor total"
@@ -3071,7 +3100,7 @@ msgstr "Total value"
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:147
 #: mobile/templates/mobile/financeiro.html:395
 #: mobile/templates/mobile/operacional.html:288
-#: properties/templates/properties/service_provider_public.html:343
+#: properties/templates/properties/service_provider_public.html:486
 msgid "Início"
 msgstr ""
 
@@ -3111,9 +3140,11 @@ msgstr "Start date"
 
 #: administration/templates/administration/users/user_list.html:289
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:426
+#: properties/templates/properties/property_checklist_form.html:199
 #: properties/templates/properties/property_specification_form.html:214
+#: properties/templates/properties/service_provider_checklist.html:216
 #: properties/templates/properties/service_provider_form.html:84
-#: properties/templates/properties/service_provider_public.html:875
+#: properties/templates/properties/service_provider_public.html:1306
 msgid "Voltar"
 msgstr ""
 
@@ -3125,6 +3156,7 @@ msgstr "Create Account"
 
 #: administration/templates/administration/users/user_list.html:301
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:432
+#: properties/templates/properties/service_provider_public.html:1316
 msgid "Fechar"
 msgstr ""
 
@@ -3533,6 +3565,7 @@ msgid "Desculpe, algo deu errado no assistente. Vamos voltar ao chat normal."
 msgstr ""
 
 #: maintenance/forms.py:23 maintenance/forms.py:29
+#: maintenance/templates/maintenance/maintenance_form.html:213
 #, fuzzy
 #| msgid "Nenhuma propriedade encontrada"
 msgid "Sem especificação / Equipamento geral"
@@ -3560,7 +3593,7 @@ msgstr ""
 #: maintenance/models.py:66
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:32
 #: mobile/templates/mobile/property_detail.html:201
-#: reservations/templates/reservations/reservation_list_v2.html:404
+#: reservations/templates/reservations/reservation_list_v2.html:417
 #: subscriptions/models.py:12
 #, fuzzy
 #| msgid "Cancelar"
@@ -3572,8 +3605,11 @@ msgstr "Cancel"
 #: maintenance/templates/maintenance/maintenance_wizard.html:171
 #: properties/models.py:107 properties/models.py:119 properties/models.py:187
 #: properties/models.py:257 properties/models.py:409 properties/models.py:465
+#: properties/models.py:564 properties/models.py:782
 #: properties/templates/properties/global_reports.html:250
 #: properties/templates/properties/global_reports.html:328
+#: properties/templates/properties/service_provider_checklist.html:228
+#: properties/templates/properties/service_provider_public.html:782
 #: reservations/models.py:73
 msgid "Propriedade"
 msgstr "Property"
@@ -3593,7 +3629,7 @@ msgid "Data de Fim"
 msgstr ""
 
 #: maintenance/models.py:97
-#: maintenance/templates/maintenance/maintenance_form.html:137
+#: maintenance/templates/maintenance/maintenance_form.html:206
 #, fuzzy
 #| msgid "Data da aquisição"
 msgid "Equipamento / Especificação"
@@ -3638,7 +3674,7 @@ msgstr ""
 #: maintenance/models.py:121 maintenance/models.py:211
 #: maintenance/templates/maintenance/maintenance_list.html:420
 #: properties/templates/properties/property_settings.html:508
-#: properties/views.py:775
+#: properties/views.py:776
 msgid "Manutenção"
 msgstr ""
 
@@ -3646,7 +3682,7 @@ msgstr ""
 #: maintenance/templates/maintenance/maintenance_list.html:4
 #: maintenance/templates/maintenance/maintenance_list.html:397
 #: properties/templates/properties/includes/property_sidebar.html:31
-#: properties/views.py:1067
+#: properties/views.py:1117
 #, fuzzy
 #| msgid "Ações"
 msgid "Manutenções"
@@ -3666,7 +3702,7 @@ msgstr ""
 
 #: maintenance/models.py:151
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:158
-#: mobile/templates/mobile/reservation_form.html:195 properties/models.py:392
+#: mobile/templates/mobile/reservation_form.html:212 properties/models.py:392
 #: reservations/models.py:97
 msgid "Observações"
 msgstr "Notes"
@@ -3796,8 +3832,8 @@ msgstr ""
 
 #: maintenance/templates/maintenance/includes/maintenance_detail_content.html:141
 #: maintenance/templates/maintenance/includes/maintenance_wizard_partial.html:250
-#: mobile/templates/mobile/reservation_detail.html:380
-#: mobile/templates/mobile/reservation_detail.html:424
+#: mobile/templates/mobile/reservation_detail.html:402
+#: mobile/templates/mobile/reservation_detail.html:446
 #, fuzzy
 #| msgid "Valor total"
 msgid "Valor (R$)"
@@ -3979,7 +4015,7 @@ msgstr ""
 #: maintenance/templates/maintenance/maintenance_dashboard.html:1062
 #: maintenance/templates/maintenance/maintenance_dashboard.html:1114
 #: maintenance/templates/maintenance/maintenance_form.html:8
-#: maintenance/templates/maintenance/maintenance_form.html:108
+#: maintenance/templates/maintenance/maintenance_form.html:177
 #: maintenance/templates/maintenance/maintenance_list.html:410
 msgid "Nova Manutenção"
 msgstr ""
@@ -4032,23 +4068,31 @@ msgid "Deseja realmente excluir esta foto?"
 msgstr ""
 
 #: maintenance/templates/maintenance/maintenance_form.html:6
-#: maintenance/templates/maintenance/maintenance_form.html:106
+#: maintenance/templates/maintenance/maintenance_form.html:175
 msgid "Editar Manutenção"
 msgstr ""
 
-#: maintenance/templates/maintenance/maintenance_form.html:139
-msgid "Pesquisar especificação (ou clique duas vezes para ver todos)..."
-msgstr ""
+#: maintenance/templates/maintenance/maintenance_form.html:208
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Pesquisar ou selecionar especificação..."
+msgstr "Acquisition date"
 
-#: maintenance/templates/maintenance/maintenance_form.html:179
+#: maintenance/templates/maintenance/maintenance_form.html:228
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "Nenhuma especificação encontrada"
+msgstr "No properties found"
+
+#: maintenance/templates/maintenance/maintenance_form.html:266
 msgid "Selecione as categorias que melhor descrevem esta manutenção."
 msgstr ""
 
-#: maintenance/templates/maintenance/maintenance_form.html:189
+#: maintenance/templates/maintenance/maintenance_form.html:276
 msgid "Atualizar Manutenção"
 msgstr ""
 
-#: maintenance/templates/maintenance/maintenance_form.html:191
+#: maintenance/templates/maintenance/maintenance_form.html:278
 #, fuzzy
 #| msgid "Salvar Reserva"
 msgid "Salvar Manutenção"
@@ -4309,8 +4353,8 @@ msgstr "Booking registered successfully!"
 
 #: mobile/templates/mobile/financeiro.html:266
 #: mobile/templates/mobile/mobile_home.html:799
-#: mobile/templates/mobile/reservation_detail.html:251 mobile/views.py:430
-#: properties/templates/properties/property_dashboard.html:310
+#: mobile/templates/mobile/reservation_detail.html:273 mobile/views.py:430
+#: properties/templates/properties/property_dashboard.html:328
 #: properties/templates/properties/service_provider_list.html:242
 #, fuzzy
 #| msgid "Dados Financeiros"
@@ -4410,7 +4454,7 @@ msgid "Segurança"
 msgstr "Security"
 
 #: mobile/templates/mobile/mobile_home.html:860
-#: properties/templates/properties/property_dashboard.html:272
+#: properties/templates/properties/property_dashboard.html:290
 #: properties/templates/properties/property_reports.html:298
 msgid "Receita Bruta"
 msgstr "Gross Revenue"
@@ -4422,6 +4466,7 @@ msgstr "My Properties"
 
 #: mobile/templates/mobile/mobile_home.html:906
 #: mobile/templates/mobile/property_detail.html:152
+#: properties/templates/properties/property_nonconformity_list.html:333
 msgid "Nova"
 msgstr ""
 
@@ -4462,14 +4507,14 @@ msgstr ""
 #: mobile/templates/mobile/mobile_profile.html:199
 #: mobilecondominio/templates/mobilecondominio/profile.html:192
 #: properties/models.py:318
-#: properties/templates/properties/service_provider_public.html:617
+#: properties/templates/properties/service_provider_public.html:903
 msgid "Claro"
 msgstr ""
 
 #: mobile/templates/mobile/mobile_profile.html:203
 #: mobilecondominio/templates/mobilecondominio/profile.html:196
 #: properties/models.py:317
-#: properties/templates/properties/service_provider_public.html:610
+#: properties/templates/properties/service_provider_public.html:896
 msgid "Escuro"
 msgstr ""
 
@@ -4479,7 +4524,7 @@ msgstr ""
 msgid "Sair da Conta"
 msgstr "Create Account"
 
-#: mobile/templates/mobile/operacional.html:246 reservations/models.py:129
+#: mobile/templates/mobile/operacional.html:246 reservations/models.py:138
 msgid "Reserva Cancelada"
 msgstr ""
 
@@ -4495,7 +4540,10 @@ msgstr "Cancel"
 msgid "Nenhum serviço programado para este mês."
 msgstr "No bookings found for this property."
 
-#: mobile/templates/mobile/operacional.html:284
+#: mobile/templates/mobile/operacional.html:284 properties/models.py:602
+#: properties/models.py:639
+#: properties/templates/properties/property_dashboard.html:376
+#: properties/templates/properties/service_provider_checklist.html:7
 msgid "Checklist"
 msgstr ""
 
@@ -4512,18 +4560,18 @@ msgid "Reservas Recentes"
 msgstr "Bookings"
 
 #: mobile/templates/mobile/property_detail.html:206
-#: mobile/templates/mobile/reservation_detail.html:174
+#: mobile/templates/mobile/reservation_detail.html:196
 msgid "Futura"
 msgstr ""
 
 #: mobile/templates/mobile/property_detail.html:207
-#: mobile/templates/mobile/reservation_detail.html:175
+#: mobile/templates/mobile/reservation_detail.html:197
 msgid "No apartamento"
 msgstr ""
 
 #: mobile/templates/mobile/property_detail.html:208
-#: mobile/templates/mobile/reservation_detail.html:176
-#: reservations/templates/reservations/reservation_list_v2.html:408
+#: mobile/templates/mobile/reservation_detail.html:198
+#: reservations/templates/reservations/reservation_list_v2.html:421
 msgid "Passada"
 msgstr "Past"
 
@@ -4539,112 +4587,112 @@ msgstr "Guest"
 msgid "Nenhuma reserva recente encontrada."
 msgstr "No properties found"
 
-#: mobile/templates/mobile/reservation_detail.html:162 mobile/views.py:226
+#: mobile/templates/mobile/reservation_detail.html:184 mobile/views.py:226
 #, fuzzy
 #| msgid "Atualizar Reserva"
 msgid "Detalhes da Reserva"
 msgstr "Update Booking"
 
-#: mobile/templates/mobile/reservation_detail.html:186
+#: mobile/templates/mobile/reservation_detail.html:208
 msgid "Ligar"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:207
-#: mobile/templates/mobile/reservation_form.html:189
+#: mobile/templates/mobile/reservation_detail.html:229
+#: mobile/templates/mobile/reservation_form.html:206
 #: reservations/templates/reservations/global_calendar.html:533
 #, fuzzy
 #| msgid "Hóspede"
 msgid "Hóspedes"
 msgstr "Guest"
 
-#: mobile/templates/mobile/reservation_detail.html:208
+#: mobile/templates/mobile/reservation_detail.html:230
 msgid "pessoas"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:214
+#: mobile/templates/mobile/reservation_detail.html:236
 msgid "Serviços e Custos"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:246
+#: mobile/templates/mobile/reservation_detail.html:268
 msgid "Nenhum custo registrado."
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:272
-#: mobile/templates/mobile/reservation_form.html:185
+#: mobile/templates/mobile/reservation_detail.html:294
+#: mobile/templates/mobile/reservation_form.html:202
 #: reservations/templates/reservations/global_calendar.html:537
 #: reservations/templates/reservations/reservation_list_v2.html:345
 msgid "Valor Total"
 msgstr "Total Value"
 
-#: mobile/templates/mobile/reservation_detail.html:276
+#: mobile/templates/mobile/reservation_detail.html:298
 msgid "Total Recebido"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:280
+#: mobile/templates/mobile/reservation_detail.html:302
 msgid "Saldo Pendente"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:293
+#: mobile/templates/mobile/reservation_detail.html:315
 msgid "Reenviar Boas-vindas (WA)"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:295
+#: mobile/templates/mobile/reservation_detail.html:317
 msgid "Enviar Boas-vindas (WA)"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:304
+#: mobile/templates/mobile/reservation_detail.html:326
 msgid "Autorização do Condomínio"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:310
+#: mobile/templates/mobile/reservation_detail.html:332
 msgid "Deseja reativar esta reserva?"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:312
+#: mobile/templates/mobile/reservation_detail.html:334
 #, fuzzy
 #| msgid "Salvar Reserva"
 msgid "Reativar Reserva"
 msgstr "Save Booking"
 
-#: mobile/templates/mobile/reservation_detail.html:320
+#: mobile/templates/mobile/reservation_detail.html:342
 msgid ""
 "Deseja realmente cancelar esta reserva? Esta ação não pode ser desfeita e "
 "afetará suas estatísticas financeiras."
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:329
+#: mobile/templates/mobile/reservation_detail.html:351
 msgid ""
 "AVISO CRÍTICO: Deseja EXCLUIR permanentemente esta reserva? Todos os dados "
 "financeiros e de hóspedes serão removidos para sempre!"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:348
-#: reservations/templates/reservations/reservation_list_v2.html:577
+#: mobile/templates/mobile/reservation_detail.html:370
+#: reservations/templates/reservations/reservation_list_v2.html:665
 msgid "Gerando visualização de alta fidelidade..."
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:355
-#: mobile/templates/mobile/reservation_detail.html:650
+#: mobile/templates/mobile/reservation_detail.html:377
+#: mobile/templates/mobile/reservation_detail.html:672
 msgid "Enviar para Portaria"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:371
+#: mobile/templates/mobile/reservation_detail.html:393
 #: properties/templates/properties/property_settings.html:367
 #: properties/templates/properties/property_settings.html:763
 #: properties/templates/properties/property_settings.html:889
 msgid "Novo Custo"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:386
+#: mobile/templates/mobile/reservation_detail.html:408
 msgid "Nenhum"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:395
+#: mobile/templates/mobile/reservation_detail.html:417
 msgid "Serviço já realizado?"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:402
-#: mobile/templates/mobile/reservation_detail.html:493
+#: mobile/templates/mobile/reservation_detail.html:424
+#: mobile/templates/mobile/reservation_detail.html:515
 #: properties/templates/properties/property_settings.html:808
 #: properties/templates/properties/property_settings.html:890
 #, fuzzy
@@ -4652,75 +4700,75 @@ msgstr ""
 msgid "Salvar Custo"
 msgstr "Save Booking"
 
-#: mobile/templates/mobile/reservation_detail.html:415
+#: mobile/templates/mobile/reservation_detail.html:437
 #: properties/templates/properties/property_settings.html:480
 msgid "Novo Pagamento"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:428 properties/models.py:217
-#: reservations/models.py:310
+#: mobile/templates/mobile/reservation_detail.html:450 properties/models.py:217
+#: reservations/models.py:334
 msgid "Data do Pagamento"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:435
-#: mobile/templates/mobile/reservation_detail.html:521
+#: mobile/templates/mobile/reservation_detail.html:457
+#: mobile/templates/mobile/reservation_detail.html:543
 #: properties/templates/properties/service_provider_list.html:254
 #, fuzzy
 #| msgid "Registrar"
 msgid "Registrar Pagamento"
 msgstr "Register"
 
-#: mobile/templates/mobile/reservation_detail.html:526
+#: mobile/templates/mobile/reservation_detail.html:548
 msgid "Deseja realmente excluir este custo?"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:541
+#: mobile/templates/mobile/reservation_detail.html:563
 msgid "Deseja realmente excluir este pagamento?"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:586
+#: mobile/templates/mobile/reservation_detail.html:608
 msgid ""
 "A exibição da autorização não está disponível pois os dados ainda não foram "
 "informados pelo cliente. Não há dados complementares nessa reserva!"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:597
+#: mobile/templates/mobile/reservation_detail.html:619
 msgid "Conectando ao ambiente seguro..."
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:618
+#: mobile/templates/mobile/reservation_detail.html:640
 msgid "Gerando arquivo oficial..."
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:627
-#: mobile/templates/mobile/reservation_detail.html:663
-#: reservations/templates/reservations/reservation_list_v2.html:627
+#: mobile/templates/mobile/reservation_detail.html:649
+#: mobile/templates/mobile/reservation_detail.html:685
+#: reservations/templates/reservations/reservation_list_v2.html:715
 msgid "Enviando..."
 msgstr ""
 
-#: mobile/templates/mobile/reservation_detail.html:643
+#: mobile/templates/mobile/reservation_detail.html:665
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Enviado com sucesso!"
 msgstr "Booking removed successfully!"
 
-#: mobile/templates/mobile/reservation_detail.html:674
+#: mobile/templates/mobile/reservation_detail.html:696
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Boas-vindas enviadas com sucesso!"
 msgstr "Booking removed successfully!"
 
-#: mobile/templates/mobile/reservation_form.html:147
+#: mobile/templates/mobile/reservation_form.html:164
 msgid "Por favor, corrija os erros abaixo."
 msgstr ""
 
-#: mobile/templates/mobile/reservation_form.html:167
-#: mobile/templates/mobile/reservation_form.html:178
+#: mobile/templates/mobile/reservation_form.html:184
+#: mobile/templates/mobile/reservation_form.html:195
 msgid "Hora"
 msgstr ""
 
-#: mobile/templates/mobile/reservation_form.html:199
-#: reservations/templates/reservations/reservation_form.html:330
+#: mobile/templates/mobile/reservation_form.html:216
+#: reservations/templates/reservations/reservation_form.html:338
 msgid "Salvar Reserva"
 msgstr "Save Booking"
 
@@ -4776,14 +4824,14 @@ msgstr ""
 #: mobile/views.py:183
 #: reservations/templates/reservations/reservation_calendar.html:551
 #: reservations/templates/reservations/reservation_form.html:8
-#: reservations/templates/reservations/reservation_form.html:158
+#: reservations/templates/reservations/reservation_form.html:160
 #: reservations/templates/reservations/reservation_list_v2.html:330
 msgid "Nova Reserva"
 msgstr "New Booking"
 
 #: mobile/views.py:202
 #: reservations/templates/reservations/reservation_form.html:6
-#: reservations/templates/reservations/reservation_form.html:156
+#: reservations/templates/reservations/reservation_form.html:158
 msgid "Editar Reserva"
 msgstr "Edit Booking"
 
@@ -4813,8 +4861,8 @@ msgstr "Booking updated successfully!"
 #: mobilecondominio/templates/mobilecondominio/base_mobile.html:207
 #: mobilecondominio/templates/mobilecondominio/profile.html:4
 #: mobilecondominio/templates/mobilecondominio/profile.html:5
-#: properties/templates/properties/service_provider_public.html:355
-#: properties/templates/properties/service_provider_public.html:582
+#: properties/templates/properties/service_provider_public.html:502
+#: properties/templates/properties/service_provider_public.html:868
 #: templates/accounts/profile.html:4 templates/accounts/profile.html:9
 msgid "Meu Perfil"
 msgstr "My Profile"
@@ -4824,73 +4872,73 @@ msgid "Planos e Assinatura"
 msgstr ""
 
 #: mobile/views.py:420 properties/models.py:178 properties/views.py:82
-#: properties/views.py:448 properties/views.py:1185 reservations/views.py:367
+#: properties/views.py:449 properties/views.py:1235 reservations/views.py:367
 #: reservations/views.py:525
 msgid "Janeiro"
 msgstr "January"
 
 #: mobile/views.py:420 properties/models.py:178 properties/views.py:82
-#: properties/views.py:448 properties/views.py:1185 reservations/views.py:367
+#: properties/views.py:449 properties/views.py:1235 reservations/views.py:367
 #: reservations/views.py:525
 msgid "Fevereiro"
 msgstr "February"
 
 #: mobile/views.py:420 properties/models.py:178 properties/views.py:82
-#: properties/views.py:448 properties/views.py:1185 reservations/views.py:367
+#: properties/views.py:449 properties/views.py:1235 reservations/views.py:367
 #: reservations/views.py:525
 msgid "Março"
 msgstr "March"
 
 #: mobile/views.py:420 properties/models.py:178 properties/views.py:82
-#: properties/views.py:448 properties/views.py:1185 reservations/views.py:367
+#: properties/views.py:449 properties/views.py:1235 reservations/views.py:367
 #: reservations/views.py:525
 msgid "Abril"
 msgstr "April"
 
 #: mobile/views.py:421 properties/models.py:179 properties/views.py:83
-#: properties/views.py:449 properties/views.py:1186 reservations/views.py:368
+#: properties/views.py:450 properties/views.py:1236 reservations/views.py:368
 #: reservations/views.py:526
 msgid "Maio"
 msgstr "May"
 
 #: mobile/views.py:421 properties/models.py:179 properties/views.py:83
-#: properties/views.py:449 properties/views.py:1186 reservations/views.py:368
+#: properties/views.py:450 properties/views.py:1236 reservations/views.py:368
 #: reservations/views.py:526
 msgid "Junho"
 msgstr "June"
 
 #: mobile/views.py:421 properties/models.py:179 properties/views.py:83
-#: properties/views.py:449 properties/views.py:1186 reservations/views.py:368
+#: properties/views.py:450 properties/views.py:1236 reservations/views.py:368
 #: reservations/views.py:526
 msgid "Julho"
 msgstr "July"
 
 #: mobile/views.py:421 properties/models.py:179 properties/views.py:83
-#: properties/views.py:449 properties/views.py:1186 reservations/views.py:368
+#: properties/views.py:450 properties/views.py:1236 reservations/views.py:368
 #: reservations/views.py:526
 msgid "Agosto"
 msgstr "August"
 
 #: mobile/views.py:422 properties/models.py:180 properties/views.py:84
-#: properties/views.py:450 properties/views.py:1187 reservations/views.py:369
+#: properties/views.py:451 properties/views.py:1237 reservations/views.py:369
 #: reservations/views.py:527
 msgid "Setembro"
 msgstr "September"
 
 #: mobile/views.py:422 properties/models.py:180 properties/views.py:84
-#: properties/views.py:450 properties/views.py:1187 reservations/views.py:369
+#: properties/views.py:451 properties/views.py:1237 reservations/views.py:369
 #: reservations/views.py:527
 msgid "Outubro"
 msgstr "October"
 
 #: mobile/views.py:422 properties/models.py:180 properties/views.py:84
-#: properties/views.py:450 properties/views.py:1187 reservations/views.py:369
+#: properties/views.py:451 properties/views.py:1237 reservations/views.py:369
 #: reservations/views.py:527
 msgid "Novembro"
 msgstr "November"
 
 #: mobile/views.py:422 properties/models.py:180 properties/views.py:84
-#: properties/views.py:450 properties/views.py:1187 reservations/views.py:369
+#: properties/views.py:451 properties/views.py:1237 reservations/views.py:369
 #: reservations/views.py:527
 msgid "Dezembro"
 msgstr "December"
@@ -5226,6 +5274,28 @@ msgstr ""
 msgid "Ex: Magazine Luiza"
 msgstr ""
 
+#: properties/forms.py:318
+#, fuzzy
+#| msgid "Entrar"
+msgid "Ex: Conferência de Entrada"
+msgstr "Login"
+
+#: properties/forms.py:327
+msgid "Ex: Toalhas de Banho"
+msgstr ""
+
+#: properties/forms.py:343
+#, fuzzy
+#| msgid "Preencha as informações detalhadas da sua propriedade."
+msgid "Descreva a inconformidade identificada na propriedade..."
+msgstr "Fill in the detailed information of your property."
+
+#: properties/forms.py:353
+#, fuzzy
+#| msgid "Telefone"
+msgid "Selecione o prestador (opcional)..."
+msgstr "Phone"
+
 #: properties/models.py:19
 msgid "Nome da propriedade"
 msgstr "Property name"
@@ -5431,11 +5501,12 @@ msgid "Nome do Serviço"
 msgstr "Full Name"
 
 #: properties/models.py:281
+#: properties/templates/properties/service_provider_checklist.html:236
 msgid "Serviço"
 msgstr ""
 
 #: properties/models.py:306
-#: properties/templates/properties/service_provider_public.html:594
+#: properties/templates/properties/service_provider_public.html:880
 #: reservations/models.py:52
 #: reservations/templates/reservations/checkin_form.html:257
 #: reservations/templates/reservations/includes/guest_detail_modal_content.html:15
@@ -5460,6 +5531,7 @@ msgid "Tema"
 msgstr ""
 
 #: properties/models.py:326
+#: properties/templates/properties/property_checklist_response_list.html:286
 msgid "Prestador de Serviço"
 msgstr ""
 
@@ -5555,6 +5627,156 @@ msgstr "Acquisition date"
 #| msgid "Data da aquisição"
 msgid "Fotos da Especificação"
 msgstr "Acquisition date"
+
+#: properties/models.py:577
+#, fuzzy
+#| msgid "Cadastrar Propriedade"
+msgid "Checklist da Propriedade"
+msgstr "Register Property"
+
+#: properties/models.py:578
+#: properties/templates/properties/property_checklist_list.html:212
+#, fuzzy
+#| msgid "Todas as Propriedades"
+msgid "Checklists da Propriedade"
+msgstr "All Properties"
+
+#: properties/models.py:587
+#: properties/templates/properties/service_provider_checklist.html:274
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:89
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:99
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:117
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:131
+msgid "Ruim"
+msgstr ""
+
+#: properties/models.py:588
+#: properties/templates/properties/service_provider_checklist.html:270
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:87
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:97
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:115
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:129
+msgid "Regular"
+msgstr ""
+
+#: properties/models.py:589
+#: properties/templates/properties/service_provider_checklist.html:266
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:85
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:95
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:113
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:127
+msgid "Bom"
+msgstr ""
+
+#: properties/models.py:593
+msgid "Apenas Quantidade"
+msgstr ""
+
+#: properties/models.py:594
+msgid "Apenas Qualidade"
+msgstr ""
+
+#: properties/models.py:595
+msgid "Quantidade e Qualidade"
+msgstr ""
+
+#: properties/models.py:605
+msgid "Quantidade Padrão"
+msgstr ""
+
+#: properties/models.py:610
+#: properties/templates/properties/property_checklist_form.html:231
+#, fuzzy
+#| msgid "Estado"
+msgid "Estado Padrão"
+msgstr "State"
+
+#: properties/models.py:616
+#: properties/templates/properties/property_checklist_form.html:232
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Tipo de Avaliação"
+msgstr "Acquisition date"
+
+#: properties/models.py:620
+msgid "Registro fotográfico obrigatório?"
+msgstr ""
+
+#: properties/models.py:626 properties/models.py:681
+msgid "Item do Checklist"
+msgstr ""
+
+#: properties/models.py:627
+#: properties/templates/properties/property_checklist_form.html:212
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:42
+msgid "Itens do Checklist"
+msgstr ""
+
+#: properties/models.py:655
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Data da Resposta"
+msgstr "Acquisition date"
+
+#: properties/models.py:658 properties/models.py:675
+msgid "Resposta do Checklist"
+msgstr ""
+
+#: properties/models.py:659
+msgid "Respostas dos Checklists"
+msgstr ""
+
+#: properties/models.py:683
+#, fuzzy
+#| msgid "Cidade"
+msgid "Quantidade"
+msgstr "City"
+
+#: properties/models.py:689
+msgid "Estado/Qualidade"
+msgstr ""
+
+#: properties/models.py:695
+msgid "Foto / Registro Fotográfico"
+msgstr ""
+
+#: properties/models.py:699
+msgid "Resposta de Item do Checklist"
+msgstr ""
+
+#: properties/models.py:700
+msgid "Respostas dos Itens do Checklist"
+msgstr ""
+
+#: properties/models.py:784
+msgid "Relato da Inconformidade"
+msgstr ""
+
+#: properties/models.py:789
+msgid "Registro Fotográfico"
+msgstr ""
+
+#: properties/models.py:791
+#, fuzzy
+#| msgid "Registrar"
+msgid "Registrado em"
+msgstr "Register"
+
+#: properties/models.py:792
+msgid "Lido / Verificado"
+msgstr ""
+
+#: properties/models.py:795
+#, fuzzy
+#| msgid "Nome Completo"
+msgid "Inconformidade do Prestador"
+msgstr "Full Name"
+
+#: properties/models.py:796
+#, fuzzy
+#| msgid "Nome Completo"
+msgid "Inconformidades dos Prestadores"
+msgstr "Full Name"
 
 #: properties/templates/properties/global_reports.html:4
 #: properties/templates/properties/global_reports.html:200
@@ -5687,6 +5909,209 @@ msgstr ""
 msgid "Erro ao carregar modelo. Tente novamente mais tarde."
 msgstr ""
 
+#: properties/templates/properties/property_checklist_form.html:4
+#: properties/templates/properties/property_checklist_form.html:170
+#, fuzzy
+#| msgid "Excluir"
+msgid "Editar Checklist"
+msgstr "Delete"
+
+#: properties/templates/properties/property_checklist_form.html:202
+#, fuzzy
+#| msgid "Salvar Reserva"
+msgid "Salvar Checklist"
+msgstr "Save Booking"
+
+#: properties/templates/properties/property_checklist_form.html:215
+msgid "Defina os itens a serem verificados no apartamento."
+msgstr ""
+
+#: properties/templates/properties/property_checklist_form.html:220
+#, fuzzy
+#| msgid "Adicionar"
+msgid "Adicionar Item"
+msgstr "Add"
+
+#: properties/templates/properties/property_checklist_form.html:230
+msgid "Qtd. Padrão"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_form.html:233
+msgid "Foto Obrigatória?"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_form.html:255
+#, fuzzy
+#| msgid "Tem certeza que deseja excluir a reserva de"
+msgid "Tem certeza que deseja remover este item?"
+msgstr "Are you sure you want to delete the booking for"
+
+#: properties/templates/properties/property_checklist_form.html:270
+msgid "Nenhum item cadastrado para este checklist ainda."
+msgstr ""
+
+#: properties/templates/properties/property_checklist_form.html:281
+msgid "Novo Item de Checklist"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_form.html:327
+#, fuzzy
+#| msgid "Adicionar"
+msgid "Adicionar"
+msgstr "Add"
+
+#: properties/templates/properties/property_checklist_item_form.html:4
+#: properties/templates/properties/property_checklist_item_form.html:61
+msgid "Editar Item do Checklist"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_item_form.html:118
+#, fuzzy
+#| msgid "Salvar Reserva"
+msgid "Salvar Item"
+msgstr "Save Booking"
+
+#: properties/templates/properties/property_checklist_list.html:4
+msgid "Checklists"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_list.html:215
+msgid ""
+"Gerencie checklists e itens de vistoria para controle de entrada, saída e "
+"manutenção."
+msgstr ""
+
+#: properties/templates/properties/property_checklist_list.html:220
+#: properties/templates/properties/property_checklist_list.html:279
+#: properties/templates/properties/property_checklist_list.html:287
+msgid "Novo Checklist"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_list.html:238
+#, fuzzy
+#| msgid "Tem certeza que deseja excluir a reserva de"
+msgid "Tem certeza que deseja excluir este checklist e todos os seus itens?"
+msgstr "Are you sure you want to delete the booking for"
+
+#: properties/templates/properties/property_checklist_list.html:248
+#, fuzzy
+#| msgid "Dados Cadastrais"
+msgid "Itens Cadastrados"
+msgstr "Registration Data"
+
+#: properties/templates/properties/property_checklist_list.html:260
+msgid "Respostas"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_list.html:263
+msgid "Não há respostas cadastradas"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_list.html:265
+msgid "Sem Respostas"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_list.html:277
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "Nenhum checklist cadastrado"
+msgstr "No properties found"
+
+#: properties/templates/properties/property_checklist_list.html:278
+#, fuzzy
+#| msgid "Comece cadastrando seu primeiro imóvel para gerenciar."
+msgid "Comece criando o primeiro checklist desta propriedade."
+msgstr "Start by registering your first property to manage."
+
+#: properties/templates/properties/property_checklist_response_list.html:4
+msgid "Respostas de Checklist"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_response_list.html:245
+#, fuzzy
+#| msgid "Todas as Propriedades"
+msgid "Voltar para Checklists"
+msgstr "All Properties"
+
+#: properties/templates/properties/property_checklist_response_list.html:251
+msgid "Respostas do Checklist"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_response_list.html:254
+msgid ""
+"Respostas enviadas pelos prestadores de serviço e faxineiras para esta "
+"propriedade."
+msgstr ""
+
+#: properties/templates/properties/property_checklist_response_list.html:264
+#, fuzzy
+#| msgid "Hóspede"
+msgid "Reserva / Hóspede"
+msgstr "Guest"
+
+#: properties/templates/properties/property_checklist_response_list.html:265
+msgid "Respondido por"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_response_list.html:266
+#, fuzzy
+#| msgid "Data da aquisição"
+msgid "Data / Hora"
+msgstr "Acquisition date"
+
+#: properties/templates/properties/property_checklist_response_list.html:277
+#, fuzzy
+#| msgid "Reservas"
+msgid "Reserva #"
+msgstr "Bookings"
+
+#: properties/templates/properties/property_checklist_response_list.html:284
+#, fuzzy
+#| msgid "Painel de Controle"
+msgid "Administrador"
+msgstr "Dashboard"
+
+#: properties/templates/properties/property_checklist_response_list.html:287
+msgid "Aplicativo"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_response_list.html:300
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:154
+msgid "Atenção"
+msgstr ""
+
+#: properties/templates/properties/property_checklist_response_list.html:305
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:161
+#, fuzzy
+#| msgid "Confirmar Exclusão"
+msgid "Conforme"
+msgstr "Confirm Deletion"
+
+#: properties/templates/properties/property_checklist_response_list.html:314
+#, fuzzy
+#| msgid "Tem certeza que deseja excluir a reserva de"
+msgid "Tem certeza que deseja excluir esta resposta de checklist?"
+msgstr "Are you sure you want to delete the booking for"
+
+#: properties/templates/properties/property_checklist_response_list.html:331
+#, fuzzy
+#| msgid "Nenhuma reserva encontrada para este imóvel."
+msgid "Nenhuma resposta encontrada para este checklist."
+msgstr "No bookings found for this property."
+
+#: properties/templates/properties/property_checklist_response_list.html:346
+#: properties/templates/properties/property_checklist_response_list.html:372
+#: reservations/templates/reservations/reservation_list_v2.html:515
+#: reservations/templates/reservations/reservation_list_v2.html:596
+msgid "Carregando dados do checklist..."
+msgstr ""
+
+#: properties/templates/properties/property_checklist_response_list.html:384
+#: reservations/templates/reservations/reservation_list_v2.html:578
+#: reservations/templates/reservations/reservation_list_v2.html:608
+msgid "Erro ao carregar os dados. Tente novamente."
+msgstr ""
+
 #: properties/templates/properties/property_confirm_delete.html:4
 msgid "Excluir Propriedade"
 msgstr "Delete Property"
@@ -5708,109 +6133,129 @@ msgstr "Yes, Delete"
 msgid "Painel de Controle"
 msgstr "Dashboard"
 
-#: properties/templates/properties/property_dashboard.html:234
+#: properties/templates/properties/property_dashboard.html:252
 msgid "Unidade Operacional"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:252
+#: properties/templates/properties/property_dashboard.html:270
 msgid "Disponibilidade"
 msgstr "Availability"
 
-#: properties/templates/properties/property_dashboard.html:253
+#: properties/templates/properties/property_dashboard.html:271
 #: reservations/templates/reservations/reservation_calendar.html:612
 msgid "Disponível"
 msgstr "Available"
 
-#: properties/templates/properties/property_dashboard.html:262
+#: properties/templates/properties/property_dashboard.html:280
 msgid "Reservas do Mês"
 msgstr "Monthly Bookings"
 
-#: properties/templates/properties/property_dashboard.html:273
-#: reservations/templates/reservations/reservation_list_v2.html:431
+#: properties/templates/properties/property_dashboard.html:291
+#: reservations/templates/reservations/reservation_list_v2.html:444
 msgid "R$"
 msgstr "$"
 
-#: properties/templates/properties/property_dashboard.html:282
+#: properties/templates/properties/property_dashboard.html:300
 msgid "Dias Ociosos no Mês"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:294
+#: properties/templates/properties/property_dashboard.html:312
 #, fuzzy
 #| msgid "Cadastrar Agora"
 msgid "Cadastro"
 msgstr "Register Now"
 
-#: properties/templates/properties/property_dashboard.html:295
+#: properties/templates/properties/property_dashboard.html:313
 msgid "Dados cadastrar da propriedade, fotos e configurações gerais"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:302
+#: properties/templates/properties/property_dashboard.html:320
 #: reservations/templates/reservations/reservation_calendar.html:4
 #, fuzzy
 #| msgid "Calendário de Reservas"
 msgid "Calendário"
 msgstr "Booking Calendar"
 
-#: properties/templates/properties/property_dashboard.html:303
+#: properties/templates/properties/property_dashboard.html:321
 #, fuzzy
 #| msgid "Descrição da propriedade"
 msgid "Gestão visual de ocupação da propriedade"
 msgstr "Property description"
 
-#: properties/templates/properties/property_dashboard.html:311
+#: properties/templates/properties/property_dashboard.html:329
 msgid ""
 "Estrutura de custo da sua propriedade, mantenha atualizado para uma visão "
 "real da propriedade"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:318
+#: properties/templates/properties/property_dashboard.html:336
 #, fuzzy
 #| msgid "Observações"
 msgid "Instruções"
 msgstr "Notes"
 
-#: properties/templates/properties/property_dashboard.html:319
+#: properties/templates/properties/property_dashboard.html:337
 msgid ""
 "Instruções e regras da propriedade que serão enviadas ao cliente no momento "
 "do check in"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:327
+#: properties/templates/properties/property_dashboard.html:345
 msgid ""
 "Modelo para confecção de documento de autorização para envio ao condomínio"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:334
+#: properties/templates/properties/property_dashboard.html:352
 #: properties/templates/properties/property_document_list.html:4
 msgid "Documentos"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:335
+#: properties/templates/properties/property_dashboard.html:353
 #, fuzzy
 #| msgid "Descrição da propriedade"
 msgid "Documentos e arquivos da propriedade"
 msgstr "Property description"
 
-#: properties/templates/properties/property_dashboard.html:342
+#: properties/templates/properties/property_dashboard.html:360
 #: properties/templates/properties/property_drive.html:4
 msgid "Editor de textos"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:343
+#: properties/templates/properties/property_dashboard.html:361
 msgid "Crie e edite textos e planilhas com dados relativos a essa propriedade"
 msgstr ""
 
-#: properties/templates/properties/property_dashboard.html:350
+#: properties/templates/properties/property_dashboard.html:368
 #: properties/templates/properties/property_specification_list.html:4
 #, fuzzy
 #| msgid "Visualizações"
 msgid "Especificações"
 msgstr "Views"
 
-#: properties/templates/properties/property_dashboard.html:351
+#: properties/templates/properties/property_dashboard.html:369
 msgid ""
 "Especificações, marca e modelo de equipamentos em geral, para controle de "
 "manutenções e substituicoes"
+msgstr ""
+
+#: properties/templates/properties/property_dashboard.html:377
+msgid ""
+"cadastro de checklists para serem realizados no apartamento, conferência de "
+"itens."
+msgstr ""
+
+#: properties/templates/properties/property_dashboard.html:387
+#: properties/templates/properties/property_nonconformity_list.html:4
+#: properties/templates/properties/service_provider_public.html:498
+#, fuzzy
+#| msgid "Cidade"
+msgid "Inconformidades"
+msgstr "City"
+
+#: properties/templates/properties/property_dashboard.html:388
+msgid ""
+"Relatos de inconformidades para a propriedade, são aspects que precisam ser "
+"verificados"
 msgstr ""
 
 #: properties/templates/properties/property_document_list.html:267
@@ -5852,6 +6297,7 @@ msgid "Enviar"
 msgstr ""
 
 #: properties/templates/properties/property_document_list.html:400
+#: properties/templates/properties/property_nonconformity_list.html:515
 msgid "Tamanho selecionado: "
 msgstr ""
 
@@ -5966,6 +6412,66 @@ msgstr "Start by registering your first property to manage."
 #: properties/templates/properties/property_list.html:421
 msgid "Cadastrar Minha Primeira Propriedade"
 msgstr "Register My First Property"
+
+#: properties/templates/properties/property_nonconformity_list.html:301
+#, fuzzy
+#| msgid "Cadastrar Propriedade"
+msgid "Relatos de Inconformidades"
+msgstr "Register Property"
+
+#: properties/templates/properties/property_nonconformity_list.html:304
+msgid ""
+"Relatos de inconformidades para a propriedade, são aspectos que precisam ser "
+"verificados"
+msgstr ""
+
+#: properties/templates/properties/property_nonconformity_list.html:309
+#: properties/templates/properties/property_nonconformity_list.html:376
+#: properties/templates/properties/service_provider_public.html:753
+msgid "Relatar Inconformidade"
+msgstr ""
+
+#: properties/templates/properties/property_nonconformity_list.html:345
+#, fuzzy
+#| msgid "Cadastrar Propriedade"
+msgid "Foto da Inconformidade"
+msgstr "Register Property"
+
+#: properties/templates/properties/property_nonconformity_list.html:354
+msgid "Marcar como lido"
+msgstr ""
+
+#: properties/templates/properties/property_nonconformity_list.html:374
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "Nenhuma inconformidade registrada"
+msgstr "No properties found"
+
+#: properties/templates/properties/property_nonconformity_list.html:375
+msgid "Nenhum relato de inconformidade foi registrado para esta propriedade."
+msgstr ""
+
+#: properties/templates/properties/property_nonconformity_list.html:384
+#, fuzzy
+#| msgid "Nova Propriedade"
+msgid "Nova Inconformidade"
+msgstr "New Property"
+
+#: properties/templates/properties/property_nonconformity_list.html:489
+#, fuzzy
+#| msgid "Tem certeza que deseja excluir a reserva de"
+msgid "Tem certeza que deseja excluir este relato de inconformidade?"
+msgstr "Are you sure you want to delete the booking for"
+
+#: properties/templates/properties/property_nonconformity_list.html:520
+msgid "Atenção: O limite máximo para fotos é 2MB."
+msgstr ""
+
+#: properties/templates/properties/property_nonconformity_list.html:536
+msgid ""
+"A foto selecionada é muito grande (máximo de 2MB). Por favor, compacte-a "
+"antes de enviar."
+msgstr ""
 
 #: properties/templates/properties/property_reports.html:212
 #, fuzzy
@@ -6235,6 +6741,54 @@ msgstr ""
 msgid "Você só pode selecionar no máximo 5 fotos."
 msgstr ""
 
+#: properties/templates/properties/service_provider_checklist.html:218
+#, fuzzy
+#| msgid "Salvar Reserva"
+msgid "Realizar Checklist"
+msgstr "Save Booking"
+
+#: properties/templates/properties/service_provider_checklist.html:232
+#: reservations/models.py:17 reservations/models.py:39
+msgid "Cliente"
+msgstr ""
+
+#: properties/templates/properties/service_provider_checklist.html:240
+#, fuzzy
+#| msgid "Nova Reserva"
+msgid "Check-out da Reserva"
+msgstr "New Booking"
+
+#: properties/templates/properties/service_provider_checklist.html:255
+#, fuzzy
+#| msgid "Nenhuma propriedade encontrada"
+msgid "Quantidade encontrada"
+msgstr "No properties found"
+
+#: properties/templates/properties/service_provider_checklist.html:262
+msgid "Estado / Qualidade"
+msgstr ""
+
+#: properties/templates/properties/service_provider_checklist.html:284
+msgid "Foto obrigatória"
+msgstr ""
+
+#: properties/templates/properties/service_provider_checklist.html:288
+#: properties/templates/properties/service_provider_checklist.html:338
+msgid "Tirar/Enviar Foto"
+msgstr ""
+
+#: properties/templates/properties/service_provider_checklist.html:302
+#, fuzzy
+#| msgid "Editar Reserva"
+msgid "Enviar Respostas"
+msgstr "Edit Booking"
+
+#: properties/templates/properties/service_provider_checklist.html:320
+#, fuzzy
+#| msgid "Alterar Senha"
+msgid "Alterar Foto"
+msgstr "Change Password"
+
 #: properties/templates/properties/service_provider_form.html:6
 #: properties/templates/properties/service_provider_form.html:18
 #, fuzzy
@@ -6265,7 +6819,7 @@ msgid "Gestão global de contatos e acessos financeiros."
 msgstr ""
 
 #: properties/templates/properties/service_provider_list.html:135
-#: reservations/models.py:284
+#: reservations/models.py:308
 #: reservations/templates/reservations/includes/guest_detail_modal_content.html:11
 #: reservations/templates/reservations/includes/guest_detail_modal_content.html:82
 msgid "Nome"
@@ -6377,107 +6931,215 @@ msgstr ""
 msgid "Por favor, selecione uma nota."
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:347
+#: properties/templates/properties/service_provider_public.html:490
 msgid "Agenda"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:402
+#: properties/templates/properties/service_provider_public.html:549
 msgid ""
 "Bem-vindo ao seu portal personalizado. Utilize o menu lateral para gerenciar "
 "seu perfil."
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:439
+#: properties/templates/properties/service_provider_public.html:561
+msgid "Checklist pendente"
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:591
 msgid "Ver na Agenda"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:446
+#: properties/templates/properties/service_provider_public.html:598
 msgid "Nenhum serviço pendente no momento."
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:454
+#: properties/templates/properties/service_provider_public.html:606
 msgid "Minha Agenda"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:499
+#: properties/templates/properties/service_provider_public.html:653
+#: properties/views.py:1003
+msgid "Checklist obrigatório pendente!"
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:656
+msgid ""
+"Você deve responder ao checklist antes de poder marcar o serviço como "
+"concluído."
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:660
+msgid "Responder Checklist"
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:666
 msgid "Marcar como Realizado"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:508
+#: properties/templates/properties/service_provider_public.html:676
 #, fuzzy
 #| msgid "Você ainda não cadastrou nenhuma propriedade."
 msgid "Você ainda não tem serviços agendados."
 msgstr "You haven't registered any properties yet."
 
-#: properties/templates/properties/service_provider_public.html:516
+#: properties/templates/properties/service_provider_public.html:684
 msgid "Histórico Realizado"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:529
+#: properties/templates/properties/service_provider_public.html:697
 msgid "serviços realizados"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:538
+#: properties/templates/properties/service_provider_public.html:706
 msgid "Nenhum histórico disponível."
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:547
+#: properties/templates/properties/service_provider_public.html:715
 #, fuzzy
 #| msgid "Todas as Propriedades"
 msgid "Voltar para propriedades"
 msgstr "All Properties"
 
-#: properties/templates/properties/service_provider_public.html:570
+#: properties/templates/properties/service_provider_public.html:738
 #, fuzzy
 #| msgid "Cancelar"
 msgid "Cancelar Realizado"
 msgstr "Cancel"
 
-#: properties/templates/properties/service_provider_public.html:604
+#: properties/templates/properties/service_provider_public.html:748
+#, fuzzy
+#| msgid "Todas as Propriedades"
+msgid "Inconformidades na Propriedade"
+msgstr "All Properties"
+
+#: properties/templates/properties/service_provider_public.html:756
+#, fuzzy
+#| msgid "Minhas Propriedades"
+msgid "Minhas Ocorrências"
+msgstr "My Properties"
+
+#: properties/templates/properties/service_provider_public.html:770
+#, fuzzy
+#| msgid "Editar Propriedade"
+msgid "Selecione a Propriedade"
+msgstr "Edit Property"
+
+#: properties/templates/properties/service_provider_public.html:772
+#, fuzzy
+#| msgid "Todas as Propriedades"
+msgid "Escolha uma propriedade..."
+msgstr "All Properties"
+
+#: properties/templates/properties/service_provider_public.html:791
+msgid "Relato da Ocorrência"
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:794
+msgid "Digite ou clique no microfone para relatar a inconformidade..."
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:796
+msgid ""
+"Você pode usar o botão ao lado para gravar áudio que será convertido em "
+"texto."
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:800
+#, fuzzy
+#| msgid "Salvar Reserva"
+msgid "Gravar áudio"
+msgstr "Save Booking"
+
+#: properties/templates/properties/service_provider_public.html:803
+#: properties/templates/properties/service_provider_public.html:1233
+msgid "Gravar"
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:809
+#, fuzzy
+#| msgid "Foto de Perfil"
+msgid "Foto / Registro Fotográfico (Opcional)"
+msgstr "Profile Picture"
+
+#: properties/templates/properties/service_provider_public.html:813
+msgid "Tirar ou Escolher Foto"
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:824
+#, fuzzy
+#| msgid "Visualizações"
+msgid "Salvar Inconformidade"
+msgstr "Views"
+
+#: properties/templates/properties/service_provider_public.html:830
+msgid ""
+"Você não está vinculado a nenhuma propriedade ativa para relatar "
+"inconformidades."
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:845
+msgid "Enviado por"
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:859
+#, fuzzy
+#| msgid "Nenhuma reserva encontrada para este imóvel."
+msgid "Nenhuma ocorrência registrada por você."
+msgstr "No bookings found for this property."
+
+#: properties/templates/properties/service_provider_public.html:890
 msgid "Tema do Portal"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:624
+#: properties/templates/properties/service_provider_public.html:910
 #: templates/accounts/profile.html:73
 msgid "Foto de Perfil"
 msgstr "Profile Picture"
 
-#: properties/templates/properties/service_provider_public.html:629
+#: properties/templates/properties/service_provider_public.html:915
 msgid "Trocar Foto"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:765
-#: properties/templates/properties/service_provider_public.html:811
+#: properties/templates/properties/service_provider_public.html:1054
+#: properties/templates/properties/service_provider_public.html:1100
 msgid "Aguarde..."
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:848
+#: properties/templates/properties/service_provider_public.html:1192
+msgid "Reconhecimento de voz não é suportado pelo seu navegador."
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:1203
+msgid "Ouvindo..."
+msgstr ""
+
+#: properties/templates/properties/service_provider_public.html:1279
 msgid "Concluir Serviço?"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:850
+#: properties/templates/properties/service_provider_public.html:1281
 msgid "Você está confirmando a realização do serviço:"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:853
+#: properties/templates/properties/service_provider_public.html:1284
 msgid "Uma vez confirmado, ele sairá da sua agenda ativa."
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:867
+#: properties/templates/properties/service_provider_public.html:1298
 #, fuzzy
 #| msgid "Localização"
 msgid "Estornar Realização?"
 msgstr "Location"
 
-#: properties/templates/properties/service_provider_public.html:869
+#: properties/templates/properties/service_provider_public.html:1300
 msgid "Você está cancelando a realização do serviço:"
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:872
+#: properties/templates/properties/service_provider_public.html:1303
 msgid "O serviço voltará para sua agenda de pendentes."
 msgstr ""
 
-#: properties/templates/properties/service_provider_public.html:876
+#: properties/templates/properties/service_provider_public.html:1307
 #, fuzzy
 #| msgid "Confirmar Exclusão"
 msgid "Confirmar Estorno"
@@ -6529,195 +7191,273 @@ msgstr "Booking updated successfully!"
 msgid "Modelo de autorização atualizado com sucesso!"
 msgstr "Profile updated successfully!"
 
-#: properties/views.py:190
+#: properties/views.py:191
 msgid "Propriedade cadastrada com sucesso!"
 msgstr "Property registered successfully!"
 
-#: properties/views.py:206
+#: properties/views.py:207
 msgid "Propriedade atualizada com sucesso!"
 msgstr "Property updated successfully!"
 
-#: properties/views.py:219
+#: properties/views.py:220
 msgid "Propriedade removida com sucesso!"
 msgstr "Property removed successfully!"
 
-#: properties/views.py:465
+#: properties/views.py:466
 #, fuzzy
 #| msgid "Perfil atualizado com sucesso!"
 msgid "Custo adicionado com sucesso!"
 msgstr "Profile updated successfully!"
 
-#: properties/views.py:468
+#: properties/views.py:469
 #, fuzzy
 #| msgid "Nenhuma propriedade encontrada"
 msgid "Propriedade não encontrada."
 msgstr "No properties found"
 
-#: properties/views.py:492
+#: properties/views.py:493
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Custo removido com sucesso!"
 msgstr "Booking removed successfully!"
 
-#: properties/views.py:504
+#: properties/views.py:505
 #, fuzzy
 #| msgid "Perfil atualizado com sucesso!"
 msgid "Custo atualizado com sucesso!"
 msgstr "Profile updated successfully!"
 
-#: properties/views.py:599
+#: properties/views.py:600
 #, fuzzy
 #| msgid "Perfil atualizado com sucesso!"
 msgid "Histórico financeiro atualizado com sucesso!"
 msgstr "Profile updated successfully!"
 
-#: properties/views.py:715
+#: properties/views.py:716
 #, fuzzy
 #| msgid "Perfil atualizado com sucesso!"
 msgid "Prestador atualizado com sucesso!"
 msgstr "Profile updated successfully!"
 
-#: properties/views.py:737
+#: properties/views.py:738
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Prestador removido com sucesso!"
 msgstr "Booking removed successfully!"
 
-#: properties/views.py:788 subscriptions/models.py:104
+#: properties/views.py:789 subscriptions/models.py:104
 msgid "Pagamento"
 msgstr ""
 
-#: properties/views.py:789
+#: properties/views.py:790
 msgid "Liquidação de Saldo"
 msgstr ""
 
-#: properties/views.py:800
+#: properties/views.py:801
 msgid "Custo Fixo"
 msgstr ""
 
-#: properties/views.py:843
+#: properties/views.py:844
 msgid "O valor deve ser maior que zero."
 msgstr ""
 
-#: properties/views.py:856
+#: properties/views.py:857
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Pagamento registrado com sucesso!"
 msgstr "Booking removed successfully!"
 
-#: properties/views.py:878
+#: properties/views.py:879
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Documento enviado com sucesso!"
 msgstr "Booking removed successfully!"
 
-#: properties/views.py:891
+#: properties/views.py:892
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Documento excluído com sucesso!"
 msgstr "Booking removed successfully!"
 
-#: properties/views.py:963
+#: properties/views.py:960
+msgid "Por favor, selecione a propriedade e descreva a inconformidade."
+msgstr ""
+
+#: properties/views.py:974 properties/views.py:1788
+#, fuzzy
+#| msgid "Propriedade cadastrada com sucesso!"
+msgid "Inconformidade registrada com sucesso!"
+msgstr "Property registered successfully!"
+
+#: properties/views.py:1004
+msgid "Você deve responder ao checklist antes de concluir o serviço."
+msgstr ""
+
+#: properties/views.py:1013
 msgid "Serviço Concluído"
 msgstr ""
 
-#: properties/views.py:964
+#: properties/views.py:1014
 msgid "A {} da propriedade {} foi finalizada por {}."
 msgstr ""
 
-#: properties/views.py:1092
+#: properties/views.py:1142
 msgid "Ajustes Manuais"
 msgstr ""
 
-#: properties/views.py:1145
+#: properties/views.py:1195
 #, fuzzy
 #| msgid "Janeiro"
 msgid "Jan"
 msgstr "January"
 
-#: properties/views.py:1145
+#: properties/views.py:1195
 msgid "Fev"
 msgstr ""
 
-#: properties/views.py:1145
+#: properties/views.py:1195
 #, fuzzy
 #| msgid "Março"
 msgid "Mar"
 msgstr "March"
 
-#: properties/views.py:1145
+#: properties/views.py:1195
 #, fuzzy
 #| msgid "Abril"
 msgid "Abr"
 msgstr "April"
 
-#: properties/views.py:1146
+#: properties/views.py:1196
 #, fuzzy
 #| msgid "Maio"
 msgid "Mai"
 msgstr "May"
 
-#: properties/views.py:1146
+#: properties/views.py:1196
 #, fuzzy
 #| msgid "Junho"
 msgid "Jun"
 msgstr "June"
 
-#: properties/views.py:1146
+#: properties/views.py:1196
 #, fuzzy
 #| msgid "Julho"
 msgid "Jul"
 msgstr "July"
 
-#: properties/views.py:1146
+#: properties/views.py:1196
 #, fuzzy
 #| msgid "Agosto"
 msgid "Ago"
 msgstr "August"
 
-#: properties/views.py:1147
+#: properties/views.py:1197
 msgid "Set"
 msgstr ""
 
-#: properties/views.py:1147
+#: properties/views.py:1197
 #, fuzzy
 #| msgid "Outubro"
 msgid "Out"
 msgstr "October"
 
-#: properties/views.py:1147
+#: properties/views.py:1197
 msgid "Nov"
 msgstr ""
 
-#: properties/views.py:1147
+#: properties/views.py:1197
 msgid "Dez"
 msgstr ""
 
-#: properties/views.py:1370
+#: properties/views.py:1420
 msgid "Você pode enviar no máximo 5 fotos."
 msgstr ""
 
-#: properties/views.py:1383
+#: properties/views.py:1433
 #, fuzzy
 #| msgid "Perfil atualizado com sucesso!"
 msgid "Especificação adicionada com sucesso!"
 msgstr "Profile updated successfully!"
 
-#: properties/views.py:1423
+#: properties/views.py:1473
 msgid "Uma especificação não pode ter mais de 5 fotos no total."
 msgstr ""
 
-#: properties/views.py:1435
+#: properties/views.py:1485
 #, fuzzy
 #| msgid "Reserva atualizada com sucesso!"
 msgid "Especificação atualizada com sucesso!"
 msgstr "Booking updated successfully!"
 
-#: properties/views.py:1455
+#: properties/views.py:1505
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Especificação excluída com sucesso!"
 msgstr "Booking removed successfully!"
+
+#: properties/views.py:1534
+#, fuzzy
+#| msgid "Propriedade cadastrada com sucesso!"
+msgid "Checklist cadastrado com sucesso!"
+msgstr "Property registered successfully!"
+
+#: properties/views.py:1565
+#, fuzzy
+#| msgid "Perfil atualizado com sucesso!"
+msgid "Checklist atualizado com sucesso!"
+msgstr "Profile updated successfully!"
+
+#: properties/views.py:1579
+#, fuzzy
+#| msgid "Perfil atualizado com sucesso!"
+msgid "Checklist excluído com sucesso!"
+msgstr "Profile updated successfully!"
+
+#: properties/views.py:1591
+#, fuzzy
+#| msgid "Perfil atualizado com sucesso!"
+msgid "Item adicionado com sucesso!"
+msgstr "Profile updated successfully!"
+
+#: properties/views.py:1618
+#, fuzzy
+#| msgid "Perfil atualizado com sucesso!"
+msgid "Item do checklist atualizado com sucesso!"
+msgstr "Profile updated successfully!"
+
+#: properties/views.py:1632
+#, fuzzy
+#| msgid "Reserva removida com sucesso!"
+msgid "Item excluído com sucesso!"
+msgstr "Booking removed successfully!"
+
+#: properties/views.py:1642 properties/views.py:1658
+msgid "Não há checklist associado a este serviço."
+msgstr ""
+
+#: properties/views.py:1702
+#, fuzzy
+#| msgid "Reserva removida com sucesso!"
+msgid "Checklist respondido com sucesso!"
+msgstr "Booking removed successfully!"
+
+#: properties/views.py:1753
+#, fuzzy
+#| msgid "Propriedade removida com sucesso!"
+msgid "Resposta de checklist excluída com sucesso!"
+msgstr "Property removed successfully!"
+
+#: properties/views.py:1808
+#, fuzzy
+#| msgid "Reserva removida com sucesso!"
+msgid "Inconformidade excluída com sucesso!"
+msgstr "Booking removed successfully!"
+
+#: properties/views.py:1819
+#, fuzzy
+#| msgid "Propriedade cadastrada com sucesso!"
+msgid "Inconformidade marcada como lida!"
+msgstr "Property registered successfully!"
 
 #: reservations/forms.py:7 reservations/models.py:90
 msgid "Valor total"
@@ -6733,6 +7473,18 @@ msgstr "The end date cannot be before the start date."
 msgid "Nome completo do hóspede"
 msgstr "Full Name"
 
+#: reservations/forms.py:68 reservations/models.py:105
+msgid ""
+"Deseja selecionar um check list para enviar para a faxineira realizar no ato "
+"da faxina? (irá para a faxineira que utiliza o sistema)"
+msgstr ""
+
+#: reservations/forms.py:69
+#, fuzzy
+#| msgid "Excluir Unidade"
+msgid "(Não realizar checklist)"
+msgstr "Delete Unit"
+
 #: reservations/forms_checkin.py:16
 msgid "Apto, Bloco, etc."
 msgstr ""
@@ -6742,10 +7494,6 @@ msgstr ""
 #| msgid "Nome Completo"
 msgid "Nome do acompanhante"
 msgstr "Full Name"
-
-#: reservations/models.py:17 reservations/models.py:39
-msgid "Cliente"
-msgstr ""
 
 #: reservations/models.py:18
 msgid "Clientes"
@@ -6794,83 +7542,83 @@ msgstr "Full Name"
 msgid "Quantidade de hóspedes"
 msgstr ""
 
-#: reservations/models.py:105
+#: reservations/models.py:114
 msgid "Token de Check-in"
 msgstr ""
 
-#: reservations/models.py:110
+#: reservations/models.py:119
 msgid "Boas-vindas enviada"
 msgstr ""
 
-#: reservations/models.py:125
+#: reservations/models.py:134
 msgid "Autorização Enviada"
 msgstr ""
 
-#: reservations/models.py:135
+#: reservations/models.py:144
 #, fuzzy
 #| msgid "Data da aquisição"
 msgid "Data de Envio da Autorização"
 msgstr "Acquisition date"
 
-#: reservations/models.py:138
+#: reservations/models.py:147
 msgid "Horário de check-in"
 msgstr ""
 
-#: reservations/models.py:139
+#: reservations/models.py:148
 msgid "Horário de check-out"
 msgstr ""
 
-#: reservations/models.py:253
+#: reservations/models.py:277
 msgid "Custo de Referência"
 msgstr ""
 
-#: reservations/models.py:265
+#: reservations/models.py:289
 msgid "Realizado em"
 msgstr ""
 
-#: reservations/models.py:271
+#: reservations/models.py:295
 #, fuzzy
 #| msgid "Nova Reserva"
 msgid "Custo da Reserva"
 msgstr "New Booking"
 
-#: reservations/models.py:272
+#: reservations/models.py:296
 #, fuzzy
 #| msgid "Nova Reserva"
 msgid "Custos da Reserva"
 msgstr "New Booking"
 
-#: reservations/models.py:316
+#: reservations/models.py:340
 #, fuzzy
 #| msgid "Calendário de Reservas"
 msgid "Pagamento da Reserva"
 msgstr "Booking Calendar"
 
-#: reservations/models.py:317
+#: reservations/models.py:341
 #, fuzzy
 #| msgid "Calendário de Reservas"
 msgid "Pagamentos da Reserva"
 msgstr "Booking Calendar"
 
-#: reservations/models.py:333
+#: reservations/models.py:357
 #, fuzzy
 #| msgid "Proprietário"
 msgid "Porteiro/Usuário"
 msgstr "Owner"
 
-#: reservations/models.py:344
+#: reservations/models.py:368
 msgid "Tipo de Liberação"
 msgstr ""
 
-#: reservations/models.py:347
+#: reservations/models.py:371
 msgid "Liberado em"
 msgstr ""
 
-#: reservations/models.py:350
+#: reservations/models.py:374
 msgid "Liberação de Portaria"
 msgstr ""
 
-#: reservations/models.py:351
+#: reservations/models.py:375
 msgid "Liberações de Portaria"
 msgstr ""
 
@@ -7014,6 +7762,53 @@ msgstr "Update Booking"
 msgid "Pagamentos do Dia"
 msgstr ""
 
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:17
+msgid "Respondido por:"
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:25
+msgid "Data/Hora:"
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:35
+msgid ""
+"Atenção: Alguns itens foram informados fora do padrão e precisam de atenção!"
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:48
+msgid "Item"
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:49
+msgid "Esperado (Padrão)"
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:50
+#, fuzzy
+#| msgid "Registrar"
+msgid "Registrado"
+msgstr "Register"
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:51
+msgid "Foto"
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:65
+msgid "Quantidade abaixo do esperado."
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:70
+msgid "Estado de conservação ruim."
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:72
+msgid "Estado de conservação regular."
+msgstr ""
+
+#: reservations/templates/reservations/includes/checklist_detail_modal_content.html:142
+msgid "Clique para ampliar"
+msgstr ""
+
 #: reservations/templates/reservations/includes/guest_detail_modal_content.html:7
 #, fuzzy
 #| msgid "Hóspede"
@@ -7074,231 +7869,236 @@ msgstr "Delete Booking?"
 msgid "Tem certeza que deseja excluir a reserva de"
 msgstr "Are you sure you want to delete the booking for"
 
-#: reservations/templates/reservations/reservation_form.html:177
+#: reservations/templates/reservations/reservation_form.html:179
 #, fuzzy
 #| msgid "Nova Reserva"
 msgid "Dados da Reserva"
 msgstr "New Booking"
 
-#: reservations/templates/reservations/reservation_form.html:229
-#: reservations/templates/reservations/reservation_form.html:360
+#: reservations/templates/reservations/reservation_form.html:237
+#: reservations/templates/reservations/reservation_form.html:368
 msgid "Personalizar horários de check-in/out"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:247
+#: reservations/templates/reservations/reservation_form.html:255
 msgid ""
 "Estes horários serão usados especificamente para esta reserva, substituindo "
 "os padrões da propriedade."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:260
+#: reservations/templates/reservations/reservation_form.html:268
 #, fuzzy
 #| msgid "Gestão Financeira"
 msgid "Resumo Financeiro"
 msgstr "Financial Management"
 
-#: reservations/templates/reservations/reservation_form.html:265
+#: reservations/templates/reservations/reservation_form.html:273
 #, fuzzy
 #| msgid "Salvar Reserva"
 msgid "Valor da Reserva"
 msgstr "Save Booking"
 
-#: reservations/templates/reservations/reservation_form.html:269
+#: reservations/templates/reservations/reservation_form.html:277
 msgid "Total Pago"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:273
+#: reservations/templates/reservations/reservation_form.html:281
 msgid "Saldo a Receber"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:282
+#: reservations/templates/reservations/reservation_form.html:290
 msgid "Pagamentos / Adiantamentos"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:283
+#: reservations/templates/reservations/reservation_form.html:291
 #, fuzzy
 #| msgid "Adicionar"
 msgid "Adicionar Pagamento"
 msgstr "Add"
 
-#: reservations/templates/reservations/reservation_form.html:293
+#: reservations/templates/reservations/reservation_form.html:301
 msgid "Nenhum pagamento registrado."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:300
+#: reservations/templates/reservations/reservation_form.html:308
 msgid "Custos / Encargos"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:301
+#: reservations/templates/reservations/reservation_form.html:309
 #, fuzzy
 #| msgid "Adicionar"
 msgid "Adicionar Custo"
 msgstr "Add"
 
-#: reservations/templates/reservations/reservation_form.html:311
+#: reservations/templates/reservations/reservation_form.html:319
 msgid "Nenhum custo automatizado."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:315
+#: reservations/templates/reservations/reservation_form.html:323
 msgid "Total de Custos"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:328
+#: reservations/templates/reservations/reservation_form.html:336
 msgid "Atualizar Reserva"
 msgstr "Update Booking"
 
-#: reservations/templates/reservations/reservation_form.html:351
-#: reservations/templates/reservations/reservation_form.html:357
+#: reservations/templates/reservations/reservation_form.html:359
+#: reservations/templates/reservations/reservation_form.html:365
 msgid "Ocultar personalização de horários"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:572
+#: reservations/templates/reservations/reservation_form.html:580
 msgid "Buscar prestador..."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:634
+#: reservations/templates/reservations/reservation_form.html:642
 msgid "Ex: Adiantamento, Extra..."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_form.html:718
+#: reservations/templates/reservations/reservation_form.html:726
 msgid "Pago"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:360
+#: reservations/templates/reservations/reservation_list_v2.html:359
+#: reservations/templates/reservations/reservation_list_v2.html:363
+msgid "Checklist:"
+msgstr ""
+
+#: reservations/templates/reservations/reservation_list_v2.html:363
+msgid "Respondido (Clique para ver)"
+msgstr ""
+
+#: reservations/templates/reservations/reservation_list_v2.html:373
 msgid "WhatsApp enviado"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:380
+#: reservations/templates/reservations/reservation_list_v2.html:393
 msgid "Entrada no condomínio"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:395
+#: reservations/templates/reservations/reservation_list_v2.html:408
 msgid "Saída do condomínio"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:406
+#: reservations/templates/reservations/reservation_list_v2.html:419
 msgid "Em breve"
 msgstr "Upcoming"
 
-#: reservations/templates/reservations/reservation_list_v2.html:410
+#: reservations/templates/reservations/reservation_list_v2.html:423
 msgid "No Imóvel"
 msgstr "In Property"
 
-#: reservations/templates/reservations/reservation_list_v2.html:418
+#: reservations/templates/reservations/reservation_list_v2.html:431
 #, fuzzy
 #| msgid "Dados Financeiros"
 msgid "Dados preenchidos"
 msgstr "Financial Data"
 
-#: reservations/templates/reservations/reservation_list_v2.html:422
+#: reservations/templates/reservations/reservation_list_v2.html:435
 #, fuzzy
 #| msgid "Excluir Unidade"
 msgid "Excluir dados de check-in"
 msgstr "Delete Unit"
 
-#: reservations/templates/reservations/reservation_list_v2.html:435
+#: reservations/templates/reservations/reservation_list_v2.html:448
 msgid "Enviar solicitação de dados via Whatsapp"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:439
+#: reservations/templates/reservations/reservation_list_v2.html:452
 #, fuzzy
 #| msgid "Localização"
 msgid "Ver Autorização"
 msgstr "Location"
 
-#: reservations/templates/reservations/reservation_list_v2.html:451
+#: reservations/templates/reservations/reservation_list_v2.html:464
 #, fuzzy
 #| msgid "Editar Reserva"
 msgid "Restaurar Reserva"
 msgstr "Edit Booking"
 
-#: reservations/templates/reservations/reservation_list_v2.html:451
+#: reservations/templates/reservations/reservation_list_v2.html:464
 #, fuzzy
 #| msgid "Salvar Reserva"
 msgid "Cancelar Reserva"
 msgstr "Save Booking"
 
-#: reservations/templates/reservations/reservation_list_v2.html:473
+#: reservations/templates/reservations/reservation_list_v2.html:486
 msgid "Nenhuma reserva encontrada para este imóvel."
 msgstr "No bookings found for this property."
 
-#: reservations/templates/reservations/reservation_list_v2.html:474
+#: reservations/templates/reservations/reservation_list_v2.html:487
 msgid "Cadastrar Primeira Reserva"
 msgstr "Register First Booking"
 
-#: reservations/templates/reservations/reservation_list_v2.html:488
-#: reservations/templates/reservations/reservation_list_v2.html:530
+#: reservations/templates/reservations/reservation_list_v2.html:501
+#: reservations/templates/reservations/reservation_list_v2.html:566
 msgid "Carregando dados do hóspede..."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:513
+#: reservations/templates/reservations/reservation_list_v2.html:549
 msgid ""
 "Atenção: Isso excluirá os dados preenchidos pelo hóspede (documentos, "
 "acompanhantes, etc.) e permitirá um novo preenchimento. Confirmar exclusão?"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:514
+#: reservations/templates/reservations/reservation_list_v2.html:550
 msgid "Deseja enviar a mensagem de boas-vindas via WhatsApp?"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:515
+#: reservations/templates/reservations/reservation_list_v2.html:551
 msgid ""
 "Tem certeza que deseja cancelar esta reserva? Ela será marcada visualmente "
 "mas não será excluída."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:516
+#: reservations/templates/reservations/reservation_list_v2.html:552
 msgid "Deseja restaurar esta reserva?"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:518
+#: reservations/templates/reservations/reservation_list_v2.html:554
 msgid "Tem certeza?"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:542
-msgid "Erro ao carregar os dados. Tente novamente."
-msgstr ""
-
-#: reservations/templates/reservations/reservation_list_v2.html:573
+#: reservations/templates/reservations/reservation_list_v2.html:661
 msgid "Já Enviado (Reenviar?)"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:574
-#: reservations/templates/reservations/reservation_list_v2.html:722
+#: reservations/templates/reservations/reservation_list_v2.html:662
+#: reservations/templates/reservations/reservation_list_v2.html:812
 msgid "Enviar WhatsApp"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:586
+#: reservations/templates/reservations/reservation_list_v2.html:674
 msgid "Erro ao carregar pré-visualização."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:612
+#: reservations/templates/reservations/reservation_list_v2.html:700
 msgid "Esta autorização já foi enviada. Enviar novamente?"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:646
+#: reservations/templates/reservations/reservation_list_v2.html:734
 msgid "Já Enviado"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:647
+#: reservations/templates/reservations/reservation_list_v2.html:735
 #, fuzzy
 #| msgid "Reserva removida com sucesso!"
 msgid "Autorização enviada com sucesso!"
 msgstr "Booking removed successfully!"
 
-#: reservations/templates/reservations/reservation_list_v2.html:657
+#: reservations/templates/reservations/reservation_list_v2.html:745
 msgid "Erro ao enviar"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:658
+#: reservations/templates/reservations/reservation_list_v2.html:746
 msgid "Falha no envio:"
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:680
+#: reservations/templates/reservations/reservation_list_v2.html:768
 msgid "Erro ao gerar PDF para download."
 msgstr ""
 
-#: reservations/templates/reservations/reservation_list_v2.html:718
+#: reservations/templates/reservations/reservation_list_v2.html:808
 msgid "Baixar PDF"
 msgstr ""
 
@@ -7385,6 +8185,12 @@ msgid ""
 "Dados de check-in excluídos com sucesso. O hóspede já pode preencher "
 "novamente."
 msgstr ""
+
+#: reservations/views_checkin.py:569
+#, fuzzy
+#| msgid "Nenhuma reserva encontrada para este imóvel."
+msgid "Nenhuma resposta de checklist encontrada para esta reserva."
+msgstr "No bookings found for this property."
 
 #: subscriptions/models.py:10
 msgid "Ativa"
@@ -7844,11 +8650,6 @@ msgstr ""
 #: templates/dashboard_layout.html:65
 msgid "Clique para renovar"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Data da aquisição"
-#~ msgid "Pesquisar especificação..."
-#~ msgstr "Acquisition date"
 
 #, fuzzy
 #~| msgid "Hóspede"

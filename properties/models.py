@@ -771,7 +771,9 @@ class ProviderNonConformity(models.Model):
         ServiceProvider,
         on_delete=models.CASCADE,
         related_name='non_conformities',
-        verbose_name=_("Prestador")
+        verbose_name=_("Prestador"),
+        null=True,
+        blank=True
     )
     property = models.ForeignKey(
         Property,
@@ -787,6 +789,7 @@ class ProviderNonConformity(models.Model):
         verbose_name=_("Registro Fotográfico")
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Registrado em"))
+    is_read = models.BooleanField(default=False, verbose_name=_("Lido / Verificado"))
 
     class Meta:
         verbose_name = _("Inconformidade do Prestador")
