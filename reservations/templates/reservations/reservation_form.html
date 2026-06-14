@@ -34,11 +34,13 @@
     }
     input:not([type="checkbox"]), textarea, select {
         width: 100%;
-        padding: 0.8rem 1rem;
-        border-radius: 10px;
+        padding: 1rem;
+        border-radius: 12px;
         border: 1px solid var(--glass-border);
         background: var(--bg-card);
         color: var(--text-main);
+        font-size: 1rem;
+        font-family: inherit;
         transition: all 0.3s;
     }
     input:focus, textarea:focus, select:focus {
@@ -215,6 +217,12 @@
                     <label for="{{ form.total_value.id_for_label }}">{{ form.total_value.label }}</label>
                     {{ form.total_value }}
                     {% if form.total_value.errors %}<div class="field-error">{{ form.total_value.errors.0 }}</div>{% endif %}
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="{{ form.checklist.id_for_label }}">{{ form.checklist.label }}</label>
+                    {{ form.checklist }}
+                    {% if form.checklist.errors %}<div class="field-error">{{ form.checklist.errors.0 }}</div>{% endif %}
                 </div>
 
                 <div class="form-group">

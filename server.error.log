@@ -16969,3 +16969,27 @@ django.core.exceptions.FieldError: Unknown field(s) (specification) specified fo
 [2026-06-14 11:59:06 -0300] [26729] [INFO] Booting worker with pid: 26729
 [2026-06-14 11:59:06 -0300] [26730] [INFO] Booting worker with pid: 26730
 [2026-06-14 11:59:06 -0300] [26725] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 12:16:07 -0300] [26725] [INFO] Handling signal: term
+[2026-06-14 12:16:07 -0300] [26729] [INFO] Worker exiting (pid: 26729)
+[2026-06-14 12:16:07 -0300] [26730] [INFO] Worker exiting (pid: 26730)
+[2026-06-14 12:16:07 -0300] [26728] [INFO] Worker exiting (pid: 26728)
+[2026-06-14 12:16:10 -0300] [26725] [INFO] Shutting down: Master
+[2026-06-14 12:16:10 -0300] [29336] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 12:16:10 -0300] [29336] [INFO] Listening at: http://127.0.0.1:8000 (29336)
+[2026-06-14 12:16:10 -0300] [29336] [INFO] Using worker: sync
+[2026-06-14 12:16:10 -0300] [29339] [INFO] Booting worker with pid: 29339
+[2026-06-14 12:16:10 -0300] [29340] [INFO] Booting worker with pid: 29340
+[2026-06-14 12:16:10 -0300] [29341] [INFO] Booting worker with pid: 29341
+[2026-06-14 12:16:11 -0300] [29336] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 12:18:58 -0300] [29336] [INFO] Handling signal: term
+[2026-06-14 12:18:58 -0300] [29339] [INFO] Worker exiting (pid: 29339)
+[2026-06-14 12:18:58 -0300] [29340] [INFO] Worker exiting (pid: 29340)
+[2026-06-14 12:18:58 -0300] [29341] [INFO] Worker exiting (pid: 29341)
+[2026-06-14 12:18:59 -0300] [29336] [INFO] Shutting down: Master
+[2026-06-14 12:18:59 -0300] [29721] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 12:18:59 -0300] [29721] [INFO] Listening at: http://127.0.0.1:8000 (29721)
+[2026-06-14 12:18:59 -0300] [29721] [INFO] Using worker: sync
+[2026-06-14 12:18:59 -0300] [29724] [INFO] Booting worker with pid: 29724
+[2026-06-14 12:18:59 -0300] [29726] [INFO] Booting worker with pid: 29726
+[2026-06-14 12:18:59 -0300] [29728] [INFO] Booting worker with pid: 29728
+[2026-06-14 12:19:00 -0300] [29721] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl

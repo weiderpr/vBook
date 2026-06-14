@@ -96,6 +96,15 @@ class Reservation(models.Model):
     )
     notes = models.TextField(blank=True, null=True, verbose_name=_("Observações"))
     
+    checklist = models.ForeignKey(
+        'properties.PropertyChecklist',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='reservations',
+        verbose_name=_("Deseja selecionar um check list para enviar para a faxineira realizar no ato da faxina? (irá para a faxineira que utiliza o sistema)")
+    )
+    
     checkin_token = models.UUIDField(
         default=uuid.uuid4, 
         editable=False, 

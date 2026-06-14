@@ -11,7 +11,7 @@ class ReservationForm(forms.ModelForm):
         fields = [
             'start_date', 'end_date', 'client_name', 
             'client_phone', 'guests_count', 'total_value', 'notes',
-            'checkin_time', 'checkout_time'
+            'checkin_time', 'checkout_time', 'checklist'
         ]
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),
@@ -58,3 +58,13 @@ class ReservationForm(forms.ModelForm):
                 self.initial['checkin_time'] = prop.default_checkin_time
             if not self.initial.get('checkout_time') and not getattr(self.instance, 'checkout_time', None):
                 self.initial['checkout_time'] = prop.default_checkout_time
+            
+            from properties.models import PropertyChecklist
+            self.fields['checklist'].queryset = PropertyChecklist.objects.filter(property=prop, status='active')
+        else:
+            from properties.models import PropertyChecklist
+            self.fields['checklist'].queryset = PropertyChecklist.objects.none()
+
+        self.fields['checklist'].label = _("Deseja selecionar um check list para enviar para a faxineira realizar no ato da faxina? (irá para a faxineira que utiliza o sistema)")
+        self.fields['checklist'].empty_label = _("(Não realizar checklist)")
+        self.fields['checklist'].required = False
