@@ -249,7 +249,7 @@
                         <span><strong>{% trans "Criado em" %}:</strong> {{ checklist.created_at|date:"d/m/Y H:i" }}</span>
                     </div>
 
-                    <div class="checklist-actions" style="display: flex; gap: 10px; align-items: center; width: 100%;">
+                    <div class="checklist-actions" style="display: flex; gap: 10px; align-items: center; width: 100%; flex-wrap: wrap;">
                         <a href="{% url 'properties:checklist_update' checklist.pk %}" class="btn btn-outline" style="font-size: 0.75rem; height: 38px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; flex: 1; border-radius: 10px; min-width: 0;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"/></svg>
                             {% trans "Editar" %}

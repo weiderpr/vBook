@@ -331,6 +331,149 @@
             background: rgba(239, 68, 68, 0.1); color: #f87171;
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
+
+        /* Speech to Text and Inconformidades */
+        .voice-input-container {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .voice-textarea {
+            flex: 1;
+            min-height: 120px;
+            resize: vertical;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        body.light-mode .voice-textarea {
+            background: #ffffff;
+            color: #0f172a;
+        }
+        .voice-btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-voice {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        .btn-voice.recording {
+            background: #ef4444;
+            animation: pulse-red 1.5s infinite;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5);
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.08); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .voice-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            max-width: 80px;
+        }
+        .voice-status.recording {
+            color: #ef4444;
+        }
+        
+        .non-conformity-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease;
+        }
+        .non-conformity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+        .non-conformity-property {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+        .non-conformity-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .non-conformity-desc {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+            white-space: pre-wrap;
+        }
+        .non-conformity-photo {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            transition: opacity 0.2s;
+            margin-top: 8px;
+        }
+        .non-conformity-photo:hover {
+            opacity: 0.9;
+        }
+        
+        .file-upload-preview-container {
+            position: relative;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .file-upload-preview {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            display: block;
+        }
+        .btn-remove-photo {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            font-size: 14px;
+            line-height: 1;
+        }
     </style>
 </head>
 <body class="{% if provider.theme == 'light' %}light-mode{% endif %}">
@@ -349,6 +492,10 @@
         <a href="#history" class="menu-item" id="menu-history" onclick="showView('history')">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             {% trans "Histórico" %}
+        </a>
+        <a href="#inconformidades" class="menu-item" id="menu-inconformidades" onclick="showView('inconformidades')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            {% trans "Inconformidades" %}
         </a>
         <a href="#profile" class="menu-item" id="menu-profile" onclick="showView('profile')">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -596,6 +743,124 @@
                     {% endfor %}
                 {% endif %}
             </div>
+        </div>        <!-- Inconformidades View -->
+        <div id="inconformidadesView" class="profile-view">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.4rem;">{% trans "Inconformidades na Propriedade" %}</h2>
+            
+            <!-- Tab switches -->
+            <div style="display: flex; gap: 10px; margin-bottom: 1.5rem;">
+                <button type="button" id="btn-show-report-form" onclick="toggleNonConformityView('form')" style="flex: 1; height: 44px; font-size: 0.9rem; font-weight: 700; border-radius: 12px; cursor: pointer; transition: 0.3s; background: linear-gradient(135deg, var(--primary), #a855f7); color: white; border: none;">
+                    {% trans "Relatar Inconformidade" %}
+                </button>
+                <button type="button" id="btn-show-report-list" onclick="toggleNonConformityView('list')" style="flex: 1; height: 44px; font-size: 0.9rem; font-weight: 700; border-radius: 12px; cursor: pointer; transition: 0.3s; background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--glass-border);">
+                    {% trans "Minhas Ocorrências" %}
+                </button>
+            </div>
+
+            <!-- Tab 1: Form to report new -->
+            <div id="nonConformityFormSection" style="display: block;">
+                {% if provider_properties %}
+                    <div class="form-card">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="report_non_conformity">
+
+                            {% if provider_properties|length > 1 %}
+                                <div class="form-group">
+                                    <label class="form-label">{% trans "Selecione a Propriedade" %}</label>
+                                    <select name="property_id" class="form-control" style="background: rgba(255, 255, 255, 0.05); color: var(--text); border: 1px solid var(--glass-border); border-radius: 12px; width: 100%; height: 48px; padding: 0 1rem; font-family: inherit;" required>
+                                        <option value="" style="background: var(--bg); color: var(--text);">{% trans "Escolha uma propriedade..." %}</option>
+                                        {% for prop in provider_properties %}
+                                            <option value="{{ prop.id }}" style="background: var(--bg); color: var(--text);">{{ prop.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            {% else %}
+                                {% with first_prop=provider_properties|first %}
+                                    <input type="hidden" name="property_id" value="{{ first_prop.id }}">
+                                    <div class="form-group">
+                                        <label class="form-label">{% trans "Propriedade" %}</label>
+                                        <div class="form-control" style="display: flex; align-items: center; background: rgba(255,255,255,0.02); font-weight: bold; border-color: transparent;">
+                                            {{ first_prop.name }}
+                                        </div>
+                                    </div>
+                                {% endwith %}
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Relato da Ocorrência" %}</label>
+                                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                    <div style="flex: 1;">
+                                        <textarea name="description" id="reportTextarea" class="form-control" style="height: 120px; padding: 12px; resize: vertical; display: block;" placeholder="{% trans 'Digite ou clique no microfone para relatar a inconformidade...' %}" required></textarea>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+                                            {% trans "Você pode usar o botão ao lado para gravar áudio que será convertido em texto." %}
+                                        </div>
+                                    </div>
+                                    <div class="voice-btn-container">
+                                        <button type="button" id="startVoiceBtn" class="btn-voice" title="{% trans 'Gravar áudio' %}" onclick="toggleVoiceRecording()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                                        </button>
+                                        <div id="voiceStatus" class="voice-status">{% trans "Gravar" %}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 1.5rem;">
+                                <label class="form-label">{% trans "Foto / Registro Fotográfico (Opcional)" %}</label>
+                                <label for="nonConformityPhotoInput" class="photo-upload-label">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                        {% trans "Tirar ou Escolher Foto" %}
+                                    </div>
+                                </label>
+                                <input type="file" name="photo" id="nonConformityPhotoInput" accept="image/*" capture="environment" style="display: none;" onchange="previewNonConformityPhoto(this)">
+                                
+                                <div id="nonConformityPhotoPreviewContainer" class="file-upload-preview-container" style="display: none;">
+                                    <img id="nonConformityPhotoPreview" class="file-upload-preview" src="#">
+                                    <button type="button" class="btn-remove-photo" onclick="clearNonConformityPhoto()">×</button>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-save">{% trans "Salvar Inconformidade" %}</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="form-card" style="text-align: center; border-style: dashed; padding: 3rem 1.5rem;">
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">
+                            {% trans "Você não está vinculado a nenhuma propriedade ativa para relatar inconformidades." %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Tab 2: List of occurrences -->
+            <div id="nonConformityListSection" style="display: none;">
+                {% if non_conformities %}
+                    {% for item in non_conformities %}
+                        <div class="non-conformity-card">
+                            <div class="non-conformity-header">
+                                <div>
+                                    <div class="non-conformity-property">{{ item.property.name }}</div>
+                                    <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">
+                                        {% trans "Enviado por" %} {{ item.provider.name }}
+                                    </div>
+                                </div>
+                                <div class="non-conformity-date">{{ item.created_at|date:"d/m/Y H:i" }}</div>
+                            </div>
+                            <div class="non-conformity-desc">{{ item.description }}</div>
+                            {% if item.photo %}
+                                <img src="{{ item.photo.url }}" class="non-conformity-photo" onclick="openPhotoModal('{{ item.photo.url }}')">
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="form-card" style="text-align: center; border-style: dashed; padding: 3rem 1.5rem;">
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">
+                            {% trans "Nenhuma ocorrência registrada por você." %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
 
         <!-- Profile View -->
@@ -691,6 +956,9 @@
             } else if(viewName === 'profile') {
                 document.getElementById('profileView').classList.add('active');
                 document.getElementById('menu-profile').classList.add('active');
+            } else if(viewName === 'inconformidades') {
+                document.getElementById('inconformidadesView').classList.add('active');
+                document.getElementById('menu-inconformidades').classList.add('active');
             }
             
             if (shouldToggleMenu && document.getElementById('sideMenu').classList.contains('active')) {
@@ -701,9 +969,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hash = window.location.hash.substring(1);
             const savedView = localStorage.getItem('activeView');
-            const viewToShow = (['home', 'agenda', 'history', 'profile'].includes(hash)) ? hash : savedView;
+            const viewToShow = (['home', 'agenda', 'history', 'profile', 'inconformidades'].includes(hash)) ? hash : savedView;
             
-            if (viewToShow && ['home', 'agenda', 'history', 'profile'].includes(viewToShow)) {
+            if (viewToShow && ['home', 'agenda', 'history', 'profile', 'inconformidades'].includes(viewToShow)) {
                 showView(viewToShow, false);
             }
         });
@@ -858,6 +1126,148 @@
                 btn.disabled = false;
             });
         }
+
+        function toggleNonConformityView(view) {
+            const formSec = document.getElementById('nonConformityFormSection');
+            const listSec = document.getElementById('nonConformityListSection');
+            const btnForm = document.getElementById('btn-show-report-form');
+            const btnList = document.getElementById('btn-show-report-list');
+            
+            if (view === 'form') {
+                formSec.style.display = 'block';
+                listSec.style.display = 'none';
+                
+                // Active button style (Relatar Inconformidade)
+                btnForm.style.background = 'linear-gradient(135deg, var(--primary), #a855f7)';
+                btnForm.style.color = 'white';
+                btnForm.style.border = 'none';
+                
+                // Inactive button style (Minhas Ocorrências)
+                btnList.style.background = 'var(--card-bg)';
+                btnList.style.color = 'var(--text-muted)';
+                btnList.style.border = '1px solid var(--glass-border)';
+            } else {
+                formSec.style.display = 'none';
+                listSec.style.display = 'block';
+                
+                // Active button style (Minhas Ocorrências)
+                btnList.style.background = 'linear-gradient(135deg, var(--primary), #a855f7)';
+                btnList.style.color = 'white';
+                btnList.style.border = 'none';
+                
+                // Inactive button style (Relatar Inconformidade)
+                btnForm.style.background = 'var(--card-bg)';
+                btnForm.style.color = 'var(--text-muted)';
+                btnForm.style.border = '1px solid var(--glass-border)';
+            }
+        }
+
+        let recognition = null;
+        let isRecording = false;
+
+        function initSpeechRecognition() {
+            try {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    return null;
+                }
+                const rec = new SpeechRecognition();
+                rec.lang = 'pt-BR';
+                rec.continuous = true;
+                rec.interimResults = false;
+                rec.maxAlternatives = 1;
+                return rec;
+            } catch (e) {
+                console.error("Speech recognition not supported:", e);
+                return null;
+            }
+        }
+
+        function toggleVoiceRecording() {
+            if (!recognition) {
+                recognition = initSpeechRecognition();
+            }
+
+            if (!recognition) {
+                alert("{% trans 'Reconhecimento de voz não é suportado pelo seu navegador.' %}");
+                return;
+            }
+
+            const btn = document.getElementById('startVoiceBtn');
+            const status = document.getElementById('voiceStatus');
+            const textarea = document.getElementById('reportTextarea');
+
+            if (!isRecording) {
+                isRecording = true;
+                btn.classList.add('recording');
+                status.innerText = "{% trans 'Ouvindo...' %}";
+                status.classList.add('recording');
+                
+                recognition.onresult = function(event) {
+                    const resultIndex = event.resultIndex;
+                    const transcript = event.results[resultIndex][0].transcript;
+                    textarea.value += (textarea.value ? ' ' : '') + transcript;
+                };
+
+                recognition.onerror = function(event) {
+                    console.error("Speech recognition error:", event.error);
+                    stopRecordingUI();
+                };
+
+                recognition.onend = function() {
+                    stopRecordingUI();
+                };
+
+                recognition.start();
+            } else {
+                recognition.stop();
+            }
+        }
+
+        function stopRecordingUI() {
+            isRecording = false;
+            const btn = document.getElementById('startVoiceBtn');
+            const status = document.getElementById('voiceStatus');
+            if (btn) btn.classList.remove('recording');
+            if (status) {
+                status.innerText = "{% trans 'Gravar' %}";
+                status.classList.remove('recording');
+            }
+        }
+
+        function previewNonConformityPhoto(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('nonConformityPhotoPreview');
+                    const container = document.getElementById('nonConformityPhotoPreviewContainer');
+                    preview.src = e.target.result;
+                    container.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function clearNonConformityPhoto() {
+            const input = document.getElementById('nonConformityPhotoInput');
+            const container = document.getElementById('nonConformityPhotoPreviewContainer');
+            const preview = document.getElementById('nonConformityPhotoPreview');
+            input.value = '';
+            preview.src = '#';
+            container.style.display = 'none';
+        }
+
+        function openPhotoModal(imgUrl) {
+            const modal = document.getElementById('photoModal');
+            const img = document.getElementById('photoModalImg');
+            img.src = imgUrl;
+            modal.classList.add('active');
+        }
+
+        function closePhotoModal() {
+            const modal = document.getElementById('photoModal');
+            modal.classList.remove('active');
+        }
     </script>
 
     <!-- Completion Modal -->
@@ -896,6 +1306,14 @@
                 <button class="btn-cancel" onclick="closeCancelModal()">{% trans "Voltar" %}</button>
                 <button class="btn-confirm-cancel btn-confirm" style="background: #ef4444;" onclick="executeCancelCompletion()">{% trans "Confirmar Estorno" %}</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Photo Preview Modal -->
+    <div id="photoModal" class="modal" onclick="closePhotoModal()">
+        <div class="modal-card" style="max-width: 90vw; max-height: 90vh; padding: 10px; background: transparent; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center;" onclick="event.stopPropagation()">
+            <img id="photoModalImg" style="max-width: 100%; max-height: 80vh; border-radius: 12px; object-fit: contain; box-shadow: 0 4px 24px rgba(0,0,0,0.5);">
+            <button class="btn-complete" style="margin-top: 1rem; width: auto; padding: 10px 24px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--glass-border); color: var(--text);" onclick="closePhotoModal()">{% trans "Fechar" %}</button>
         </div>
     </div>
 </body>

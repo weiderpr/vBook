@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.db.models import Sum, Q
 from core.utils import send_notification
 
-from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider, PropertyDocument, PropertyChecklist, PropertyChecklistResponse
+from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider, PropertyDocument, PropertyChecklist, PropertyChecklistResponse, ProviderNonConformity
 from .utils import get_property_stats
 from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm, PropertyDocumentForm
 from reservations.models import Reservation, ReservationCost, ReservationPayment
@@ -924,15 +924,57 @@ class ServiceProviderPublicView(View):
                 next_services.append(cost)
                 seen_properties.add(cost.reservation.property_id)
 
+        # Fetch properties associated with the provider
+        properties_from_reservations = Property.objects.filter(
+            reservations__costs__provider=provider
+        )
+        properties_from_costs = Property.objects.filter(
+            costs__provider=provider
+        )
+        provider_properties = (properties_from_reservations | properties_from_costs).distinct().order_by('name')
+
+        # Fetch registered non-conformities for this provider
+        non_conformities = provider.non_conformities.all().select_related('property').order_by('-created_at')
+
         return render(request, "properties/service_provider_public.html", {
             "provider": provider,
             "costs": costs,
             "completed_costs": completed_costs,
-            "next_services": next_services
+            "next_services": next_services,
+            "provider_properties": provider_properties,
+            "non_conformities": non_conformities
         })
 
     def post(self, request, token):
         provider = get_object_or_404(ServiceProvider, access_token=token)
+        
+        # Check action for report non-conformity
+        action = request.POST.get("action")
+        if action == "report_non_conformity":
+            property_id = request.POST.get("property_id")
+            description = request.POST.get("description")
+            photo = request.FILES.get("photo")
+            
+            if not property_id or not description:
+                messages.error(request, _("Por favor, selecione a propriedade e descreva a inconformidade."))
+                response = redirect("properties:provider_public", token=token)
+                response['Location'] += '#inconformidades'
+                return response
+            
+            property_obj = get_object_or_404(Property, pk=property_id)
+            
+            # Create occurrence
+            ProviderNonConformity.objects.create(
+                provider=provider,
+                property=property_obj,
+                description=description,
+                photo=photo
+            )
+            messages.success(request, _("Inconformidade registrada com sucesso!"))
+            response = redirect("properties:provider_public", token=token)
+            response['Location'] += '#inconformidades'
+            return response
+
         name = request.POST.get("name")
         phone = request.POST.get("phone")
         cpf = request.POST.get("cpf")

@@ -716,3 +716,132 @@ class PropertyChecklistItemResponse(models.Model):
             if resp_val is not None and def_val is not None and resp_val < def_val:
                 return True
         return False
+
+    def save(self, *args, **kwargs):
+        if self.photo:
+            try:
+                # Validate image file extension
+                ext = os.path.splitext(self.photo.name)[1].lower()
+                if ext not in ['.png', '.jpg', '.jpeg', '.webp']:
+                    raise ValueError("Format file not supported.")
+
+                img = Image.open(self.photo)
+                # Convert to RGB if necessary
+                if img.mode in ("RGBA", "P"):
+                    img = img.convert("RGB")
+
+                # Target file size <= 100KB (102400 bytes)
+                quality = 85
+                max_dim = 1200
+
+                while True:
+                    # Resize if too large
+                    if img.width > max_dim or img.height > max_dim:
+                        img_temp = img.copy()
+                        img_temp.thumbnail((max_dim, max_dim), Image.LANCZOS)
+                    else:
+                        img_temp = img
+
+                    output = BytesIO()
+                    img_temp.save(output, format='JPEG', quality=quality, optimize=True)
+                    size = output.tell()
+
+                    # Stop if size is <= 100KB, or quality / dimension is minimized
+                    if size <= 102400 or quality <= 20 or max_dim <= 400:
+                        output.seek(0)
+                        new_name = f"{uuid.uuid4().hex}.jpg"
+                        self.photo.save(new_name, ContentFile(output.read()), save=False)
+                        break
+
+                    # Reduce quality or dimension
+                    if quality > 40:
+                        quality -= 10
+                    else:
+                        max_dim -= 200
+                        quality = 60
+            except Exception as e:
+                print(f"Error compressing image: {e}")
+
+        super().save(*args, **kwargs)
+
+
+
+class ProviderNonConformity(models.Model):
+    provider = models.ForeignKey(
+        ServiceProvider,
+        on_delete=models.CASCADE,
+        related_name='non_conformities',
+        verbose_name=_("Prestador")
+    )
+    property = models.ForeignKey(
+        Property,
+        on_delete=models.CASCADE,
+        related_name='non_conformities',
+        verbose_name=_("Propriedade")
+    )
+    description = models.TextField(verbose_name=_("Relato da Inconformidade"))
+    photo = models.ImageField(
+        upload_to='non_conformities/',
+        null=True,
+        blank=True,
+        verbose_name=_("Registro Fotográfico")
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Registrado em"))
+
+    class Meta:
+        verbose_name = _("Inconformidade do Prestador")
+        verbose_name_plural = _("Inconformidades dos Prestadores")
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.property.name} - {self.provider.name} - {self.created_at.strftime('%d/%m/%Y')}"
+
+    def save(self, *args, **kwargs):
+        if self.photo:
+            try:
+                # Security: validate image file extension
+                ext = os.path.splitext(self.photo.name)[1].lower()
+                if ext not in ['.png', '.jpg', '.jpeg', '.webp']:
+                    raise ValueError("Format file not supported.")
+
+                img = Image.open(self.photo)
+                # Convert to RGB if necessary
+                if img.mode in ("RGBA", "P"):
+                    img = img.convert("RGB")
+
+                # Target file size <= 100KB (102400 bytes)
+                quality = 85
+                max_dim = 1200
+
+                while True:
+                    # Resize if too large
+                    if img.width > max_dim or img.height > max_dim:
+                        img_temp = img.copy()
+                        img_temp.thumbnail((max_dim, max_dim), Image.LANCZOS)
+                    else:
+                        img_temp = img
+
+                    output = BytesIO()
+                    img_temp.save(output, format='JPEG', quality=quality, optimize=True)
+                    size = output.tell()
+
+                    # Stop if size is <= 100KB, or quality / dimension is minimized
+                    if size <= 102400 or quality <= 20 or max_dim <= 400:
+                        output.seek(0)
+                        # Security: use unique UUID for filename
+                        new_name = f"{uuid.uuid4().hex}.jpg"
+                        self.photo.save(new_name, ContentFile(output.read()), save=False)
+                        break
+
+                    # Reduce quality or dimension
+                    if quality > 40:
+                        quality -= 10
+                    else:
+                        max_dim -= 200
+                        quality = 60
+            except Exception as e:
+                # TODO(security): handle exception gracefully without exposing system internals to front users
+                print(f"Error compressing image: {e}")
+
+        super().save(*args, **kwargs)
+

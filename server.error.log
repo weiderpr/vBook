@@ -18446,3 +18446,55 @@ NameError: name 'PropertyChecklistResponse' is not defined. Did you mean: 'Prope
 [2026-06-14 19:10:00 -0300] [66040] [INFO] Booting worker with pid: 66040
 [2026-06-14 19:10:00 -0300] [66041] [INFO] Booting worker with pid: 66041
 [2026-06-14 19:10:01 -0300] [66032] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 19:34:24 -0300] [66032] [INFO] Handling signal: term
+[2026-06-14 19:34:24 -0300] [66039] [INFO] Worker exiting (pid: 66039)
+[2026-06-14 19:34:24 -0300] [66040] [INFO] Worker exiting (pid: 66040)
+[2026-06-14 19:34:24 -0300] [66041] [INFO] Worker exiting (pid: 66041)
+[2026-06-14 19:34:24 -0300] [66032] [INFO] Worker (pid:66039) was sent SIGTERM!
+[2026-06-14 19:34:24 -0300] [66032] [INFO] Worker (pid:66040) was sent SIGTERM!
+[2026-06-14 19:34:24 -0300] [66032] [INFO] Worker (pid:66041) was sent SIGTERM!
+[2026-06-14 19:34:24 -0300] [66032] [INFO] Shutting down: Master
+[2026-06-14 19:34:24 -0300] [68855] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 19:34:24 -0300] [68855] [INFO] Listening at: http://127.0.0.1:8000 (68855)
+[2026-06-14 19:34:24 -0300] [68855] [INFO] Using worker: sync
+[2026-06-14 19:34:24 -0300] [68857] [INFO] Booting worker with pid: 68857
+[2026-06-14 19:34:24 -0300] [68858] [INFO] Booting worker with pid: 68858
+[2026-06-14 19:34:24 -0300] [68859] [INFO] Booting worker with pid: 68859
+[2026-06-14 19:34:24 -0300] [68855] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 19:37:35 -0300] [68855] [INFO] Handling signal: term
+[2026-06-14 19:37:35 -0300] [68859] [INFO] Worker exiting (pid: 68859)
+[2026-06-14 19:37:35 -0300] [68857] [INFO] Worker exiting (pid: 68857)
+[2026-06-14 19:37:35 -0300] [68858] [INFO] Worker exiting (pid: 68858)
+[2026-06-14 19:37:35 -0300] [68855] [INFO] Worker (pid:68859) was sent SIGTERM!
+[2026-06-14 19:37:37 -0300] [68855] [INFO] Shutting down: Master
+[2026-06-14 19:37:37 -0300] [69237] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 19:37:37 -0300] [69237] [INFO] Listening at: http://127.0.0.1:8000 (69237)
+[2026-06-14 19:37:37 -0300] [69237] [INFO] Using worker: sync
+[2026-06-14 19:37:37 -0300] [69239] [INFO] Booting worker with pid: 69239
+[2026-06-14 19:37:37 -0300] [69240] [INFO] Booting worker with pid: 69240
+[2026-06-14 19:37:37 -0300] [69241] [INFO] Booting worker with pid: 69241
+[2026-06-14 19:37:37 -0300] [69237] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 19:40:29 -0300] [69241] [INFO] Worker exiting (pid: 69241)
+[2026-06-14 19:40:29 -0300] [69237] [INFO] Handling signal: term
+[2026-06-14 19:40:29 -0300] [69239] [INFO] Worker exiting (pid: 69239)
+[2026-06-14 19:40:29 -0300] [69240] [INFO] Worker exiting (pid: 69240)
+[2026-06-14 19:40:31 -0300] [69237] [INFO] Shutting down: Master
+[2026-06-14 19:40:31 -0300] [69635] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 19:40:31 -0300] [69635] [INFO] Listening at: http://127.0.0.1:8000 (69635)
+[2026-06-14 19:40:31 -0300] [69635] [INFO] Using worker: sync
+[2026-06-14 19:40:31 -0300] [69639] [INFO] Booting worker with pid: 69639
+[2026-06-14 19:40:31 -0300] [69640] [INFO] Booting worker with pid: 69640
+[2026-06-14 19:40:32 -0300] [69642] [INFO] Booting worker with pid: 69642
+[2026-06-14 19:40:32 -0300] [69635] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 19:41:37 -0300] [69635] [INFO] Handling signal: term
+[2026-06-14 19:41:37 -0300] [69639] [INFO] Worker exiting (pid: 69639)
+[2026-06-14 19:41:37 -0300] [69640] [INFO] Worker exiting (pid: 69640)
+[2026-06-14 19:41:37 -0300] [69642] [INFO] Worker exiting (pid: 69642)
+[2026-06-14 19:41:39 -0300] [69635] [INFO] Shutting down: Master
+[2026-06-14 19:41:39 -0300] [69794] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 19:41:39 -0300] [69794] [INFO] Listening at: http://127.0.0.1:8000 (69794)
+[2026-06-14 19:41:39 -0300] [69794] [INFO] Using worker: sync
+[2026-06-14 19:41:39 -0300] [69801] [INFO] Booting worker with pid: 69801
+[2026-06-14 19:41:39 -0300] [69802] [INFO] Booting worker with pid: 69802
+[2026-06-14 19:41:39 -0300] [69803] [INFO] Booting worker with pid: 69803
+[2026-06-14 19:41:40 -0300] [69794] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl

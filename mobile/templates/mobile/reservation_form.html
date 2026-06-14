@@ -10,15 +10,10 @@
     <title>{{ title }} - VerticeBook</title>
     <link rel="manifest" href="/book/static/manifest.json?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {% include 'mobile/includes/theme_vars.html' %}
     <style>
         :root {
-            --primary: #0072ff;
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f1f5f9;
-            --text-dim: #94a3b8;
-            --input-bg: #1e293b;
-            --input-border: rgba(255, 255, 255, 0.1);
+            --input-border: var(--border);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -30,13 +25,13 @@
         }
         .header {
             position: fixed; top: 0; left: 0; width: 100%;
-            padding: 1rem 1.5rem; background: rgba(15, 23, 42, 0.9);
+            padding: 1rem 1.5rem; background: var(--header-bg);
             backdrop-filter: blur(10px); z-index: 100;
             display: flex; align-items: center; gap: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border);
         }
         .back-btn {
-            color: white; text-decoration: none; display: flex; align-items: center;
+            color: var(--text-main); text-decoration: none; display: flex; align-items: center;
         }
         .title { font-size: 1.1rem; font-weight: 700; }
 
@@ -50,7 +45,7 @@
             width: 100%; background: var(--input-bg);
             border: 1px solid var(--input-border);
             border-radius: 8px; padding: 0.4rem 0.5rem;
-            color: white; font-family: 'Outfit', sans-serif;
+            color: var(--text-main); font-family: 'Outfit', sans-serif;
             font-size: 0.8rem; transition: border-color 0.3s;
             height: 38px;
         }
@@ -58,6 +53,28 @@
             outline: none; border-color: var(--primary);
             background: rgba(0, 114, 255, 0.05);
         }
+        
+        /* Webkit Date & Time Input overrides for iOS Safari */
+        input[type="date"].form-input,
+        input[type="time"].form-input {
+            display: inline-flex;
+            align-items: center;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        input[type="date"].form-input::-webkit-date-and-time-value,
+        input[type="time"].form-input::-webkit-date-and-time-value {
+            color: var(--text-main);
+            min-height: 1.5em;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+        input[type="date"].form-input::-webkit-datetime-edit,
+        input[type="time"].form-input::-webkit-datetime-edit {
+            color: var(--text-main);
+        }
+
         textarea.form-input { min-height: 80px; height: auto; resize: none; }
         
         .btn-submit {
@@ -116,7 +133,7 @@
             color: var(--text-main) !important;
         }
         .iti__country.iti__highlight {
-            background-color: rgba(255, 255, 255, 0.05) !important;
+            background-color: var(--nav-hover) !important;
             color: var(--primary) !important;
         }
         .iti__selected-flag {
