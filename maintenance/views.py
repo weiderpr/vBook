@@ -58,10 +58,69 @@ class MaintenanceCreateView(LoginRequiredMixin, PropertyMaintenanceMixin, Create
         kwargs['property'] = self.get_property()
         return kwargs
 
+    def get_initial(self):
+        initial = super().get_initial()
+        from_nc_id = self.request.GET.get('from_nonconformity')
+        if from_nc_id:
+            from properties.models import ProviderNonConformity
+            from django.utils import timezone
+            nc = get_object_or_404(ProviderNonConformity, pk=from_nc_id, property=self.get_property())
+            
+            desc = nc.description or ""
+            title = desc.strip()
+            if len(title) > 60:
+                title = title[:57] + '...'
+            
+            initial['title'] = title
+            initial['description'] = desc
+            
+            # Pre-fill dates with today's date for better UX
+            today = timezone.localtime(timezone.now()).date()
+            initial['start_date'] = today
+            initial['end_date'] = today
+        return initial
+
     def form_valid(self, form):
         form.instance.property = self.get_property()
         messages.success(self.request, _("Manutenção cadastrada com sucesso!"))
-        return super().form_valid(form)
+        
+        # Save the maintenance object first to get an ID
+        response = super().form_valid(form)
+        
+        # Check if created from a non-conformity
+        from_nc_id = self.request.GET.get('from_nonconformity')
+        if from_nc_id:
+            from properties.models import ProviderNonConformity
+            try:
+                nc = ProviderNonConformity.objects.get(pk=from_nc_id, property=form.instance.property)
+                # 1. Link the non-conformity to the maintenance
+                nc.maintenance = form.instance
+                nc.save(update_fields=['maintenance'])
+                
+                # 2. Copy the photo to MaintenancePhoto if it exists
+                if nc.photo:
+                    from .models import MaintenancePhoto
+                    from django.core.files.base import ContentFile
+                    import os
+                    import uuid
+                    
+                    try:
+                        nc.photo.open('rb')
+                        photo_content = nc.photo.read()
+                        photo_ext = os.path.splitext(nc.photo.name)[1].lower()
+                        new_photo_name = f"{uuid.uuid4().hex}{photo_ext}"
+                        
+                        new_photo = MaintenancePhoto(maintenance=form.instance)
+                        new_photo.image.save(new_photo_name, ContentFile(photo_content), save=True)
+                    except Exception as e:
+                        # Log error or print safely without throwing 500
+                        print(f"Error copying non-conformity photo: {e}")
+                    finally:
+                        nc.photo.close()
+            except ProviderNonConformity.DoesNotExist:
+                pass
+                
+        return response
 
     def get_success_url(self):
         return reverse('maintenance:list', kwargs={'property_pk': self.kwargs.get('property_pk')})

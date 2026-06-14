@@ -18546,3 +18546,15 @@ NameError: name 'PropertyChecklistResponse' is not defined. Did you mean: 'Prope
 [2026-06-14 20:13:03 -0300] [74037] [INFO] Booting worker with pid: 74037
 [2026-06-14 20:13:03 -0300] [74038] [INFO] Booting worker with pid: 74038
 [2026-06-14 20:13:03 -0300] [74033] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl
+[2026-06-14 20:25:48 -0300] [74033] [INFO] Handling signal: term
+[2026-06-14 20:25:48 -0300] [74037] [INFO] Worker exiting (pid: 74037)
+[2026-06-14 20:25:48 -0300] [74036] [INFO] Worker exiting (pid: 74036)
+[2026-06-14 20:25:48 -0300] [74038] [INFO] Worker exiting (pid: 74038)
+[2026-06-14 20:25:50 -0300] [74033] [INFO] Shutting down: Master
+[2026-06-14 20:25:50 -0300] [75698] [INFO] Starting gunicorn 25.3.0
+[2026-06-14 20:25:50 -0300] [75698] [INFO] Listening at: http://127.0.0.1:8000 (75698)
+[2026-06-14 20:25:50 -0300] [75698] [INFO] Using worker: sync
+[2026-06-14 20:25:50 -0300] [75701] [INFO] Booting worker with pid: 75701
+[2026-06-14 20:25:51 -0300] [75702] [INFO] Booting worker with pid: 75702
+[2026-06-14 20:25:51 -0300] [75703] [INFO] Booting worker with pid: 75703
+[2026-06-14 20:25:51 -0300] [75698] [INFO] Control socket listening at /root/.gunicorn/gunicorn.ctl

@@ -790,6 +790,14 @@ class ProviderNonConformity(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Registrado em"))
     is_read = models.BooleanField(default=False, verbose_name=_("Lido / Verificado"))
+    maintenance = models.ForeignKey(
+        'maintenance.Maintenance',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='non_conformities',
+        verbose_name=_("Manutenção Relacionada")
+    )
 
     class Meta:
         verbose_name = _("Inconformidade do Prestador")
