@@ -30,4 +30,10 @@ urlpatterns = [
     path('prestadores/checkout/<int:pk>/', views.ProviderCheckoutView.as_view(), name='provider_checkout'),
     path('prestadores/buscar/', views.ProviderSearchAPIView.as_view(), name='provider_search'),
     path('prestadores/acesso/<int:pk>/detalhes/', views.ProviderAccessDetailsJsonView.as_view(), name='provider_access_details'),
+    
+    # Avisos aos Condôminos
+    path('avisos/', views.NoticeListView.as_view(), name='notice_list'),
+    path('avisos/cadastrar/', views.NoticeCreateView.as_view(), name='notice_create'),
+    path('avisos/<int:pk>/alterar/', views.NoticeUpdateView.as_view(), name='notice_update'),
+    path('avisos/<int:pk>/excluir/', views.NoticeDeleteView.as_view(), name='notice_delete'),
 ]

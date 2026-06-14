@@ -193,9 +193,13 @@ class EvolutionService:
             # Garantir que a instância do proprietário existe
             self._ensure_instance_exists()
 
-            phone = ''.join(filter(str.isdigit, reserva.client_phone))
-            if not phone.startswith('55') and len(phone) <= 11:
-                phone = f"55{phone}"
+            raw_phone = reserva.client_phone.strip()
+            if raw_phone.startswith('+'):
+                phone = ''.join(filter(str.isdigit, raw_phone))
+            else:
+                phone = ''.join(filter(str.isdigit, raw_phone))
+                if not phone.startswith('55') and len(phone) <= 11:
+                    phone = f"55{phone}"
 
             checkin_url = reserva.get_checkin_url()
             
@@ -248,9 +252,13 @@ class EvolutionService:
         try:
             self._ensure_instance_exists()
 
-            phone = ''.join(filter(str.isdigit, number))
-            if not phone.startswith('55') and len(phone) <= 11:
-                phone = f"55{phone}"
+            raw_phone = number.strip()
+            if raw_phone.startswith('+'):
+                phone = ''.join(filter(str.isdigit, raw_phone))
+            else:
+                phone = ''.join(filter(str.isdigit, raw_phone))
+                if not phone.startswith('55') and len(phone) <= 11:
+                    phone = f"55{phone}"
 
             b64_data = base64.b64encode(file_bytes).decode('utf-8')
             payload = {

@@ -1,5 +1,6 @@
 import builtins
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from properties.models import Property
@@ -165,3 +166,47 @@ class PortariaCheckinVisitor(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.document}"
+
+
+class Notice(models.Model):
+    condo = models.ForeignKey(
+        'administration.Condo',
+        on_delete=models.CASCADE,
+        related_name='notices',
+        verbose_name=_("Condomínio")
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='created_notices',
+        verbose_name=_("Criado por")
+    )
+    message = models.TextField(verbose_name=_("Mensagem"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Ativo"))
+    valid_until = models.DateField(verbose_name=_("Ativo até"), null=True, blank=True)
+    all_owners = models.BooleanField(default=True, verbose_name=_("Para todos proprietários"))
+    target_owners = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        related_name='received_notices',
+        verbose_name=_("Proprietários destino")
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Criado em"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Atualizado em"))
+
+    @property
+    def is_currently_active(self):
+        if not self.is_active:
+            return False
+        if self.valid_until and self.valid_until < timezone.localtime(timezone.now()).date():
+            return False
+        return True
+
+    class Meta:
+        db_table = 'portaria_aviso'
+        verbose_name = _("Aviso")
+        verbose_name_plural = _("Avisos")
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Aviso #{self.id} - {self.condo.name} ({self.created_at.strftime('%d/%m/%Y') if self.created_at else ''})"

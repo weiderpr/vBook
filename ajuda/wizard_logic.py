@@ -99,10 +99,11 @@ class ReservationWizard:
             return self.get_next_question(), False, 'wizard'
 
         if self.step == 'CLIENT_PHONE':
+            has_plus = answer.strip().startswith('+')
             clean_phone = "".join(filter(str.isdigit, answer))
             if len(clean_phone) < 8:
                 return gettext("Telefone inválido. Por favor, informe com DDD."), False, 'wizard'
-            self.data['client_phone'] = clean_phone
+            self.data['client_phone'] = f"+{clean_phone}" if has_plus else clean_phone
             self.step = 'GUESTS'
             return self.get_next_question(), False, 'wizard'
 

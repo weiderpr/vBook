@@ -102,8 +102,45 @@
         background: rgba(255, 255, 255, 0.05);
         color: var(--primary);
     }
+    
+    /* Estilização para o intl-tel-input */
+    .iti {
+        width: 100%;
+        display: block;
+    }
+    .iti__country-list {
+        background-color: var(--bg-card) !important;
+        border: 1px solid var(--glass-border) !important;
+        color: var(--text-main) !important;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .iti__country {
+        padding: 0.8rem 1rem !important;
+        outline: none;
+    }
+    .iti__country-name, .iti__dial-code {
+        color: var(--text-main) !important;
+    }
+    .iti__country.iti__highlight {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        color: var(--primary) !important;
+    }
+    .iti__selected-flag {
+        background-color: rgba(255, 255, 255, 0.02) !important;
+        border-radius: 10px 0 0 10px;
+        padding: 0 0.8rem 0 1rem !important;
+    }
+    .iti__selected-flag:hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+    .iti input {
+        padding-left: 52px !important;
+    }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
 <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0/build/vanilla-masker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 {% endblock %}
 
 {% block sidebar %}
@@ -325,11 +362,63 @@
         });
 
         // 1. Masks Implementation
-        if (typeof VMasker !== 'undefined') {
-            // Phone Mask: (99) 99999-9999
-            VMasker(phoneInput).maskPattern('(99) 99999-9999');
+        let iti;
+        if (phoneInput && typeof window.intlTelInput !== 'undefined') {
+            iti = window.intlTelInput(phoneInput, {
+                initialCountry: "br",
+                preferredCountries: ["br", "us", "ar", "pt"],
+                nationalMode: true,
+                autoPlaceholder: "aggressive",
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+            });
             
-            // Money Mask: R$ 1.234,56
+            // Format phone to national format on blur
+            phoneInput.addEventListener('blur', function() {
+                if (phoneInput.value.trim() && typeof intlTelInputUtils !== 'undefined') {
+                    const formatted = iti.getNumber(intlTelInputUtils.numberFormat.NATIONAL);
+                    if (formatted) {
+                        phoneInput.value = formatted;
+                    }
+                }
+            });
+            
+            // Format phone dynamically while typing
+            let isDeleting = false;
+            phoneInput.addEventListener('keydown', function(e) {
+                isDeleting = (e.key === 'Backspace' || e.key === 'Delete');
+            });
+            phoneInput.addEventListener('input', function(e) {
+                if (isDeleting) return;
+                var val = phoneInput.value;
+                if (val && typeof intlTelInputUtils !== 'undefined') {
+                    var formatted = intlTelInputUtils.formatNumber(val, iti.getSelectedCountryData().iso2, intlTelInputUtils.numberFormat.NATIONAL);
+                    if (formatted) {
+                        var selectionStart = phoneInput.selectionStart;
+                        var prevLen = phoneInput.value.length;
+                        phoneInput.value = formatted;
+                        var newLen = phoneInput.value.length;
+                        var diff = newLen - prevLen;
+                        phoneInput.setSelectionRange(selectionStart + diff, selectionStart + diff);
+                    }
+                }
+            });
+            
+            // Format phone on form submit to standard E.164 format
+            const parentForm = phoneInput.closest('form');
+            if (parentForm) {
+                parentForm.addEventListener('submit', function() {
+                    const fullNumber = iti.getNumber();
+                    if (fullNumber) {
+                        phoneInput.value = fullNumber;
+                    }
+                });
+            }
+        } else if (phoneInput && typeof VMasker !== 'undefined') {
+            // Fallback Phone Mask: (99) 99999-9999
+            VMasker(phoneInput).maskPattern('(99) 99999-9999');
+        }
+
+        if (typeof VMasker !== 'undefined') {
             VMasker(valueInput).maskMoney({
                 precision: 2,
                 separator: ',',

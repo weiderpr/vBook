@@ -7,7 +7,9 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from reservations.models import Reservation, GateRelease, Companion
 from properties.models import Property, PortariaCustomProperty, ServiceProvider, Service
-from .models import PortariaCheckinManual, PortariaCheckinManualGuest, ServiceProviderAccessLog, PortariaCheckinVisitor
+from .models import PortariaCheckinManual, PortariaCheckinManualGuest, ServiceProviderAccessLog, PortariaCheckinVisitor, Notice
+from django.contrib.auth import get_user_model
+User = get_user_model()
 import datetime
 import json
 import logging
@@ -1468,6 +1470,165 @@ class ProviderAccessDetailsJsonView(StaffRequiredMixin, View):
         }
         
         return JsonResponse({'status': 'success', 'data': data})
+
+
+class NoticeListView(StaffRequiredMixin, TemplateView):
+    template_name = 'admcondominio/notices.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        condo = self.request.user.condo
+        context['condo'] = condo
+        
+        # Obter todos os avisos do condomínio do usuário
+        notices = Notice.objects.filter(condo=condo).select_related('created_by').prefetch_related('target_owners').order_by('-created_at')
+        context['notices'] = notices
+        
+        # Obter todos os proprietários cadastrados e ativos no condomínio
+        # que são usuários do sistema (ou seja, vinculados a alguma propriedade)
+        owners = User.objects.filter(properties__condo=condo, is_active=True).distinct().order_by('full_name')
+        context['owners'] = owners
+        
+        return context
+
+
+class NoticeCreateView(StaffRequiredMixin, View):
+    def post(self, request):
+        condo = request.user.condo
+        if not condo:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Erro: Você não está associado a nenhum condomínio.")
+            }, status=403)
+            
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Dados inválidos.")
+            }, status=400)
+            
+        message = data.get('message', '').strip()
+        valid_until_str = data.get('valid_until', '').strip()
+        all_owners = data.get('all_owners', True)
+        target_owners_ids = data.get('target_owners', [])
+        
+        if not message:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("O conteúdo do aviso é obrigatório.")
+            }, status=400)
+            
+        valid_until = None
+        if valid_until_str:
+            try:
+                valid_until = datetime.datetime.strptime(valid_until_str, '%Y-%m-%d').date()
+            except ValueError:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Formato de data limite inválido.")
+                }, status=400)
+                
+        # Criar o aviso
+        notice = Notice.objects.create(
+            condo=condo,
+            created_by=request.user,
+            message=message,
+            is_active=True,
+            valid_until=valid_until,
+            all_owners=all_owners
+        )
+        
+        if not all_owners and target_owners_ids:
+            valid_owners = User.objects.filter(id__in=target_owners_ids, properties__condo=condo).distinct()
+            notice.target_owners.set(valid_owners)
+            
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Aviso cadastrado com sucesso!")
+        })
+
+
+class NoticeUpdateView(StaffRequiredMixin, View):
+    def post(self, request, pk):
+        condo = request.user.condo
+        notice = get_object_or_404(Notice, pk=pk, condo=condo)
+        
+        is_admin_or_manager = request.user.is_admin or request.user.user_type in ['admin', 'manager']
+        if not (is_admin_or_manager or notice.created_by == request.user):
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Erro: Você não tem permissão para alterar este aviso.")
+            }, status=403)
+            
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Dados inválidos.")
+            }, status=400)
+            
+        message = data.get('message', '').strip()
+        valid_until_str = data.get('valid_until', '').strip()
+        is_active = data.get('is_active', True)
+        all_owners = data.get('all_owners', True)
+        target_owners_ids = data.get('target_owners', [])
+        
+        if not message:
+            return JsonResponse({
+                'status': 'error',
+                'message': _("O conteúdo do aviso é obrigatório.")
+            }, status=400)
+            
+        valid_until = None
+        if valid_until_str:
+            try:
+                valid_until = datetime.datetime.strptime(valid_until_str, '%Y-%m-%d').date()
+            except ValueError:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': _("Formato de data limite inválido.")
+                }, status=400)
+                
+        # Atualizar
+        notice.message = message
+        notice.valid_until = valid_until
+        notice.is_active = is_active
+        notice.all_owners = all_owners
+        notice.save()
+        
+        if all_owners:
+            notice.target_owners.clear()
+        else:
+            valid_owners = User.objects.filter(id__in=target_owners_ids, properties__condo=condo).distinct()
+            notice.target_owners.set(valid_owners)
+            
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Aviso alterado com sucesso!")
+        })
+
+
+class NoticeDeleteView(StaffRequiredMixin, View):
+    def post(self, request, pk):
+        condo = request.user.condo
+        notice = get_object_or_404(Notice, pk=pk, condo=condo)
+        
+        is_admin_or_manager = request.user.is_admin or request.user.user_type in ['admin', 'manager']
+        if not (is_admin_or_manager or notice.created_by == request.user):
+            return JsonResponse({
+                'status': 'error',
+                'message': _("Erro: Você não tem permissão para excluir este aviso.")
+            }, status=403)
+            
+        notice.delete()
+        
+        return JsonResponse({
+            'status': 'success',
+            'message': _("Aviso excluído com sucesso!")
+        })
 
 
 

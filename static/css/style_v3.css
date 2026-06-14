@@ -618,6 +618,69 @@ nav a:hover {
     box-shadow: var(--glass-shadow);
 }
 
+@media (min-width: 1024px) and (max-width: 1440px) {
+    .sidebar {
+        width: 210px !important;
+        padding: 1rem !important;
+    }
+    .dashboard-main {
+        margin-left: 210px !important;
+        padding: 1.5rem !important;
+        padding-top: 6rem !important;
+    }
+    .license-info {
+        padding: 0.5rem !important;
+        font-size: 0.6rem !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    .dashboard-container {
+        flex-direction: column !important;
+    }
+    .sidebar {
+        position: relative !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--glass-border) !important;
+        padding: 1rem !important;
+        margin-top: 45px !important; /* Space for fixed navbar */
+        overflow: visible !important;
+    }
+    .sidebar-content {
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        overflow: visible !important;
+    }
+    .sidebar-menu {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+    .sidebar-menu li {
+        margin-bottom: 0 !important;
+        flex: 1 1 auto !important;
+    }
+    .sidebar-menu a {
+        padding: 0.5rem 1rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.85rem !important;
+    }
+    .license-info {
+        margin-top: 1rem !important;
+        margin-bottom: 0 !important;
+    }
+    .dashboard-main {
+        margin-left: 0 !important;
+        padding: 1.5rem !important;
+        padding-top: 1.5rem !important;
+    }
+}
+
 @media (max-width: 992px) {
     .hero .container, .split-section .container {
         flex-direction: column;
