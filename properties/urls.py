@@ -35,6 +35,11 @@ urlpatterns = [
     path('checklists/<int:checklist_pk>/itens/novo/', views.PropertyChecklistItemCreateView.as_view(), name='checklist_item_create'),
     path('checklists/itens/<int:pk>/editar/', views.PropertyChecklistItemUpdateView.as_view(), name='checklist_item_update'),
     path('checklists/itens/<int:pk>/excluir/', views.PropertyChecklistItemDeleteView.as_view(), name='checklist_item_delete'),
+    
+    # Respostas de Checklists
+    path('checklists/<int:checklist_pk>/respostas/', views.PropertyChecklistResponseListView.as_view(), name='checklist_response_list'),
+    path('checklists/respostas/<int:pk>/detalhe/', views.PropertyChecklistResponseDetailView.as_view(), name='checklist_response_detail'),
+    path('checklists/respostas/<int:pk>/excluir/', views.PropertyChecklistResponseDeleteView.as_view(), name='checklist_response_delete'),
 
 
     

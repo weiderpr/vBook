@@ -662,6 +662,10 @@ class PropertyChecklistResponse(models.Model):
     def __str__(self):
         return f"Resposta de {self.checklist.description} para Reserva #{self.reservation.id}"
 
+    @property
+    def has_attention_items(self):
+        return any(resp.is_below_default for resp in self.item_responses.all())
+
 
 class PropertyChecklistItemResponse(models.Model):
     response = models.ForeignKey(

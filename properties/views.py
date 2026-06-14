@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.db.models import Sum, Q
 from core.utils import send_notification
 
-from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider, PropertyDocument
+from .models import Property, PropertyCost, FinancialHistory, Service, ServiceProvider, PropertyDocument, PropertyChecklist, PropertyChecklistResponse
 from .utils import get_property_stats
 from .forms import PropertyForm, PropertyCostForm, PropertyInstructionsForm, PropertyAuthorizationForm, ServiceProviderForm, PropertyDocumentForm
 from reservations.models import Reservation, ReservationCost, ReservationPayment
@@ -1658,6 +1658,58 @@ class ServiceProviderChecklistView(View):
 
         messages.success(request, _("Checklist respondido com sucesso!"))
         return redirect(reverse('properties:provider_public', kwargs={'token': token}) + '#agenda')
+
+
+class PropertyChecklistResponseListView(LoginRequiredMixin, ListView):
+    model = PropertyChecklistResponse
+    template_name = 'properties/property_checklist_response_list.html'
+    context_object_name = 'responses'
+
+    def get_queryset(self):
+        self.checklist = get_object_or_404(
+            PropertyChecklist,
+            pk=self.kwargs['checklist_pk'],
+            property__user=self.request.user
+        )
+        return PropertyChecklistResponse.objects.filter(
+            checklist=self.checklist
+        ).select_related('reservation', 'user').order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['checklist'] = self.checklist
+        context['property'] = self.checklist.property
+        context['active_item'] = 'checklists'
+        return context
+
+
+class PropertyChecklistResponseDetailView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        checklist_response = get_object_or_404(
+            PropertyChecklistResponse,
+            pk=pk,
+            checklist__property__user=request.user
+        )
+        item_responses = checklist_response.item_responses.select_related('item').order_by('item__id')
+        context = {
+            'reservation': checklist_response.reservation,
+            'checklist': checklist_response.checklist,
+            'checklist_response': checklist_response,
+            'item_responses': item_responses,
+        }
+        return render(request, 'reservations/includes/checklist_detail_modal_content.html', context)
+
+
+class PropertyChecklistResponseDeleteView(LoginRequiredMixin, DeleteView):
+    model = PropertyChecklistResponse
+
+    def get_queryset(self):
+        return PropertyChecklistResponse.objects.filter(checklist__property__user=self.request.user)
+
+    def get_success_url(self):
+        messages.success(self.request, _("Resposta de checklist excluída com sucesso!"))
+        return reverse_lazy('properties:checklist_response_list', kwargs={'checklist_pk': self.object.checklist.pk})
+
 
 
 
